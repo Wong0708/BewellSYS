@@ -546,7 +546,7 @@
                                                     <td>2018-04-17</td> 
                                                     <td>N/A</td> 
                                                     <td><span class="label label-warning">Unpaid</span></td>
-                                                    <td><span class="label label-info">Processing</span></td>
+                                                    <td><span class="label label-info">{{$order->clod_status}}</span></td>
                                                     {{-- <th>100</th> --}}
                                                     <td>{{$order->updated_at}}</td>
                                                     <td>

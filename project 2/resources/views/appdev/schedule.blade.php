@@ -223,33 +223,43 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Schedule</h4>
                             </div>
-                            {!! Form::open(array('route'=>'clientorder.store','id'=>'addproductform'))!!}
+                            {!! Form::open(array('route'=>'schedule.store'))!!}
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Order #:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
-                                    <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                    @if(isset($clients))
-                                                        @foreach ($clients as $client)
-                                                            <option>{{$client->cl_name}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                    
+                                    <select name="order_num" class="form-control order_dropdown" id="client" style="margin-bottom:10px;">
+                                            @if($orders)
+                                                @foreach ($orders as $order)
+                                                    <option value="{{$order->id}}"
+                                                            locs="@foreach($order->locations as $locs){{$locs->loc_address}};@endforeach"
+                                                            locs_ids="@foreach($order->locations as $locs){{$locs->id}};@endforeach
+                                                                    ">
+                                                        {{$order->client_name}} | CLOD-{{$order->id}} </option>
+                                                @endforeach
+                                            @endif
+                                    </select>
+
+                                    <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
+                                    <br>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
+                                    <select name="address" class="form-control address_dropdown" id="client" style="margin-bottom:10px;">
+                                        @if($orders)
+                                            @foreach ($orders as $order)
+                                                @foreach($order->locations as $locs)
+                                                    <option value="{{$locs->id}}">{{$locs->loc_address}}</option>
+                                                @endforeach
+                                                @break
+                                            @endforeach
+                                        @endif
                                     </select>
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Delivery Date:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
 
-                                    <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                    @if(isset($clients))
-                                                        @foreach ($clients as $client)
-                                                            <option>{{$client->cl_name}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                    
-                                    </select>
+                                    <input type="date" class="form-control" name="delivery_date">
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
@@ -766,6 +776,20 @@
             <!-- end - This is for export functionality only -->
             <script>
                 $(document).ready(function() {
+
+                    $('.order_dropdown').bind('change',function() {
+                        var option_locs = $('option:selected', this).attr('locs').split(";");
+                        var option_id = $('option:selected', this).attr('locs_ids').split(";");
+
+                        $('.address_dropdown').find('option').remove();
+
+                        for (i = 0; i < option_locs.length; i++) {
+                            if(option_locs[i]!=""){
+                                $('.address_dropdown').append('<option value="'+option_id[i]+'">'+option_locs[i]+'</option>');
+                            }
+                        }
+
+                    });
                     $('.myTable').DataTable();
                     $(document).ready(function() {
                         var table = $('#example').DataTable({
