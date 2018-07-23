@@ -264,19 +264,24 @@
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the car's plate number. Ex: NSA-2134. <b style="color:#E53935;">*Required</b></span>
-                                            
-                                    <input style="margin-top:10px;" class="form-control" type="text"/>
+
+                                    <select name="plate_num" class="form-control" id="client" style="margin-bottom:10px;">
+                                        @if(isset($trucks))
+                                            @foreach ($trucks as $truck)
+                                                <option value="{{$truck->id}}">[{{$truck->plate_num}}] {{$truck->car_model}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Driver:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a driver to deliver the order. <b style="color:#E53935;">*Required</b></span>
-                                    <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                    @if(isset($clients))
-                                                        @foreach ($clients as $client)
-                                                            <option>{{$client->cl_name}}</option>
+                                    <select name="driver" class="form-control" id="client" style="margin-bottom:10px;">
+                                                    @if(isset($drivers))
+                                                        @foreach ($drivers as $driver)
+                                                            <option value="{{$driver->id}}">{{$driver->name}}</option>
                                                         @endforeach
                                                     @endif
-                                                    
                                     </select>
 
                                     <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
