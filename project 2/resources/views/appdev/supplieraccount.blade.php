@@ -329,6 +329,73 @@
                             </div>
                         </div> --}}
                     
+                <!-- clientdetail modal -->
+                <div id="moreModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"></button>
+                                <center ><b><h2 class="modal-title" style="display: inline;" id="supplierName"></h2></b></center>
+                            </div>
+                            <div class="modal-body">
+                                <span class="text-muted" id="updated" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"></span>
+                                <br><br>
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Address:</b></label>
+                                <input type="text" class="form-control" id="supplierAddress" value="" readonly/>
+
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Contact Person:</b></label>
+                                <input type="text" class="form-control" id="supplierContactperson" value="" readonly/>
+
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Contact Number:</b></label>
+                                <input type="text" class="form-control" id="supplierContactnumber" value="" readonly/>
+
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier E-mail:</b></label>
+                                <input type="text" class="form-control" id="supplierStatus" value="" readonly/>
+
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Status:</b></label>
+                                <input type="text" class="form-control" id="supplierEmail" value="" readonly/>
+
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Remarks:</b></label>
+                                <input type="text" class="form-control" id="supplierRemarks" value="" readonly/>
+
+
+                                {{--<label for="client" class="control-label" id="expiryLabel" style="color:black; display: inline; font-family:Helvetica,Arial,sans-serif;"><b>Expiration Date:</b></label>
+                                <a class="mytooltip" href="javascript:void(0)" style="display: inline;">
+                                    <i class="fa fa-question-circle"></i><span class="tooltip-content3" id="expiryTip">
+                                        Expiry Date: </span>
+                                </a>
+                                
+                                <input type="text" class="form-control" id="expiryDate" value="" readonly/>--}}
+                                {{--<div class="row" style="margin-top: 40px">
+                                    <div class="col-md-4 col-xs-12 col-sm-6">
+                                        <div class="white-box text-center bg-purple">
+                                            <h1 class="text-white counter">120</h1>
+                                            <p class="text-white">Total On-order Material/s</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 col-sm-6">
+                                        <div class="white-box text-center bg-info">
+                                            <h1 class="text-white counter">231</h1>
+                                            <p class="text-white">Total Available Material/s</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 col-sm-6">
+                                        <div class="white-box text-center bg-success">
+                                            <h1 class="text-white counter">81</h1>
+                                            <p class="text-white">Total Allocated Material/s</p>
+                                        </div>
+                                    </div>
+                                </div>--}}
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                    <span class='glyphicon glyphicon-remove'></span> Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--MODAL ENDS HERE-->
                 
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
@@ -366,7 +433,16 @@
                                             @if(isset($suppliers))
                                                 @foreach ($suppliers as $supplier)
                                                 <tr>
-                                                    <td><a href="">{{'SP-'.$supplier->id}}</td>
+                                                    <td><a href=""class="itemStat" data-toggle="modal" data-target="#moreModal"
+                                                       data-suppliername="{{$supplier->sp_name}}"
+                                                       data-supplieraddress="{{$supplier->sp_address}}"
+                                                       data-suppliercontactperson="{{$supplier->sp_contactperson}}"
+                                                       data-suppliercontactnumber="{{$supplier->sp_contactnumber}}"
+                                                       data-supplieremail="{{$supplier->sp_email}}"
+                                                       data-supplierremarks="{{$supplier->sp_remarks}}"
+                                                       data-supplierstatus="{{$supplier->sp_status}}"
+                                                       data-updatedat="{{$supplier->updated_at}}">
+                                                       {{'SP-'.$supplier->id}}</td>
                                                     <td>{{$supplier->sp_name}}</td>
                                                     <td>{{$supplier->sp_contactperson}}</td>
                                                     <td>{{$supplier->sp_contactnumber}}</td>
@@ -544,6 +620,30 @@
                     buttons: [
                         'copy', 'csv', 'excel', 'pdf', 'print'
                     ]
+                });
+                $('.itemStat').click(function () {
+
+                    $('#supplierName').html($(this).data('suppliername'));
+                    $('#updated').html("Last updated at "+$(this).data('updatedat'));
+                    $('#supplierStatus').val($(this).data('supplierstatus'));
+                    $('#supplierContactperson').val($(this).data('suppliercontactperson'));
+                    $('#supplierContactnumber').val($(this).data('suppliercontactnumber'));
+                    $('#supplierAddress').val($(this).data('supplieraddress'));
+                    $('#supplierRemarks').val($(this).data('supplierremarks'));
+                    $('#supplierEmail').val($(this).data('supplieremail'));
+
+                    {{--if(datediff<0){
+                        $('#expiryTip').html("This item is expired.");
+                        $('#expiryLabel').css('color', 'red');
+                    }
+                    else if(datediff>0 && datediff<=3){
+                        $('#expiryTip').html("This item is nearly expired. Expiration in"+ datediff +" days");
+                        $('#expiryLabel').css('color', 'blue');
+                    }
+                    else if(datediff>=4){
+                        $('#expiryTip').html("This item is in good condition.");
+                        $('#expiryLabel').css('color', 'green');
+                    }--}}
                 });
             </script>
             <!--Style Switcher -->

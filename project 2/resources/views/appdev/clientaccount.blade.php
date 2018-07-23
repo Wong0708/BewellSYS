@@ -335,7 +335,62 @@
                                 </div>
                             </div>
                         </div> --}}
-                    
+                <!-- clientdetail modal -->
+                <div id="moreModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"></button>
+                                <center ><b><h2 class="modal-title" style="display: inline;" id="clientName"></h2></b></center>
+                            </div>
+                            <div class="modal-body">
+                                <span class="text-muted" id="updated" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"></span>
+                                <br><br>
+
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Status:</b></label>
+                                <input type="text" class="form-control" id="clientStatus" value="" readonly/>
+
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client E-mail:</b></label>
+                                <input type="text" class="form-control" id="clientEmail" value="" readonly/>
+
+
+                                {{--<label for="client" class="control-label" id="expiryLabel" style="color:black; display: inline; font-family:Helvetica,Arial,sans-serif;"><b>Expiration Date:</b></label>
+                                <a class="mytooltip" href="javascript:void(0)" style="display: inline;">
+                                    <i class="fa fa-question-circle"></i><span class="tooltip-content3" id="expiryTip">
+                                        Expiry Date: </span>
+                                </a>
+                                
+                                <input type="text" class="form-control" id="expiryDate" value="" readonly/>--}}
+                                {{--<div class="row" style="margin-top: 40px">
+                                    <div class="col-md-4 col-xs-12 col-sm-6">
+                                        <div class="white-box text-center bg-purple">
+                                            <h1 class="text-white counter">120</h1>
+                                            <p class="text-white">Total On-order Material/s</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 col-sm-6">
+                                        <div class="white-box text-center bg-info">
+                                            <h1 class="text-white counter">231</h1>
+                                            <p class="text-white">Total Available Material/s</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 col-sm-6">
+                                        <div class="white-box text-center bg-success">
+                                            <h1 class="text-white counter">81</h1>
+                                            <p class="text-white">Total Allocated Material/s</p>
+                                        </div>
+                                    </div>
+                                </div>--}}
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                    <span class='glyphicon glyphicon-remove'></span> Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--MODAL ENDS HERE-->
                 
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
@@ -361,8 +416,8 @@
                                                 <th>Customer Name</th>
                                                 <th>E-mail</th>
                                                 {{-- <th></th> --}}
-                                                <th></th>
-                                                <th></th>
+                                                <th>Status</th>
+                                                <th><i class="fa fa-gear"></th>
                                                 {{-- <th><i class="fa fa-gear"></th> --}}
                                                 {{-- <th><i class="fa fa-gear"></th> --}}
                                         </tr>
@@ -371,7 +426,12 @@
                                             @if(isset($clients))
                                                 @foreach ($clients as $client)
                                                 <tr>
-                                                    <td><a href="">{{'CL-'.$client->id}}</td>
+                                                    <td><a href="" class="itemStat" data-toggle="modal" data-target="#moreModal"
+                                                       data-clientname="{{$client->cl_name}}"
+                                                       data-clientemail="{{$client->cl_email}}"
+                                                       data-clientstatus="{{$client->cl_status}}"
+                                                       data-updatedat="{{$client->updated_at}}"
+                                                       >{{'CL-'.$client->id}}</td>
                                                     <td>{{$client->cl_name}}</td>
                                                     <td>{{$client->cl_email}}</td>
                                                     <td><span class="label label-success">{{$client->cl_status}}</span></td>
@@ -548,6 +608,27 @@
                         'copy', 'csv', 'excel', 'pdf', 'print'
                     ]
                 });
+
+                 $('.itemStat').click(function () {
+
+                        $('#clientName').html($(this).data('clientname'));
+                        $('#updated').html("Last updated at "+$(this).data('updatedat'));
+                        $('#clientStatus').val($(this).data('clientstatus'));
+                        $('#clientEmail').val($(this).data('clientemail'));
+
+                        {{--if(datediff<0){
+                            $('#expiryTip').html("This item is expired.");
+                            $('#expiryLabel').css('color', 'red');
+                        }
+                        else if(datediff>0 && datediff<=3){
+                            $('#expiryTip').html("This item is nearly expired. Expiration in"+ datediff +" days");
+                            $('#expiryLabel').css('color', 'blue');
+                        }
+                        else if(datediff>=4){
+                            $('#expiryTip').html("This item is in good condition.");
+                            $('#expiryLabel').css('color', 'green');
+                        }--}}
+                });
             </script>
             <!--Style Switcher -->
             <script src="plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
@@ -593,7 +674,8 @@
                     var verify = confirm("Do you wish to edit this order?");
                     return verify;
                 });
-
+                
+                
                 // $(document).on('click', '.statusSubmit', function() {
                 //     var verify = confirm("Do you wish to update the status of this order?");
                 //     return verify;
