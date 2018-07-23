@@ -31,9 +31,15 @@ class ScheduleController extends Controller
     {
         $trucks = Truck::all();
         $drivers = driver::all();
-        $orders = ClientOrder::where('clod_status','Processing');
+        $orders = ClientOrder::all();
         $locations = ClientLocation::all();
         $clients = Client::all();
+
+
+        $orders = $orders->filter(function ($order) {
+            return $order->clod_status == "Processing";
+        });
+
         foreach($orders as $order){
             $order['locations']= array();
             $order['locations']= DB::table('bc_client_location')->where('id', $order['clientID'])->get()->toArray();
