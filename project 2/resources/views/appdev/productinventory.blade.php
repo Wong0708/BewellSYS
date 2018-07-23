@@ -395,7 +395,7 @@
                                 </div>
                             </div>
                         </div>
-                <!--MODAL ENDS HERE-->
+                <!-- Productdetail modal -->
                 <div id="moreModal" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -447,6 +447,7 @@
                         </div>
                     </div>
                 </div>
+                <!--MODAL ENDS HERE-->
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                     <div class="col-sm-12">
                         <div class="white-box">

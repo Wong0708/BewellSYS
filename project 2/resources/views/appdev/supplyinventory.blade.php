@@ -463,7 +463,7 @@
                                         @foreach($supply as $supply1)
                                         <tr>
                                             <td>{{'RM-'.$supply1->id}}</td>
-                                            <td><a href={{url('supplydetail')}}>{{$supply1->sp_code}}</a></td>
+                                            <td><a href="{{route('appdev.supplydetailz', ['id' => $supply1->id])}}">{{$supply1->sp_code}}</a></td>
                                             <td>{{$supply1->sp_name}}</td>
                                             <td>{{$supply1->sp_sku}}</td>
                                             <td>{{$supply1->sp_qty}}</td>

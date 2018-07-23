@@ -134,7 +134,7 @@
                         <span style=" position:absolute; bottom: 30px; width:100%; text-align: center; font-size:12px;"><strong>AIMinds</strong></span>
                         <span style=" position:absolute; bottom: 10px; width:100%; text-align: center; font-size:10px;">BCOFSYS - Version 1.0.1</span>
                         <li><a href={{route('dashboard.index')}} class="waves-effect"><i class="linea-icon linea-aerrow fa-fw" data-icon="&#xe078;"></i> <span class="hide-menu">Dashboard</span></a></li>
-                        <li style="background-color: #E9F0FD;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#4c87ed;" data-icon="x" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu" style="color:#4c87ed;">Order<span class="fa arrow"></span></span></a>
+                        <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="x" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Order<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('clientorder.index')}}>Client</a> </li>
                                 <li> <a href={{route('manufacturerorder.index')}}>Manufacturer</a> </li>
@@ -148,7 +148,7 @@
                                 <li> <a href="javascript:void(0)">Supplier</a> </li>
                             </ul> --}}
                         </li>
-                        <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="f" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Inventory<span class="fa arrow"></span></span></a>
+                        <li style="background-color: #E9F0FD;"> <a href="javascript:void(0)" class="waves-effect"><i  style="color:#4c87ed;" data-icon="f" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu" style="color:#4c87ed;">Inventory<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('product.index')}}>Product</a> </li>
                             <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
@@ -203,7 +203,7 @@
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title" style="color:black;">Material Details: RW-0001</h4>
+                        <h4 class="page-title" style="color:black;">Material Details: {{'RM-'.$supply1->id}}</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
@@ -455,30 +455,30 @@
                 <!--MODAL ENDS HERE-->
 
                 <div class="row">
-                        <div class="col-md-3 col-xs-12 col-sm-6">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
-                                <h1 class="text-white counter">120</h1>
+                                <h1 class="text-white counter">120</h1> <!-- select * from supplier_orders where material id = this material -->
                                 <p class="text-white">Total On-order Material/s</p>
                             </div>
                         </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-info">
-                                <h1 class="text-white counter">231</h1>
+                                <h1 class="text-white counter">231</h1> <!-- (select sp_qty from bewelldb.supply) - (select sum(items_sent) from manufacturer_order_details where raw material = this material and status != delivering or delivered) -->
                                 <p class="text-white">Total Available Material/s</p>
                             </div>
                         </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
                             <div class="white-box text-center">
-                                <h1 class="counter">81</h1>
+                                <h1 class="counter">81</h1> <!-- select sum(items_sent) from manufacturer_order_details where status != delivering or delivered) --> 
                                 <p class="text-muted">Total Allocated Material/s</p>
                             </div>
                         </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
+                        {{-- <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-success">
                                 <h1 class="text-white counter">₱3,000.00</h1>
                                 <p class="text-white">Total Investment Cost</p>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     
               
@@ -488,9 +488,9 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h4 style="color:black; margin-bottom:7px;">Order Functions</h4>
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i></span>Manage Client Order</button>
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i></span>Manage Manufacturer Order</button>
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span>Manage Supplier Order</button>
+                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i><a href={{route('clientorder.index')}}></span>Manage Client Order</button>
+                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i><a href={{route('manufacturerorder.index')}}></span>Manage Manufacturer Order</button>
+                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i><a href={{route('supplierorder.index')}}></span>Manage Supplier Order</button>
                                     </div>
                                 </div>
                       </div>
@@ -627,7 +627,7 @@
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this material.</span>
                                             <p class="text-muted m-b-30"></p>
                                         {{-- <hr> --}}
-                                            <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Material Details: RW-0001</h3>
+                                            <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Material Details: {{'RM-'.$supply1->id}}</h3>
                                             <div class="table-responsive">
                                                     <table id="myTable4" class="table table-striped">
                                                         <thead>

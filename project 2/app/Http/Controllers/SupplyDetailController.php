@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Supply;
+use App\SupplyLogs;
+
+use DateTime;
+
 
 class SupplyDetailController extends Controller
 {
@@ -13,7 +18,8 @@ class SupplyDetailController extends Controller
      */
     public function index()
     {
-        return view('appdev.supplydetail');
+        $supplylog = SupplyLogs::all();
+        return view('appdev.supplydetail')->with("supplylog",$supplylog);
     }
 
     /**
@@ -24,6 +30,15 @@ class SupplyDetailController extends Controller
     public function create()
     {
         //
+    }
+
+    public function getSupply($id){
+
+        $supply1 = Supply::find($id);
+        if($supply1['id'] == null){
+            return view('errors.404');
+        }
+        return view("appdev.supplydetail",['supply1' => $supply1]);
     }
 
     /**

@@ -49,6 +49,8 @@ Route::resource('supply', 'SupplyController');
 
 Route::resource('supplydetail', 'SupplyDetailController');
 
+Route::get('supplydetailz/{id}', 'SupplyDetailController@getSupply')->name('appdev.supplydetailz');
+
 Route::resource('salesreport', 'SalesReportController');
 
 Route::resource('inventoryreport', 'InventoryReportController');
@@ -58,8 +60,12 @@ Route::resource('notifications', 'NotificationController');
 Route::resource('driverdetail', 'DriverDetailController');
 
 Route::resource('truck', 'TruckController');
+
 Route::resource('truckdetail', 'TruckDetailController');
+
 Route::get('truckdetailz/{id}', 'TruckDetailController@getTruck')->name('appdev.truckdetailz');
+
 Route::get('driver/{id}', 'DriverController@getDriver')->name('appdev.driver');
+
 Route::resource('driver', 'DriverController');
 
