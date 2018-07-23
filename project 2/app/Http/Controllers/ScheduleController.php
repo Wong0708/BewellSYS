@@ -31,21 +31,17 @@ class ScheduleController extends Controller
     {
         $trucks = Truck::all();
         $drivers = driver::all();
-        $orders = ClientOrder::all();
+        $orders = ClientOrder::where('clod_status','Processing');
         $locations = ClientLocation::all();
         $clients = Client::all();
-
         foreach($orders as $order){
             $order['locations']= array();
             $order['locations']= DB::table('bc_client_location')->where('id', $order['clientID'])->get()->toArray();
             $a = DB::table('bc_client')->select('bc_client.cl_name')->where('id', $order['clientID'])->first();
             $order['client_name'] = $a->cl_name;
         }
-
         // get order and get the client from that order
         // display their list of addresses
-
-
         return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("orders",$orders);
        
     }
