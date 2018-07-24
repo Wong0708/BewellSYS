@@ -150,5 +150,12 @@ class ClientAccountController extends Controller
     public function destroy($id)
     {
         //
+        $client = Client::find($id);
+        $client->delete();
+
+        // dd($product);
+
+        Session::flash('success','Successfully deleted a client!');
+        return redirect("/clientaccount");
     }
 }
