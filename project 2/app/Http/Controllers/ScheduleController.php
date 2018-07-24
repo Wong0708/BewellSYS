@@ -117,7 +117,7 @@ class ScheduleController extends Controller
 
         $schedule = new Schedule();
         $date = new DateTime();
-
+        // change status of order to processed.
         $schedule->scd_date = $fields['date'];
         $schedule->scd_status = "Scheduled";
         $schedule->orderID = $fields['order_num'];
@@ -130,7 +130,7 @@ class ScheduleController extends Controller
 
         $schedule->save();
         $i = 0;
-        $insertID = DB::getPdo()->lastInsertId();
+        $insertID =$schedule->id;
         foreach ($fields['ids'] as $id){
 
             $schedule_det = new ScheduleDetail();
