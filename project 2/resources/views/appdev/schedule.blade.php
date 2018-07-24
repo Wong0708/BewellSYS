@@ -1,3 +1,5 @@
+<?php use App\Http\Controllers\ScheduleController;?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -266,7 +268,7 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the car's plate number. Ex: NSA-2134. <b style="color:#E53935;">*Required</b></span>
 
-                                    <select name="plate_num" class="form-control" id="client" style="margin-bottom:10px;">
+                                    <select name="plate_num" class="form-control truck_dropdown" id="client" style="margin-bottom:10px;">
                                         @if(isset($trucks))
                                             @foreach ($trucks as $truck)
                                                 <option value="{{$truck->id}}"
@@ -295,9 +297,9 @@
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section assign orders to the desired truck. <b style="color:#E53935;">*Required</b></span>
                                             <br>
 
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Total Capacity:</b><p id="truck_total_cap"></p></h4>
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Current Capacity: </b><p id="truck_cur_cap"></p></h4>
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Available Capacity: </b><p id="truck_avail_cap"></p></h4>
+                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Total Capacity:</b><p id="truck_total_cap"></p></h4>
+                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Current Capacity: </b><p id="truck_cur_cap"></p></h4>
+                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Available Capacity: </b><p id="truck_avail_cap"></p></h4>
                                             
                                             {{-- <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button></label> --}}
                                             <div class="table-responsive" style="margin-top:10px;">
@@ -312,7 +314,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="addproduct" class="prod_table">
-
+                                                @if($orders)
+                                                    @foreach ($orders as $order)
+                                                        @foreach($order->order_details as $ord)
+                                                            <tr style="font-size:12px;">
+                                                                <td><span class="label label-info">CLOD-{{$ord->id}}</span></td>
+                                                                <td>PR-{{$ord->productID}}</td>
+                                                                <td>{{$ord->cldt_qty}} Boxes</td>
+                                                                <input type="hidden" name="ids[]" value="{{$ord->productID}}">
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="Hello mark" name="orderqty[]" type="text" class="orderqty"></td>
+                                                                <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        @break
+                                                    @endforeach
+                                                @endif
                                                 </tbody>
                                                 </table>
                                             </div>
@@ -334,7 +350,6 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody id="addproduct">
-                                                                            
                                                                             <tr style="font-size:12px;">
                                                                                <td>1</td>
                                                                                <td>PR-0001</td>
@@ -351,11 +366,8 @@
                                 
                                 </div>
 
-                                    {{-- <h1>Total:</h1> --}}
-                                        
                                 </div>
                                 <div class="modal-footer">
-                                    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> --}}
                                     <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
                                 </div>
                             {!!Form::close()!!}
@@ -466,9 +478,7 @@
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                             @if(Session::has('success'))
                                 <div class="alert alert-success"> {{Session::get('success')}} </div>
-                      
-                              
-                              @endif
+                            @endif
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL ORDER SCHEDULES</h3>
                             {{-- <div class="col-sm-12" style="background-color:red;"> --}}
                                 <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Schedule</button>
@@ -488,32 +498,30 @@
                                                 <th>Schedule Date</th>
                                                 <th>Delivery Date</th>
                                                 <th>Status</th>
-                                                <th>Last Updated</th>
                                                 <th><i class="fa fa-gear"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                    @if(isset($schedules))
+                                        @foreach($schedules as $schedule)
                                                 <tr>
-
-                                                    <td>TR-0001</td>
-                                                <td><a href={{url("scheduledetail")}}>CLOD-1231</a></td> 
-                                                    <td>ABC-9102</td> 
-                                                    <td>Boss Jaycom</td> 
-                                                    <td>Taft Avenue, Barangay Maginhawa</td> 
-                                                    <td>2018-07-02</td>
-                                                    <td>2018-07-02</td>
-                                                    <td><span class="label label-info">Processing</span></td>
-                                                    <td>2018-04-18 09:43:15</td>
+                                                    <td>TR-{{$schedule->id}}</td>
+                                                    <td><a href={{url("scheduledetail")}}>CLOD-{{$schedule->orderID}}</a></td>
+                                                    <td>{{ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
+                                                    <td>{{ScheduleController::getTruck($schedule->driverID)->name}}</td>
+                                                    <td>{{ScheduleController::getTruck($schedule->locationID)->loc_address}}</td>
+                                                    <td>{{$schedule->scd_date}}</td>
+                                                    <td>N/A</td>
+                                                    <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
                                                     <td>
-                                                        {{-- <i style="color:#4c87ed;" class="fa fa-edit"> --}}
-
-                                                                {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
-                                                                <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                {{-- {!!Form::close()!!} --}}
-                                                        
+                                                        {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
+                                                        <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
+                                                        {{-- {!!Form::close()!!} --}}
                                                     </td>
-                                                    {{-- <td>  --}}
-                                                </tr> 
+                                                </tr>
+                                        @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
 
@@ -752,6 +760,17 @@
                             }
                         }
                     });
+
+                    $('.truck_dropdown').bind('change',function() {
+                        var max_cap = parseInt($('option:selected', this).attr('truck_total_cap').val());
+                        var curr_cap = 0;
+                        var avail_cap = max_cap - curr_cap;
+                        $('#truck_total_cap').html(max_cap);
+                        $.ajax(); // get current capacity
+                        $('#truck_avail_cap').html(curr_cap);
+                        $('#truck_avail_cap').html(avail_cap);
+                    });
+
                     $('.myTable').DataTable();
                     $(document).ready(function() {
                         var table = $('#example').DataTable({
