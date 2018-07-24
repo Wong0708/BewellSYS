@@ -312,7 +312,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="addproduct" class="prod_table">
-
+                                                @if($orders)
+                                                    @foreach ($orders as $order)
+                                                        @foreach($order->order_details as $ord)
+                                                            <tr style="font-size:12px;">
+                                                                <td><span class="label label-info">CLOD-{{$ord->id}}</span></td>
+                                                                <td>PR-{{$ord->productID}}</td>
+                                                                <td>{{$ord->cldt_qty}} Boxes</td>
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="Hello mark" name="orderqty[]" type="text" class="orderqty"></td>
+                                                                <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        @break
+                                                    @endforeach
+                                                @endif
                                                 </tbody>
                                                 </table>
                                             </div>
@@ -334,7 +347,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody id="addproduct">
-                                                                            
+
                                                                             <tr style="font-size:12px;">
                                                                                <td>1</td>
                                                                                <td>PR-0001</td>
