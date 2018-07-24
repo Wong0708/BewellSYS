@@ -237,8 +237,7 @@
                                                             locs_ids="@foreach($order->locations as $locs){{$locs->id}};@endforeach"
                                                             prod_ids="@foreach($order->order_details as $prod){{$prod->productID}};@endforeach"
                                                             prod_qty="@foreach($order->order_details as $qty){{$prod->cldt_qty}};@endforeach"
-                                                    >
-                                                        {{$order->client_name}} | CLOD-{{$order->id}} </option>
+                                                    >{{$order->client_name}} | CLOD-{{$order->id}} </option>
                                                 @endforeach
                                             @endif
                                     </select>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ClientOrderDetail;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -36,9 +37,24 @@ class ScheduleController extends Controller
         $clients = Client::all();
 
 
+
+        $orders = $orders->filter(function ($order) {
+            $order_det = ClientOrderDetail::all();
+            $order_det_id = array();
+
+            foreach ($order_det as $det){
+
+                array_push($order_det_id,$det['orderID']);
+            }
+
+            return in_array($order->id,$order_det_id,TRUE);
+        });
         $orders = $orders->filter(function ($order) {
             return $order->clod_status == "Processing";
         });
+
+
+
 
         foreach($orders as $order){
             $order['locations']= array();
