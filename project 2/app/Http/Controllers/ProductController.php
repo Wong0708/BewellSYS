@@ -95,9 +95,9 @@ class ProductController extends Controller
         foreach ($add_product['available'] as $added_product){
             $productarray[6] = $added_product;
         }
-        foreach ($add_product['minimum'] as $added_product){
+        /*foreach ($add_product['minimum'] as $added_product){
             $productarray[7] = $added_product;
-        }
+        }*/
         foreach ($add_product['maximum'] as $added_product){
             $productarray[8] = $added_product;
         }
@@ -114,6 +114,7 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->pd_expiryDate = $date1;
+        $product->pd_code = $productarray[1];
         $product->pd_name = $productarray[0];
         $product->pd_desc = 'N/A';
         $product->pd_sku = $productarray[2];
@@ -193,6 +194,6 @@ class ProductController extends Controller
         // dd($product);
 
         Session::flash('success','Successfully deleted a product!');
-        return redirect("/productinventory");
+        return redirect("/product");
     }
 }
