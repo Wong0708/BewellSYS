@@ -353,6 +353,8 @@
                                 <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client E-mail:</b></label>
                                 <input type="text" class="form-control" id="clientEmail" value="" readonly/>
 
+                                <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Addresses:</b></label>
+                                <div id = "clientAddresses">hello</div>
 
                                 {{--<label for="client" class="control-label" id="expiryLabel" style="color:black; display: inline; font-family:Helvetica,Arial,sans-serif;"><b>Expiration Date:</b></label>
                                 <a class="mytooltip" href="javascript:void(0)" style="display: inline;">
@@ -431,6 +433,7 @@
                                                        data-clientemail="{{$client->cl_email}}"
                                                        data-clientstatus="{{$client->cl_status}}"
                                                        data-updatedat="{{$client->updated_at}}"
+                                                       addresses="@foreach($client->locations as $loc){{$loc->loc_address}};@endforeach"
                                                        >{{'CL-'.$client->id}}</td>
                                                     <td>{{$client->cl_name}}</td>
                                                     <td>{{$client->cl_email}}</td>
@@ -616,6 +619,14 @@
                         $('#clientStatus').val($(this).data('clientstatus'));
                         $('#clientEmail').val($(this).data('clientemail'));
 
+                        var addresses = $(this).attr('addresses').split(";");
+                        for(i=0; i < addresses.length;i++){
+                            if(addresses[i]!=""){
+
+                                console.log("xd");
+                                $('#clientAddresses').append('<input type="text" class="form-control" value="'+addresses[i]+'" readonly/>');
+                            }
+                        }
                         {{--if(datediff<0){
                             $('#expiryTip').html("This item is expired.");
                             $('#expiryLabel').css('color', 'red');

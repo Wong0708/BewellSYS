@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use App\Client;
 use App\ClientDetail;
+
 use DateTime;
 
 class ClientAccountController extends Controller
@@ -21,8 +22,14 @@ class ClientAccountController extends Controller
         //
         
         $clients = Client::all();
+        foreach($clients as $client){
+            $client['locations'] = array();
+            $client['locations'] = DB::table('bc_client_location')->where('companyID', $client['id'])->get()->toArray();
+        }
+       
         return view('appdev.clientaccount')->with("clients",$clients);
     }
+
 
     /**
      * Show the form for creating a new resource.
