@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\ClientOrderDetail;
+use App\Schedule;
+use App\ScheduleDetail;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -111,6 +113,35 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
 
+        $fields = $request->all();
+
+        $schedule = new Schedule();
+        $date = new DateTime();
+
+        $schedule->scd_date = $fields['date'];
+        $schedule->scd_status = "Scheduled";
+        $schedule->orderID = $fields['order_num'];
+        $schedule->truckID = $fields['plate_num'];
+        $schedule->driverID = $fields['driver'];
+        $schedule->locationID = $fields['address'];
+
+        $schedule->created_at = $date->getTimestamp();
+        $schedule->updated_at = $date->getTimestamp();
+
+        $schedule->save();
+        $i = 0;
+        $insertID = DB::getPdo()->lastInsertId();
+        foreach ($fields['ids'] as $id){
+
+            $schedule_det = new ScheduleDetail();
+            $schedule_det->productID = $id;
+            $schedule_det->delivered_qty = $fields['orderqty'][$i];
+            $schedule_det->scheduleID = $insertID;
+
+            $schedule_det->created_at = $date->getTimestamp();
+            $schedule_det->updated_at = $date->getTimestamp();
+            $i = $i+1;
+        }
     }
 
     /**
