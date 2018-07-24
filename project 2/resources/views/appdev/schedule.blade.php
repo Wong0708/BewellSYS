@@ -234,8 +234,10 @@
                                                 @foreach ($orders as $order)
                                                     <option value="{{$order->id}}"
                                                             locs="@foreach($order->locations as $locs){{$locs->loc_address}};@endforeach"
-                                                            locs_ids="@foreach($order->locations as $locs){{$locs->id}};@endforeach
-                                                                    ">
+                                                            locs_ids="@foreach($order->locations as $locs){{$locs->id}};@endforeach"
+                                                            prod_ids="@foreach($order->order_details as $prod){{$prod->productID}};@endforeach"
+                                                            prod_qty="@foreach($order->order_details as $qty){{$prod->cldt_qty}};@endforeach"
+                                                    >
                                                         {{$order->client_name}} | CLOD-{{$order->id}} </option>
                                                 @endforeach
                                             @endif
@@ -268,7 +270,11 @@
                                     <select name="plate_num" class="form-control" id="client" style="margin-bottom:10px;">
                                         @if(isset($trucks))
                                             @foreach ($trucks as $truck)
-                                                <option value="{{$truck->id}}">[{{$truck->plate_num}}] {{$truck->car_model}}</option>
+                                                <option value="{{$truck->id}}"
+                                                        truck_total_cap="{{$truck->max_box}}"
+                                                        truck_avail_cap=""
+                                                        truck_cur_cap=""
+                                                >[{{$truck->plate_num}}] {{$truck->car_model}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -290,50 +296,27 @@
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section assign orders to the desired truck. <b style="color:#E53935;">*Required</b></span>
                                             <br>
 
-                                            <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Total Capacity: 120 Boxes</b></h4>
-                                            <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Current Capacity: 70 Boxes</b></h4>
-                                            <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Available Capacity: 50 Boxes</b></h4>
+                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Total Capacity:</b><p id="truck_total_cap"></p></h4>
+                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Current Capacity: </b><p id="truck_cur_cap"></p></h4>
+                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Available Capacity: </b><p id="truck_avail_cap"></p></h4>
                                             
                                             {{-- <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button></label> --}}
                                             <div class="table-responsive" style="margin-top:10px;">
                                             <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
                                                 <thead>
                                                     <tr style="font-size:12px; font-weight:700; ">
-    
-                                                        {{--
-                                                        <th></th> --}}
-                                                        {{-- <th>Product Code</th> --}}
-                                                        <th>#</th>
                                                         <th>Order #</th>
                                                         <th>Code</th>
                                                         <th>Qty (Boxes)</th>
                                                         <th>Deliver Qty (Boxes)</th>
-                                                        {{--
-                                                        <th>Grams</th> --}} {{--
-                                                        <th>Price</th> --}} {{--
-                                                        <th>Current Qty</th> --}}
-                                                        {{-- <th>Order Amount (Boxes)</th> --}}
-                                                        <th><i class="fa fa-gear"></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="addproduct">
-                                                                
-                                                                <tr style="color:black;">
-                                                                    {{-- @if(isset($products)) --}}
-                                                                    {{-- <td>PR-0001</td> --}}
-                                                                    <td><span class="label label-info">1</span></td>
-                                                                    <td>CLOD-1</td>
-                                                                    <td>BC-C500G</td>
-                                                                    <td>100 Boxes</td>
-                                                                    <td><input style="font-size:12px;" class="form-control" data-mask="9,999 BOXES ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                                </tr>
-                                                              
-    
-                                                                
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                        <th><i class="fa fa-gear"></i></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="addproduct" class="prod_table">
+
+                                                </tbody>
+                                                </table>
+                                            </div>
 
                                                     <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Schedule/s</b></h4>
                                                     {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
@@ -344,16 +327,9 @@
                                                                 <tr style="font-size:12px; font-weight:700;">
                                                                         <th> #</th>
                                                                     <th>Order #</th>
-                                                                    {{--
-                                                                    <th></th> --}}
                                                                     <th>Driver</th>
                                                                     <th>Address</th>
                                                                     <th>Delivery Date</th>
-                                                                    {{--
-                                                                    <th>Grams</th> --}} {{--
-                                                                    <th>Price</th> --}} {{--
-                                                                    <th>Current Qty</th> --}}
-                                                                    {{-- <th>Unit Price</th> --}}
                                                                     <th>Status</th>
                                                                     {{-- <th><i class="fa fa-gear"></th> --}}
                                                                             </tr>
@@ -368,10 +344,6 @@
                                                                                <td>2018-07-21</td>
                                                                                <td><span class="label label-success">Scheduled</span></td>
                                                                             </tr>
-
-                                                                          
-                
-                                                                            
                                                                         </tbody>
                                                                     </table>
                                         
@@ -657,7 +629,7 @@
 
                                                         {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                    {{-- {!!Form::close()!!} --}}
+                                                        {{-- {!!Form::close()!!} --}}
 
                                                 </td>
                                             </tr>
@@ -715,35 +687,6 @@
                                         <li><a href="javascript:void(0)" theme="purple-dark" class="purple-dark-theme">11</a></li>
                                         <li><a href="javascript:void(0)" theme="megna-dark" class="megna-dark-theme">12</a></li>
                                     </ul>
-                                    {{--
-                                    <ul class="m-t-20 chatonline">
-                                        <li><b>Chat option</b></li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/varun.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/genu.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/ritesh.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/arijit.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/govinda.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/hritik.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/john.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/pawandeep.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
-                                        </li>
-                                    </ul>
-                                </div> --}}
                             </div>
                         </div>
                         <!-- /.right-sidebar -->
@@ -785,6 +728,9 @@
                     $('.order_dropdown').bind('change',function() {
                         var option_locs = $('option:selected', this).attr('locs').split(";");
                         var option_id = $('option:selected', this).attr('locs_ids').split(";");
+                        var prod_ids = $('option:selected', this).attr('prod_ids').split(";");
+                        var prod_qty = $('option:selected', this).attr('prod_qty').split(";");
+                        var order_id = $('option:selected', this).attr('value');
 
                         $('.address_dropdown').find('option').remove();
 
@@ -794,6 +740,18 @@
                             }
                         }
 
+                        $('.prod_table').find('tr').remove();
+                        for (x = 0; x < prod_ids.length; x++) {
+                            if(prod_ids[x]!=""){
+                                $('.prod_table').append('<tr style="color:black;">'+
+                                    '<td><span class="label label-info">CLOD-'+order_id+'</span></td>'+
+                                    '<td>PR-'+prod_ids[x]+'</td>'+
+                                    '<td>'+prod_qty[x]+' Boxes</td>'+
+                                    '<td><input style="font-size:12px;" class="form-control" data-mask="9,999 BOXES ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>'+
+                                    '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>' +
+                                    '</tr>');
+                            }
+                        }
                     });
                     $('.myTable').DataTable();
                     $(document).ready(function() {
