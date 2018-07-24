@@ -1,4 +1,4 @@
-<?php use App\Http\Controllers\MyController;?>
+<?php use App\Http\Controllers\ScheduleController;?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -478,9 +478,7 @@
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                             @if(Session::has('success'))
                                 <div class="alert alert-success"> {{Session::get('success')}} </div>
-                      
-                              
-                              @endif
+                            @endif
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL ORDER SCHEDULES</h3>
                             {{-- <div class="col-sm-12" style="background-color:red;"> --}}
                                 <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Schedule</button>
@@ -500,32 +498,30 @@
                                                 <th>Schedule Date</th>
                                                 <th>Delivery Date</th>
                                                 <th>Status</th>
-                                                <th>Last Updated</th>
                                                 <th><i class="fa fa-gear"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                    @if(isset($schedules))
+                                        @foreach($schedules as $schedule)
                                                 <tr>
-
-                                                    <td>TR-0001</td>
-                                                <td><a href={{url("scheduledetail")}}>CLOD-1231</a></td> 
-                                                    <td>ABC-9102</td> 
-                                                    <td>Boss Jaycom</td> 
-                                                    <td>Taft Avenue, Barangay Maginhawa</td> 
-                                                    <td>2018-07-02</td>
-                                                    <td>2018-07-02</td>
-                                                    <td><span class="label label-info">Processing</span></td>
-                                                    <td>2018-04-18 09:43:15</td>
+                                                    <td>TR-{{$schedule->id}}</td>
+                                                    <td><a href={{url("scheduledetail")}}>CLOD-{{$schedule->orderID}}</a></td>
+                                                    <td>{{ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
+                                                    <td>{{ScheduleController::getTruck($schedule->driverID)->name}}</td>
+                                                    <td>{{ScheduleController::getTruck($schedule->locationID)->loc_address}}</td>
+                                                    <td>{{$schedule->scd_date}}</td>
+                                                    <td>N/A</td>
+                                                    <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
                                                     <td>
-                                                        {{-- <i style="color:#4c87ed;" class="fa fa-edit"> --}}
-
-                                                                {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
-                                                                <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                {{-- {!!Form::close()!!} --}}
-                                                        
+                                                        {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
+                                                        <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
+                                                        {{-- {!!Form::close()!!} --}}
                                                     </td>
-                                                    {{-- <td>  --}}
-                                                </tr> 
+                                                </tr>
+                                        @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
 

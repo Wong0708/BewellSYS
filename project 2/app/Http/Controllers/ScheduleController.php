@@ -39,6 +39,7 @@ class ScheduleController extends Controller
         $clients = Client::all();
 
 
+        $schedules = Schedule::all();
 
         $orders = $orders->filter(function ($order) {
             $order_det = ClientOrderDetail::all();
@@ -67,7 +68,7 @@ class ScheduleController extends Controller
         }
         // get order and get the client from that order
         // display their list of addresses
-        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("orders",$orders);
+        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("orders",$orders)->with("schedules",$schedules);
        
     }
 
@@ -103,7 +104,16 @@ class ScheduleController extends Controller
 
         Session::flash('success','Successfully added a truck!');
     }
+    public function getTruck($id){
+        return Truck::find($id);
+    }
 
+    public function getDriver($id){
+        return Driver::find($id);
+    }
+    public function getLocation($id){
+        return ClientLocation::find($id);
+    }
     /**
      * Store a newly created resource in storage.
      *
