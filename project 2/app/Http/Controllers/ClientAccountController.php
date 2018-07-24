@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
 use App\Client;
-use App\ClientDetail;
+use App\ClientLocation;
 
 use DateTime;
 
@@ -90,11 +90,11 @@ class ClientAccountController extends Controller
         $i=0;
         for ($row = 0; $row<sizeof($details[0]); $row++)
         {
-                $clientdetail = new ClientDetail();
-                $clientdetail->cl_id = $client->id;
-                $clientdetail->cl_address = $details[0][$i];
-                $clientdetail->cl_contactperson = $details[1][$i];
-                $clientdetail->cl_contactnumber = $details[2][$i];
+                $clientdetail = new ClientLocation();
+                $clientdetail->companyID = $client->id;
+                $clientdetail->loc_address = $details[0][$i];
+                $clientdetail->loc_contactperson = $details[1][$i];
+                $clientdetail->loc_contactnumber = $details[2][$i];
                 $clientdetail->created_at = $date->gettimestamp();
                 $clientdetail->updated_at = $date->getTimestamp();
                 $clientdetail->save();

@@ -434,6 +434,8 @@
                                                        data-clientstatus="{{$client->cl_status}}"
                                                        data-updatedat="{{$client->updated_at}}"
                                                        addresses="@foreach($client->locations as $loc){{$loc->loc_address}};@endforeach"
+                                                       contactperson="@foreach($client->locations as $loc){{$loc->loc_contactperson}};@endforeach"
+                                                       contactnumber="@foreach($client->locations as $loc){{$loc->loc_contactnumber}};@endforeach"
                                                        >{{'CL-'.$client->id}}</td>
                                                     <td>{{$client->cl_name}}</td>
                                                     <td>{{$client->cl_email}}</td>
