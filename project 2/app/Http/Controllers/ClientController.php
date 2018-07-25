@@ -132,6 +132,14 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $client = Client::find($id);
+        $client->cl_status = $request->input('clientStatus');
+        $client->save();
+
+        // dd($order);
+
+        Session::flash('success','Successfully updated the client status!');
+        return redirect("/clientaccount");
     }
 
     /**
