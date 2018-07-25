@@ -4,6 +4,7 @@
 <html lang="en">
 
 <head>
+    <meta id="token" name="token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -261,8 +262,8 @@
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Delivery Date:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
-
-                                    <input type="date" class="form-control" name="delivery_date">
+                                    {{csrf_field()}}
+                                    <input type="date" class="form-control delivery_date" name="delivery_date" value="">
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
@@ -296,11 +297,31 @@
                                             <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Order/s</b></h4>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section assign orders to the desired truck. <b style="color:#E53935;">*Required</b></span>
                                             <br>
+                                    <div class="row">
+                                        <center>
+                                        <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Total Capacity:</b></h4></div>
+                                        <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Current Capacity: </b></h4></div>
+                                        <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Available Capacity: </b></h4></div>
+                                        </center>
+                                    </div>
+                                    <div class="row">
+                                        <center>
+                                            <div class="col-md-4">
+                                                <p id="truck_total_cap">
+                                                    @if(isset($trucks))
+                                                        @foreach ($trucks as $truck)
+                                                                {{$truck->max_box}}
+                                                            @break
+                                                        @endforeach
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            <div class="col-md-4"><p id="truck_cur_cap">N/A - select a date</p></div>
+                                            <div class="col-md-4"><p id="truck_avail_cap">N/A</p></div>
+                                        </center>
+                                    </div>
 
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Total Capacity:</b><p id="truck_total_cap"></p></h4>
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Current Capacity: </b><p id="truck_cur_cap"></p></h4>
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Available Capacity: </b><p id="truck_avail_cap"></p></h4>
-                                            
+
                                             {{-- <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button></label> --}}
                                             <div class="table-responsive" style="margin-top:10px;">
                                             <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
@@ -730,8 +751,6 @@
             <script>
                 $(document).ready(function() {
 
-
-
                     $('.order_dropdown').bind('change',function() {
                         var option_locs = $('option:selected', this).attr('locs').split(";");
                         var option_id = $('option:selected', this).attr('locs_ids').split(";");
@@ -772,6 +791,33 @@
                         $('#truck_curr_cap').html(curr_cap);
                         $('#truck_avail_cap').html(avail_cap);
                     });
+
+                    $('.delivery_date').bind('change',function(e) {
+
+
+                        e.preventDefault();
+                        var truckID = parseInt($('option:selected', $('.truck_dropdown')).attr('value'));
+
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "{{ url('/schedule/getCapacity') }}",
+                            method: 'post',
+                            data: {
+                                truckID: truckID,
+                                date: $(this).val(),
+                                _token: '{{csrf_token()}}'
+                            },
+                            success: function(result){
+                                console.log(result.success);
+                                console.log(result.total_curr_cap);
+                                console.log(result.msg);
+                            }});
+                    });
+
 
                     $('.myTable').DataTable();
                     $(document).ready(function() {
@@ -865,19 +911,6 @@
                     return verify;
                 });
 
-                // $(document).on('click', '.statusSubmit', function() {
-                //     var verify = confirm("Do you wish to update the status of this order?");
-                //     return verify;
-
-                //     if(verify){
-
-                //     }
-                // });
-
-                // $('.updatestatusform').submit(function() {
-                //     var verify = confirm("Do you wish to update the status of this order?");
-                //     return verify;
-                // });
             </script>
 </body>
 
