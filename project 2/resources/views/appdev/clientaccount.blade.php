@@ -620,13 +620,15 @@
                         $('#updated').html("Last updated at "+$(this).data('updatedat'));
                         $('#clientStatus').val($(this).data('clientstatus'));
                         $('#clientEmail').val($(this).data('clientemail'));
-
+                        $('#clientAddresses').empty();
                         var addresses = $(this).attr('addresses').split(";");
+                        var contactperson = $(this).attr('contactperson').split(";");
+                        var contactnumber = $(this).attr('contactnumber').split(";");
                         for(i=0; i < addresses.length;i++){
                             if(addresses[i]!=""){
 
                                 console.log("xd");
-                                $('#clientAddresses').append('<input type="text" class="form-control" value="'+addresses[i]+'" readonly/>');
+                                $('#clientAddresses').append('<input type="text" class="form-control" value="'+addresses[i]+" | "+contactperson[i]+" | "+contactnumber[i]+'" readonly/>');
                             }
                         }
                         {{--if(datediff<0){
