@@ -749,6 +749,12 @@
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
             <!-- end - This is for export functionality only -->
             <script>
+                function computeBoxes(){
+
+                }
+                function checkSchedValidity(){
+
+                }
                 $(document).ready(function() {
 
                     $('.order_dropdown').bind('change',function() {
