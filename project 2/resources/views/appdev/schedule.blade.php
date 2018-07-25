@@ -483,8 +483,6 @@
                             {{-- <div class="col-sm-12" style="background-color:red;"> --}}
                                 <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Schedule</button>
                                                     
-                                <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place a schedule on an order </span> </a> {{-- </div> --}} {{-- </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
-
                                 <p class="text-muted m-b-30"></p>
                                 <div class="table-responsive">
                                     <table class="table table-striped myTable">
