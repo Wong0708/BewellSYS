@@ -56,6 +56,7 @@ class ScheduleController extends Controller
         });
 
         foreach($orders as $order){
+            
             $order['locations']= array();
             $order['locations']= DB::table('bc_cgit lient_location')->where('id', $order['clientID'])->get()->toArray();
             $order['order_details']=DB::table("bc_client_order_detail")->where('orderID', $order['id'])->get()->toArray();

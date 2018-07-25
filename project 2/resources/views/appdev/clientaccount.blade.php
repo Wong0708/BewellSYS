@@ -677,8 +677,11 @@
                 });
 
                 $(document).on('click', '.removeorder', function() {
-                    $( ".deleteOrder" ).submit();
                     var verify = confirm("Do you wish to delete this client account?");
+                    
+                    if (verify) { 
+                        $(this).closest('.deleteOrder').submit();
+                    }
                     return verify;
 
                 });
