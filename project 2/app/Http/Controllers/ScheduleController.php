@@ -55,22 +55,12 @@ class ScheduleController extends Controller
             return $order->clod_status == "Processing";
         });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 796e5206a7d8f6b567d4109f085aa7239f523778
         foreach($orders as $order){
             
             $order['locations']= array();
             $order['locations']= DB::table('bc_client_location')->where('id', $order['clientID'])->get()->toArray();
             $order['order_details']=DB::table("bc_client_order_detail")->where('orderID', $order['id'])->get()->toArray();
-<<<<<<< HEAD
             $a = Client::find($order['clientID']);
-=======
-
-            $a = Client::find($order['clientID']);
-
->>>>>>> 796e5206a7d8f6b567d4109f085aa7239f523778
             $order['client_name'] = $a['cl_name'];
         }
         // get order and get the client from that order
