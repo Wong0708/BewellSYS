@@ -506,8 +506,8 @@
                                     @if(isset($schedules))
                                         @foreach($schedules as $schedule)
                                                 <tr>
-                                                    <td>TR-{{$schedule->id}}</td>
-                                                    <td><a href={{url("scheduledetail")}}>CLOD-{{$schedule->orderID}}</a></td>
+                                                    <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
+                                                    <td>CLOD-{{$schedule->orderID}}</td>
                                                     <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
                                                     <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
                                                     <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
@@ -732,8 +732,6 @@
             <script>
                 $(document).ready(function() {
 
-                    var max_cap = parseInt($('option:selected', $('.truck_dropdown').attr('truck_total_cap'));
-                    $('#truck_total_cap').html(max_cap);
 
 
                     $('.order_dropdown').bind('change',function() {

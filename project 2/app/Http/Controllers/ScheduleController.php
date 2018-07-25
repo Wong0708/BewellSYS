@@ -46,10 +46,8 @@ class ScheduleController extends Controller
             $order_det_id = array();
 
             foreach ($order_det as $det){
-
                 array_push($order_det_id,$det['orderID']);
             }
-
             return in_array($order->id,$order_det_id,TRUE);
         });
         $orders = $orders->filter(function ($order) {
@@ -104,6 +102,17 @@ class ScheduleController extends Controller
         $truck->save();
 
         Session::flash('success','Successfully added a truck!');
+    }
+
+    public function getSchedule($id){
+
+        $schedule = Schedule::find($id);
+        if($schedule['id'] == null){
+            return view('errors.404');
+        }
+        $schedule_dets = DB::table('bc_schedule_detail')->join('bc_schedule','bc_schedule_detail.orderID','=','bc_schedule.id')->get()->toArray();
+
+        return  view("appdev.scheduledetail",['schedule' => $schedule])->with("schedule_dets",$schedule_dets);
     }
     public static function getTruck($id){
         return Truck::find($id);

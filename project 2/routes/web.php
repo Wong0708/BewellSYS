@@ -67,5 +67,7 @@ Route::get('truckdetailz/{id}', 'TruckDetailController@getTruck')->name('appdev.
 
 Route::get('driver/{id}', 'DriverController@getDriver')->name('appdev.driver');
 
+Route::get('sched_det/{id}', 'ScheduleDetailController@getSchedule')->name('appdev.scheduledetail');
+
 Route::resource('driver', 'DriverController');
 
