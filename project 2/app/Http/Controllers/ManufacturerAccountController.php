@@ -127,5 +127,12 @@ class ManufacturerAccountController extends Controller
     public function destroy($id)
     {
         //
+        $product = Manufacturer::find($id);
+        $product->delete();
+
+        // dd($product);
+
+        Session::flash('success','Successfully deleted a manufacturer profile!');
+        return redirect("/manufactureraccount");
     }
 }

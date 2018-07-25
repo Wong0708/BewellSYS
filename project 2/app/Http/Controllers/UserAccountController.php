@@ -154,5 +154,12 @@ class UserAccountController extends Controller
     public function destroy($id)
     {
         //
+        $product = User::find($id);
+        $product->delete();
+
+        // dd($product);
+
+        Session::flash('success','Successfully deleted a user!');
+        return redirect("/useraccount");
     }
 }

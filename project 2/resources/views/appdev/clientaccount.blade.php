@@ -441,15 +441,39 @@
                                                     <td>{{$client->cl_email}}</td>
                                                     <td><span class="label label-success">{{$client->cl_status}}</span></td>
                                                     <td>
-                                                        <i style="color:#4c87ed;" class="fa fa-edit">
-
-                                                                {!! Form::open(['route'=>['clientaccount.destroy',$client->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
-                                                                <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                {!!Form::close()!!} 
+                                                        <i data-order="{{$client->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editModal" class="fa fa-edit">
+                                                    {!! Form::open(['route'=>['clientaccount.destroy',$client->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
+                                                        <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
+                                                    {!!Form::close()!!} 
                                                         
                                                     </td>
                                                     {{-- <td>  --}}
                                                 </tr> 
+                                                <!--edit modal -->
+                                                <div  class="modal fade" id="editModal" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"></button>
+                                                                <center ><b><h2 class="modal-title" style="display: inline;">Edit Client Status</h2></b></center>
+                                                        </div>
+                                                        {!! Form::open(['route'=>['clientaccount.update',$client->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="clientStatus">Client Status:</label>
+                                                                <select name="clientStatus" class="form-control" id="clientStatus">
+                                                                    <option>Active</option>
+                                                                    <option>Inactive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                                        </div>
+                                                        {!!Form::close()!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 @endforeach
                                             @endif
                                     </tbody>
@@ -675,6 +699,14 @@
 
                 $('#addproductform').submit(function() {
                     var verify = confirm("Do you wish to proceed to add the following products?");
+                    return verify;
+                });
+
+                 $('#editproductform').submit(function() {
+                    var verify = confirm("Do you wish to proceed to edit this product?");
+                    if (verify) { 
+                        $(this).closest('.editOrder').submit();
+                    }
                     return verify;
                 });
 

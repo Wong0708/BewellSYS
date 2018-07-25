@@ -513,9 +513,9 @@
                                                     <td>N/A</td>
                                                     <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
                                                     <td>
-                                                        {{-- {!! Form::open(['route'=>'clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
+                                                        {!! Form::open(['route'=>'schedule.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-close removeorder">
-                                                        {{-- {!!Form::close()!!} --}}
+                                                        {!!Form::close()!!}
                                                     </td>
                                                 </tr>
                                         @endforeach
@@ -571,9 +571,9 @@
                                                 <td>{{$truck->updated_at}}</td>
                                                 <td>
                                                     <i style="color:#4c87ed;" class="fa fa-edit"></i>
-                                                        {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
+                                                        {!! Form::open(['route'=>['truck.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder"></i>
-                                                        {{-- {!!Form::close()!!} --}}
+                                                        {!!Form::close()!!} 
 
                                                 </td>
                                                 {{-- <td>  --}}
@@ -632,9 +632,9 @@
 
                                                     <i style="color:#4c87ed;" class="fa fa-edit">
 
-                                                        {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
+                                                        {!! Form::open(['route'=>['driver.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                        {{-- {!!Form::close()!!} --}}
+                                                        {!!Form::close()!!} 
 
                                                 </td>
                                             </tr>
@@ -850,9 +850,12 @@
                     return verify;
                 });
 
-                $(document).on('click', '.removeorder', function() {
-                    $( ".deleteTruck" ).submit();
-                    var verify = confirm("Do you wish to delete this truck??");
+                 $(document).on('click', '.removeorder', function() {
+                    var verify = confirm("Do you wish to delete this account?");
+                    
+                    if (verify) { 
+                        $(this).closest('.deleteOrder').submit();
+                    }
                     return verify;
 
                 });

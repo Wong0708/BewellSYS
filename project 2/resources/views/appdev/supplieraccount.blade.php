@@ -451,9 +451,9 @@
                                                     <td>
                                                         <i style="color:#4c87ed;" class="fa fa-edit">
 
-                                                                {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
+                                                                {!! Form::open(['route'=>['supplieraccount.destroy',$supplier->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
                                                                 <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                {{-- {!!Form::close()!!} --}}
+                                                                {!!Form::close()!!} 
                                                         
                                                     </td>
                                                     {{-- <td>  --}}
@@ -680,8 +680,11 @@
                 });
 
                 $(document).on('click', '.removeorder', function() {
-                    $( ".deleteOrder" ).submit();
-                    var verify = confirm("Do you wish to delete this order?");
+                    var verify = confirm("Do you wish to delete this supplier account?");
+                    
+                    if (verify) { 
+                        $(this).closest('.deleteOrder').submit();
+                    }
                     return verify;
 
                 });

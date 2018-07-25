@@ -131,10 +131,12 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $date = new datetime();
         //
-        $client = Client::find($id);
-        $client->cl_status = $request->input('clientStatus');
-        $client->save();
+        $clients = Client::find($id);
+        $clients->cl_status = $request->input('clientStatus');
+        $clients->updated_at = $date->getTimeStamp();
+        $clients->save();
 
         // dd($order);
 
@@ -151,5 +153,12 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //
+        $product = Client::find($id);
+        $product->delete();
+
+        // dd($product);
+
+        Session::flash('success','Successfully deleted a client profile!');
+        return redirect("/clientaccount");
     }
 }

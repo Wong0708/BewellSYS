@@ -704,9 +704,12 @@
                     return verify;
                 });
 
-                $(document).on('click', '.removeorder', function() {
-                    $( ".deleteOrder" ).submit();
-                    var verify = confirm("Do you wish to delete this product?");
+                 $(document).on('click', '.removeorder', function() {
+                    var verify = confirm("Do you wish to delete this product account?");
+                    
+                    if (verify) { 
+                        $(this).closest('.deleteOrder').submit();
+                    }
                     return verify;
 
                 });

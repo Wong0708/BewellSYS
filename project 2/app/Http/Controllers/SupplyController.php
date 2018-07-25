@@ -80,6 +80,7 @@ class SupplyController extends Controller
 
         $supply = new Supply();
         $supply->sp_expiryDate = $date1;
+        $supply->sp_code = $supplyarray[1];
         $supply->sp_name = $supplyarray[0];
         $supply->sp_desc = 'N/A';
         $supply->sp_sku = $supplyarray[2];
@@ -140,5 +141,12 @@ class SupplyController extends Controller
     public function destroy($id)
     {
         //
+        $product = Supply::find($id);
+        $product->delete();
+
+        // dd($product);
+
+        Session::flash('success','Successfully deleted a supply!');
+        return redirect("/supply");
     }
 }

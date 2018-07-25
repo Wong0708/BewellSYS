@@ -133,5 +133,12 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         //
+        $product = Supplier::find($id);
+        $product->delete();
+
+        // dd($product);
+
+        Session::flash('success','Successfully deleted a supplier!');
+        return redirect("/supplieraccount");
     }
 }

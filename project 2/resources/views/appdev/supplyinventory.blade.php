@@ -476,9 +476,9 @@
                                             <td>{{$supply1->updated_at}}</td>
                                             <td>
                                                 <i style="color:#4c87ed;" class="fa fa-edit">
-                                                        {{-- {!! Form::open(['route'=>['supply.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
+                                                         {!! Form::open(['route'=>['supply.destroy',$supply1->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                        {{-- {!!Form::close()!!} --}}
+                                                        {!!Form::close()!!} 
                                             </td>
                                         </tr>
                                         @endforeach
@@ -678,7 +678,11 @@
                 });
 
                 $(document).on('click', '.removeorder', function() {
-                    var verify = confirm("Do you wish to delete this product?");
+                    var verify = confirm("Do you wish to delete this supply account?");
+                    
+                    if (verify) { 
+                        $(this).closest('.deleteOrder').submit();
+                    }
                     return verify;
 
                 });

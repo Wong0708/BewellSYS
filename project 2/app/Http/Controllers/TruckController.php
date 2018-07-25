@@ -100,7 +100,7 @@ class TruckController extends Controller
 
         // dd($product);
 
-        Session::flash('success','Successfully deleted a Truck!');
+        Session::flash('success','Successfully deleted a truck!');
         return redirect("/schedule");
     }
 }

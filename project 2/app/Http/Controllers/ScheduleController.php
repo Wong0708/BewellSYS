@@ -217,5 +217,12 @@ class ScheduleController extends Controller
     public function destroy($id)
     {
         //
+        $schedule = Schedule::find($id);
+        $schedule->delete();
+
+        // dd($product);
+
+        Session::flash('success','Successfully deleted a schedule!');
+        return redirect("/schedule");
     }
 }
