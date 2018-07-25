@@ -788,12 +788,13 @@
                         console.log("zuccedd: "+max_cap);
                         $('#truck_total_cap').html(max_cap);
                         $.ajax(); // get current capacity
-                        $('#truck_curr_cap').html(curr_cap);
-                        $('#truck_avail_cap').html(avail_cap);
+                      //  $('#truck_curr_cap').html(curr_cap);
+                      //  $('#truck_avail_cap').html(avail_cap);
                     });
 
                     $('.delivery_date').bind('change',function(e) {
 
+                        var max_cap = parseInt($('option:selected', $('.truck_dropdown')).attr('truck_total_cap'));
 
                         e.preventDefault();
                         var truckID = parseInt($('option:selected', $('.truck_dropdown')).attr('value'));
@@ -812,6 +813,11 @@
                                 _token: '{{csrf_token()}}'
                             },
                             success: function(result){
+
+                                $('#truck_cur_cap').html(result.total_curr_cap);
+                                var avail = max_cap - parseInt(result.total_curr_cap);
+                                $('#truck_avail_cap').html(avail);
+
                                 console.log(result.success);
                                 console.log(result.total_curr_cap);
                                 console.log(result.msg);
