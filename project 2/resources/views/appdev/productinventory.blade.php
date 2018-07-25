@@ -478,6 +478,8 @@
                                                 <th>ROP</th>
                                                 <th>Price</th>
                                                 <th></th>
+                                                <th></th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -504,10 +506,11 @@
                                                 <td>{{'₱'.$product->pd_price}}</td>
                                                 <td>
                                                     <i style="color:#4c87ed;" data-toggle="modal" data-target="#statusModal"  class="fa fa-edit"></i>
-
-                                                    {{-- {!! Form::open(['route'=>['supply.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
-                                                    <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder"></i>
-                                                    {{-- {!!Form::close()!!} --}}
+                                                </td>
+                                                <td>
+                                                    {!! Form::open(['route'=>['product.destroy',$product->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
+                                                    <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder" ></i>
+                                                    {!!Form::close()!!}
                                                 </td>
                                                 {{-- <td>  --}}
                                             </tr>
