@@ -139,6 +139,11 @@ class ScheduleController extends Controller
         $schedule->created_at = $date->getTimestamp();
         $schedule->updated_at = $date->getTimestamp();
 
+
+        $order = ClientOrder::find($fields['order_num']);
+        $order->clod_status = "Scheduled";
+        $order->save();
+
         $schedule->save();
         $i = 0;
         $insertID =$schedule->id;

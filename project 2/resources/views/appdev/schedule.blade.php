@@ -732,6 +732,10 @@
             <script>
                 $(document).ready(function() {
 
+                    var max_cap = parseInt($('option:selected', $('.truck_dropdown').attr('truck_total_cap'));
+                    $('#truck_total_cap').html(max_cap);
+
+
                     $('.order_dropdown').bind('change',function() {
                         var option_locs = $('option:selected', this).attr('locs').split(";");
                         var option_id = $('option:selected', this).attr('locs_ids').split(";");
