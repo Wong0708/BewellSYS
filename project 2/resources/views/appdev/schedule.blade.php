@@ -534,7 +534,7 @@
                                                     <td>N/A</td>
                                                     <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
                                                     <td>
-                                                        {!! Form::open(['route'=>'schedule.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
+                                                        {!! Form::open(['route'=>['schedule.destroy',$schedule->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-close removeorder">
                                                         {!!Form::close()!!}
                                                     </td>
@@ -592,7 +592,7 @@
                                                 <td>{{$truck->updated_at}}</td>
                                                 <td>
                                                     <i style="color:#4c87ed;" class="fa fa-edit"></i>
-                                                        {!! Form::open(['route'=>['truck.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
+                                                        {!! Form::open(['route'=>['truck.destroy',$truck->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder"></i>
                                                         {!!Form::close()!!} 
 
@@ -653,7 +653,7 @@
 
                                                     <i style="color:#4c87ed;" class="fa fa-edit">
 
-                                                        {!! Form::open(['route'=>['driver.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
+                                                        {!! Form::open(['route'=>['driver.destroy',$driver->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
                                                         {!!Form::close()!!} 
 
