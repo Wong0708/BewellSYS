@@ -62,7 +62,7 @@ class ScheduleController extends Controller
             $order['locations']= DB::table('bc_client_location')->where('id', $order['clientID'])->get()->toArray();
             $order['order_details']=DB::table("bc_client_order_detail")->where('orderID', $order['id'])->get()->toArray();
             $a = DB::table('bc_client')->select('bc_client.cl_name')->where('id', $order['clientID'])->first();
-            $order['client_name'] = $a->cl_name;
+            $order['client_name'] = "jj";
         }
         // get order and get the client from that order
         // display their list of addresses
