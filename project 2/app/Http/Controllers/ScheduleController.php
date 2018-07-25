@@ -72,8 +72,42 @@ class ScheduleController extends Controller
         return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
        
     }
+    public function getCurrCapacity(Request $request){
+        $total_curr_cap = 0;
+        $schedules = Schedule::all();
+        $tid = $request->truckID;
+        $date = $request->date." 00:00:00";
 
+        $schedules = $schedules->filter(function ($sched) use ($tid) {
+            return $sched->truckID == $tid;
+        });
+        $schedules = $schedules->filter(function ($sched) use ($date) {
+            return $sched->scd_date == $date;
+        });
+
+
+        foreach ($schedules as $schedule){
+            $schedule_dets = ScheduleDetail::all();
+            $sid = $schedule['id'];
+
+            $schedule_dets = $schedule_dets->filter(function ($sched) use ($sid) {
+                return $sched->scheduleID == $sid;
+            });
+
+            foreach ($schedule_dets as $schedule_det){
+                $total_curr_cap += $schedule_det['delivered_qty'];
+            }
+        }
+
+
+        return response()->json(['success'=>'zuccess','total_curr_cap'=>$total_curr_cap,'msg'=>"shadow"]);
+    }
     /**
+     * return Response::json(array(
+    'success' => $total_curr_cap,
+    'msg' => "gago",
+    'total_curr_cap' => $total_curr_cap,
+    ));
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

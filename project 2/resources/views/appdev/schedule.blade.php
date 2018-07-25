@@ -4,6 +4,7 @@
 <html lang="en">
 
 <head>
+    <meta id="token" name="token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -261,8 +262,8 @@
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Delivery Date:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
-
-                                    <input type="date" class="form-control" name="delivery_date">
+                                    {{csrf_field()}}
+                                    <input type="date" class="form-control delivery_date" name="delivery_date" value="">
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
@@ -750,8 +751,6 @@
             <script>
                 $(document).ready(function() {
 
-
-
                     $('.order_dropdown').bind('change',function() {
                         var option_locs = $('option:selected', this).attr('locs').split(";");
                         var option_id = $('option:selected', this).attr('locs_ids').split(";");
@@ -792,6 +791,33 @@
                         $('#truck_curr_cap').html(curr_cap);
                         $('#truck_avail_cap').html(avail_cap);
                     });
+
+                    $('.delivery_date').bind('change',function(e) {
+
+
+                        e.preventDefault();
+                        var truckID = parseInt($('option:selected', $('.truck_dropdown')).attr('value'));
+
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "{{ url('/schedule/getCapacity') }}",
+                            method: 'post',
+                            data: {
+                                truckID: truckID,
+                                date: $(this).val(),
+                                _token: '{{csrf_token()}}'
+                            },
+                            success: function(result){
+                                console.log(result.success);
+                                console.log(result.total_curr_cap);
+                                console.log(result.msg);
+                            }});
+                    });
+
 
                     $('.myTable').DataTable();
                     $(document).ready(function() {
@@ -882,18 +908,6 @@
                     return verify;
                 });
 
-                // $(document).on('click', '.statusSubmit', function() {
-                //     var verify = confirm("Do you wish to update the status of this order?");
-                //     return verify;
-
-                //     if(verify){
-
-                //     }
-                // });
-
-                // $('.updatestatusform').submit(function() {
-                //     var verify = confirm("Do you wish to update the status of this order?");
-                // });
             </script>
 </body>
 
