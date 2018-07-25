@@ -515,8 +515,8 @@
                                                     <td>N/A</td>
                                                     <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
                                                     <td>
-                                                        {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
-                                                        <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
+                                                        {{-- {!! Form::open(['route'=>'clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
+                                                        <i style="margin-left:5px; color:#E53935;" class="fa fa-close removeorder">
                                                         {{-- {!!Form::close()!!} --}}
                                                     </td>
                                                 </tr>

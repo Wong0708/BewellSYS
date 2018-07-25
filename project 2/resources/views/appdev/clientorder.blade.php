@@ -72,17 +72,15 @@
                             </ul>
                             <!-- /.dropdown-tasks -->
                         </li>
-    
-    
-                        
                         <li class="dropdown">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
-                                
+                            <b>
                                 @if(Auth::user()->access==1)
                                    Logistics Head
                                 @endif
         
-                            </b> </a>
+                            </b>
+                            </a>
     
                             <!--DROPDOWN OF THE CLASS-->
                             <ul class="dropdown-menu dropdown-user animated flipInY">
