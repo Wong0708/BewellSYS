@@ -893,7 +893,6 @@
 
                 // $('.updatestatusform').submit(function() {
                 //     var verify = confirm("Do you wish to update the status of this order?");
-
                 // });
             </script>
 </body>
