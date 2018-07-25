@@ -316,7 +316,7 @@
                                                     @endif
                                                 </p>
                                             </div>
-                                            <div class="col-md-4"><p id="truck_cur_cap">N/A - select a date</p></div>
+                                            <div class="col-md-4"><b><p id="truck_cur_cap">N/A - select a date</p></b></div>
                                             <div class="col-md-4"><p id="truck_avail_cap">N/A</p></div>
                                         </center>
                                     </div>
@@ -343,7 +343,7 @@
                                                                 <td>PR-{{$ord->productID}}</td>
                                                                 <td>{{$ord->cldt_qty}} Boxes</td>
                                                                 <input type="hidden" name="ids[]" value="{{$ord->productID}}">
-                                                                <td><input style="font-size:12px;" class="form-control" placeholder="Hello mark" name="orderqty[]" type="text" class="orderqty"></td>
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" name="orderqty[]" type="text" class="orderqty"></td>
                                                                 <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
                                                             </tr>
                                                         @endforeach
@@ -813,10 +813,22 @@
                                 _token: '{{csrf_token()}}'
                             },
                             success: function(result){
+                                var total_cur = parseInt(result.total_curr_cap);
+                                var avail = max_cap - total_cur;
 
-                                $('#truck_cur_cap').html(result.total_curr_cap);
-                                var avail = max_cap - parseInt(result.total_curr_cap);
-                                $('#truck_avail_cap').html(avail);
+                                if(total_cur === 0){
+                                    $('#truck_cur_cap').html("no box loaded.");
+                                    $('#truck_cur_cap').css("color","green");
+                                    $('#truck_avail_cap').html("all space available.");
+                                }
+                                else if(max_cap===total_cur){
+                                    $('#truck_cur_cap').html("fully loaded");
+                                    $('#truck_cur_cap').css("color","red");
+                                    $('#truck_avail_cap').html("all space taken");
+                                }else{
+                                    $('#truck_cur_cap').html(total_cur);
+                                    $('#truck_avail_cap').html(avail);
+                                }
 
                                 console.log(result.success);
                                 console.log(result.total_curr_cap);
