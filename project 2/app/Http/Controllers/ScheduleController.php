@@ -68,6 +68,7 @@ class ScheduleController extends Controller
         }
         // get order and get the client from that order
         // display their list of addresses
+
         return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("orders",$orders)->with("schedules",$schedules);
        
     }
@@ -104,14 +105,14 @@ class ScheduleController extends Controller
 
         Session::flash('success','Successfully added a truck!');
     }
-    public function getTruck($id){
+    public static function getTruck($id){
         return Truck::find($id);
     }
 
-    public function getDriver($id){
+    public static function getDriver($id){
         return Driver::find($id);
     }
-    public function getLocation($id){
+    public static function getLocation($id){
         return ClientLocation::find($id);
     }
     /**
@@ -128,7 +129,7 @@ class ScheduleController extends Controller
         $schedule = new Schedule();
         $date = new DateTime();
         // change status of order to processed.
-        $schedule->scd_date = $fields['date'];
+        $schedule->scd_date = $fields['delivery_date'];
         $schedule->scd_status = "Scheduled";
         $schedule->orderID = $fields['order_num'];
         $schedule->truckID = $fields['plate_num'];
@@ -150,8 +151,12 @@ class ScheduleController extends Controller
 
             $schedule_det->created_at = $date->getTimestamp();
             $schedule_det->updated_at = $date->getTimestamp();
+
+            $schedule_det->save();
             $i = $i+1;
         }
+
+        return redirect("/schedule");
     }
 
     /**

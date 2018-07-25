@@ -508,9 +508,9 @@
                                                 <tr>
                                                     <td>TR-{{$schedule->id}}</td>
                                                     <td><a href={{url("scheduledetail")}}>CLOD-{{$schedule->orderID}}</a></td>
-                                                    <td>{{ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
-                                                    <td>{{ScheduleController::getTruck($schedule->driverID)->name}}</td>
-                                                    <td>{{ScheduleController::getTruck($schedule->locationID)->loc_address}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
                                                     <td>{{$schedule->scd_date}}</td>
                                                     <td>N/A</td>
                                                     <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
@@ -754,7 +754,8 @@
                                     '<td><span class="label label-info">CLOD-'+order_id+'</span></td>'+
                                     '<td>PR-'+prod_ids[x]+'</td>'+
                                     '<td>'+prod_qty[x]+' Boxes</td>'+
-                                    '<td><input style="font-size:12px;" class="form-control" data-mask="9,999 BOXES ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>'+
+                                    '<input type="hidden" name="ids[]" value="'+prod_ids[x]+'">'+
+                                    '<td><input style="font-size:12px;" class="form-control" placeholder="qty" name="orderqty[]" type="text" class="orderqty"></td>'+
                                     '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>' +
                                     '</tr>');
                             }
@@ -762,12 +763,13 @@
                     });
 
                     $('.truck_dropdown').bind('change',function() {
-                        var max_cap = parseInt($('option:selected', this).attr('truck_total_cap').val());
+                        var max_cap = parseInt($('option:selected', this).attr('truck_total_cap'));
                         var curr_cap = 0;
                         var avail_cap = max_cap - curr_cap;
+                        console.log("zuccedd: "+max_cap);
                         $('#truck_total_cap').html(max_cap);
                         $.ajax(); // get current capacity
-                        $('#truck_avail_cap').html(curr_cap);
+                        $('#truck_curr_cap').html(curr_cap);
                         $('#truck_avail_cap').html(avail_cap);
                     });
 
