@@ -33,6 +33,7 @@ class ScheduleController extends Controller
     public function index()
     {
         $trucks = Truck::all();
+        $trucc = Truck::all();
         $drivers = driver::all();
         $orders = ClientOrder::all();
         $locations = ClientLocation::all();
@@ -68,7 +69,7 @@ class ScheduleController extends Controller
         // get order and get the client from that order
         // display their list of addresses
 
-        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("orders",$orders)->with("schedules",$schedules);
+        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
        
     }
 

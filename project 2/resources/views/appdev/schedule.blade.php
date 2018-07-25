@@ -296,11 +296,31 @@
                                             <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Order/s</b></h4>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section assign orders to the desired truck. <b style="color:#E53935;">*Required</b></span>
                                             <br>
+                                    <div class="row">
+                                        <center>
+                                        <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Total Capacity:</b></h4></div>
+                                        <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Current Capacity: </b></h4></div>
+                                        <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Available Capacity: </b></h4></div>
+                                        </center>
+                                    </div>
+                                    <div class="row">
+                                        <center>
+                                            <div class="col-md-4">
+                                                <p id="truck_total_cap">
+                                                    @if(isset($trucks))
+                                                        @foreach ($trucks as $truck)
+                                                                {{$truck->max_box}}
+                                                            @break
+                                                        @endforeach
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            <div class="col-md-4"><p id="truck_cur_cap">N/A - select a date</p></div>
+                                            <div class="col-md-4"><p id="truck_avail_cap">N/A</p></div>
+                                        </center>
+                                    </div>
 
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Total Capacity:</b><p id="truck_total_cap"></p></h4>
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Current Capacity: </b><p id="truck_cur_cap"></p></h4>
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Available Capacity: </b><p id="truck_avail_cap"></p></h4>
-                                            
+
                                             {{-- <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button></label> --}}
                                             <div class="table-responsive" style="margin-top:10px;">
                                             <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
