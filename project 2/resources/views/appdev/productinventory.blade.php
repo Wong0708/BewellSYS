@@ -505,7 +505,7 @@
                                                 <td>{{$product->pd_reorder}}</td>
                                                 <td>{{'₱'.$product->pd_price}}</td>
                                                 <td>
-                                                    <i style="color:#4c87ed;" data-toggle="modal" data-target="#statusModal"  class="fa fa-edit"></i>
+                                                    <i pdid="{{$product->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editModal" class="fa fa-edit editz">
                                                 </td>
                                                 <td>
                                                     {!! Form::open(['route'=>['product.destroy',$product->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
@@ -514,6 +514,32 @@
                                                 </td>
                                                 {{-- <td>  --}}
                                             </tr>
+                                            <!-- edit modal -->
+                                            <div  class="modal fade" id="editModal" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                                            <center ><b><h2 class="modal-title" style="display: inline;">Edit Product Status</h2></b></center>
+                                                    </div>
+                                                    {!! Form::open(['route'=>['product.update',$product->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="productStatuss">Product Status:</label>
+                                                            <select name="productStatuss" class="form-control" id="productStatuss">
+                                                                <option>In Stock</option>
+                                                                <option>Out of Stock</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <input id="pd_id" type="hidden" name="pd_id">
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                                    </div>
+                                                    {!!Form::close()!!}
+                                                    </div>
+                                                </div>
+                                            </div>
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -656,8 +682,16 @@
                     $('#itemName').html($(this).data('prodname'));
                     $('#updated').html("Last updated at "+$(this).data('updated'));
                     $('#productStatus').val($(this).data('status'));
+                    /*if($('#productStatus') == "In Stock")
+                    {
+                        $('#productStatus').css('color', 'green');
+                    }
+                    else if($('#productStatus') == "Out of Stock")
+                    {
+                        $('#productStatus').css('color', 'red');
+                    }*/
                     $('#expiryDate').val($(this).data('expiry'));
-
+                    
                     if(datediff<0){
                         $('#expiryTip').html("This item is expired.");
                         $('#expiryLabel').css('color', 'red');
@@ -703,7 +737,11 @@
                     var verify = confirm("Do you wish to proceed to add the following products?");
                     return verify;
                 });
-
+                $(document).on('click', '.editz', function() {
+                    
+                    $("#pd_id").val($(this).attr('pdid'));
+                    alert($("#pd_id").val());
+                });
                  $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this product account?");
                     

@@ -178,14 +178,17 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $products = Product::find($id);
-        $products->pd_status = $request->input('productStatus');
+        $date = new datetime();
+        //
+        $products = Product::find($request->pd_id);
+        $products->pd_status = $request->input('productStatuss');
+        $products->updated_at = $date->getTimeStamp();
         $products->save();
 
         // dd($order);
 
         Session::flash('success','Successfully updated the product status!');
-        return redirect("/productinventory");
+        return redirect("/product");
     }
 
     /**
