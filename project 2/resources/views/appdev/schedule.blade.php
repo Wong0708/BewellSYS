@@ -778,7 +778,7 @@
                             alert("Delivering quantity exceeds the available space.");
                         }
                     }else{
-                        alert("please select a date!")
+                        alert("please select a date")
                     }
                 }
                 $(document).ready(function() {
