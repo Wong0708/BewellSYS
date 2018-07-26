@@ -353,8 +353,8 @@
                                                 </tbody>
                                                 </table>
                                             </div>
-
-                                                    <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Schedule/s</b></h4>
+                                                    <hr>
+                                                    <center><h2  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Schedule Summary</b></h2></center>
                                                     {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
                                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced delivery list for the truck delivery.</span>
                                                     
@@ -375,6 +375,7 @@
                                                                                 <td id="prev_driver">@if(isset($drivers))
                                                                                             @foreach ($drivers as $driver)
                                                                                                 <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                                                                                @break
                                                                                             @endforeach
                                                                                         @endif</td>
                                                                                <td><span class="label label-success" id="prev_address">Taft Avenue, Metro Manila</span></td>

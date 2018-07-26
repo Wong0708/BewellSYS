@@ -40,7 +40,7 @@ class ScheduleController extends Controller
         $clients = Client::all();
 
         $latest = Schedule::all();
-        $latest_id = $latest->keys()->last();
+        $latest_id = Schedule::all()->last();
         $latest_id = $latest_id['id'];
         $schedules = Schedule::all();
 
