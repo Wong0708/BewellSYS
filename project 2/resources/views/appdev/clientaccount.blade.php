@@ -717,7 +717,7 @@
                 $(document).on('click', '.editz', function() {
                     
                     $("#cl_id").val($(this).attr('clid'));
-                    alert($("#cl_id").val());
+                    //alert($("#cl_id").val());
                 });
                 $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this client account?");
