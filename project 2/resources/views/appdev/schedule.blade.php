@@ -769,7 +769,6 @@
                     for(i = 0; i<boxes.length;i++){
                         sum += parseInt(boxes[i].value);
                     }
-                   // alert(sum+'- x -'+cur_cap);
                     cur_cap += sum;
                     if(date!=null){
                         if (cur_cap<=max_cap){
