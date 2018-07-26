@@ -761,7 +761,7 @@
                     var cur_cap = parseInt($('#truck_cur_cap').val());
 
                     var date = $(".delivery_date").val();
-                    var okay = false;
+
                     var sum = 0;
 
 
