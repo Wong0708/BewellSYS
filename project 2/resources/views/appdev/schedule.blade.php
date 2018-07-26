@@ -353,16 +353,15 @@
                                                 </tbody>
                                                 </table>
                                             </div>
-
-                                                    <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Schedule/s</b></h4>
+                                                    <hr>
+                                                    <center><h2  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Schedule Summary</b></h2></center>
                                                     {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
                                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced delivery list for the truck delivery.</span>
                                                     
                                                     <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
                                                             <thead>
                                                                 <tr style="font-size:12px; font-weight:700;">
-                                                                        <th> #</th>
-                                                                    <th>Order #</th>
+                                                                    <th>Sched #</th>
                                                                     <th>Driver</th>
                                                                     <th>Address</th>
                                                                     <th>Delivery Date</th>
@@ -372,10 +371,14 @@
                                                                         </thead>
                                                                         <tbody id="addproduct">
                                                                             <tr style="font-size:12px;">
-                                                                               <td>1</td>
-                                                                               <td>PR-0001</td>
-                                                                               <td>Juan Dela Cruz</td>
-                                                                               <td><span class="label label-success">Taft Avenue, Metro Manila</span></td>
+                                                                               <td>TR-{{$latest_id+1}}</td>
+                                                                                <td id="prev_driver">@if(isset($drivers))
+                                                                                            @foreach ($drivers as $driver)
+                                                                                                <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                                                                                @break
+                                                                                            @endforeach
+                                                                                        @endif</td>
+                                                                               <td><span class="label label-success" id="prev_address">Taft Avenue, Metro Manila</span></td>
                                                                                <td>2018-07-21</td>
                                                                                <td><span class="label label-success">Scheduled</span></td>
                                                                             </tr>
