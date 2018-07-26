@@ -139,6 +139,17 @@ class ClientAccountController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $date = new datetime();
+        //
+        $clients = Client::find($request->cl_id);
+        $clients->cl_status = $request->input('clientStatus');
+        $clients->updated_at = $date->getTimeStamp();
+        $clients->save();
+
+        // dd($order);
+
+        Session::flash('success','Successfully updated the client status!');
+        return redirect("/clientaccount");
     }
 
     /**

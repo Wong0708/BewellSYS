@@ -439,9 +439,13 @@
                                                        >{{'CL-'.$client->id}}</td>
                                                     <td>{{$client->cl_name}}</td>
                                                     <td>{{$client->cl_email}}</td>
-                                                    <td><span class="label label-success">{{$client->cl_status}}</span></td>
+                                                    @if ($client->cl_status  == "Active")
+                                                        <td><span class="label label-success">{{$client->cl_status}}</span></td>
+                                                    @else 
+                                                        <td><span class="label label-danger">{{$client->cl_status}}</span></td>
+                                                    @endif
                                                     <td>
-                                                        <i data-order="{{$client->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editModal" class="fa fa-edit">
+                                                        <i clid="{{$client->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editModal" class="fa fa-edit editz">
                                                     {!! Form::open(['route'=>['clientaccount.destroy',$client->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
                                                     {!!Form::close()!!} 
@@ -467,6 +471,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
+                                                        <input id="cl_id" type="hidden" name="cl_id">
                                                         <div class="modal-footer">
                                                             <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
                                                         </div>
@@ -701,7 +706,6 @@
                     var verify = confirm("Do you wish to proceed to add the following products?");
                     return verify;
                 });
-
                  $('#editproductform').submit(function() {
                     var verify = confirm("Do you wish to proceed to edit this product?");
                     if (verify) { 
@@ -710,6 +714,11 @@
                     return verify;
                 });
 
+                $(document).on('click', '.editz', function() {
+                    
+                    $("#cl_id").val($(this).attr('clid'));
+                    alert($("#cl_id").val());
+                });
                 $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this client account?");
                     
