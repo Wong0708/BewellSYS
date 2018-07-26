@@ -85,6 +85,17 @@ class TruckController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $date = new datetime();
+        //
+        $truck = Truck::find($request->tr_id);
+        $truck->tr_status = $request->input('truckStatus');
+        $truck->updated_at = $date->getTimeStamp();
+        $truck->save();
+
+        // dd($order);
+
+        Session::flash('success','Successfully updated the truck status!');
+        return redirect("/schedule");
     }
 
     /**

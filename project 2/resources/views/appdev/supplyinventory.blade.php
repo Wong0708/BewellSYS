@@ -472,15 +472,45 @@
                                             <td>{{$supply1->sp_qty}}</td>
                                             <td>{{$supply1->sp_maxQty}}</td>
                                             <td>{{$supply1->sp_reorder}}</td>
-                                            <td><span class="label label-info">{{$supply1->sp_status}}</span></td>
+                                            @if ($supply1->sp_status  == "On Stock")
+                                                <td><span class="label label-success">{{$supply1->sp_status}}</span></td>
+                                            @else 
+                                                <td><span class="label label-danger">{{$supply1->sp_status}}</span></td>
+                                            @endif
                                             <td>{{$supply1->updated_at}}</td>
                                             <td>
-                                                <i style="color:#4c87ed;" class="fa fa-edit">
+                                                <i spid="{{$supply1->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editModal" class="fa fa-edit editz">
                                                          {!! Form::open(['route'=>['supply.destroy',$supply1->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
                                                         {!!Form::close()!!} 
                                             </td>
                                         </tr>
+                                        <!--edit modal -->
+                                        <div  class="modal fade" id="editModal" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"></button>
+                                                                <center ><b><h2 class="modal-title" style="display: inline;">Edit Supply Status</h2></b></center>
+                                                        </div>
+                                                        {!! Form::open(['route'=>['supply.update',$supply1->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="supplyStatus">Supply Status:</label>
+                                                                <select name="supplyStatus" class="form-control" id="supplyStatus">
+                                                                    <option>On Stock</option>
+                                                                    <option>Out of Stock</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <input id="sp_id" type="hidden" name="sp_id">
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                                        </div>
+                                                        {!!Form::close()!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                         @endforeach
                                     @endif
                                     </tbody>
@@ -676,7 +706,11 @@
                     var verify = confirm("Do you wish to proceed to add the following products?");
                     return verify;
                 });
-
+                $(document).on('click', '.editz', function() {
+                    
+                    $("#sp_id").val($(this).attr('spid'));
+                    //alert($("#sp_id").val());
+                });
                 $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this supply account?");
                     

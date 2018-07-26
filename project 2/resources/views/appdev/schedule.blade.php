@@ -595,7 +595,7 @@
                                                 </td>
                                                 <td>{{$truck->updated_at}}</td>
                                                 <td>
-                                                    <i style="color:#4c87ed;" class="fa fa-edit"></i>
+                                                    <i trid="{{$truck->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editTruckModal" class="fa fa-edit truckeditz">
                                                         {!! Form::open(['route'=>['truck.destroy',$truck->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder"></i>
                                                         {!!Form::close()!!} 
@@ -603,6 +603,32 @@
                                                 </td>
                                                 {{-- <td>  --}}
                                             </tr>
+                                            <!--truck edit modal -->
+                                            <div  class="modal fade" id="editTruckModal" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                                            <center ><b><h2 class="modal-title" style="display: inline;">Edit Truck Status</h2></b></center>
+                                                    </div>
+                                                    {!! Form::open(['route'=>['truck.update',$truck->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="truckStatus">Truck Status:</label>
+                                                            <select name="truckStatus" class="form-control" id="truckStatus">
+                                                                <option>Available</option>
+                                                                <option>Not Available</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <input id="tr_id" type="hidden" name="tr_id">
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                                    </div>
+                                                    {!!Form::close()!!}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     @endif
 
@@ -655,7 +681,7 @@
                                                 <td>{{$driver->updated_at}}</td>
                                                 <td>
 
-                                                    <i style="color:#4c87ed;" class="fa fa-edit">
+                                                    <i drid="{{$driver->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editDriverModal" class="fa fa-edit drivereditz">
 
                                                         {!! Form::open(['route'=>['driver.destroy',$driver->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
@@ -663,6 +689,32 @@
 
                                                 </td>
                                             </tr>
+                                            <!--driver edit modal -->
+                                            <div  class="modal fade" id="editDriverModal" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                                            <center ><b><h2 class="modal-title" style="display: inline;">Edit Driver Status</h2></b></center>
+                                                    </div>
+                                                    {!! Form::open(['route'=>['driver.update',$driver->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="driverStatus">Driver Status:</label>
+                                                            <select name="driverStatus" class="form-control" id="driverStatus">
+                                                                <option>Available</option>
+                                                                <option>Not Available</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <input id="dr_id" type="hidden" name="dr_id">
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                                    </div>
+                                                    {!!Form::close()!!}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     @endif
 
@@ -954,7 +1006,16 @@
                     var verify = confirm("Do you wish to proceed to add the following products?");
                     return verify;
                 });
-
+                $(document).on('click', '.truckeditz', function() {
+                    
+                    $("#tr_id").val($(this).attr('trid'));
+                    //alert($("#tr_id").val());
+                });
+                $(document).on('click', '.drivereditz', function() {
+                    
+                    $("#dr_id").val($(this).attr('drid'));
+                    //alert($("#dr_id").val());
+                });
                  $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this account?");
                     

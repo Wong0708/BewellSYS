@@ -116,6 +116,17 @@ class ManufacturerAccountController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $date = new datetime();
+        //
+        $manufacturers = Manufacturer::find($request->mn_id);
+        $manufacturers->mn_status = $request->input('manufacturerStatus');
+        $manufacturers->updated_at = $date->getTimeStamp();
+        $manufacturers->save();
+
+        // dd($order);
+
+        Session::flash('success','Successfully updated the manufacturer status!');
+        return redirect("/manufactureraccount");
     }
 
     /**

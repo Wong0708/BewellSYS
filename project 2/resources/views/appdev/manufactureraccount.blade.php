@@ -368,9 +368,13 @@
                                                     <td>{{$manufacturer->mn_contactperson}}</td>
                                                     <td>{{$manufacturer->mn_contactnumber}}</td>
                                                     <td>{{$manufacturer->mn_email}}</td>
-                                                    <td><span class="label label-success">{{$manufacturer->mn_status}}</span></td>
+                                                    @if ($manufacturer->mn_status  == "Active")
+                                                        <td><span class="label label-success">{{$manufacturer->mn_status}}</span></td>
+                                                    @else 
+                                                        <td><span class="label label-danger">{{$manufacturer->mn_status}}</span></td>
+                                                    @endif
                                                     <td>
-                                                        <i style="color:#4c87ed;" class="fa fa-edit">
+                                                        <i mnid="{{$manufacturer->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editModal" class="fa fa-edit editz">
 
                                                                 {!! Form::open(['route'=>['manufactureraccount.destroy',$manufacturer->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                                 <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
@@ -379,6 +383,32 @@
                                                     </td>
                                                     {{-- <td>  --}}
                                                 </tr> 
+                                                <!--edit modal -->
+                                                <div  class="modal fade" id="editModal" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"></button>
+                                                                <center ><b><h2 class="modal-title" style="display: inline;">Edit Manufacturer Status</h2></b></center>
+                                                        </div>
+                                                        {!! Form::open(['route'=>['manufactureraccount.update',$manufacturer->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="manufacturerStatus">Manufacturer Status:</label>
+                                                                <select name="manufacturerStatus" class="form-control" id="manufacturerStatus">
+                                                                    <option>Active</option>
+                                                                    <option>Inactive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <input id="mn_id" type="hidden" name="mn_id">
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                                        </div>
+                                                        {!!Form::close()!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 @endforeach
                                             @endif
                                     </tbody>
@@ -575,7 +605,11 @@
                     var verify = confirm("Do you wish to proceed to add the following products?");
                     return verify;
                 });
-
+                $(document).on('click', '.editz', function() {
+                    
+                    $("#mn_id").val($(this).attr('mnid'));
+                    //alert($("#mn_id").val());
+                });
                 $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this manufacturer account?");
                     

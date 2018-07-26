@@ -447,9 +447,13 @@
                                                     <td>{{$supplier->sp_contactperson}}</td>
                                                     <td>{{$supplier->sp_contactnumber}}</td>
                                                     <td>{{$supplier->sp_email}}</td>
-                                                    <td><span class="label label-success">{{$supplier->sp_status}}</span></td>
+                                                    @if ($supplier->sp_status  == "Active")
+                                                        <td><span class="label label-success">{{$supplier->sp_status}}</span></td>
+                                                    @else 
+                                                        <td><span class="label label-danger">{{$supplier->sp_status}}</span></td>
+                                                    @endif
                                                     <td>
-                                                        <i style="color:#4c87ed;" class="fa fa-edit">
+                                                    <i spid="{{$supplier->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editModal" class="fa fa-edit editz">
 
                                                                 {!! Form::open(['route'=>['supplieraccount.destroy',$supplier->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
                                                                 <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
@@ -458,6 +462,32 @@
                                                     </td>
                                                     {{-- <td>  --}}
                                                 </tr> 
+                                                <!--edit modal -->
+                                                <div  class="modal fade" id="editModal" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"></button>
+                                                                <center ><b><h2 class="modal-title" style="display: inline;">Edit Supplier Status</h2></b></center>
+                                                        </div>
+                                                        {!! Form::open(['route'=>['supplieraccount.update',$supplier->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="supplierStatus">Client Status:</label>
+                                                                <select name="supplierStatus" class="form-control" id="supplierStatus">
+                                                                    <option>Active</option>
+                                                                    <option>Inactive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <input id="sp_id" type="hidden" name="sp_id">
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                                        </div>
+                                                        {!!Form::close()!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 @endforeach
                                             @endif
                                     </tbody>
@@ -678,7 +708,11 @@
                     var verify = confirm("Do you wish to proceed to add the following products?");
                     return verify;
                 });
-
+                $(document).on('click', '.editz', function() {
+                    
+                    $("#sp_id").val($(this).attr('spid'));
+                    //alert($("#sp_id").val());
+                });
                 $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this supplier account?");
                     

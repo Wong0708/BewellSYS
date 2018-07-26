@@ -86,6 +86,17 @@ class DriverController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $date = new datetime();
+        //
+        $driver = Driver::find($request->dr_id);
+        $driver->dr_status = $request->input('driverStatus');
+        $driver->updated_at = $date->getTimeStamp();
+        $driver->save();
+
+        // dd($order);
+
+        Session::flash('success','Successfully updated the driver status!');
+        return redirect("/schedule");
     }
 
     /**

@@ -122,6 +122,17 @@ class SupplierAccountController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $date = new datetime();
+        //
+        $supplier = Supplier::find($request->sp_id);
+        $supplier->sp_status = $request->input('supplierStatus');
+        $supplier->updated_at = $date->getTimeStamp();
+        $supplier->save();
+
+        // dd($order);
+
+        Session::flash('success','Successfully updated the supplier status!');
+        return redirect("/supplieraccount");
     }
 
     /**

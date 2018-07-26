@@ -129,6 +129,17 @@ class SupplyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $date = new datetime();
+        //
+        $supply = Supply::find($request->sp_id);
+        $supply->sp_status = $request->input('supplyStatus');
+        $supply->updated_at = $date->getTimeStamp();
+        $supply->save();
+
+        // dd($order);
+
+        Session::flash('success','Successfully updated the supply status!');
+        return redirect("/supply");
         
     }
 

@@ -740,7 +740,7 @@
                 $(document).on('click', '.editz', function() {
                     
                     $("#pd_id").val($(this).attr('pdid'));
-                    alert($("#pd_id").val());
+                    //alert($("#pd_id").val());
                 });
                  $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this product account?");
