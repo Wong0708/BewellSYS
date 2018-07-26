@@ -316,8 +316,8 @@
                                                     @endif
                                                 </p>
                                             </div>
-                                            <div class="col-md-4"><p id="truck_cur_cap">N/A - select a date</p></div>
-                                            <div class="col-md-4"><p id="truck_avail_cap">N/A</p></div>
+                                            <div class="col-md-4"><b><p id="truck_cur_cap" value="">N/A - select a date</p></b></div>
+                                            <div class="col-md-4"><p id="truck_avail_cap" value="">N/A</p></div>
                                         </center>
                                     </div>
 
@@ -343,7 +343,7 @@
                                                                 <td>PR-{{$ord->productID}}</td>
                                                                 <td>{{$ord->cldt_qty}} Boxes</td>
                                                                 <input type="hidden" name="ids[]" value="{{$ord->productID}}">
-                                                                <td><input style="font-size:12px;" class="form-control" placeholder="Hello mark" name="orderqty[]" type="text" class="orderqty"></td>
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
                                                                 <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
                                                             </tr>
                                                         @endforeach
@@ -389,7 +389,8 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" onclick="checkSchedValidity()" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
+                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit" type="submit">Submit</button>
                                 </div>
                             {!!Form::close()!!}
                             
@@ -749,6 +750,37 @@
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
             <!-- end - This is for export functionality only -->
             <script>
+                function  computeBoxes(){
+                    return 0;
+                }
+                function checkSchedValidity(){
+                    var total_coms = computeBoxes();
+                    var boxes = document.getElementsByName('orderqty[]');
+
+                    var max_cap = parseInt($('option:selected', $('.truck_dropdown')).attr('truck_total_cap'));
+                    var cur_cap = parseInt($('#truck_cur_cap').val());
+
+                    var date = $(".delivery_date").val();
+
+                    var sum = 0;
+
+
+                    console.log(boxes.length);
+                    for(i = 0; i<boxes.length;i++){
+                        sum += parseInt(boxes[i].value);
+                    }
+                    cur_cap += sum;
+                    if(date!=null){
+                        if (cur_cap<=max_cap){
+                            $('#schedSubmit').click();
+                        }
+                        else{
+                            alert("Delivering quantity exceeds the available space.");
+                        }
+                    }else{
+                        alert("please select a date")
+                    }
+                }
                 $(document).ready(function() {
 
                     $('.order_dropdown').bind('change',function() {
@@ -774,7 +806,7 @@
                                     '<td>PR-'+prod_ids[x]+'</td>'+
                                     '<td>'+prod_qty[x]+' Boxes</td>'+
                                     '<input type="hidden" name="ids[]" value="'+prod_ids[x]+'">'+
-                                    '<td><input style="font-size:12px;" class="form-control" placeholder="qty" name="orderqty[]" type="text" class="orderqty"></td>'+
+                                    '<td><input style="font-size:12px;" class="form-control" placeholder="qty" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>'+
                                     '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>' +
                                     '</tr>');
                             }
@@ -788,12 +820,13 @@
                         console.log("zuccedd: "+max_cap);
                         $('#truck_total_cap').html(max_cap);
                         $.ajax(); // get current capacity
-                        $('#truck_curr_cap').html(curr_cap);
-                        $('#truck_avail_cap').html(avail_cap);
+                      //  $('#truck_curr_cap').html(curr_cap);
+                      //  $('#truck_avail_cap').html(avail_cap);
                     });
 
                     $('.delivery_date').bind('change',function(e) {
 
+                        var max_cap = parseInt($('option:selected', $('.truck_dropdown')).attr('truck_total_cap'));
 
                         e.preventDefault();
                         var truckID = parseInt($('option:selected', $('.truck_dropdown')).attr('value'));
@@ -812,6 +845,29 @@
                                 _token: '{{csrf_token()}}'
                             },
                             success: function(result){
+                                var total_cur = parseInt(result.total_curr_cap);
+                                var avail = max_cap - total_cur;
+
+                                if(total_cur === 0){
+                                    $('#truck_cur_cap').val(0);
+                                    $('#truck_cur_cap').html("no boxes loaded.");
+                                    $('#truck_avail_cap').html("all space available.");
+
+                                    $('#truck_cur_cap').css("color","green");
+                                }
+                                else if(max_cap===total_cur){
+
+                                    $('#truck_cur_cap').val(result.total_curr_cap);
+                                    $('#truck_cur_cap').html("fully loaded");
+                                    $('#truck_avail_cap').html("all space taken");
+
+                                    $('#truck_cur_cap').css("color","red");
+                                }else{
+                                    $('#truck_cur_cap').val(result.total_curr_cap);
+                                    $('#truck_cur_cap').html(total_cur);
+                                    $('#truck_avail_cap').html(avail);
+                                }
+
                                 console.log(result.success);
                                 console.log(result.total_curr_cap);
                                 console.log(result.msg);

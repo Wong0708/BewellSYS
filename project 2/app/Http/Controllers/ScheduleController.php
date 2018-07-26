@@ -98,9 +98,35 @@ class ScheduleController extends Controller
                 $total_curr_cap += $schedule_det['delivered_qty'];
             }
         }
-
-
         return response()->json(['success'=>'zuccess','total_curr_cap'=>$total_curr_cap,'msg'=>"shadow"]);
+    }
+    public function getCurCapacity($truckID, $date){
+        $total_curr_cap = 0;
+        $schedules = Schedule::all();
+        $tid = $truckID;
+        $date = $date." 00:00:00";
+
+        $schedules = $schedules->filter(function ($sched) use ($tid) {
+            return $sched->truckID == $tid;
+        });
+        $schedules = $schedules->filter(function ($sched) use ($date) {
+            return $sched->scd_date == $date;
+        });
+
+
+        foreach ($schedules as $schedule){
+            $schedule_dets = ScheduleDetail::all();
+            $sid = $schedule['id'];
+
+            $schedule_dets = $schedule_dets->filter(function ($sched) use ($sid) {
+                return $sched->scheduleID == $sid;
+            });
+
+            foreach ($schedule_dets as $schedule_det){
+                $total_curr_cap += $schedule_det['delivered_qty'];
+            }
+        }
+        return $total_curr_cap;
     }
     /**
      * return Response::json(array(
