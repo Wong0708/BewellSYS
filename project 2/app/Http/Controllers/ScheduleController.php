@@ -39,7 +39,9 @@ class ScheduleController extends Controller
         $locations = ClientLocation::all();
         $clients = Client::all();
 
-
+        $latest = Schedule::all();
+        $latest_id = $latest->keys()->last();
+        $latest_id = $latest_id['id'];
         $schedules = Schedule::all();
 
         $orders = $orders->filter(function ($order) {
@@ -69,7 +71,7 @@ class ScheduleController extends Controller
         // get order and get the client from that order
         // display their list of addresses
 
-        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
+        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("latest_id",$latest_id)->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
        
     }
     public function getCurrCapacity(Request $request){
