@@ -434,20 +434,24 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal"></button>
-                                <center ><b><h2 class="modal-title" style="display: inline;">Conclude Schedule <i class="fa fa-calendar-check-o"></i></h2></b></center>
+                                <center ><b><h2 class="modal-title" style="display: inline;">Conclude Schedule
+                                            <i class="fa fa-calendar"></i>
+                                        </h2></b></center>
                             </div>
                             {!! Form::open(['route'=>['schedule.update',1],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="truckStatus">Conclusion</label>
-                                    <select name="schedule_conclusion" class="form-control" id="truckStatus">
-                                        <option value="cancel">Fulfill Delivery</option>
-                                        <option value="fulfill">Cancel Delivery</option>
+                                    <select name="schedule_conclusion" style="font-family: 'FontAwesome', 'Open Sans';font-size: 21px;" class="form-control sched_conc" id="sched_conc">
+                                        <option value="fulfil" style="">&#xf274; Fulfill Delivery</option>
+                                        <option value="cancel">&#xf273; Cancel Delivery</option>
                                     </select>
-                                    <input type="date" name="delivery_date"/>
                                     <label for="truckStatus">Remarks:</label>
-                                    <textarea class="form-control" rows="5" name="remarks" id="comment"></textarea>
-
+                                    <textarea class="form-control" class="form-control" placeholder="Write about your transaction details" rows="5" name="remarks" id="comment"></textarea>
+                                    <div id="date_conclude" style="display:block">
+                                        <label for="truckStatus">Delivery Date:</label>
+                                        <input type="date" class="form-control" name="delivery_date"/>
+                                    </div>
                                 </div>
                             </div>
                             <input id="sc_id" type="hidden" name="id">
@@ -924,7 +928,16 @@
                       //  $('#truck_curr_cap').html(curr_cap);
                       //  $('#truck_avail_cap').html(avail_cap);
                     });
+                    $('.sched_conc').bind('change',function() {
+                        var x = $('option:selected', this).attr('value');
+                        if(x === "cancel"){
+                            $('#date_conclude').css('display','none');
+                        }
+                        else{
+                            $('#date_conclude').css('display','block');
+                        }
 
+                    });
                     $('.delivery_date').bind('change',function(e) {
 
                         var max_cap = parseInt($('option:selected', $('.truck_dropdown')).attr('truck_total_cap'));
@@ -1056,7 +1069,7 @@
                 $(document).on('click', '.conclude', function() {
 
                     $("#sc_id").val($(this).attr('scid'));
-                    //alert($("#cl_id").val());
+                    $('#date_conclude').css('display','block');
                 });
                 $(document).on('click', '.truckeditz', function() {
                     
