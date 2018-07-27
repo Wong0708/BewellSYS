@@ -22,6 +22,8 @@
     <link href="css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
+
+    <link href="css/allah.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="css/colors/blue.css" id="theme" rel="stylesheet">
 
@@ -75,8 +77,8 @@
                             </ul>
                             <!-- /.dropdown-tasks -->
                         </li>
-    
-    
+
+
                         
                         <li class="dropdown">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
@@ -400,6 +402,62 @@
                         </div>
                     </div>
                 </div>
+                <!--truck edit modal -->
+                <div  class="modal fade" id="editTruckModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"></button>
+                                <center ><b><h2 class="modal-title" style="display: inline;">Edit Truck Status</h2></b></center>
+                            </div>
+                            {!! Form::open(['route'=>['truck.update',1],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="truckStatus">Truck Status:</label>
+                                    <select name="truckStatus" class="form-control" id="truckStatus">
+                                        <option>Available</option>
+                                        <option>Not Available</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input id="tr_id" type="hidden" name="tr_id">
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                            </div>
+                            {!!Form::close()!!}
+                        </div>
+                    </div>
+                </div>
+                <!--conclude sched modal -->
+                <div  class="modal fade" id="concludeSchedModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"></button>
+                                <center ><b><h2 class="modal-title" style="display: inline;">Conclude Schedule <i class="fa fa-calendar-check-o"></i></h2></b></center>
+                            </div>
+                            {!! Form::open(['route'=>['schedule.update',1],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="truckStatus">Conclusion</label>
+                                    <select name="schedule_conclusion" class="form-control" id="truckStatus">
+                                        <option value="cancel">Fulfill Delivery</option>
+                                        <option value="fulfill">Cancel Delivery</option>
+                                    </select>
+                                    <input type="date" name="delivery_date"/>
+                                    <label for="truckStatus">Remarks:</label>
+                                    <textarea class="form-control" rows="5" name="remarks" id="comment"></textarea>
+
+                                </div>
+                            </div>
+                            <input id="sc_id" type="hidden" name="id">
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                            </div>
+                            {!!Form::close()!!}
+                        </div>
+                    </div>
+                </div>
 
                 <div class="modal fade" id="driverModal" tabindex="-1" role="dialog" aria-labelledby="adddriver">
                         <div class="modal-dialog" role="document">
@@ -497,16 +555,29 @@
                         </div>
 
 
-                
+
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
+                    @if(Session::has('success'))
+                        <script>
+                            window.onload = function() {
+                                var x = document.getElementById("allah_snackbar");
+                                x.className = "show";
+                                setTimeout(function(){
+                                    x.className = x.className.replace("show", ""); }, 3000);
+                            }
+                        </script>
+                        <div class="alert alert-success"> {{Session::get('success')}} </div>
+                    @endif
+
+                        @if(Session::has('success'))
+                            <center><div id="allah_snackbar">{{Session::get('success')}}</div></center>
+                        @endif
                     <div class="col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                            @if(Session::has('success'))
-                                <div class="alert alert-success"> {{Session::get('success')}} </div>
-                            @endif
+
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL ORDER SCHEDULES</h3>
                             {{-- <div class="col-sm-12" style="background-color:red;"> --}}
-                                <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Schedule</button>
+                                <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-calendar-plus-o"></i></span>Add Schedule</button>
                                                     
                                 <p class="text-muted m-b-30"></p>
                                 <div class="table-responsive">
@@ -539,7 +610,7 @@
                                                     <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
                                                     <td>
                                                         {!! Form::open(['route'=>['schedule.destroy',$schedule->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
-                                                        <center><a href="#"><i style=" font-size: 20px; color:#E53935;" class="fa fa-book removeorder"></i></a>
+                                                        <center><a href="#" data-toggle="modal" data-target="#concludeSchedModal" scid="{{$schedule->id}}" class="conclude"><i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>
                                                         </center>
                                                         {!!Form::close()!!}
                                                     </td>
@@ -556,11 +627,9 @@
 
                     <div class="col-lg-12 col-sm-12">
                             <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                            @if(Session::has('success'))
-                                <div class="alert alert-success"> {{Session::get('success')}} </div>
-                            @endif
+
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL TRUCKS</h3>
-                            <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#truckmodal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Truck</button>
+                            <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#truckmodal" type="button"><span class="btn-label"><i class="fa fa fa-truck"></i></span>Add Truck</button>
 
                             <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
@@ -604,32 +673,7 @@
                                                 </td>
                                                 {{-- <td>  --}}
                                             </tr>
-                                            <!--truck edit modal -->
-                                            <div  class="modal fade" id="editTruckModal" role="dialog">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal"></button>
-                                                            <center ><b><h2 class="modal-title" style="display: inline;">Edit Truck Status</h2></b></center>
-                                                    </div>
-                                                    {!! Form::open(['route'=>['truck.update',$truck->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
-                                                    <div class="modal-body">
-                                                        <div class="form-group">
-                                                            <label for="truckStatus">Truck Status:</label>
-                                                            <select name="truckStatus" class="form-control" id="truckStatus">
-                                                                <option>Available</option>
-                                                                <option>Not Available</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <input id="tr_id" type="hidden" name="tr_id">
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
-                                                    </div>
-                                                    {!!Form::close()!!}
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         @endforeach
                                     @endif
 
@@ -640,10 +684,11 @@
                     </div>
                 </div>
 
+
                 <div class="col-lg-12 col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                         <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL DRIVERS</h3>
-                        <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#driverModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Driver</button>
+                        <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#driverModal" type="button"><span class="btn-label"><i class="fa fa-wrench"></i></span>Add Driver</button>
                                                 
                         <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place a new company driver! </span> </a> {{-- </div> --}} {{-- </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                         <p class="text-muted m-b-30"></p>
@@ -1006,6 +1051,12 @@
                 $('#addproductform').submit(function() {
                     var verify = confirm("Do you wish to proceed to add the following products?");
                     return verify;
+                });
+
+                $(document).on('click', '.conclude', function() {
+
+                    $("#sc_id").val($(this).attr('scid'));
+                    //alert($("#cl_id").val());
                 });
                 $(document).on('click', '.truckeditz', function() {
                     
