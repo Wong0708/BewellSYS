@@ -68,9 +68,12 @@ class ScheduleController extends Controller
 
             $order['client_name'] = $a['cl_name'];
         }
-        // get order and get the client from that order
-        // display their list of addresses
 
+        foreach($schedules as $schedule){
+
+            $date = date_create($schedule['scd_date']);
+            $schedule['scd_date'] = date_format($date, "F j Y");
+        }
         return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("latest_id",$latest_id)->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
        
     }

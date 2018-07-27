@@ -364,7 +364,7 @@
                                                                     <th>Sched #</th>
                                                                     <th>Driver</th>
                                                                     <th>Address</th>
-                                                                    <th>Delivery Date</th>
+                                                                    <th>Delivered Date</th>
                                                                     <th>Status</th>
                                                                     {{-- <th><i class="fa fa-gear"></th> --}}
                                                                             </tr>
@@ -519,9 +519,9 @@
                                                 <th>Driver</th>
                                                 <th>Address</th>
                                                 <th>Schedule Date</th>
-                                                <th>Delivery Date</th>
+                                                <th>Delivered Date</th>
                                                 <th>Status</th>
-                                                <th><i class="fa fa-gear"></th>
+                                                <th><i class="fa fa-gavel"></i> Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -539,7 +539,8 @@
                                                     <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
                                                     <td>
                                                         {!! Form::open(['route'=>['schedule.destroy',$schedule->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
-                                                        <i style="margin-left:5px; color:#E53935;" class="fa fa-close removeorder">
+                                                        <center><a href="#"><i style=" font-size: 20px; color:#E53935;" class="fa fa-book removeorder"></i></a>
+                                                        </center>
                                                         {!!Form::close()!!}
                                                     </td>
                                                 </tr>
