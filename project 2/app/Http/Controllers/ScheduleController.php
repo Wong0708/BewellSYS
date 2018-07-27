@@ -299,16 +299,25 @@ class ScheduleController extends Controller
 
         $fields = $request->all();
         $schedule = Schedule::find($fields['id']);
+        $order = ClientOrder::find($schedule['orderID']);
         if($request->schedule_conclusion == "fulfil"){
 
             $schedule->dateDelivered = $request->delivery_date;
             $schedule->scd_status = "Delivered";
             $schedule->remark = $request->remarks;
+
+            $order->clod_status = "Delivered";
         }
         else{
             $schedule->scd_status = "Cancelled";
             $schedule->remark = $request->remarks;
+
+
+            $order->clod_status = "Cancelled";
         }
+
+
+        $order->save();
 
         $schedule->save();
 
