@@ -611,7 +611,7 @@
                                                     <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
                                                     <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
                                                     <td>{{$schedule->scd_date}}</td>
-                                                    <td>N/A</td>
+                                                    <td>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else N/A @endif</td>
                                                     <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
                                                         >{{$schedule->scd_status}}</span></td>
                                                     <td>

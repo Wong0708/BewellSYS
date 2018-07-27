@@ -74,6 +74,9 @@ class ScheduleController extends Controller
 
             $date = date_create($schedule['scd_date']);
             $schedule['scd_date'] = date_format($date, "F j Y");
+
+            $date = date_create($schedule['dateDelivered']);
+            $schedule['dateDelivered'] = date_format($date, "F j Y");
         }
         return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("latest_id",$latest_id)->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
        
