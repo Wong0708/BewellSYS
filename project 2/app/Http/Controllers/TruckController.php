@@ -23,7 +23,7 @@ class TruckController extends Controller
     public function index()
     {
 
-        return view('appdev.productinventory')->with("products",$products)->with("supply",$supply);
+        return view('appdev.productinventory');
     }
 
     /**
@@ -82,7 +82,7 @@ class TruckController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $date = new datetime();

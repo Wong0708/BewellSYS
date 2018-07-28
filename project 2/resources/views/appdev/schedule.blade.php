@@ -22,6 +22,8 @@
     <link href="css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
+
+    <link href="css/allah.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="css/colors/blue.css" id="theme" rel="stylesheet">
 
@@ -75,8 +77,8 @@
                             </ul>
                             <!-- /.dropdown-tasks -->
                         </li>
-    
-    
+
+
                         
                         <li class="dropdown">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
@@ -284,7 +286,7 @@
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Driver:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a driver to deliver the order. <b style="color:#E53935;">*Required</b></span>
-                                    <select name="driver" class="form-control" id="client" style="margin-bottom:10px;">
+                                    <select name="driver" class="form-control driver_dropdown" id="driver" style="margin-bottom:10px;">
                                                     @if(isset($drivers))
                                                         @foreach ($drivers as $driver)
                                                             <option value="{{$driver->id}}">{{$driver->name}}</option>
@@ -364,7 +366,7 @@
                                                                     <th>Sched #</th>
                                                                     <th>Driver</th>
                                                                     <th>Address</th>
-                                                                    <th>Delivery Date</th>
+                                                                    <th>Delivered Date</th>
                                                                     <th>Status</th>
                                                                     {{-- <th><i class="fa fa-gear"></th> --}}
                                                                             </tr>
@@ -379,11 +381,12 @@
                                                                                             @endforeach
                                                                                         @endif</td>
                                                                                <td><span class="label label-success" id="prev_address">Taft Avenue, Metro Manila</span></td>
-                                                                               <td>2018-07-21</td>
+                                                                               <td id="prev_delivery_date"></td>
                                                                                <td><span class="label label-success">Scheduled</span></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
+                                                                    <h2><center><span class="control label" id="alert" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
                                         
                                                 </div>
                                 
@@ -397,6 +400,66 @@
                                 </div>
                             {!!Form::close()!!}
                             
+                        </div>
+                    </div>
+                </div>
+                <!--truck edit modal -->
+                <div  class="modal fade" id="editTruckModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"></button>
+                                <center ><b><h2 class="modal-title" style="display: inline;">Edit Truck Status</h2></b></center>
+                            </div>
+                            {!! Form::open(['route'=>['truck.update',1],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="truckStatus">Truck Status:</label>
+                                    <select name="truckStatus" class="form-control" id="truckStatus">
+                                        <option>Available</option>
+                                        <option>Not Available</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input id="tr_id" type="hidden" name="tr_id">
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                            </div>
+                            {!!Form::close()!!}
+                        </div>
+                    </div>
+                </div>
+                <!--conclude sched modal -->
+                <div  class="modal fade" id="concludeSchedModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"></button>
+                                <center ><b><h2 class="modal-title" style="display: inline;">Conclude Schedule
+                                            <i class="fa fa-calendar"></i>
+                                        </h2></b></center>
+                            </div>
+                            {!! Form::open(['route'=>['schedule.update',1],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="truckStatus">Conclusion</label>
+                                    <select name="schedule_conclusion" style="font-family: 'FontAwesome', 'Open Sans';font-size: 21px;" class="form-control sched_conc" id="sched_conc">
+                                        <option value="fulfil" style="">&#xf274; Fulfill Delivery</option>
+                                        <option value="cancel">&#xf273; Cancel Delivery</option>
+                                    </select>
+                                    <label for="truckStatus">Remarks:</label>
+                                    <textarea class="form-control" class="form-control" placeholder="Write about your transaction details" rows="5" name="remarks" id="comment"></textarea>
+                                    <div id="date_conclude" style="display:block">
+                                        <label for="truckStatus">Delivery Date:</label>
+                                        <input type="date" class="form-control" name="delivery_date"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <input id="sc_id" type="hidden" name="id">
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                            </div>
+                            {!!Form::close()!!}
                         </div>
                     </div>
                 </div>
@@ -497,16 +560,29 @@
                         </div>
 
 
-                
+
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
+                    @if(Session::has('success'))
+                        <script>
+                            window.onload = function() {
+                                var x = document.getElementById("allah_snackbar");
+                                x.className = "show";
+                                setTimeout(function(){
+                                    x.className = x.className.replace("show", ""); }, 3000);
+                            }
+                        </script>
+                        <div class="alert alert-success"> {{Session::get('success')}} </div>
+                    @endif
+
+                        @if(Session::has('success'))
+                            <center><div id="allah_snackbar">{{Session::get('success')}}</div></center>
+                        @endif
                     <div class="col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                            @if(Session::has('success'))
-                                <div class="alert alert-success"> {{Session::get('success')}} </div>
-                            @endif
+
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL ORDER SCHEDULES</h3>
                             {{-- <div class="col-sm-12" style="background-color:red;"> --}}
-                                <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Schedule</button>
+                                <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-calendar-plus-o"></i></span>Add Schedule</button>
                                                     
                                 <p class="text-muted m-b-30"></p>
                                 <div class="table-responsive">
@@ -519,9 +595,9 @@
                                                 <th>Driver</th>
                                                 <th>Address</th>
                                                 <th>Schedule Date</th>
-                                                <th>Delivery Date</th>
+                                                <th>Delivered Date</th>
                                                 <th>Status</th>
-                                                <th><i class="fa fa-gear"></th>
+                                                <th><i class="fa fa-gavel"></i> Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -535,11 +611,18 @@
                                                     <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
                                                     <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
                                                     <td>{{$schedule->scd_date}}</td>
+<<<<<<< HEAD
                                                     <td>N/A</td>
                                                     <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
+=======
+                                                    <td>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else N/A @endif</td>
+                                                    <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
+                                                        >{{$schedule->scd_status}}</span></td>
+>>>>>>> 050c9d4f321c825353f85c5d8097c9aee98a9757
                                                     <td>
                                                         {!! Form::open(['route'=>['schedule.destroy',$schedule->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
-                                                        <i style="margin-left:5px; color:#E53935;" class="fa fa-close removeorder">
+                                                        <center><a href="#" data-toggle="modal" data-target="#concludeSchedModal" scid="{{$schedule->id}}" class="conclude"><i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>
+                                                        </center>
                                                         {!!Form::close()!!}
                                                     </td>
                                                 </tr>
@@ -555,11 +638,9 @@
 
                     <div class="col-lg-12 col-sm-12">
                             <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                            @if(Session::has('success'))
-                                <div class="alert alert-success"> {{Session::get('success')}} </div>
-                            @endif
+
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL TRUCKS</h3>
-                            <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#truckmodal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Truck</button>
+                            <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#truckmodal" type="button"><span class="btn-label"><i class="fa fa fa-truck"></i></span>Add Truck</button>
 
                             <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
@@ -603,32 +684,7 @@
                                                 </td>
                                                 {{-- <td>  --}}
                                             </tr>
-                                            <!--truck edit modal -->
-                                            <div  class="modal fade" id="editTruckModal" role="dialog">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal"></button>
-                                                            <center ><b><h2 class="modal-title" style="display: inline;">Edit Truck Status</h2></b></center>
-                                                    </div>
-                                                    {!! Form::open(['route'=>['truck.update',$truck->id],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
-                                                    <div class="modal-body">
-                                                        <div class="form-group">
-                                                            <label for="truckStatus">Truck Status:</label>
-                                                            <select name="truckStatus" class="form-control" id="truckStatus">
-                                                                <option>Available</option>
-                                                                <option>Not Available</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <input id="tr_id" type="hidden" name="tr_id">
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
-                                                    </div>
-                                                    {!!Form::close()!!}
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         @endforeach
                                     @endif
 
@@ -639,10 +695,11 @@
                     </div>
                 </div>
 
+
                 <div class="col-lg-12 col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                         <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL DRIVERS</h3>
-                        <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#driverModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Driver</button>
+                        <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#driverModal" type="button"><span class="btn-label"><i class="fa fa-wrench"></i></span>Add Driver</button>
                                                 
                         <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place a new company driver! </span> </a> {{-- </div> --}} {{-- </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                         <p class="text-muted m-b-30"></p>
@@ -805,6 +862,14 @@
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
             <!-- end - This is for export functionality only -->
             <script>
+                $( document ).ready(function() {
+                    var loc = $('option:selected', ".address_dropdown").html();
+
+                    //console.log( "ready!" );
+                    $("#prev_address").html(loc);
+                });
+            </script>
+            <script>
                 function  computeBoxes(){
                     return 0;
                 }
@@ -830,7 +895,9 @@
                             $('#schedSubmit').click();
                         }
                         else{
-                            alert("Delivering quantity exceeds the available space.");
+                            //$('#alert').click();
+                            //alert("Delivering quantity exceeds the available space.");
+                            $('#alert').css('display','block');
                         }
                     }else{
                         alert("please select a date")
@@ -850,6 +917,9 @@
                         for (i = 0; i < option_locs.length; i++) {
                             if(option_locs[i]!=""){
                                 $('.address_dropdown').append('<option value="'+option_id[i]+'">'+option_locs[i]+'</option>');
+                                if(i===0){
+                                    $('#prev_address').html(option_locs[i]);
+                                }
                             }
                         }
 
@@ -867,6 +937,11 @@
                             }
                         }
                     });
+                    $('.driver_dropdown').bind('change',function() {
+                        var driver = $('option:selected', this).html();
+                        $('#prev_driver').html(driver);
+
+                    });
 
                     $('.truck_dropdown').bind('change',function() {
                         var max_cap = parseInt($('option:selected', this).attr('truck_total_cap'));
@@ -878,7 +953,16 @@
                       //  $('#truck_curr_cap').html(curr_cap);
                       //  $('#truck_avail_cap').html(avail_cap);
                     });
+                    $('.sched_conc').bind('change',function() {
+                        var x = $('option:selected', this).attr('value');
+                        if(x === "cancel"){
+                            $('#date_conclude').css('display','none');
+                        }
+                        else{
+                            $('#date_conclude').css('display','block');
+                        }
 
+                    });
                     $('.delivery_date').bind('change',function(e) {
 
                         var max_cap = parseInt($('option:selected', $('.truck_dropdown')).attr('truck_total_cap'));
@@ -927,6 +1011,8 @@
                                 console.log(result.total_curr_cap);
                                 console.log(result.msg);
                             }});
+
+                            $('#prev_delivery_date').html($(this).val());
                     });
 
 
@@ -1006,6 +1092,12 @@
                     var verify = confirm("Do you wish to proceed to add the following products?");
                     return verify;
                 });
+
+                $(document).on('click', '.conclude', function() {
+
+                    $("#sc_id").val($(this).attr('scid'));
+                    $('#date_conclude').css('display','block');
+                });
                 $(document).on('click', '.truckeditz', function() {
                     
                     $("#tr_id").val($(this).attr('trid'));
@@ -1034,4 +1126,4 @@
             </script>
 </body>
 
-</html>
+</html> 

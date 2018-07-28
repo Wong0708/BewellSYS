@@ -202,10 +202,12 @@
         <div id="page-wrapper">
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title" style="color:black;">Schedule Details: TR-0001</h4>
+                    <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title" style="display:inline;color:black;">Schedule Details: TR-{{$schedule->id}} / </h4>
+                        <i class="fa fa-circle" style="display: inline;color: {{\App\Http\Controllers\ScheduleDetailController::getSchedClassColor($schedule->id)}}"></i>
+                        <p style="display: inline" class="text-muted">  {{$schedule->scd_status}}</p>
                     </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <div class="col-lg-7 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
                             {{-- <li><a href="#">Order</a></li> --}}
@@ -393,182 +395,158 @@
                     </div>
                 </div>
 
-                {{-- <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="sysmodal2">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="exampleModalLabel1">Edit Order</h4> </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">Customer</label>
-                                            <input type="dropdown" class="form-control" id="recipient-name1"> </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+                <div class="col-lg-6 col-sm-6">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                                <button type="button" class="list-group-item" disabled>
+                                    <span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe016;" class="linea-icon linea-basic"></i></span>
+                                    <b>Order Number: </b>CLO-{{$schedule->orderID}}
+                                </button>
+                                <button type="button" class="list-group-item" disabled>
+                                    <span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-elaborate"></i></span>
+                                    <b>Scheduled Date: </b>{{$schedule->scd_date}}
+                                </button>
+                                <button type="button" class="list-group-item" disabled>
+                                    <span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe026;" class="linea-icon linea-elaborate"></i></span>
+                                    <b>Date Delivered: </b>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else Scheduled {!! $schedule->datediff !!}  @endif
+                                </button>
+                                <button type="button" class="list-group-item" disabled>
+                                    <span><i style="color:#1565C0; margin-right:5px;" data-icon="Z" class="linea-icon linea-basic"></i></span>
+                                    <b>Location: </b>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}
+                                </button>
 
 
-                
-                        {{-- <div id="statusModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"></button>
-                                        <h4 class="modal-title"></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="orderStatus">Order Status:</label>
-                                                <select name="orderStatus" class="form-control" id="orderStatus">
-                                                    <option>Processing</option>
-                                                    <option>Scheduled</option>
-                                                    <option>Delivering</option>
-                                                    <option>Delivered</option>
-                                                    <option>Complete</option>
-                                                    <option>Cancelled</option>
-                                                </select>
-                                            </div>
-
-                                            <input id="orderID" type="hidden" name="orderID">
-                                            
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning" data-dismiss="modal">
-                                                <span class='glyphicon glyphicon-remove'></span> Close
-                                            </button>
-                                            <button type="submit" class="btn btn-danger">
-                                                    <span class='glyphicon glyphicon-remove'></span> Submit
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> --}}
-                    
-                <!--MODAL ENDS HERE-->
-
-                <div class="row">
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center bg-purple">
-                                <h1 class="text-white counter">1,000</h1>
-                                <p class="text-white">Total Ordered</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center bg-info">
-                                <h1 class="text-white counter">500</h1>
-                                <p class="text-white">Total Delivered</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center">
-                                <h1 class="counter">500</h1>
-                                <p class="text-muted">Total Remaining Order/s</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center bg-success">
-                                <h1 class="text-white counter">300</h1>
-                                <p class="text-white">Total Available Capacity</p>
                             </div>
                         </div>
                     </div>
-                    
-              
-                  <div class="col-lg-6 col-sm-6">
-                      <div class="row">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
 
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <h4 style="color:black; margin-bottom:7px;">Order Functions</h4>
-                                    <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i></span>Manage Client Order</button>
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i></span>Manage Manufacturer Order</button>
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span>Manage Supplier Order</button>
-                                    </div>
+                                {{-- <h3 class="box-title">Ordered Products</h3> --}}
+                                <h3 class="box-title m-b-0" style="color:black;">Ordered Material/s</h3>
+                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section contains all the specified order/s.</span>
+                                <br>
+                                <button style="margin-top:10px;"  class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
+                                {{-- <p class="text-muted m-b-30"></p> --}}
+                                <hr>
+                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: CLOD-1</h3>
+                                <div class="table-responsive">
+                                    <table id="myTable" class="table table-striped">
+                                        <thead>
+                                        <tr style="color:black;">
+                                            <th>#</th>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                            <th>SKU</th>
+                                            <th>Quantity (Boxes)</th>
+                                            <th>Remaining</th>
+                                            <th>Delivered</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            {{-- <td>PR-0001</td> --}}
+                                            <td>1</td>
+                                            <td>BC-Calcium</td>
+                                            <td>Bewell-C Calcium</td>
+                                            <td>500 grams</td>
+                                            <td>500</td>
+                                            <td>300</td>
+                                            <td>200</td>
+
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                      </div>
-
-                      {{-- <div class="row">
-                            <div class="col-lg-12 col-sm-12">
-                                
-                                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Manufacturer Details</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the contact information of the manufacturer.</span>
-                                        <div class="row" style="margin-top:10px; ">
-                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Manufacturer</strong>
-                                                    <br>
-                                                    <p class="text-muted">Acadia Pharmaceuticals</p>
-                                                </div>
-                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Contact Number</strong>
-                                                    <br>
-                                                    <p class="text-muted">+63 945 326 7890</p>
-                                                </div>
-                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Email</strong>
-                                                    <br>
-                                                    <p class="text-muted">Acadia Pharmaceuticals@gmail.com</p>
-                                                </div>
-                                                <div class="col-md-6 col-xs-6"> <strong>Location</strong>
-                                                    <br>
-                                                    <p class="text-muted">17 Venus Ave Tagum City, Philippines</p>
-                                                </div>
-                                            </div>
-                                    </div>
                             </div>
-                        </div> --}}
-                      {{-- <div class="row">
-                            <div class="col-lg-12 col-sm-12">
-                                
-                                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Order Payment Report</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the manufacturer order/s.</span><br>
-                                        
-                                    <button style="margin-top:10px; " class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>
-                                        <p class="text-muted m-b-30"></p>
-                                        <div class="table-responsive">
-                                                <table id="myTable2" class="table table-striped">
-                                                    <thead>
-                                                        <tr style="color:black;">
-                                                            <th>#</th>
-                                                            <th>Order #</th>
-                                                            <th>Grand Total</th>
-                                                            <th>Paid</th>
-                                                            <th>Balance</th>
-                                                            <th>Status</th>
-                                                            <th><i class="fa fa-gear"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                   
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>MLOD-0001</td>
-                                                                <td>₱49,291</td>
-                                                                <td>₱20,000 </td>
-                                                                <td>₱29,291</td>
-                                                                
-                                                                <td><span class="label label-warning">Unpaid</span></td>
-                                                                <td>
-                                                                        <i style="color:#4c87ed;" class="fa fa-edit">
-                
-                                                                                <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                        
-                                                                    </td>
-                                                             
-                                                               
-                                                            </tr> 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                                <h3 class="box-title m-b-0" style="color:black;">Order Delivery Summary</h3>
+                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the section to show summary delivery.</span>
+                                <br>
+                                <button style="margin-top:10px;" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe00b;"></i></span>Print Order Delivery Report (ODR)</button>
+                                {{-- <button style="margin-top:10px;" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="|"></i></span>Update Raw Material Inventory</button>                         --}}
+
+                                {{-- <p class="text-muted m-b-30"></p>
+                                 --}}
+                                <hr>
+                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Schedule Details: TR-0001</h3>
+
+                                <table class="table table-bordered">
+                                    <thead style="color:black;">
+                                    <tr style="color:black;">
+                                        <th>#</th>
+                                        <th>Truck Plate #</th>
+                                        <th>Driver</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        {{-- <th>Schedule Date</th> --}}
+                                        <th>Delivery Date</th>
+                                        <th>Qty (Boxes)</th>
+                                        {{-- <th>Gross Total Price</th> --}}
+                                        {{-- <th>Discount</th> --}}
+                                        {{-- <th>Grand Total Price</th> --}}
+                                        {{-- <th>Profit</th> --}}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>NSA-2134</td>
+                                        <td>Juan Dela Cruz</td>
+                                        <td>BC-C500G</td>
+                                        <td>Bewell-C Calcium</td>
+                                        <td>2018-07-22</td>
+                                        <td>100</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                <hr>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                <button style=" width: 100%"  class="btn btn-info waves-effect waves-light"
+                                        data-toggle="modal" data-target="#clientOrderModal" type="button">
+                                    <span class="btn-label"><i class="fa fa-calendar-check-o"></i></span>
+                                    Fulfill Schedule
+                                </button>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                <button style=" width: 100%"  class="btn btn-danger waves-effect waves-light"
+                                        data-toggle="modal" data-target="#clientOrderModal" type="button">
+                                    <span class="btn-label"><i class="fa fa-calendar-times-o"></i></span>
+                                    Cancel Schedule
+                                </button>
+                        </div>
+
+
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <div class="white-box text-center bg-success">
+                                <h1 class="text-white counter">{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</h1>
+                                <p class="text-white">Driver</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <div class="white-box text-center">
+                                <h1 class=" counter">{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</h1>
+                                <p>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->car_model}}</p>
+                            </div>
+                        </div>
+                    </div>
                       <div class="row">
                             <div class="col-lg-12 col-sm-12">
                                 
@@ -713,128 +691,7 @@
                                 </div>
                                
                     </div>
-                    
-                <div class="col-lg-6 col-sm-6">
-                        <div class="row">
-                                <div class="col-lg-12 col-sm-12">
-                                <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                    
-                                    {{-- <h3 class="box-title">Ordered Products</h3> --}}
-                                    <h3 class="box-title m-b-0" style="color:black;">Ordered Material/s</h3>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section contains all the specified order/s.</span>
-                                    <br>
-                                    <button style="margin-top:10px;"  class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
-                                    {{-- <p class="text-muted m-b-30"></p> --}}
-                                    <hr>
-                                    <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: CLOD-1</h3>
-                                    <div class="table-responsive">
-                                            <table id="myTable" class="table table-striped">
-                                                <thead>
-                                                    <tr style="color:black;">
-                                                        <th>#</th>
-                                                        <th>Code</th>
-                                                        <th>Name</th>
-                                                        <th>SKU</th>
-                                                        <th>Quantity (Boxes)</th>
-                                                        <th>Remaining</th>
-                                                        <th>Delivered</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                        <tr>
-                                                            {{-- <td>PR-0001</td> --}}
-                                                            <td>1</td>
-                                                            <td>BC-Calcium</td>
-                                                            <td>Bewell-C Calcium</td>
-                                                            <td>500 grams</td>
-                                                            <td>500</td>
-                                                            <td>300</td>
-                                                            <td>200</td>
-                                                            
-                                                           
-                                                        </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                    <div class="row">
-                    <div class="col-lg-12">
-                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                        <h3 class="box-title m-b-0" style="color:black;">Order Delivery Report</h3>
-                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the section to generate order delivery report.</span>
-                                <br>
-                        <button style="margin-top:10px;" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe00b;"></i></span>Print Order Delivery Report (ODR)</button>          
-                        {{-- <button style="margin-top:10px;" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="|"></i></span>Update Raw Material Inventory</button>                         --}}
-                                      
-                        {{-- <p class="text-muted m-b-30"></p>
-                         --}}
-                         <hr>
-                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Schedule Details: TR-0001</h3>
-                         
-                           <table class="table table-bordered">
-                               <thead style="color:black;">
-                                   <tr style="color:black;">
-                                        <th>#</th>
-                                       <th>Truck Plate #</th>
-                                       <th>Driver</th>
-                                       <th>Code</th>
-                                       <th>Name</th>
-                                       {{-- <th>Schedule Date</th> --}}
-                                       <th>Delivery Date</th>
-                                       <th>Qty (Boxes)</th>
-                                       {{-- <th>Gross Total Price</th> --}}
-                                       {{-- <th>Discount</th> --}}
-                                       {{-- <th>Grand Total Price</th> --}}
-                                       {{-- <th>Profit</th> --}}
-                                   </tr>
-                               </thead>
-                               <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>NSA-2134</td>
-                                        <td>Juan Dela Cruz</td>
-                                        <td>BC-C500G</td>
-                                        <td>Bewell-C Calcium</td>
-                                        <td>2018-07-22</td>
-                                        <td>100</td>
-                                    </tr>
-                                    <tr>
-                                            <td>1</td>
-                                            <td>NSA-2134</td>
-                                            <td>Juan Dela Cruz</td>
-                                            <td>BC-C500G</td>
-                                            <td>Bewell-C Calcium</td>
-                                            <td>2018-07-22</td>
-                                            <td>100</td>
-                                        </tr> <tr>
-                                                <td>1</td>
-                                                <td>NSA-2134</td>
-                                                <td>Juan Dela Cruz</td>
-                                                <td>BC-C500G</td>
-                                                <td>Bewell-C Calcium</td>
-                                                <td>2018-07-22</td>
-                                                <td>100</td>
-                                            </tr> <tr>
-                                                    <td>1</td>
-                                                    <td>NSA-2134</td>
-                                                    <td>Juan Dela Cruz</td>
-                                                    <td>BC-C500G</td>
-                                                    <td>Bewell-C Calcium</td>
-                                                    <td>2018-07-22</td>
-                                                    <td>100</td>
-                                                </tr>
 
-                               </tbody>
-                           </table>
-                           <hr>
-                           
-        </div>
-                           
-                    </div>
-                </div>
-            </div>
                 </div>
                 
             </div>

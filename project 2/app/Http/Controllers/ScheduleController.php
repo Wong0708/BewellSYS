@@ -49,8 +49,9 @@ class ScheduleController extends Controller
             $order_det_id = array();
 
             foreach ($order_det as $det){
-                array_push($order_det_id,$det['orderID']);
+                array_push($order_det_id, $det['orderID']);
             }
+
             return in_array($order->id,$order_det_id,TRUE);
         });
 
@@ -68,9 +69,16 @@ class ScheduleController extends Controller
 
             $order['client_name'] = $a['cl_name'];
         }
-        // get order and get the client from that order
-        // display their list of addresses
 
+        foreach($schedules as $schedule){
+
+            $date = date_create($schedule['scd_date']);
+            $schedule['scd_date'] = date_format($date, "F j Y");
+            if($schedule->dateDelivered){
+                $date = date_create($schedule['dateDelivered']);
+                $schedule['dateDelivered'] = date_format($date, "F j Y");
+            }
+        }
         return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("latest_id",$latest_id)->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
        
     }
@@ -188,6 +196,24 @@ class ScheduleController extends Controller
     public static function getLocation($id){
         return ClientLocation::find($id);
     }
+    public static function getSchedClassColor($id){
+        $schedule = Schedule::find($id);
+        switch ($schedule->scd_status){
+            case "Processing":
+                return "label-default";
+                break;
+            case "Scheduled":
+                return "label-info";
+                break;
+            case "Delivered";
+                return "label-success";
+                break;
+            case "Cancelled";
+                return "label-danger";
+                break;
+        }
+        return null;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -232,8 +258,11 @@ class ScheduleController extends Controller
 
             $schedule_det->save();
             $i = $i+1;
+
+
         }
 
+        Session::flash('success','New schedule added!');
         return redirect("/schedule");
     }
 
@@ -268,7 +297,33 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $fields = $request->all();
+        $schedule = Schedule::find($fields['id']);
+        $order = ClientOrder::find($schedule['orderID']);
+        if($request->schedule_conclusion == "fulfil"){
+
+            $schedule->dateDelivered = $request->delivery_date;
+            $schedule->scd_status = "Delivered";
+            $schedule->remark = $request->remarks;
+
+            $order->clod_status = "Delivered";
+        }
+        else{
+            $schedule->scd_status = "Cancelled";
+            $schedule->remark = $request->remarks;
+
+
+            $order->clod_status = "Cancelled";
+        }
+
+
+        $order->save();
+
+        $schedule->save();
+
+        Session::flash('success','Successfully confirmed schedule!');
+        return redirect("/schedule");
     }
 
     /**
