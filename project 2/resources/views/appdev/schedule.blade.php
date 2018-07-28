@@ -286,7 +286,7 @@
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Driver:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a driver to deliver the order. <b style="color:#E53935;">*Required</b></span>
-                                    <select name="driver" class="form-control" id="client" style="margin-bottom:10px;">
+                                    <select name="driver" class="form-control driver_dropdown" id="driver" style="margin-bottom:10px;">
                                                     @if(isset($drivers))
                                                         @foreach ($drivers as $driver)
                                                             <option value="{{$driver->id}}">{{$driver->name}}</option>
@@ -381,7 +381,7 @@
                                                                                             @endforeach
                                                                                         @endif</td>
                                                                                <td><span class="label label-success" id="prev_address">Taft Avenue, Metro Manila</span></td>
-                                                                               <td>2018-07-21</td>
+                                                                               <td id="prev_delivery_date"></td>
                                                                                <td><span class="label label-success">Scheduled</span></td>
                                                                             </tr>
                                                                         </tbody>
@@ -857,6 +857,14 @@
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
             <!-- end - This is for export functionality only -->
             <script>
+                $( document ).ready(function() {
+                    var loc = $('option:selected', ".address_dropdown").html();
+
+                    //console.log( "ready!" );
+                    $("#prev_address").html(loc);
+                });
+            </script>
+            <script>
                 function  computeBoxes(){
                     return 0;
                 }
@@ -902,6 +910,9 @@
                         for (i = 0; i < option_locs.length; i++) {
                             if(option_locs[i]!=""){
                                 $('.address_dropdown').append('<option value="'+option_id[i]+'">'+option_locs[i]+'</option>');
+                                if(i===0){
+                                    $('#prev_address').html(option_locs[i]);
+                                }
                             }
                         }
 
@@ -918,6 +929,11 @@
                                     '</tr>');
                             }
                         }
+                    });
+                    $('.driver_dropdown').bind('change',function() {
+                        var driver = $('option:selected', this).html();
+                        $('#prev_driver').html(driver);
+
                     });
 
                     $('.truck_dropdown').bind('change',function() {
@@ -988,6 +1004,8 @@
                                 console.log(result.total_curr_cap);
                                 console.log(result.msg);
                             }});
+
+                            $('#prev_delivery_date').html($(this).val());
                     });
 
 
