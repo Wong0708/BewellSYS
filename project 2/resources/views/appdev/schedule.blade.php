@@ -386,6 +386,7 @@
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
+                                                                    <h2><center><span class="control label" id="alert" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
                                         
                                                 </div>
                                 
@@ -447,8 +448,7 @@
                                         <option value="cancel">&#xf273; Cancel Delivery</option>
                                     </select>
                                     <label for="truckStatus">Remarks:</label>
-                                    <textarea class="form-control" class="form-control" placeholder="Write about your transaction details"
-                                              rows="5" name="remarks" id="comment"></textarea>
+                                    <textarea class="form-control" class="form-control" placeholder="Write about your transaction details" rows="5" name="remarks" id="comment"></textarea>
                                     <div id="date_conclude" style="display:block">
                                         <label for="truckStatus">Delivery Date:</label>
                                         <input type="date" class="form-control" name="delivery_date"/>
@@ -565,17 +565,17 @@
                     @if(Session::has('success'))
                         <script>
                             window.onload = function() {
-                                var x = document.getElementById("snackbar");
+                                var x = document.getElementById("allah_snackbar");
                                 x.className = "show";
                                 setTimeout(function(){
                                     x.className = x.className.replace("show", ""); }, 3000);
                             }
                         </script>
-                       <!-- <div class="alert alert-success"> {{Session::get('success')}} </div>-->
+                        <div class="alert alert-success"> {{Session::get('success')}} </div>
                     @endif
 
                         @if(Session::has('success'))
-                            <center><div id="snackbar">{{Session::get('success')}}</div></center>
+                            <center><div id="allah_snackbar">{{Session::get('success')}}</div></center>
                         @endif
                     <div class="col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -612,8 +612,7 @@
                                                     <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
                                                     <td>{{$schedule->scd_date}}</td>
                                                     <td>N/A</td>
-                                                    <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
-                                                        >{{$schedule->scd_status}}</span></td>
+                                                    <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
                                                     <td>
                                                         {!! Form::open(['route'=>['schedule.destroy',$schedule->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
                                                         <center><a href="#" data-toggle="modal" data-target="#concludeSchedModal" scid="{{$schedule->id}}" class="conclude"><i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>
@@ -882,7 +881,9 @@
                             $('#schedSubmit').click();
                         }
                         else{
-                            alert("Delivering quantity exceeds the available space.");
+                            //$('#alert').click();
+                            //alert("Delivering quantity exceeds the available space.");
+                            $('#alert').css('display','block');
                         }
                     }else{
                         alert("please select a date")
@@ -1071,7 +1072,7 @@
                 $(document).on('click', '.conclude', function() {
 
                     $("#sc_id").val($(this).attr('scid'));
-                    //$('#date_conclude').css('display','block');
+                    $('#date_conclude').css('display','block');
                 });
                 $(document).on('click', '.truckeditz', function() {
                     
@@ -1101,4 +1102,4 @@
             </script>
 </body>
 
-</html>
+</html> 
