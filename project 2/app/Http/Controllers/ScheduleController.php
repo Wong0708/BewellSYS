@@ -74,6 +74,9 @@ class ScheduleController extends Controller
 
             $date = date_create($schedule['scd_date']);
             $schedule['scd_date'] = date_format($date, "F j Y");
+
+            $date = date_create($schedule['dateDelivered']);
+            $schedule['dateDelivered'] = date_format($date, "F j Y");
         }
         return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("latest_id",$latest_id)->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
        
@@ -296,16 +299,25 @@ class ScheduleController extends Controller
 
         $fields = $request->all();
         $schedule = Schedule::find($fields['id']);
+        $order = ClientOrder::find($schedule['orderID']);
         if($request->schedule_conclusion == "fulfil"){
 
             $schedule->dateDelivered = $request->delivery_date;
             $schedule->scd_status = "Delivered";
             $schedule->remark = $request->remarks;
+
+            $order->clod_status = "Delivered";
         }
         else{
             $schedule->scd_status = "Cancelled";
             $schedule->remark = $request->remarks;
+
+
+            $order->clod_status = "Cancelled";
         }
+
+
+        $order->save();
 
         $schedule->save();
 
