@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class SupplyLogs extends Model
 {
-    protected $table="BC_Supply_Logs";
+    protected $table="bc_supply_logs";
 }

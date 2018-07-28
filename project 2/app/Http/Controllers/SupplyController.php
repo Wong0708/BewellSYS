@@ -74,6 +74,10 @@ class SupplyController extends Controller
         {
             $supplyarray[6] = $added_supply;
         }
+        foreach ($add_supply['desc'] as $added_supply)
+        {
+            $supplyarray[7] = $added_supply;
+        }
 
         $date = new DateTime();
         $date1 = date("Y-m-d");
@@ -82,7 +86,7 @@ class SupplyController extends Controller
         $supply->sp_expiryDate = $date1;
         $supply->sp_code = $supplyarray[1];
         $supply->sp_name = $supplyarray[0];
-        $supply->sp_desc = 'N/A';
+        $supply->sp_desc = $supplyarray[7];
         $supply->sp_sku = $supplyarray[2];
         $supply->sp_qty = 0;
         $supply->sp_reorder = 0;

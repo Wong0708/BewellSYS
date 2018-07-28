@@ -455,37 +455,50 @@
                 <!--MODAL ENDS HERE-->
 
                 <div class="row">
-                        <div class="col-md-4 col-xs-12 col-sm-6">
+                        <div class="col-md-3 col-xs-12 col-sm-6">
+                         @if($supply1->sp_status == "On Stock")
+                            <div class="white-box text-center bg-success">
+                                <h1 class="text-white counter">{{$supply1->sp_qty}}</h1>
+                                <p class="text-white">{{'This Product is '.$supply1->sp_status}}</p>
+                            </div>
+                        @else
+                        <div class="white-box text-center bg-danger">
+                                <h1 class="text-white counter">{{$supply1->sp_qty}}</h1>
+                                <p class="text-white">{{'This Product is '.$supply1->sp_status}}</p>
+                        </div>
+                        @endif
+                        </div> 
+                        <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
                                 <h1 class="text-white counter">120</h1> <!-- select * from supplier_orders where material id = this material -->
                                 <p class="text-white">Total On-order Material/s</p>
                             </div>
                         </div>
-                        <div class="col-md-4 col-xs-12 col-sm-6">
+                        <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-info">
                                 <h1 class="text-white counter">231</h1> <!-- (select sp_qty from bewelldb.supply) - (select sum(items_sent) from manufacturer_order_details where raw material = this material and status != delivering or delivered) -->
                                 <p class="text-white">Total Available Material/s</p>
                             </div>
                         </div>
-                        <div class="col-md-4 col-xs-12 col-sm-6">
+                        <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center">
                                 <h1 class="counter">81</h1> <!-- select sum(items_sent) from manufacturer_order_details where status != delivering or delivered) --> 
                                 <p class="text-muted">Total Allocated Material/s</p>
                             </div>
                         </div>
-                        {{-- <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center bg-success">
-                                <h1 class="text-white counter">₱3,000.00</h1>
-                                <p class="text-white">Total Investment Cost</p>
-                            </div>
-                        </div> --}}
+                        
                     </div>
                     
-              
-                  <div class="col-lg-6 col-sm-6">
+                    <div class="col-lg-12 col-sm-12">
                       <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <h4 style="color:black; margin-bottom:7px;">Material Description</h4>
+                                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                                        {{$supply1->sp_desc}}
+                                    </div>
+                                </div>
 
-                            <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
                                     <h4 style="color:black; margin-bottom:7px;">Order Functions</h4>
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i><a href={{route('clientorder.index')}}></span>Manage Client Order</button>
@@ -569,7 +582,7 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            <div class="row">
+                          <!--  <div class="row">
                                     <div class="col-lg-12 col-sm-12">
                                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                         
@@ -616,7 +629,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 </div>
                          
                         <div class="row">
@@ -626,42 +639,30 @@
                                             <h3 class="box-title m-b-0" style="color:black;">Material Update History</h3>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this material.</span>
                                             <p class="text-muted m-b-30"></p>
-                                        {{-- <hr> --}}
+                                         <hr>
                                             <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Material Details: {{'RM-'.$supply1->id}}</h3>
                                             <div class="table-responsive">
                                                     <table id="myTable4" class="table table-striped">
                                                         <thead>
                                                             <tr style="color:black;">
-                                                                <th>#</th>
+                                                                <th>Update #</th>
                                                                 <th>User</th>
-                                                                <th>Update</th>
-                                                                {{-- <th>Notification</th> --}}
+                                                                <th>Audit Name</th>
                                                                 <th>Timestamp</th>
-                                                                {{-- <th></th> --}}
-                                                                {{-- <th></th> --}}
-                                                                {{-- <th><i class="fa fa-gear"></th> --}}
-                                                                {{-- <th><i class="fa fa-gear"></th> --}}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                       
+                                                       @if(isset($supply_logs))
+                                                            @foreach($supply_logs as $supplylog)
                                                                 <tr>
-                                                                    {{-- <td><a href={{route('clientorder.show',$order->id)}}>{{'CLOD-'.$order->id}}</a></td>
-                
-                                                                    <td>{{$order->fromClient->cl_name}}</td>
-                                                                    <td>{{$order->clod_date}}</td> 
-                                                                    <td>2018-04-17</td> 
-                                                                    <td>2018-04-17</td>  --}}
-                
-                                                                    {{-- <td><span class="label label-info">1</span></td> --}}
-                                                                    <td>1</td>
-                                                                    <td>PrivateAirJET</td>
-                                                                    <td><span class="label label-info">Added 5 New Client Orders.</span></td>
-                                                                    <td>2018-04-18 09:42:37</td>
-                                                                    {{-- <td>Just Now!</td> --}}
-                                                                 
-                                                                   
+                                                                    <td>{{'UID-'.$supplylog->query_id}}</td>
+                                                                    <td>{{$supplylog->userID}}</td> 
+                                                                    <td><span class="label label-info">{{$supplylog->auditName.' | '.$supplylog->supplystatus}}</span></td>
+                                                                    <td>{{$supplylog->updated_at}}</td>
                                                                 </tr> 
+                                                                
+                                                            @endforeach
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -671,7 +672,7 @@
                                
                     </div>
                     
-                <div class="col-lg-6 col-sm-6">
+              <!--  <div class="col-lg-6 col-sm-6">
                         <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -724,9 +725,9 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                            </div>
-                    <div class="row">
+                            </div> -->
+                            </div> 
+             <!--      <div class="row">
                     <div class="col-lg-12">
                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                         <h3 class="box-title m-b-0" style="color:black;">Material-Supply Report</h3>
@@ -740,7 +741,7 @@
                          <hr>
                          <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Material Details: RW-0001</h3>
                          
-                           <table class="table table-bordered">
+                        ()   <table class="table table-bordered">
                                <thead style="color:black;">
                                    <tr style="color:black;">
                                         <th>#</th>
@@ -796,7 +797,7 @@
                     </div>
                 </div>
             </div>
-                </div>
+                </div>--> 
                 
             </div>
 

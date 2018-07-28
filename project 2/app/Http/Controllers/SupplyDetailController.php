@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;  
+use Session;
 use App\Supply;
 use App\SupplyLogs;
 
@@ -18,8 +20,8 @@ class SupplyDetailController extends Controller
      */
     public function index()
     {
-        $supplylog = SupplyLogs::all();
-        return view('appdev.supplydetail')->with("supplylog",$supplylog);
+        $supplylogs = SupplyLogs::all();
+        return view('appdev.supplydetail')->with("supplylogs",$supplylogs);
     }
 
     /**
@@ -38,7 +40,8 @@ class SupplyDetailController extends Controller
         if($supply1['id'] == null){
             return view('errors.404');
         }
-        return view("appdev.supplydetail",['supply1' => $supply1]);
+        $supply_logs = DB::table('bc_supply_logs')->join('bc_supply','bc_supply_logs.materialID','=','bc_supply.id')->where('materialID',$supply1['id'])->get()->toArray();
+        return view("appdev.supplydetail",['supply1' => $supply1])->with("supply_logs",$supply_logs);
     }
 
     /**

@@ -240,6 +240,10 @@
                                     <label for="sku" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Material SKU:</b></label>
                                     <input type="text" class="form-control" data-mask="9999 GRAMS" name="SKU[]" required/>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Type the SKU for the desired material. Ex: 1000 GRAMS</span>
+                                    <br>
+                                    <label for="sku" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Material Description:</b></label>
+                                    <input type="text" class="form-control" name="desc[]"/>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Type the description for the desired material.</span>
 
                                     <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
                                         <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Material Initial Inventory Detail/s</b></h4>
@@ -340,6 +344,7 @@
                                                                                             <td>Available</td>
                                                                                             <td><input type="text" class="form-control" data-mask="9,999" required/></td>
                                                                                         </tr>
+                                                                                        
                                                                                     </tbody>
                                                                                 </table>
                                                                             </div> --}}
