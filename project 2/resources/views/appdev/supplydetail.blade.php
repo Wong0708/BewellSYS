@@ -202,10 +202,10 @@
         <div id="page-wrapper">
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title" style="color:black;">Material Details: {{'RM-'.$supply1->id}}</h4>
+                    <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+                        <h4 class="page-title" style="color:black;">Material Details: {{'RM-'.$supply1->id.' | '.$supply1->sp_name}}</h4>
                     </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">Inventory</a></li>
