@@ -257,9 +257,9 @@
                                     <br>
                                                
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Department:</b></label>
-                                    <select name="department[]" class="form-control department" name = "department[]" required>
-                                        <option>Logistics Head</option>
-                                        <option>Logistics Department</option>
+                                    <select name="department[]" class="form-control department" name = "department" required>
+                                        <option value="1">Logistics Head</option>
+                                        <option value="0">Logistics Department</option>
                                     </select>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the department in the company of the user.</span>
                                    

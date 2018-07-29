@@ -71,17 +71,11 @@ class UserAccountController extends Controller
         {
             $userdetail[4] = $added_user;
         }
+
+
         foreach($added_users['department'] as $added_user)
         {
-            if($added_user = "Logistics Head")
-            {
-                $added_user = 1;
-            }
-            else if($added_user = "Logistics Department")
-            {
-                $added_user = 0;
-            }
-            $userdetail[5] = $added_user;
+            $userdetail[5] = $added_user['department'];
         }
         foreach($added_users['role'] as $added_user)
         {

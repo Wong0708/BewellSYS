@@ -38,165 +38,76 @@
         <div class="cssload-speeding-wheel"></div>
     </div>
     <div id="wrapper">
+
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top m-b-0">
-                <div class="navbar-header" style="background:#64B5F6;  border-radius: 2px; position:relative;"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
-                    <div class="top-left-part" style="background-color:#BBDEFB; opacity:1;"><a class="logo" href="index.html"><b><img src="plugins/images/bewelllogos.png"  width="35px" alt="home" /></b><span class="hidden-xs"><img src="plugins/images/bewelllogol.png" width="110px" alt="home" /></span></a></div>
-                    <ul class="nav navbar-top-links navbar-left hidden-xs">
-                        <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
-                        <li>
-                            <form role="search" class="app-search hidden-xs">
-                                <input type="text" style="min-width:300px; background-color:#F5F5F5;" placeholder="Search System" class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
-                            </li>
-                    </ul>
-                    <ul class="nav navbar-top-links navbar-right pull-right">
-                        <!-- /.dropdown -->
-    
-                        <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i>
-              <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
-              </a>
-                            <ul class="dropdown-menu dropdown-tasks animated flipInX feeds">
-                                <li>
-                                        <strong>Notifications</strong> 
-                                </li>
-                                <li>
-                                    <div class="bg-info"><i class="fa fa-bell-o text-white"></i></div> Added 5 New Client Orders. <span class="text-muted">Just Now</span>
-                          
-                                </li>
-                                <li>
-                                    <div class="bg-danger"><i class="ti-user text-white"></i></div> New user registered.<span class="text-muted">16 July</span>
-                                </li>
-                                <li>
-                                    <a class="text-center" href="#"> <strong>See All Notifications</strong> <i class="fa fa-angle-right"></i> </a>
-                                </li>
-                            </ul>
-                            <!-- /.dropdown-tasks -->
-                        </li>
-    
-    
-                        
-                        <li class="dropdown">
-                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
-                                
-                                @if(Auth::user()->access==1)
-                                   Logistics Head
-                                @endif
-        
-                            </b> </a>
-    
-                            <!--DROPDOWN OF THE CLASS-->
-                            <ul class="dropdown-menu dropdown-user animated flipInY">
-                                <li><a href="#"><i class="ti-user"></i> Manage Account</a></li>
-                                {{-- <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                                <li><a href="#"><i class="ti-email"></i> Inbox</a></li> --}}
-                                {{-- <li role="separator" class="divider"></li>
-                                <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li> --}}
-                                <li role="separator" class="divider"></li>
-                            <li><a href={{route('logout.index')}}><i class="fa fa-power-off"></i> Logout</a></li>
-                            </ul>
-                            <!-- /.dropdown-user -->
-                        </li>
-                        <!-- /.Megamenu -->
-                        {{-- <li class="right-side-toggle"> <a class="waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li> --}}
-                        <!-- /.dropdown -->
-                    </ul>
-                </div>
-                <!-- /.navbar-header -->
-                <!-- /.navbar-top-links -->
-                <!-- /.navbar-static-side -->
-            </nav>
-        <!-- Left navbar-header -->
-        <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-                    <ul class="nav" id="side-menu">
-                        <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-                            <!-- input-group -->
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
-                <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
-                </span> </div>
-                            <!-- /input-group -->
-                        </li>
-                        {{-- <li class="user-pro">
-                        <a href="#" class="waves-effect"><img src="plugins/images/jet.jpg" alt="user-img" class="img-circle"> <span class="hide-menu">
-                            @if(Auth::user()->access==1)
-                                Administrator
-                            @endif
-    
-                            <span class="fa arrow"></span></span>
-                            </a>
-                            <ul class="nav nav-second-level">
-                                <li><a href="javascript:void(0)"><i class="ti-user"></i> Manage Account</a></li>
-                            </ul>
-                        </li> --}}
-                        {{-- <li class="nav-small-cap m-t-10">--- Main Menu</li> --}}
-                        <span style=" position:absolute; bottom: 50px; width:100%; text-align: center; font-size:14px;">Powered by</span>
-                        <span style=" position:absolute; bottom: 30px; width:100%; text-align: center; font-size:12px;"><strong>AIMinds</strong></span>
-                        <span style=" position:absolute; bottom: 10px; width:100%; text-align: center; font-size:10px;">BCOFSYS - Version 1.0.1</span>
-                        <li><a href={{route('dashboard.index')}} class="waves-effect"><i class="linea-icon linea-aerrow fa-fw" data-icon="&#xe078;"></i> <span class="hide-menu">Dashboard</span></a></li>
-                        <li> <a href="javascript:void(0)" class="waves-effect"><i data-icon="x" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Order<span class="fa arrow"></span></span></a>
-                            <ul class="nav nav-second-level">
-                                <li> <a href={{route('clientorder.index')}}>Client</a> </li>
-                                <li> <a href={{route('manufacturerorder.index')}}>Manufacturer</a> </li>
-                                <li> <a href={{route('supplierorder.index')}}>Supplier</a> </li>
-                            </ul>
-                        </li>
-                        <li> <a href={{route('schedule.index')}} class="waves-effect"><i style="color:#5F6367;" data-icon="r" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Schedule</span></a>
-                            {{-- <ul class="nav nav-second-level">
-                                <li> <a href="javascript:void(0)">Client</a> </li>
-                                <li> <a href="javascript:void(0)">Manufacturer</a> </li>
-                                <li> <a href="javascript:void(0)">Supplier</a> </li>
-                            </ul> --}}
-                        </li>
-                        <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="f" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Inventory<span class="fa arrow"></span></span></a>
-                            <ul class="nav nav-second-level">
-                                <li> <a href={{route('product.index')}}>Product</a> </li>
-                            <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
-                            </ul>
-                        </li>
-                        <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
-                            <ul class="nav nav-second-level">
-                                <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Manufacturer</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Supplier</a> </li>
-                            </ul>
-                        </li>
-    
-                        <li style="border-bottom:1px solid #E8EAED; background-color: #E9F0FD;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#4c87ed;" data-icon="V" class="linea-icon linea-basic fa-fw"></i> <span style="color:#4c87ed;" class="hide-menu">Account<span class="fa arrow"></span></span></a>
-                            <ul class="nav nav-second-level">
-                                <li> <a href={{route('useraccount.index')}}>User</a> </li>
-                                <li> <a href={{route('clientaccount.index')}}>Client</a> </li>
-                                <li> <a href={{route('manufactureraccount.index')}}>Manufacturer</a> </li>
-                                <li> <a href={{route('supplieraccount.index')}}>Supplier</a> </li>
-                                {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
-                            </ul>
-                        </li>
-    
-    
-                        {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
-                            {{-- <ul class="nav nav-second-level">
-                                <li> <a href={{route('inventoryreport.index')}}>Truck</a> </li> --}}
-                                {{-- <li> <a href={{route('salesreport.index')}}>Driver</a> </li> --}}
-                                {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
-                            {{-- </ul>
-                        </li> --}}
-                        
-                        <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">FAQs</span></a></li>
-                        <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Documentation</span></a></li>
-                    
-                        {{-- <li> <a href={{route('schedule.index')}} class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Settings</span></a> --}}
-                            {{-- <ul class="nav nav-second-level">
-                                <li> <a href="javascript:void(0)">Client</a> </li>
-                                <li> <a href="javascript:void(0)">Manufacturer</a> </li>
-                                <li> <a href="javascript:void(0)">Supplier</a> </li>
-                            </ul> --}}
-                        {{-- </li> --}}
-                        {{-- <li><a href={{route('logout.index')}} class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li> --}}
-                    </ul>
-                </div>
-            </div>
+            <div class="navbar-header" style="background:#64B5F6;  border-radius: 2px; position:relative;"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                <div class="top-left-part" style="background-color:#BBDEFB; opacity:1;"><a class="logo" href="index.html"><b><img src="plugins/images/bewelllogos.png"  width="35px" alt="home" /></b><span class="hidden-xs"><img src="plugins/images/bewelllogol.png" width="110px" alt="home" /></span></a></div>
+                <ul class="nav navbar-top-links navbar-left hidden-xs">
+                    <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                    <li>
+                        <form role="search" class="app-search hidden-xs">
+                            <input type="text" style="min-width:300px; background-color:#F5F5F5;" placeholder="Search System" class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <!-- /.dropdown -->
 
+                    <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i>
+                            <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-tasks animated flipInX feeds">
+                            <li>
+                                <strong>Notifications</strong>
+                            </li>
+                            <li>
+                                <div class="bg-info"><i class="fa fa-bell-o text-white"></i></div> Added 5 New Client Orders. <span class="text-muted">Just Now</span>
+
+                            </li>
+                            <li>
+                                <div class="bg-danger"><i class="ti-user text-white"></i></div> New user registered.<span class="text-muted">16 July</span>
+                            </li>
+                            <li>
+                                <a class="text-center" href="#"> <strong>See All Notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-tasks -->
+                    </li>
+
+
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
+
+                                @if(Auth::user()->access==1)
+                                    Logistics Head
+                                @endif
+
+                            </b> </a>
+
+                        <!--DROPDOWN OF THE CLASS-->
+                        <ul class="dropdown-menu dropdown-user animated flipInY">
+                            <li><a href="#"><i class="ti-user"></i> Manage Account</a></li>
+                            {{-- <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
+                            <li><a href="#"><i class="ti-email"></i> Inbox</a></li> --}}
+                            {{-- <li role="separator" class="divider"></li>
+                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li> --}}
+                            <li role="separator" class="divider"></li>
+                            <li><a href={{route('logout.index')}}><i class="fa fa-power-off"></i> Logout</a></li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.Megamenu -->
+                {{-- <li class="right-side-toggle"> <a class="waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li> --}}
+                <!-- /.dropdown -->
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- Left navbar-header -->
+        @extends('layouts.master')
         <!-- Left navbar-header end -->
         <!-- Page Content -->
         <div id="page-wrapper">

@@ -1,3 +1,4 @@
+<?php use App\Http\Requests;?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +38,7 @@
     {
     }
     @endif --}}
+    {!!   (Request::is('dashboard') ? '<script>alert("maark")</script>' :'')  !!}
 
     <!-- Preloader -->
     <div class="preloader">
