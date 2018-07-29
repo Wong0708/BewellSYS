@@ -120,7 +120,7 @@
                             @if(Auth::user()->access==1)
                                 Administrator
                             @endif
-    
+
                             <span class="fa arrow"></span></span>
                             </a>
                             <ul class="nav nav-second-level">
@@ -152,6 +152,7 @@
                             <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
                             </ul>
                         </li>
+                        @if(Auth::user()->access==1)
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('useraccount.index')}}>User</a> </li>
@@ -160,7 +161,7 @@
                                 <li> <a href={{route('supplieraccount.index')}}>Supplier</a> </li>
                             </ul>
                         </li>
-    
+
                         <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="V" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('inventoryreport.index')}}>User</a> </li>
@@ -170,8 +171,8 @@
                                 {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                             </ul>
                         </li>
-    
-    
+                        @endif
+
                         {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
                             {{-- <ul class="nav nav-second-level">
                                 <li> <a href={{route('inventoryreport.index')}}>Truck</a> </li> --}}
@@ -179,10 +180,10 @@
                                 {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                             {{-- </ul>
                         </li> --}}
-                        
+
                         <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">FAQs</span></a></li>
                         <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Documentation</span></a></li>
-                    
+
                         {{-- <li> <a href={{route('schedule.index')}} class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Settings</span></a> --}}
                             {{-- <ul class="nav nav-second-level">
                                 <li> <a href="javascript:void(0)">Client</a> </li>

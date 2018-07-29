@@ -19,14 +19,14 @@ class UserAccountController extends Controller
     public function index()
     {
         $users = User::all();
-        if($users->id = 1)
-        {
-            $userdept = "Logistics Head";
+        foreach($users as $user) {
+            if ($user->user_id == 1) {
+                $user['userdept'] ="Logistics Head";
+            } else if ($user->user_id == 0) {
+                $user['userdept'] ="Logistics Department";
+            }
         }
-        else
-            $userdept = "Logistics Department";
-
-        return view('appdev.useraccount')->with("users",$users)->with("userdept",$userdept);
+        return view('appdev.useraccount')->with("users",$users);
         
     }
 
@@ -71,11 +71,17 @@ class UserAccountController extends Controller
         {
             $userdetail[4] = $added_user;
         }
-
-
         foreach($added_users['department'] as $added_user)
         {
-            $userdetail[5] = $added_user['department'];
+            if($added_user == "Logistics Head")
+            {
+                $added_user = 1;
+            }
+            else if($added_user == "Logistics Department")
+            {
+                $added_user = 0;
+            }
+            $userdetail[5] = $added_user;
         }
         foreach($added_users['role'] as $added_user)
         {

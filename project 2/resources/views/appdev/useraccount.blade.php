@@ -386,7 +386,7 @@
                                                 <tr>
                                                     <td>{{'US-'.$user->id}}</td>
                                                     <td>{{$user->name}}</td>
-                                                    <td>{{$userdept}}</td>
+                                                    <td>{{$user->userdept}}</td>
                                                     <td>{{$user->email}}</td>
                                                     <td>{{$user->contact}}</td>
                                                     <td><span class="label label-success">{{$user->accesscontrol}}</span></td>
