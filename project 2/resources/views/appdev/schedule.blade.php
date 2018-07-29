@@ -239,14 +239,14 @@
                                     <input type="hidden" name="sched_type" value="manufacturer">
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
                                     <select name="order_num" class="form-control order_dropdown" id="client" style="margin-bottom:10px;">
-                                        @if($orders)
-                                            @foreach ($orders as $order)
-                                                <option value="{{$order->id}}"
-                                                        locs="@foreach($order->locations as $locs){{$locs->loc_address}};@endforeach"
-                                                        locs_ids="@foreach($order->locations as $locs){{$locs->id}};@endforeach"
-                                                        prod_ids="@foreach($order->order_details as $prod){{$prod->productID}};@endforeach"
-                                                        prod_qty="@foreach($order->order_details as $qty){{$prod->cldt_qty}};@endforeach">
-                                                    {{$order->client_name}} | CLOD-{{$order->id}} </option>
+                                        @if($manufacturer_orders)
+                                            @foreach ($manufacturer_orders as $manufacturer_order)
+                                                <option value="{{$manufacturer_order->id}}"
+                                                        locs="@foreach($manufacturer_order->locations as $locs){{$locs->loc_address}};@endforeach"
+                                                        locs_ids="@foreach($manufacturer_order->locations as $locs){{$locs->id}};@endforeach"
+                                                        prod_ids="@foreach($manufacturer_order->order_details as $prod){{$prod->supplyID}};@endforeach"
+                                                        prod_qty="@foreach($manufacturer_order->order_details as $qty){{$prod->mndt_qty}};@endforeach">
+                                                    {{$manufacturer_order->client_name}} | MLOD-{{$manufacturer_order->id}} </option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -255,9 +255,9 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
                                     <select name="address" class="form-control address_dropdown" id="client" style="margin-bottom:10px;">
-                                        @if($orders)
-                                            @foreach ($orders as $order)
-                                                @foreach($order->locations as $locs)
+                                        @if($manufacturer_orders)
+                                            @foreach ($manufacturer_orders as $manufacturer_order)
+                                                @foreach($manufacturer_order->locations as $locs)
                                                     <option value="{{$locs->id}}">{{$locs->loc_address}}</option>
                                                 @endforeach
                                                 @break
@@ -341,15 +341,15 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody id="addproduct" class="prod_table">
-                                                @if($orders)
-                                                    @foreach ($orders as $order)
-                                                        @foreach($order->order_details as $ord)
+                                                @if($manufacturer_orders)
+                                                    @foreach ($manufacturer_orders as $manufacturer_order)
+                                                        @foreach($manufacturer_order->order_details as $ord)
                                                             <tr style="font-size:12px;">
-                                                                <td><span class="label label-info">CLOD-{{$ord->id}}</span></td>
-                                                                <td>PR-{{$ord->productID}}</td>
-                                                                <td>{{$ord->cldt_qty}} Boxes</td>
-                                                                <input type="hidden" name="ids[]" value="{{$ord->productID}}">
-                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
+                                                                <td><span class="label label-info">MLOD-{{$ord->id}}</span></td>
+                                                                <td>RM-{{$ord->supplyID}}</td>
+                                                                <td>{{$ord->mndt_qty}} Boxes</td>
+                                                                <input type="hidden" name="manufacturer_ids[]" value="{{$ord->supplyID}}">
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="manuforderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
                                                                 <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
                                                             </tr>
                                                         @endforeach
@@ -427,14 +427,14 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
                                     <select name="order_num" class="form-control order_dropdown" id="client" style="margin-bottom:10px;">
-                                            @if($orders)
-                                                @foreach ($orders as $order)
-                                                    <option value="{{$order->id}}"
-                                                            locs="@foreach($order->locations as $locs){{$locs->loc_address}};@endforeach"
-                                                            locs_ids="@foreach($order->locations as $locs){{$locs->id}};@endforeach"
-                                                            prod_ids="@foreach($order->order_details as $prod){{$prod->productID}};@endforeach"
-                                                            prod_qty="@foreach($order->order_details as $qty){{$prod->cldt_qty}};@endforeach"
-                                                    >{{$order->client_name}} | CLOD-{{$order->id}} </option>
+                                            @if($client_orders)
+                                                @foreach ($client_orders as $client_order)
+                                                    <option value="{{$client_order->id}}"
+                                                            locs="@foreach($client_order->locations as $locs){{$locs->loc_address}};@endforeach"
+                                                            locs_ids="@foreach($client_order->locations as $locs){{$locs->id}};@endforeach"
+                                                            prod_ids="@foreach($client_order->order_details as $prod){{$prod->productID}};@endforeach"
+                                                            prod_qty="@foreach($client_order->order_details as $qty){{$prod->cldt_qty}};@endforeach"
+                                                    >{{$client_order->client_name}} | CLOD-{{$client_order->id}} </option>
                                                 @endforeach
                                             @endif
                                     </select>
@@ -443,9 +443,9 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
                                     <select name="address" class="form-control address_dropdown" id="client" style="margin-bottom:10px;">
-                                        @if($orders)
-                                            @foreach ($orders as $order)
-                                                @foreach($order->locations as $locs)
+                                        @if($client_orders)
+                                            @foreach ($client_orders as $client_order)
+                                                @foreach($client_order->locations as $locs)
                                                     <option value="{{$locs->id}}">{{$locs->loc_address}}</option>
                                                 @endforeach
                                                 @break
@@ -529,14 +529,14 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="addproduct" class="prod_table">
-                                                @if($orders)
-                                                    @foreach ($orders as $order)
-                                                        @foreach($order->order_details as $ord)
+                                                @if($client_orders)
+                                                    @foreach ($client_orders as $client_order)
+                                                        @foreach($client_order->order_details as $ord)
                                                             <tr style="font-size:12px;">
-                                                                <td><span class="label label-info">CLOD-{{$ord->id}}</span></td>
-                                                                <td>PR-{{$ord->productID}}</td>
-                                                                <td>{{$ord->cldt_qty}} Boxes</td>
-                                                                <input type="hidden" name="ids[]" value="{{$ord->productID}}">
+                                                                <td><span class="label label-info">CLOD-{{$client_order->id}}</span></td>
+                                                                <td>PR-{{$client_order->productID}}</td>
+                                                                <td>{{$client_order->cldt_qty}} Boxes</td>
+                                                                <input type="hidden" name="ids[]" value="{{$client_order->productID}}">
                                                                 <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
                                                                 <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
                                                             </tr>
@@ -805,22 +805,22 @@
                                                 </thead>
                                                 <tbody>
 
-                                                @if(isset($schedules))
-                                                    @foreach($schedules as $schedule)
+                                                @if(isset($client_schedules))
+                                                    @foreach($client_schedules as $client_schedule)
                                                         <tr>
-                                                            <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
-                                                            <td>CLOD-{{$schedule->orderID}}</td>
-                                                            <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
-                                                            <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
-                                                            <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
-                                                            <td>{{$schedule->scd_date}}</td>
-                                                            <td>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else N/A @endif</td>
-                                                            <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
-                                                                >{{$schedule->scd_status}}</span></td>
+                                                            <td><a href="{{ route('appdev.scheduledetail', ['id' => $client_schedule->id]) }}">TR-{{$client_schedule->id}}</a></td>
+                                                            <td>CLOD-{{$client_schedule->orderID}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getTruck($client_schedule->truckID)->plate_num}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getDriver($client_schedule->driverID)->name}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getLocation($client_schedule->locationID)->loc_address}}</td>
+                                                            <td>{{$client_schedule->scd_date}}</td>
+                                                            <td>@if($client_schedule->dateDelivered){{$client_schedule->dateDelivered}}@else N/A @endif</td>
+                                                            <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($client_schedule->id)}}"
+                                                                >{{$client_schedule->scd_status}}</span></td>
                                                             <td>
 
                                                                 <center>
-                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrict($schedule->scd_status, $schedule->id) !!}
+                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrict($client_schedule->scd_status, $client_schedule->id) !!}
                                                                 </center>
                                                             </td>
                                                         </tr>
@@ -859,22 +859,22 @@
                                                 </thead>
                                                 <tbody>
 
-                                                @if(isset($schedules))
-                                                    @foreach($schedules as $schedule)
+                                                @if(isset($manufacturer_schedules))
+                                                    @foreach($manufacturer_schedules as $manufacturer_schedule)
                                                         <tr>
-                                                            <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
-                                                            <td>CLOD-{{$schedule->orderID}}</td>
-                                                            <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
-                                                            <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
-                                                            <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
-                                                            <td>{{$schedule->scd_date}}</td>
-                                                            <td>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else N/A @endif</td>
-                                                            <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
-                                                                >{{$schedule->scd_status}}</span></td>
+                                                            <td><a href="{{ route('appdev.scheduledetail', ['id' => $manufacturer_schedule->id]) }}">TR-{{$manufacturer_schedule->id}}</a></td>
+                                                            <td>MLOD-{{$manufacturer_schedule->orderID}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getTruck($manufacturer_schedule->truckID)->plate_num}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getDriver($manufacturer_schedule->driverID)->name}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getLocation($manufacturer_schedule->locationID)->loc_address}}</td>
+                                                            <td>{{$manufacturer_schedule->scd_date}}</td>
+                                                            <td>@if($manufacturer_schedule->dateDelivered){{$manufacturer_schedule->dateDelivered}}@else N/A @endif</td>
+                                                            <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($manufacturer_schedule->id)}}"
+                                                                >{{$manufacturer_schedule->scd_status}}</span></td>
                                                             <td>
 
                                                                 <center>
-                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrict($schedule->scd_status, $schedule->id) !!}
+                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrict($manufacturer_schedule->scd_status, $manufacturer_schedule->id) !!}
                                                                 </center>
                                                             </td>
                                                         </tr>

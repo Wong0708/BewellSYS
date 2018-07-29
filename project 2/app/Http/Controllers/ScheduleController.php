@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\ClientOrderDetail;
+use App\Manufacturer;
+use App\ManufacturerOrder;
+use App\ManufacturerOrderDetail;
 use App\Schedule;
 use App\ScheduleDetail;
 use Illuminate\Http\Request;
@@ -33,58 +36,96 @@ class ScheduleController extends Controller
     public function index()
     {
         $trucks = Truck::all();
-        $trucc = Truck::all();
         $drivers = driver::all();
-        $orders = ClientOrder::all();
-        $locations = ClientLocation::all();
-        $clients = Client::all();
 
-        $latest = Schedule::all();
+        $client_orders = ClientOrder::all();
+        $client_schedules = Schedule::all();
+
+        $manufacturer_orders = ManufacturerOrder::all();
+        $manufacturer_schedules = Schedule::all();
+
+
         $latest_id = Schedule::all()->last();
         $latest_id = $latest_id['id'];
-        $schedules = Schedule::all();
 
-        $orders = $orders->filter(function ($order) {
-            $order_det = ClientOrderDetail::all();
+        $client_orders = $client_orders->filter(function ($order) {
+            return $order->schedType == "client";
+        });
+
+        $manufacturer_schedules = $manufacturer_schedules->filter(function ($order) {
+            return $order->schedType == "manufacturer";
+        });
+
+        $manufacturer_orders = $manufacturer_orders->filter(function ($manufacturer_order) {
+            $order_det = ManufacturerOrderDetail::all();
             $order_det_id = array();
 
             foreach ($order_det as $det){
                 array_push($order_det_id, $det['orderID']);
             }
 
-            return in_array($order->id,$order_det_id,TRUE);
+            return in_array($manufacturer_order->id,$order_det_id,TRUE);
+        });
+        $client_orders = $client_orders->filter(function ($client_order) {
+            $order_det = ClientOrderDetail::all();
+            $order_det_id = array();
+
+            foreach ($order_det as $det){
+                array_push($order_det_id,$det['orderID']);
+            }
+            return in_array($client_order->id,$order_det_id,TRUE);
         });
 
-        $orders = $orders->filter(function ($order) {
+        $client_orders = $client_orders->filter(function ($order) {
             return $order->clod_status == "Processing";
         });
 
-        foreach($orders as $order){
-            
-            $order['locations']= array();
-            $order['locations']= DB::table('bc_client_location')->where('id', $order['clientID'])->get()->toArray();
-            $order['order_details']=DB::table("bc_client_order_detail")->where('orderID', $order['id'])->get()->toArray();
+        $manufacturer_orders = $manufacturer_orders->filter(function ($order) {
+            return $order->mnod_status == "Processing";
+        });
 
-            $a = Client::find($order['clientID']);
+        foreach($manufacturer_orders as $manufacturer_order){
 
-            $order['client_name'] = $a['cl_name'];
+            $manufacturer_order['locations']= array();
+            $manufacturer_order['locations']= DB::table('bc_manufacturer_location')->where('companyID', $manufacturer_order['manufacturerID'])->get()->toArray();
+            $manufacturer_order['order_details']=DB::table("bc_manufacturer_order_detail")->where('orderID', $manufacturer_order['id'])->get()->toArray();
+
+            $a = Manufacturer::find($manufacturer_order['manufacturerID']);
+            $manufacturer_order['manufacturer_name'] = $a['mn_name'];
         }
 
-        foreach($schedules as $schedule){
+        foreach($client_orders as $client_order){
 
-            $date = date_create($schedule['scd_date']);
-            $schedule['scd_date'] = date_format($date, "F j Y");
-            if($schedule->dateDelivered){
-                $date = date_create($schedule['dateDelivered']);
-                $schedule['dateDelivered'] = date_format($date, "F j Y");
+            $client_order['locations']= array();
+            $client_order['locations']= DB::table('bc_client_location')->where('companyID', $client_order['clientID'])->get()->toArray();
+            $client_order['order_details']=DB::table("bc_client_order_detail")->where('orderID', $client_order['id'])->get()->toArray();
+
+            $a = Client::find($client_order['clientID']);
+            $client_order['client_name'] = $a['cl_name'];
+        }
+
+        foreach($client_schedules as $client_schedule){
+            $date = date_create($client_schedule['scd_date']);
+            $client_schedule['scd_date'] = date_format($date, "F j Y");
+            if($client_schedule->dateDelivered){
+                $date = date_create($client_schedule['dateDelivered']);
+                $client_schedule['dateDelivered'] = date_format($date, "F j Y");
             }
         }
-        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])
+        foreach($manufacturer_schedules as $manufacturer_schedule){
+            $date = date_create($manufacturer_schedule['scd_date']);
+            $manufacturer_schedule['scd_date'] = date_format($date, "F j Y");
+            if($manufacturer_schedule->dateDelivered){
+                $date = date_create($manufacturer_schedule['dateDelivered']);
+                $manufacturer_schedule['dateDelivered'] = date_format($date, "F j Y");
+            }
+        }
+        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers])
             ->with("latest_id",$latest_id)
-            ->with("orders",$orders)
-            ->with("schedules",$schedules)
-            ->with("trucc",$trucc);
-       
+            ->with("manufacturer_orders",$manufacturer_orders)
+            ->with("manufacturer_schedules",$manufacturer_schedules)
+            ->with("client_orders",$client_orders)
+            ->with("client_schedules",$client_schedules);
     }
     public function getCurrCapacity(Request $request){
         $total_curr_cap = 0;
