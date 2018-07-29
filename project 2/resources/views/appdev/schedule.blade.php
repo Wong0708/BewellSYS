@@ -617,10 +617,10 @@
                                                     <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
                                                         >{{$schedule->scd_status}}</span></td>
                                                     <td>
-                                                        {!! Form::open(['route'=>['schedule.destroy',$schedule->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
-                                                        <center><a href="#" data-toggle="modal" data-target="#concludeSchedModal" scid="{{$schedule->id}}" class="conclude"><i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>
+
+                                                        <center>
+                                                            {!!  \App\Http\Controllers\ScheduleController::getRestrict($schedule->scd_status, $schedule->id) !!}
                                                         </center>
-                                                        {!!Form::close()!!}
                                                     </td>
                                                 </tr>
                                         @endforeach

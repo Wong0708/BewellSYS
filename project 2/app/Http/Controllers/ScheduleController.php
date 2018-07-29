@@ -123,6 +123,33 @@ class ScheduleController extends Controller
         }
         return $total_curr_cap;
     }
+
+    public static function getRestrict($status,$id){
+
+        switch ($status){
+            case "Processing":
+                $a='<a href="#" data-toggle="modal" 
+                                data-target="#concludeSchedModal"
+                                scid="'.$id.'" class="conclude" >
+                    <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
+                return $a;
+                break;
+            case "Scheduled":
+                $a='<a href="#" data-toggle="modal" 
+                                data-target="#concludeSchedModal"
+                                scid="'.$id.'" class="conclude" >
+                    <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
+                return $a;
+                break;
+            case "Delivered";
+                return null;
+                break;
+            case "Cancelled";
+                return null;
+                break;
+        }
+        return null;
+    }
     /**
      * return Response::json(array(
     'success' => $total_curr_cap,
@@ -283,7 +310,7 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $MSG = 'Successfully confirmed schedule!';
         $fields = $request->all();
         $schedule = Schedule::find($fields['id']);
         $order = ClientOrder::find($schedule['orderID']);
@@ -294,6 +321,8 @@ class ScheduleController extends Controller
             $schedule->remark = $request->remarks;
 
             $order->clod_status = "Delivered";
+
+            $MSG = 'Successfully delivered schedule!';
         }
         else{
             $schedule->scd_status = "Cancelled";
@@ -301,6 +330,8 @@ class ScheduleController extends Controller
 
 
             $order->clod_status = "Cancelled";
+
+            $MSG = 'Successfully cancelled schedule!';
         }
 
 
@@ -308,7 +339,7 @@ class ScheduleController extends Controller
 
         $schedule->save();
 
-        Session::flash('success','Successfully confirmed schedule!');
+        Session::flash('success',$MSG);
         return redirect("/schedule");
     }
 
