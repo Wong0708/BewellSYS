@@ -942,13 +942,58 @@
 
                     $('.truck_dropdown').bind('change',function() {
                         var max_cap = parseInt($('option:selected', this).attr('truck_total_cap'));
+
                         var curr_cap = 0;
+                        var delivery_date = $('.delivery_date').val();
+
                         var avail_cap = max_cap - curr_cap;
-                        console.log("zuccedd: "+max_cap);
+
                         $('#truck_total_cap').html(max_cap);
-                        $.ajax(); // get current capacity
-                      //  $('#truck_curr_cap').html(curr_cap);
-                      //  $('#truck_avail_cap').html(avail_cap);
+                        if(delivery_date != ""){
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                url: "{{ url('/schedule/getCapacity') }}",
+                                method: 'post',
+                                data: {
+                                    truckID: $('option:selected', this).val(),
+                                    date: delivery_date,
+                                    _token: '{{csrf_token()}}'
+                                },
+                                success: function(result){
+                                    var total_cur = parseInt(result.total_curr_cap);
+                                    var avail = max_cap - total_cur;
+
+                                    if(total_cur === 0){
+                                        $('#truck_cur_cap').val(0);
+                                        $('#truck_cur_cap').html("no boxes loaded.");
+                                        $('#truck_avail_cap').html("all space available.");
+
+                                        $('#truck_cur_cap').css("color","green");
+                                    }
+                                    else if(max_cap===total_cur){
+
+                                        $('#truck_cur_cap').val(result.total_curr_cap);
+                                        $('#truck_cur_cap').html("fully loaded");
+                                        $('#truck_avail_cap').html("all space taken");
+
+                                        $('#truck_cur_cap').css("color","red");
+                                    }else{
+                                        $('#truck_cur_cap').val(result.total_curr_cap);
+                                        $('#truck_cur_cap').html(total_cur);
+                                        $('#truck_avail_cap').html(avail);
+                                    }
+
+                                    console.log(result.success);
+                                    console.log(result.total_curr_cap);
+                                    console.log(result.msg);
+                                }});
+                        }
+
+
                     });
                     $('.sched_conc').bind('change',function() {
                         var x = $('option:selected', this).attr('value');

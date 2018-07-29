@@ -107,23 +107,20 @@ class ScheduleController extends Controller
             foreach ($schedule_dets as $schedule_det){
                 $total_curr_cap += $schedule_det['delivered_qty'];
             }
+
         }
         return response()->json(['success'=>'zuccess','total_curr_cap'=>$total_curr_cap,'msg'=>"shadow"]);
     }
     public static function getCurCapacity($id){
         $total_curr_cap = 0;
-
-
         $schedule_dets = ScheduleDetail::all();
         $sid = $id;
         $schedule_dets = $schedule_dets->filter(function ($sched) use ($sid) {
             return $sched->scheduleID == $sid;
         });
-
         foreach ($schedule_dets as $schedule_det){
             $total_curr_cap += $schedule_det['delivered_qty'];
         }
-
         return $total_curr_cap;
     }
     /**
@@ -218,7 +215,7 @@ class ScheduleController extends Controller
         $schedule = new Schedule();
         $date = new DateTime();
         // change status of order to processed.
-        $schedule->scd_date = $fields['delivery_date'];
+        $schedule->scd_date = $fields['delivery_date']." 00:00:00";
         $schedule->scd_status = "Scheduled";
         $schedule->orderID = $fields['order_num'];
         $schedule->truckID = $fields['plate_num'];
