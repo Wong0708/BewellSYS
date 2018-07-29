@@ -161,7 +161,7 @@
                             <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
                             </ul>
                         </li>
-                        @if(Auth::user()->access==1)
+                        @if(Auth::user()->user_id==1)
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
