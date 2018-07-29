@@ -79,7 +79,11 @@ class ScheduleController extends Controller
                 $schedule['dateDelivered'] = date_format($date, "F j Y");
             }
         }
-        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])->with("latest_id",$latest_id)->with("orders",$orders)->with("schedules",$schedules)->with("trucc",$trucc);
+        return view('appdev.schedule',['trucks' => $trucks],['drivers' => $drivers],['clients'=>$clients])
+            ->with("latest_id",$latest_id)
+            ->with("orders",$orders)
+            ->with("schedules",$schedules)
+            ->with("trucc",$trucc);
        
     }
     public function getCurrCapacity(Request $request){

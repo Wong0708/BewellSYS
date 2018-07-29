@@ -18,6 +18,7 @@
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
     <!-- Menu CSS -->
     <link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+
     <!-- animation CSS -->
     <link href="css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -34,6 +35,7 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <![endif]-->
 </head>
 
@@ -221,14 +223,203 @@
                 </div>
                 <!-- /row -->
                 <!--MODAL STARTS HERE-->
+                <div class="modal fade" id="manuOrderModal" tabindex="-1" role="dialog" aria-labelledby="addManuOrder">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Manufacturer Schedule</h4>
+                            </div>
+                            {!! Form::open(array('route'=>'schedule.store'))!!}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Order #:</b></label>
+                                    <br>
+                                    <input type="hidden" name="sched_type" value="manufacturer">
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
+                                    <select name="order_num" class="form-control order_dropdown" id="client" style="margin-bottom:10px;">
+                                        @if($orders)
+                                            @foreach ($orders as $order)
+                                                <option value="{{$order->id}}"
+                                                        locs="@foreach($order->locations as $locs){{$locs->loc_address}};@endforeach"
+                                                        locs_ids="@foreach($order->locations as $locs){{$locs->id}};@endforeach"
+                                                        prod_ids="@foreach($order->order_details as $prod){{$prod->productID}};@endforeach"
+                                                        prod_qty="@foreach($order->order_details as $qty){{$prod->cldt_qty}};@endforeach">
+                                                    {{$order->client_name}} | CLOD-{{$order->id}} </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+
+                                    <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
+                                    <br>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
+                                    <select name="address" class="form-control address_dropdown" id="client" style="margin-bottom:10px;">
+                                        @if($orders)
+                                            @foreach ($orders as $order)
+                                                @foreach($order->locations as $locs)
+                                                    <option value="{{$locs->id}}">{{$locs->loc_address}}</option>
+                                                @endforeach
+                                                @break
+                                            @endforeach
+                                        @endif
+                                    </select>
+
+                                    <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Delivery Date:</b></label>
+                                    <br>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
+                                    {{csrf_field()}}
+                                    <input type="date" class="form-control delivery_date" name="delivery_date" value="">
+
+                                    <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
+                                    <br>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the car's plate number. Ex: NSA-2134. <b style="color:#E53935;">*Required</b></span>
+
+                                    <select name="plate_num" class="form-control truck_dropdown" id="client" style="margin-bottom:10px;">
+                                        @if(isset($trucks))
+                                            @foreach ($trucks as $truck)
+                                                <option value="{{$truck->id}}"
+                                                        truck_total_cap="{{$truck->max_box}}"
+                                                        truck_avail_cap=""
+                                                        truck_cur_cap=""
+                                                >[{{$truck->plate_num}}] {{$truck->car_model}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+
+                                    <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Driver:</b></label>
+                                    <br>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a driver to deliver the order. <b style="color:#E53935;">*Required</b></span>
+                                    <select name="driver" class="form-control driver_dropdown" id="driver" style="margin-bottom:10px;">
+                                        @if(isset($drivers))
+                                            @foreach ($drivers as $driver)
+                                                <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+
+                                    <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
+
+                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Order/s</b></h4>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section assign orders to the desired truck. <b style="color:#E53935;">*Required</b></span>
+                                        <br>
+                                        <div class="row">
+                                            <center>
+                                                <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Total Capacity:</b></h4></div>
+                                                <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Current Capacity: </b></h4></div>
+                                                <div class="col-md-4"><h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Available Capacity: </b></h4></div>
+                                            </center>
+                                        </div>
+                                        <div class="row">
+                                            <center>
+                                                <div class="col-md-4">
+                                                    <p id="truck_total_cap">
+                                                        @if(isset($trucks))
+                                                            @foreach ($trucks as $truck)
+                                                                {{$truck->max_box}}
+                                                                @break
+                                                            @endforeach
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-4"><b><p id="truck_cur_cap" value="">N/A - select a date</p></b></div>
+                                                <div class="col-md-4"><p id="truck_avail_cap" value="">N/A</p></div>
+                                            </center>
+                                        </div>
+
+
+                                        {{-- <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button></label> --}}
+                                        <div class="table-responsive" style="margin-top:10px;">
+                                            <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
+                                                <thead>
+                                                <tr style="font-size:12px; font-weight:700; ">
+                                                    <th>Order #</th>
+                                                    <th>Code</th>
+                                                    <th>Qty (Boxes)</th>
+                                                    <th>Deliver Qty (Boxes)</th>
+                                                    <th><i class="fa fa-gear"></i></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="addproduct" class="prod_table">
+                                                @if($orders)
+                                                    @foreach ($orders as $order)
+                                                        @foreach($order->order_details as $ord)
+                                                            <tr style="font-size:12px;">
+                                                                <td><span class="label label-info">CLOD-{{$ord->id}}</span></td>
+                                                                <td>PR-{{$ord->productID}}</td>
+                                                                <td>{{$ord->cldt_qty}} Boxes</td>
+                                                                <input type="hidden" name="ids[]" value="{{$ord->productID}}">
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
+                                                                <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        @break
+                                                    @endforeach
+                                                @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <hr>
+                                        <center><h2  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Schedule Summary</b></h2></center>
+                                        {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced delivery list for the truck delivery.</span>
+
+                                        <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
+                                            <thead>
+                                            <tr style="font-size:12px; font-weight:700;">
+                                                <th>Sched #</th>
+                                                <th>Driver</th>
+                                                <th>Address</th>
+                                                <th>Delivered Date</th>
+                                                <th>Status</th>
+                                                {{-- <th><i class="fa fa-gear"></th> --}}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="addproduct">
+                                            <tr style="font-size:12px;">
+                                                <td>TR-{{$latest_id+1}}</td>
+                                                <td id="prev_driver">
+                                                    @if(isset($drivers))
+                                                        @foreach ($drivers as $driver)
+                                                            <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                                            @break
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td><span class="label label-success" id="prev_address">Taft Avenue, Metro Manila</span></td>
+                                                <td id="prev_delivery_date"></td>
+                                                <td><span class="label label-success">Scheduled</span></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <h2><center><span class="control label" id="alert" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" onclick="checkSchedValidity()" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit" type="submit">Submit</button>
+                            </div>
+                            {!!Form::close()!!}
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--MODAL STARTS HERE-->
                 <div class="modal fade" id="clientOrderModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Schedule</h4>
+                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Client Schedule</h4>
                             </div>
                             {!! Form::open(array('route'=>'schedule.store'))!!}
+
+                            <input type="hidden" name="sched_type" value="client">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Order #:</b></label>
@@ -581,53 +772,120 @@
                         @endif
                     <div class="col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL ORDER SCHEDULES</h3>
-                            {{-- <div class="col-sm-12" style="background-color:red;"> --}}
-                                <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-calendar-plus-o"></i></span>Add Schedule</button>
-
-                                <p class="text-muted m-b-30"></p>
-                                <div class="table-responsive">
-                                    <table class="table table-striped myTable">
-                                        <thead>
-                                            <tr style="color:black;">
-                                                <th>Tracking #</th>
-                                                <th>Order #</th>
-                                                <th>Truck Plate #</th>
-                                                <th>Driver</th>
-                                                <th>Address</th>
-                                                <th>Schedule Date</th>
-                                                <th>Delivered Date</th>
-                                                <th>Status</th>
-                                                <th><i class="fa fa-gavel"></i> Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    @if(isset($schedules))
-                                        @foreach($schedules as $schedule)
-                                                <tr>
-                                                    <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
-                                                    <td>CLOD-{{$schedule->orderID}}</td>
-                                                    <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
-                                                    <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
-                                                    <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
-                                                    <td>{{$schedule->scd_date}}</td>
-                                                    <td>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else N/A @endif</td>
-                                                    <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
-                                                        >{{$schedule->scd_status}}</span></td>
-                                                    <td>
-
-                                                        <center>
-                                                            {!!  \App\Http\Controllers\ScheduleController::getRestrict($schedule->scd_status, $schedule->id) !!}
-                                                        </center>
-                                                    </td>
+                            <ul class="nav customtab nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#client_table" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Client</span></a></li>
+                                <li role="presentation" class=""><a href="#manuf_table" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Manufacturer</span></a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="client_table">
+                                    <button class="btn btn-success waves-effect waves-light"
+                                            data-toggle="modal" data-target="#clientOrderModal"
+                                            type="button">
+                                            <span class="btn-label">
+                                            <i class="fa fa-calendar-plus-o"></i>
+                                            </span>Add Client Schedule</button>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped myTable">
+                                                <thead>
+                                                <tr style="color:black;">
+                                                    <th>Tracking #</th>
+                                                    <th>Order #</th>
+                                                    <th>Truck Plate #</th>
+                                                    <th>Driver</th>
+                                                    <th>Address</th>
+                                                    <th>Schedule Date</th>
+                                                    <th>Delivered Date</th>
+                                                    <th>Status</th>
+                                                    <th><i class="fa fa-gavel"></i> Action</th>
                                                 </tr>
-                                        @endforeach
-                                    @endif
-                                    </tbody>
-                                </table>
+                                                </thead>
+                                                <tbody>
 
+                                                @if(isset($schedules))
+                                                    @foreach($schedules as $schedule)
+                                                        <tr>
+                                                            <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
+                                                            <td>CLOD-{{$schedule->orderID}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
+                                                            <td>{{$schedule->scd_date}}</td>
+                                                            <td>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else N/A @endif</td>
+                                                            <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
+                                                                >{{$schedule->scd_status}}</span></td>
+                                                            <td>
+
+                                                                <center>
+                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrict($schedule->scd_status, $schedule->id) !!}
+                                                                </center>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="manuf_table">
+                                    <button class="btn btn-info waves-effect waves-light"
+                                            data-toggle="modal" data-target="#manuOrderModal"
+                                            type="button">
+                                            <span class="btn-label">
+                                            <i class="fa fa-calendar-plus-o"></i>
+                                            </span>Add Manufacturer Schedule</button>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped myTable">
+                                                <thead>
+                                                <tr style="color:black;">
+                                                    <th>Tracking #</th>
+                                                    <th>Order #</th>
+                                                    <th>Truck Plate #</th>
+                                                    <th>Driver</th>
+                                                    <th>Address</th>
+                                                    <th>Schedule Date</th>
+                                                    <th>Delivered Date</th>
+                                                    <th>Status</th>
+                                                    <th><i class="fa fa-gavel"></i> Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                @if(isset($schedules))
+                                                    @foreach($schedules as $schedule)
+                                                        <tr>
+                                                            <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
+                                                            <td>CLOD-{{$schedule->orderID}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
+                                                            <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
+                                                            <td>{{$schedule->scd_date}}</td>
+                                                            <td>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else N/A @endif</td>
+                                                            <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
+                                                                >{{$schedule->scd_status}}</span></td>
+                                                            <td>
+
+                                                                <center>
+                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrict($schedule->scd_status, $schedule->id) !!}
+                                                                </center>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
