@@ -28,7 +28,45 @@ class SalesReportController extends Controller
         $products = Product::all();
         $productdetails = Product::all();
 
-       return view("appdev.salesreport")->with("orders",$orders)->with("clients",$clients)->with("products",$products)->with("orderdetails", $orderdetails)->with("productdetails",$productdetails);
+       return view("appdev.salesreport")->with("start","")
+       ->with("end","")->with("orders",$orders)->with("clients",$clients)->with("products",$products)->with("orderdetails", $orderdetails)->with("productdetails",$productdetails);
+    }
+
+    public function generateReport(Request $request)
+    {
+        $orders = ClientOrder::all();
+        $orderdetails =ClientOrderDetail::all();
+        $clients = Client::all();
+        $products = Product::all();
+        $productdetails = Product::all();
+        $test = $request->dog;
+        
+        $start = new DateTime($request->start." 00:00:00");
+        $end = new DateTime($request->end." 00:00:00");
+
+        $ords = $orders;
+        
+        $orders = array();
+        foreach($ords as $ord){
+            if(new DateTime($ord['clod_date']) >= $start && new DateTime($ord['clod_date']) <= $end){
+                array_push($orders,$ord);
+            }
+        }
+        /*
+        $orders = $orders->filter(function ($order) use($start)  {
+            return $order->clod_date >= $start;
+        });
+
+        $orders = $orders->filter(function ($order) use($end) {
+            return $order->clod_date < $end;
+        });
+        */
+        return view("appdev.salesreport")->with("orders",$orders)->with("clients",$clients)
+        ->with("start",$request->start)
+        ->with("end",$request->end)
+        ->with("products",$products)
+        ->with("orderdetails", $orderdetails)
+        ->with("productdetails",$productdetails);
     }
     public static function getClient($id){
         $client = Client::where('id', $id)->first();

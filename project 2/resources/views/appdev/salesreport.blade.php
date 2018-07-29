@@ -293,21 +293,24 @@
                                                     
                                 {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                                 {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
-                                <a href="/salesreport" class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</a>
                                 <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
-                                <p class="text-muted m-b-30"></p>
-                                <div class="example">
-                                        {{-- <h5 class="box-title m-t-30">Date Range picker</h5> --}}
-                                       
-                                        <div class="input-daterange input-group" id="date-range">
-                                            <input type="date" class="form-control" name="start" /> <span class="input-group-addon bg-info b-0 text-white">to</span>
-                                            <input type="date" class="form-control" name="end" /> </div>
+                                {!!Form::open(array('route' => 'appdev.salesreport'))!!}
+                                   <input type="hidden" name="dog" value="hatdug"/>
+                                   {{Form::submit('Generate Report',['class' => 'btn btn-success waves-effect waves-light'])}}
+                                   <p class="text-muted m-b-30"></p>
+                                    <div class="input-daterange input-group" id="date-range">
+                                        <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
+                                        <input type="date" class="form-control" name="end"/> 
                                     </div>
-                                <hr>
-
+                                {!!Form::close() !!}
+                                <p class="text-muted m-b-30"></p>
+                                @if(isset($start))
+                                @endif
+                                @if(isset($end))
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell-C Nutraceutical Corporation</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Sales Report</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>2018-06-30 to 2018-07-30  </b></h4>
+                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>{{$start}} to {{$end}}  </b></h4>
+                                @endif
                                 {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
                                 <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
                                         <thead>
@@ -326,7 +329,7 @@
                                                         @if(count($orders) > 0)
                                                             @foreach($orders as $order)
                                                             <tr style ="color:black;">
-                                                                <td>Order # {{$order->id}} </td>
+                                                                <td>Order # {{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
                                                                 <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
