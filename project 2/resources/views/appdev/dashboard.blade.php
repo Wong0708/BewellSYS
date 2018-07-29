@@ -80,7 +80,7 @@
 
 
                     
-                    <li class="dropdown">
+                    <li class="dropdown"> 
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
                             
                             @if(Auth::user()->access==1)

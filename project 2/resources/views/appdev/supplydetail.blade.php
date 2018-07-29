@@ -455,7 +455,7 @@
                 <!--MODAL ENDS HERE-->
 
                 <div class="row">
-                        <div class="col-md-3 col-xs-12 col-sm-6">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
                          @if($supply1->sp_status == "On Stock")
                             <div class="white-box text-center bg-success">
                                 <h1 class="text-white counter">{{$supply1->sp_qty}}</h1>
@@ -468,7 +468,7 @@
                         </div>
                         @endif
                         </div> 
-                        <div class="col-md-3 col-xs-12 col-sm-6">
+                        {{--<div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
                                 <h1 class="text-white counter">120</h1> <!-- select * from supplier_orders where material id = this material -->
                                 <p class="text-white">Total On-order Material/s</p>
@@ -479,11 +479,15 @@
                                 <h1 class="text-white counter">231</h1> <!-- (select sp_qty from bewelldb.supply) - (select sum(items_sent) from manufacturer_order_details where raw material = this material and status != delivering or delivered) -->
                                 <p class="text-white">Total Available Material/s</p>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center">
-                                <h1 class="counter">81</h1> <!-- select sum(items_sent) from manufacturer_order_details where status != delivering or delivered) --> 
-                                <p class="text-muted">Total Allocated Material/s</p>
+                        </div> --}}
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <div class="white-box text-center bg-info">
+                                <h1 class="text-white counter">{{$supply1->sp_expiryDate}}</h1> 
+                                @if(date("Y-m-d") > $supply1->sp_expiryDate)
+                                    <p class="text-white">Material Expiry Date | This Material is Expired</p>
+                                @else
+                                    <p class="text-white">Material Expiry Date</p>
+                                @endif
                             </div>
                         </div>
                         
@@ -656,7 +660,7 @@
                                                             @foreach($supply_logs as $supplylog)
                                                                 <tr>
                                                                     <td>{{'UID-'.$supplylog->query_id}}</td>
-                                                                    <td>{{$supplylog->userID}}</td> 
+                                                                    <td>Fernan</td> 
                                                                     <td><span class="label label-info">{{$supplylog->auditName.' | '.$supplylog->supplystatus}}</span></td>
                                                                     <td>{{$supplylog->updated_at}}</td>
                                                                 </tr> 
