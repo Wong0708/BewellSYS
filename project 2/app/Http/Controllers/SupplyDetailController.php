@@ -20,8 +20,9 @@ class SupplyDetailController extends Controller
      */
     public function index()
     {
+        $date1 = date("Y-m-d");
         $supplylogs = SupplyLogs::all();
-        return view('appdev.supplydetail')->with("supplylogs",$supplylogs);
+        return view('appdev.supplydetail')->with("supplylogs",$supplylogs)->with("date1",$date1);
     }
 
     /**

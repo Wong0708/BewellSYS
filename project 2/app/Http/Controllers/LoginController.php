@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Auth;
 use Auth;
 use Session;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -42,6 +43,20 @@ class LoginController extends Controller
             'password'=>'required|max:255',
         ]);
         if(Auth::attempt(['name'=>$request->username,'password'=>$request->password])){
+            session(['username' => $request->username]);
+            $users = User::all();
+
+            /*session(['username', $request->username]);
+            foreach ($users as $user)
+            {
+
+                session(['userid', $user['id']]);
+                if($request->username == $user['name'])
+                {
+                    session(['userid', $user['id']]);
+                    break;
+                }
+            }*/
             return redirect('/dashboard');
         }else{
             Session::flash('failed','Incorrect Username/Password. Please Try again!');

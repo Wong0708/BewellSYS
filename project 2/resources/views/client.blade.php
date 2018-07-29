@@ -16,7 +16,6 @@
                             <th>Company</th>
                             <th>Office Address</th>
                             <th>Email</th>
-                            {{-- <th></th> --}}
                             
                         </tr>
                         @foreach($clients as $client)
@@ -34,7 +33,7 @@
                         </tr>
                         @endforeach
                     </table>
-                    {{-- {{link_to_route('task.create','Add New Task',null,['class'=>'btn btn-primary'])}} --}}
+                    {{-- {{link_e('task.create','Add New Task',null,['class'=>'btn btn-primary'])}} --}}
                 </div>
                 
             </div>

@@ -154,6 +154,7 @@
                             <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
                             </ul>
                         </li>
+                        @if(Auth::user()->user_id==1)
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
@@ -172,7 +173,7 @@
                                 {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                             </ul>
                         </li>
-    
+                        @endif
     
                         {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
                             {{-- <ul class="nav nav-second-level">
@@ -551,7 +552,7 @@
                                 <button style="margin-top:10px;" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe00b;"></i></span>Print Order Delivery Report (ODR)</button>
 
                                 <hr>
-                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Schedule Details: TR-0001</h3>
+                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Schedule Details: TR-{{$schedule->id}}</h3>
 
                                 <table class="table table-bordered">
                                     <thead style="color:black;">

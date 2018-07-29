@@ -154,6 +154,7 @@
                             <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
                             </ul>
                         </li>
+                        @if(Auth::user()->user_id==1)
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
@@ -172,7 +173,7 @@
                                 {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                             </ul>
                         </li>
-    
+                        @endif
     
                         {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
                             {{-- <ul class="nav nav-second-level">
@@ -257,9 +258,9 @@
                                     <br>
                                                
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Department:</b></label>
-                                    <select name="department[]" class="form-control department" name = "department[]" required>
-                                        <option>Logistics Head</option>
-                                        <option>Logistics Department</option>
+                                    <select name="department[]" class="form-control department" name = "department" required>
+                                        <option value="1">Logistics Head</option>
+                                        <option value="0">Logistics Department</option>
                                     </select>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the department in the company of the user.</span>
                                    
@@ -386,7 +387,7 @@
                                                 <tr>
                                                     <td>{{'US-'.$user->id}}</td>
                                                     <td>{{$user->name}}</td>
-                                                    <td>{{$userdept}}</td>
+                                                    <td>{{$user->userdept}}</td>
                                                     <td>{{$user->email}}</td>
                                                     <td>{{$user->contact}}</td>
                                                     <td><span class="label label-success">{{$user->accesscontrol}}</span></td>

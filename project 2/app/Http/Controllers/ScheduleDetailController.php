@@ -36,7 +36,7 @@ class ScheduleDetailController extends Controller
         if($schedule['id'] == null){
             return view('errors.404');
         }
-        $schedule_dets = DB::table('bc_schedule_detail')->join('bc_schedule','bc_schedule_detail.scheduleID','=','bc_schedule.id')->get()->toArray();
+        $schedule_dets = ScheduleDetail::all();
         $date = date_create($schedule->scd_date);
         $schedule->scd_date = date_format($date, "F j Y");
 
@@ -49,17 +49,15 @@ class ScheduleDetailController extends Controller
             $datetime2 = new DateTime("now");
             $interval = $datetime1->diff($datetime2);
             $schedule['datediff'] = $interval->format('in %a days');
+
             if($schedule['datediff'] == "in 0 days" ){
                 $schedule['datediff'] = "<b style='color: forestgreen'>TODAY</b>";
             }
         }
-/*
-        foreach($schedule_dets as $schedule_det){
-            $schedule_det['pd_name'] = self::getProduct($schedule_det->productID)->pd_name;
-            $schedule_det['pd_code'] = self::getProduct($schedule_det->productID)->pd_code;
-            $schedule_det['pd_qty'] = self::getProduct($schedule_det->productID)->pd_qty;
-        }
-*/
+        $schedule_dets = $schedule_dets->filter(function ($schedule_dets) use ($id) {
+            return $schedule_dets->scheduleID == $id;
+        });
+
         return  view("appdev.scheduledetail",['schedule' => $schedule])->with("schedule_dets",$schedule_dets);
     }
     public static function getProduct($id){

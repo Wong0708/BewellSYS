@@ -13,7 +13,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('appdev.dashboard');
+        $val = session('username');
+        return view('appdev.dashboard')->with('username', $val);
     }
 
     /**
