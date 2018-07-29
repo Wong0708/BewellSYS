@@ -3,6 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Session;
+use App\ClientOrder;
+use App\ClientOrderDetail;
+// use App\SecondaryUser;
+use App\Client;
+use App\Product;
+use App\ProductDetail;
+use DateTime;
 
 class SalesReportController extends Controller
 {
@@ -13,7 +22,36 @@ class SalesReportController extends Controller
      */
     public function index()
     {
-        return view('appdev.salesreport');
+        $orders = ClientOrder::all();
+        $orderdetails =ClientOrderDetail::all();
+        $clients = Client::all();
+        $products = Product::all();
+        $productdetails = Product::all();
+
+       return view("appdev.salesreport")->with("orders",$orders)->with("clients",$clients)->with("products",$products)->with("orderdetails", $orderdetails)->with("productdetails",$productdetails);
+    }
+    public static function getClient($id){
+        $client = Client::where('id', $id)->first();
+        return $client;
+        //return Client::find($id);
+        //$client = Client::find($id);
+        //return view("appdev.salesreport")->with("client",$client);
+    }
+    public static function getClientOrderFromOrderID($id){
+        $order = ClientOrderDetail::where('orderID',$id)->first();
+        return $order;
+    }
+    public static function getProduct($id){
+        $product = Product::where('id',$id)->first();
+        return $product;
+    }
+
+    public function dateRange($id){
+        $order = Order::find($id);
+        $start = $order->clod_date;
+        $end = $order->clod_date;
+
+        return Order::whereBetween('date-range',[$start, $end])->get();
     }
 
     /**
