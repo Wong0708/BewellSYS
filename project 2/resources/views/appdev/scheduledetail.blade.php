@@ -455,8 +455,6 @@
                                             <td>500</td>
                                             <td>300</td>
                                             <td>200</td>
-
-
                                         </tr>
                                         </tbody>
                                     </table>
@@ -464,6 +462,96 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+<!--
+<div class="row">
+                            <div class="col-lg-12 col-sm-12">
+
+                                <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                                    <h3 class="box-title m-b-0" style="color:black;">Order Update History</h3>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this order.</span>
+                                    <p class="text-muted m-b-30"></p>
+                                    <hr>
+                                    <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: MLOD-1</h3>
+                                    <div class="table-responsive">
+                                        <table id="myTable4" class="table table-striped">
+                                            <thead>
+                                            <tr style="color:black;">
+                                                <th>#</th>
+                                                <th>User</th>
+                                                <th>Update</th>
+                                                {{-- <th>Notification</th> --}}
+                    <th>Timestamp</th>
+{{-- <th></th> --}}
+            {{-- <th></th> --}}
+            {{-- <th><i class="fa fa-gear"></th> --}}
+            {{-- <th><i class="fa fa-gear"></th> --}}
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+{{-- <td><a href={{route('clientorder.show',$order->id)}}>{{'CLOD-'.$order->id}}</a></td>
+
+                                                <td>{{$order->fromClient->cl_name}}</td>
+                                                <td>{{$order->clod_date}}</td>
+                                                <td>2018-04-17</td>
+                                                <td>2018-04-17</td>  --}}
+
+            {{-- <td><span class="label label-info">1</span></td> --}}
+                    <td>1</td>
+                    <td>PrivateAirJET</td>
+                    <td><span class="label label-info">Added 5 New Client Orders.</span></td>
+                    <td>2018-04-18 09:42:37</td>
+{{-- <td>Just Now!</td> --}}
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+-->
+
+
+
+                <div class="col-lg-6 col-sm-6">
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                <button style=" width: 100%"  class="btn btn-info waves-effect waves-light"
+                                        data-toggle="modal" data-target="#clientOrderModal" type="button">
+                                    <span class="btn-label"><i class="fa fa-calendar-check-o"></i></span>
+                                    Fulfill Schedule
+                                </button>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                <button style=" width: 100%"  class="btn btn-danger waves-effect waves-light"
+                                        data-toggle="modal" data-target="#clientOrderModal" type="button">
+                                    <span class="btn-label"><i class="fa fa-calendar-times-o"></i></span>
+                                    Cancel Schedule
+                                </button>
+                        </div>
+
+
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <div class="white-box text-center bg-success">
+                                <h1 class="text-white counter">{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</h1>
+                                <p class="text-white">Driver</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <div class="white-box text-center">
+                                <h1 class=" counter">{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</h1>
+                                <p>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->car_model}}</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -514,191 +602,11 @@
 
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-sm-6">
-
-                    <div class="row">
-                        <div class="col-md-6 col-xs-12 col-sm-6">
-                                <button style=" width: 100%"  class="btn btn-info waves-effect waves-light"
-                                        data-toggle="modal" data-target="#clientOrderModal" type="button">
-                                    <span class="btn-label"><i class="fa fa-calendar-check-o"></i></span>
-                                    Fulfill Schedule
-                                </button>
-                        </div>
-                        <div class="col-md-6 col-xs-12 col-sm-6">
-                                <button style=" width: 100%"  class="btn btn-danger waves-effect waves-light"
-                                        data-toggle="modal" data-target="#clientOrderModal" type="button">
-                                    <span class="btn-label"><i class="fa fa-calendar-times-o"></i></span>
-                                    Cancel Schedule
-                                </button>
-                        </div>
-
-
-                        <div class="col-md-6 col-xs-12 col-sm-6">
-                            <div class="white-box text-center bg-success">
-                                <h1 class="text-white counter">{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</h1>
-                                <p class="text-white">Driver</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xs-12 col-sm-6">
-                            <div class="white-box text-center">
-                                <h1 class=" counter">{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</h1>
-                                <p>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->car_model}}</p>
-                            </div>
-                        </div>
-                    </div>
-                      <div class="row">
-                            <div class="col-lg-12 col-sm-12">
-                                
-                                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Order Delivery Location/s</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the schedule for the specified order/s.</span><br>
-                                        {{-- <button  style="margin-top:10px; "  class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i data-icon="r" class="linea linea-basic"></i></span>Add Schedule</button>
-                                        <button style="margin-top:10px;" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="|"></i></span>Update Order Status</button>                         --}}
-                                       
-                                        <p class="text-muted m-b-30"></p>
-                                        <div class="table-responsive">
-                                                <table id="myTable3" class="table table-striped">
-                                                    <thead>
-                                                        <tr style="color:black;">
-                                                            <th>Tracking #</th>
-                                                            <th>Plate #</th>
-                                                            <th>Driver</th>
-                                                            <th>Address</th>
-                                                            <th>Date</th>
-                                                            <th>Status</th>
-                                                            <th><i class="fa fa-gear"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                   
-                                                            <tr style="font-size:10px;">
-                                                                    <td>TR-0001 </td>
-                                                                    <td>ABC-3214 </td>
-                                                                    <td>Juan Dela Cruz</td>
-                                                                    <td>Tondo Manila, Philippines</td>
-                                                                    <td>2018-07-12 </td>
-                                                                <td><span class="label label-info">Scheduled</span></td>
-                                                                <td>
-                                                                        <i style="color:#4c87ed;" class="fa fa-edit">
-                
-                                                                                <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                        
-                                                                    </td>
-                                                             
-                                                               
-                                                            </tr> 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                    <div class="col-lg-12 col-sm-12">
-                                        
-                                            <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                                <h3 class="box-title m-b-0" style="color:black;">Order Delivery Schedule</h3>
-                                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the schedule for the specified order/s.</span><br>
-                                                <button  style="margin-top:10px; "  class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i data-icon="r" class="linea linea-basic"></i></span>Add Schedule</button>
-                                                <button style="margin-top:10px;" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="|"></i></span>Update Order Status</button>                        
-                                               
-                                                <p class="text-muted m-b-30"></p>
-                                                <div class="table-responsive">
-                                                        <table id="myTable3" class="table table-striped">
-                                                            <thead>
-                                                                <tr style="color:black;">
-                                                                    <th>Tracking #</th>
-                                                                    <th>Order #</th>
-                                                                    <th>Plate #</th>
-                                                                    <th>Delivery Date</th>
-                                                                    <th>Status</th>
-                                                                    <th><i class="fa fa-gear"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                           
-                                                                    <tr>
-                                                                            <td>TR-0001 </td>
-                                                                            <td>CLOD-0001 </td>
-                                                                            <td>ABC-3214 </td>
-                                                                            <td>2018-04-18 </td>
-                                                                        <td><span class="label label-info">Scheduled</span></td>
-                                                                        <td>
-                                                                                {{-- <i style="color:#4c87ed;" class="fa fa-edit"> --}}
-                        
-                                                                                        <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                                
-                                                                            </td>
-                                                                     
-                                                                       
-                                                                    </tr> 
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                        <div class="row">
-                                <div class="col-lg-12 col-sm-12">
-                                    
-                                        <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                            <h3 class="box-title m-b-0" style="color:black;">Order Update History</h3>
-                                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this order.</span>
-                                            <p class="text-muted m-b-30"></p>
-                                        <hr>
-                                            <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: MLOD-1</h3>
-                                            <div class="table-responsive">
-                                                    <table id="myTable4" class="table table-striped">
-                                                        <thead>
-                                                            <tr style="color:black;">
-                                                                <th>#</th>
-                                                                <th>User</th>
-                                                                <th>Update</th>
-                                                                {{-- <th>Notification</th> --}}
-                                                                <th>Timestamp</th>
-                                                                {{-- <th></th> --}}
-                                                                {{-- <th></th> --}}
-                                                                {{-- <th><i class="fa fa-gear"></th> --}}
-                                                                {{-- <th><i class="fa fa-gear"></th> --}}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                       
-                                                                <tr>
-                                                                    {{-- <td><a href={{route('clientorder.show',$order->id)}}>{{'CLOD-'.$order->id}}</a></td>
-                
-                                                                    <td>{{$order->fromClient->cl_name}}</td>
-                                                                    <td>{{$order->clod_date}}</td> 
-                                                                    <td>2018-04-17</td> 
-                                                                    <td>2018-04-17</td>  --}}
-                
-                                                                    {{-- <td><span class="label label-info">1</span></td> --}}
-                                                                    <td>1</td>
-                                                                    <td>PrivateAirJET</td>
-                                                                    <td><span class="label label-info">Added 5 New Client Orders.</span></td>
-                                                                    <td>2018-04-18 09:42:37</td>
-                                                                    {{-- <td>Just Now!</td> --}}
-                                                                 
-                                                                   
-                                                                </tr> 
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                               
-                    </div>
 
                 </div>
                 
             </div>
 
-            
-           
-                    
                 <!-- /.row -->
                 <!-- .right-sidebar -->
                 <div class="right-sidebar">
