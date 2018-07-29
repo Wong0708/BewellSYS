@@ -562,6 +562,7 @@
  
      </script>
 
+    <!--SECTION KEYWORD/S: DATABLE -->
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
