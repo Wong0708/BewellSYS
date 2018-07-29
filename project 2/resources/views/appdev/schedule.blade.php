@@ -56,17 +56,17 @@
                     </ul>
                     <ul class="nav navbar-top-links navbar-right pull-right">
                         <!-- /.dropdown -->
-    
+
                         <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i>
               <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
               </a>
                             <ul class="dropdown-menu dropdown-tasks animated flipInX feeds">
                                 <li>
-                                        <strong>Notifications</strong> 
+                                        <strong>Notifications</strong>
                                 </li>
                                 <li>
                                     <div class="bg-info"><i class="fa fa-bell-o text-white"></i></div> Added 5 New Client Orders. <span class="text-muted">Just Now</span>
-                          
+
                                 </li>
                                 <li>
                                     <div class="bg-danger"><i class="ti-user text-white"></i></div> New user registered.<span class="text-muted">16 July</span>
@@ -79,16 +79,16 @@
                         </li>
 
 
-                        
+
                         <li class="dropdown">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
-                                
+
                                 @if(Auth::user()->access==1)
                                    Logistics Head
                                 @endif
-        
+
                             </b> </a>
-    
+
                             <!--DROPDOWN OF THE CLASS-->
                             <ul class="dropdown-menu dropdown-user animated flipInY">
                                 <li><a href="#"><i class="ti-user"></i> Manage Account</a></li>
@@ -127,7 +127,7 @@
                             @if(Auth::user()->access==1)
                                 Administrator
                             @endif
-    
+
                             <span class="fa arrow"></span></span>
                             </a>
                             <ul class="nav nav-second-level">
@@ -167,7 +167,7 @@
                                 <li> <a href={{route('inventoryreport.index')}}>Supplier</a> </li>
                             </ul>
                         </li>
-    
+
                         <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="V" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('useraccount.index')}}>User</a> </li>
@@ -177,8 +177,8 @@
                                 {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                             </ul>
                         </li>
-    
-    
+
+
                         {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
                             {{-- <ul class="nav nav-second-level">
                                 <li> <a href={{route('inventoryreport.index')}}>Truck</a> </li> --}}
@@ -186,10 +186,10 @@
                                 {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                             {{-- </ul>
                         </li> --}}
-                        
+
                         <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">FAQs</span></a></li>
                         <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Documentation</span></a></li>
-                    
+
                         {{-- <li> <a href={{route('schedule.index')}} class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Settings</span></a> --}}
                             {{-- <ul class="nav nav-second-level">
                                 <li> <a href="javascript:void(0)">Client</a> </li>
@@ -282,7 +282,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                
+
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Driver:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a driver to deliver the order. <b style="color:#E53935;">*Required</b></span>
@@ -295,7 +295,7 @@
                                     </select>
 
                                     <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
-                                       
+
                                             <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Order/s</b></h4>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section assign orders to the desired truck. <b style="color:#E53935;">*Required</b></span>
                                             <br>
@@ -359,7 +359,7 @@
                                                     <center><h2  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Schedule Summary</b></h2></center>
                                                     {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
                                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced delivery list for the truck delivery.</span>
-                                                    
+
                                                     <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
                                                             <thead>
                                                                 <tr style="font-size:12px; font-weight:700;">
@@ -374,12 +374,14 @@
                                                                         <tbody id="addproduct">
                                                                             <tr style="font-size:12px;">
                                                                                <td>TR-{{$latest_id+1}}</td>
-                                                                                <td id="prev_driver">@if(isset($drivers))
+                                                                                <td id="prev_driver">
+                                                                                    @if(isset($drivers))
                                                                                             @foreach ($drivers as $driver)
                                                                                                 <option value="{{$driver->id}}">{{$driver->name}}</option>
                                                                                                 @break
                                                                                             @endforeach
-                                                                                        @endif</td>
+                                                                                        @endif
+                                                                                </td>
                                                                                <td><span class="label label-success" id="prev_address">Taft Avenue, Metro Manila</span></td>
                                                                                <td id="prev_delivery_date"></td>
                                                                                <td><span class="label label-success">Scheduled</span></td>
@@ -387,10 +389,10 @@
                                                                         </tbody>
                                                                     </table>
                                                                     <h2><center><span class="control label" id="alert" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
-                                        
+
                                                 </div>
-                                
-                                
+
+
                                 </div>
 
                                 </div>
@@ -399,7 +401,7 @@
                                     <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit" type="submit">Submit</button>
                                 </div>
                             {!!Form::close()!!}
-                            
+
                         </div>
                     </div>
                 </div>
@@ -473,18 +475,18 @@
                                 </div>
                                 {!! Form::open(array('route'=>'driver.store'))!!}
                                 <div class="modal-body">
-                                    <div class="form-group">  
+                                    <div class="form-group">
                                         <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Driver's Name:</b></label>
                                         <br>
                                         <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the full name of the Driver. Ex: Juan Dela Cruz. <b style="color:#E53935;">*Required</b></span>
                                         <input class="form-control" name="name" type="text"/>
-    
+
                                         <label for="client" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Driver's License #:</b></label>
                                         <br>
                                         <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the user's latest issued driver's license. Ex: N07-12-657548. <b style="color:#E53935;">*Required</b></span>
-                                        
+
                                         <input style="margin-top:10px;" class="form-control" name="license" type="text" data-mask="a99-99-999999"/>
-                                        
+
 
                                         <label for="client" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Contact #:</b></label>
                                         <br>
@@ -494,19 +496,19 @@
                                         <br>
                                         <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the weekly availability of the driver. Ex: M-W-F. <b style="color:#E53935;">*Required</b></span>
                                         <input style="margin-top:10px;" class="form-control" name="availability" type="text"/>
-                                        
-                                                   
+
+
                                             </div>
-    
+
                                         {{-- <h1>Total:</h1> --}}
-                                            
+
                                     </div>
                                     <div class="modal-footer">
                                         {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> --}}
                                         <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
                                     </div>
                                 {!!Form::close()!!}
-                                
+
                             </div>
                         </div>
                     </div>
@@ -520,20 +522,20 @@
                                     </div>
                                     {!! Form::open(array('route'=>'truck.store'))!!}
                                     <div class="modal-body">
-                                        <div class="form-group">  
+                                        <div class="form-group">
                                             <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Car Model:</b></label>
                                             <br>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the truck car model. Ex: Isuzu FRR90 M. <b style="color:#E53935;">*Required</b></span>
                                             <input class="form-control" name="car_model" type="text"/>
-                                            
-        
+
+
                                             <label for="client" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Car Plate Number:</b></label>
                                             <br>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the car's plate number. Ex: NSA-2134. <b style="color:#E53935;">*Required</b></span>
-                                            
+
                                             <input style="margin-top:10px;" class="form-control" name="plate_num" type="text"/>
-                                            
-    
+
+
                                             <label for="client" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Maximum Load (Boxes):</b></label>
                                             <br>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the maximum delivery load of the car. Ex: 100 Boxes <b style="color:#E53935;">*Required</b></span>
@@ -542,19 +544,19 @@
                                             <br>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the weekly availability of the driver. Ex: M-W-F. <b style="color:#E53935;">*Required</b></span>
                                             <input style="margin-top:10px;" class="form-control" name="availability" type="text"/>
-                                            
-                                                       
+
+
                                                 </div>
-        
+
                                             {{-- <h1>Total:</h1> --}}
-                                                
+
                                         </div>
                                         <div class="modal-footer">
                                             {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> --}}
                                             <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
                                         </div>
                                     {!!Form::close()!!}
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -565,7 +567,7 @@
                     @if(Session::has('success'))
                         <script>
                             window.onload = function() {
-                                var x = document.getElementById("allah_snackbar");
+                                var x = document.getElementById("snackbar");
                                 x.className = "show";
                                 setTimeout(function(){
                                     x.className = x.className.replace("show", ""); }, 3000);
@@ -575,7 +577,7 @@
                     @endif
 
                         @if(Session::has('success'))
-                            <center><div id="allah_snackbar">{{Session::get('success')}}</div></center>
+                            <center><div id="snackbar">{{Session::get('success')}}</div></center>
                         @endif
                     <div class="col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -583,7 +585,7 @@
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL ORDER SCHEDULES</h3>
                             {{-- <div class="col-sm-12" style="background-color:red;"> --}}
                                 <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-calendar-plus-o"></i></span>Add Schedule</button>
-                                                    
+
                                 <p class="text-muted m-b-30"></p>
                                 <div class="table-responsive">
                                     <table class="table table-striped myTable">
@@ -611,16 +613,11 @@
                                                     <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
                                                     <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
                                                     <td>{{$schedule->scd_date}}</td>
-<<<<<<< HEAD
-                                                    <td>N/A</td>
-                                                    <td><span class="label label-info">{{$schedule->scd_status}}</span></td>
-=======
                                                     <td>@if($schedule->dateDelivered){{$schedule->dateDelivered}}@else N/A @endif</td>
                                                     <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
                                                         >{{$schedule->scd_status}}</span></td>
->>>>>>> 050c9d4f321c825353f85c5d8097c9aee98a9757
                                                     <td>
-                                                        {!! Form::open(['route'=>['schedule.destroy',$schedule->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
+                                                        {!! Form::open(['route'=>['schedule.destroy',$schedule->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
                                                         <center><a href="#" data-toggle="modal" data-target="#concludeSchedModal" scid="{{$schedule->id}}" class="conclude"><i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>
                                                         </center>
                                                         {!!Form::close()!!}
@@ -677,9 +674,9 @@
                                                 <td>{{$truck->updated_at}}</td>
                                                 <td>
                                                     <i trid="{{$truck->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editTruckModal" class="fa fa-edit truckeditz">
-                                                        {!! Form::open(['route'=>['truck.destroy',$truck->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
+                                                        {!! Form::open(['route'=>['truck.destroy',$truck->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder"></i>
-                                                        {!!Form::close()!!} 
+                                                        {!!Form::close()!!}
 
                                                 </td>
                                                 {{-- <td>  --}}
@@ -700,7 +697,7 @@
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                         <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL DRIVERS</h3>
                         <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#driverModal" type="button"><span class="btn-label"><i class="fa fa-wrench"></i></span>Add Driver</button>
-                                                
+
                         <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place a new company driver! </span> </a> {{-- </div> --}} {{-- </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                         <p class="text-muted m-b-30"></p>
                         <div class="table-responsive">
@@ -740,9 +737,9 @@
 
                                                     <i drid="{{$driver->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editDriverModal" class="fa fa-edit drivereditz">
 
-                                                        {!! Form::open(['route'=>['driver.destroy',$driver->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} 
+                                                        {!! Form::open(['route'=>['driver.destroy',$driver->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!}
                                                         <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                        {!!Form::close()!!} 
+                                                        {!!Form::close()!!}
 
                                                 </td>
                                             </tr>
@@ -1099,19 +1096,19 @@
                     $('#date_conclude').css('display','block');
                 });
                 $(document).on('click', '.truckeditz', function() {
-                    
+
                     $("#tr_id").val($(this).attr('trid'));
                     //alert($("#tr_id").val());
                 });
                 $(document).on('click', '.drivereditz', function() {
-                    
+
                     $("#dr_id").val($(this).attr('drid'));
                     //alert($("#dr_id").val());
                 });
                  $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this account?");
-                    
-                    if (verify) { 
+
+                    if (verify) {
                         $(this).closest('.deleteOrder').submit();
                     }
                     return verify;
@@ -1126,4 +1123,4 @@
             </script>
 </body>
 
-</html> 
+</html>

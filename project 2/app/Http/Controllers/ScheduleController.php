@@ -196,6 +196,8 @@ class ScheduleController extends Controller
     public static function getLocation($id){
         return ClientLocation::find($id);
     }
+
+
     public static function getSchedClassColor($id){
         $schedule = Schedule::find($id);
         switch ($schedule->scd_status){
