@@ -16,7 +16,6 @@
                             <th>Company</th>
                             <th>Office Address</th>
                             <th>Email</th>
-                            {{-- <th></th> --}}
                             
                         </tr>
                         @foreach($clients as $client)
