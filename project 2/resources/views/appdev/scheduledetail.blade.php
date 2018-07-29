@@ -401,7 +401,7 @@
                             <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                 <button type="button" class="list-group-item" disabled>
                                     <span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe016;" class="linea-icon linea-basic"></i></span>
-                                    <b>Order Number: </b>CLO-{{$schedule->orderID}}
+                                    <b>Order Number: </b>CLOD-{{$schedule->orderID}}
                                 </button>
                                 <button type="button" class="list-group-item" disabled>
                                     <span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-elaborate"></i></span>
@@ -423,39 +423,29 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-12">
                             <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-
-                                {{-- <h3 class="box-title">Ordered Products</h3> --}}
                                 <h3 class="box-title m-b-0" style="color:black;">Ordered Material/s</h3>
                                 <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section contains all the specified order/s.</span>
-                                <br>
-                                <button style="margin-top:10px;"  class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
-                                {{-- <p class="text-muted m-b-30"></p> --}}
                                 <hr>
-                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: CLOD-1</h3>
+                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details for Client Order {{$schedule->orderID}}</h3>
                                 <div class="table-responsive">
                                     <table id="myTable" class="table table-striped">
                                         <thead>
                                         <tr style="color:black;">
-                                            <th>#</th>
-                                            <th>Code</th>
+                                            <th>Product Code</th>
                                             <th>Name</th>
                                             <th>SKU</th>
-                                            <th>Quantity (Boxes)</th>
-                                            <th>Remaining</th>
-                                            <th>Delivered</th>
+                                            <th>Deliver Qty(Boxes)</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            {{-- <td>PR-0001</td> --}}
-                                            <td>1</td>
-                                            <td>BC-Calcium</td>
-                                            <td>Bewell-C Calcium</td>
-                                            <td>500 grams</td>
-                                            <td>500</td>
-                                            <td>300</td>
-                                            <td>200</td>
-                                        </tr>
+                                        @foreach($schedule_dets as $sched_det)
+                                            <tr>
+                                                <td>PR-{{$sched_det->productID}}</td>
+                                                <td>{{\App\Http\Controllers\ScheduleDetailController::getProduct($sched_det->productID)['pd_name']}}</td>
+                                                <td>{{\App\Http\Controllers\ScheduleDetailController::getProduct($sched_det->productID)['pd_sku']}}</td>
+                                                <td>{{$sched_det->delivered_qty}}</td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -559,39 +549,28 @@
                                 <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the section to show summary delivery.</span>
                                 <br>
                                 <button style="margin-top:10px;" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe00b;"></i></span>Print Order Delivery Report (ODR)</button>
-                                {{-- <button style="margin-top:10px;" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="|"></i></span>Update Raw Material Inventory</button>                         --}}
 
-                                {{-- <p class="text-muted m-b-30"></p>
-                                 --}}
                                 <hr>
                                 <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Schedule Details: TR-0001</h3>
 
                                 <table class="table table-bordered">
                                     <thead style="color:black;">
                                     <tr style="color:black;">
-                                        <th>#</th>
+
+                                        <th>Model</th>
                                         <th>Truck Plate #</th>
                                         <th>Driver</th>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        {{-- <th>Schedule Date</th> --}}
                                         <th>Delivery Date</th>
                                         <th>Qty (Boxes)</th>
-                                        {{-- <th>Gross Total Price</th> --}}
-                                        {{-- <th>Discount</th> --}}
-                                        {{-- <th>Grand Total Price</th> --}}
-                                        {{-- <th>Profit</th> --}}
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td>1</td>
-                                        <td>NSA-2134</td>
-                                        <td>Juan Dela Cruz</td>
-                                        <td>BC-C500G</td>
-                                        <td>Bewell-C Calcium</td>
-                                        <td>2018-07-22</td>
-                                        <td>100</td>
+                                        <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->car_model}}</td>
+                                        <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
+                                        <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
+                                        <td>{{$schedule->scd_date}}</td>
+                                        <td>{{\App\Http\Controllers\ScheduleController::getCurCapacity($schedule->id)}}</td>
                                     </tr>
 
                                     </tbody>

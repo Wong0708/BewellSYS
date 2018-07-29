@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+ use App\Product;
  use Illuminate\Http\Request;
 
 
@@ -36,7 +37,6 @@ class ScheduleDetailController extends Controller
             return view('errors.404');
         }
         $schedule_dets = DB::table('bc_schedule_detail')->join('bc_schedule','bc_schedule_detail.scheduleID','=','bc_schedule.id')->get()->toArray();
-
         $date = date_create($schedule->scd_date);
         $schedule->scd_date = date_format($date, "F j Y");
 
@@ -52,10 +52,21 @@ class ScheduleDetailController extends Controller
             if($schedule['datediff'] == "in 0 days" ){
                 $schedule['datediff'] = "<b style='color: forestgreen'>TODAY</b>";
             }
-
         }
+/*
+        foreach($schedule_dets as $schedule_det){
+            $schedule_det['pd_name'] = self::getProduct($schedule_det->productID)->pd_name;
+            $schedule_det['pd_code'] = self::getProduct($schedule_det->productID)->pd_code;
+            $schedule_det['pd_qty'] = self::getProduct($schedule_det->productID)->pd_qty;
+        }
+*/
         return  view("appdev.scheduledetail",['schedule' => $schedule])->with("schedule_dets",$schedule_dets);
     }
+    public static function getProduct($id){
+        $prod = Product::where('id', $id)->first();
+        return $prod;
+    }
+
 
     /**
      * Show the form for creating a new resource.
