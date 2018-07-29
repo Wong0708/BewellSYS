@@ -57,13 +57,7 @@ class ScheduleDetailController extends Controller
         $schedule_dets = $schedule_dets->filter(function ($schedule_dets) use ($id) {
             return $schedule_dets->scheduleID == $id;
         });
-/*
-        foreach($schedule_dets as $schedule_det){
-            $schedule_det['pd_name'] = self::getProduct($schedule_det->productID)->pd_name;
-            $schedule_det['pd_code'] = self::getProduct($schedule_det->productID)->pd_code;
-            $schedule_det['pd_qty'] = self::getProduct($schedule_det->productID)->pd_qty;
-        }
-*/
+
         return  view("appdev.scheduledetail",['schedule' => $schedule])->with("schedule_dets",$schedule_dets);
     }
     public static function getProduct($id){

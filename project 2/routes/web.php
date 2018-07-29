@@ -53,6 +53,8 @@ Route::get('supplydetailz/{id}', 'SupplyDetailController@getSupply')->name('appd
 
 Route::resource('salesreport', 'SalesReportController');
 
+Route::post('salesreport', 'SalesReportController@generateReport')->name('appdev.salesreport');
+
 Route::resource('inventoryreport', 'InventoryReportController');
 
 Route::resource('notifications', 'NotificationController');

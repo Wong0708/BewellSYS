@@ -218,191 +218,6 @@
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /row -->
-                <!--MODAL STARTS HERE-->
-                <div class="modal fade" id="clientOrderModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Orders</h4>
-                            </div>
-                            {!! Form::open(array('route'=>'clientorder.store','id'=>'addproductform'))!!}
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client:</b></label>
-                                    <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                    @if(isset($clients))
-                                                        @foreach ($clients as $client)
-                                                            <option>{{$client->cl_name}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                    
-                                    </select>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one client among the list to add an order.</span>
-                                    
-
-                                    <br>
-
-                                    <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
-                                    <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                    @if(isset($clients))
-                                                        @foreach ($clients as $client)
-                                                            <option>{{$client->cl_name}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                    
-                                    </select>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the client's address as this will serve also as the shipping address.</span>
-                                    <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
-                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the client's product order based on the list.</span>
-                                        <br>
-                                        <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button></label>
-                                        <div class="table-responsive" style="margin-top:10px;">
-                                        <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
-                                            <thead>
-                                                <tr style="font-size:12px; font-weight:700; ">
-
-                                                    {{--
-                                                    <th></th> --}}
-                                                    {{-- <th>Product Code</th> --}}
-                                                    <th>Order #</th>
-                                                    <th>Product Name</th>
-                                                    <th>SKU</th>
-                                                    {{--
-                                                    <th>Grams</th> --}} {{--
-                                                    <th>Price</th> --}} {{--
-                                                    <th>Current Qty</th> --}}
-                                                    <th>Order Amount (Boxes)</th>
-                                                    <th><i class="fa fa-gear"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="addproduct">
-                                                            
-                                                            <tr style="color:black;">
-                                                                @if(isset($products))
-                                                                {{-- <td>PR-0001</td> --}}
-                                                                <td><span class="label label-info">1</span></td>
-                                                                <td> <select style="font-size:12px;" class="form-control" name="product[]" class="product">@foreach ($products as $product)<option>{{$product->pd_name}}</option>@endforeach @endif </td>
-                                                                <td>
-                                                                    <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                        <option>1000 grams</option>
-                                                                        <option>500 grams</option>
-                                                                        <option>250 grams</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                            </tr>
-                                                            <tr style="color:black;">
-                                                                    {{-- @if(isset($products)) --}}
-                                                                    {{-- <td>PR-0001</td> --}}
-                                                                    <td><span class="label label-info">2</span></td>
-                                                                    <td> <select style="font-size:12px;" style="font-size:12px;" class="form-control" name="product[]" class="product"><option>LiverGuard</option> </td>
-                                                                    <td>
-                                                                        <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                            <option>1000 grams</option>
-                                                                            <option>500 grams</option>
-                                                                            <option>250 grams</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input style="font-size:12px;" readonly class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                            </tr>
-
-                                                            <tr style="color:black;">
-                                                                    {{-- @if(isset($products)) --}}
-                                                                    {{-- <td>PR-0001</td> --}}
-                                                                    <td><span class="label label-info">2</span></td>
-                                                                    <td> <select style="font-size:12px;" class="form-control" name="product[]" class="product"><option>BC-Calcium</option> </td>
-                                                                    <td>
-                                                                        <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                            <option>1000 grams</option>
-                                                                            <option>500 grams</option>
-                                                                            <option>250 grams</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                            </tr>
-
-                                                            
-                                                        </tbody>
-                                                    </table>
-                                                {{-- <h4  style="margin-top:20px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Ordered Products: 1 product/s only</b></h4>
-                                                <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b> </b></h4> --}}
-                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Total Price: ₱100.00 </b></h4>
-                                                </div>
-                                                <hr>
-                                                    <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Product Inventory Support</b></h4>
-                                                    {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
-                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced inventory list for the client's ordered product/s.</span>
-                                                    
-                                                    <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
-                                                            <thead>
-                                                                <tr style="font-size:12px; font-weight:700;">
-                                                                    <th>Order #</th>
-                                                                    {{--
-                                                                    <th></th> --}}
-                                                                    <th>Product Code</th>
-                                                                    <th>Available</th>
-                                                                    {{--
-                                                                    <th>Grams</th> --}} {{--
-                                                                    <th>Price</th> --}} {{--
-                                                                    <th>Current Qty</th> --}}
-                                                                    <th>Price</th>
-                                                                    <th>Status</th>
-                                                                    {{-- <th><i class="fa fa-gear"></th> --}}
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="addproduct">
-                                                                            
-                                                                            <tr style="font-size:12px;">
-                                                                               <td>1</td>
-                                                                               <td>PR-0001</td>
-                                                                               <td><span class="label label-success">70</span></td>
-                                                                               <td>₱100.00</td>
-                                                                               <td><span class="label label-success">On-stock</span></td>
-                                                                            </tr>
-
-                                                                            <tr style="font-size:12px;">
-                                                                                <td>2</td>
-                                                                                <td>PR-0002</td>
-                                                                                <td><span class="label label-danger">0</span></td>
-                                                                                <td>₱70.00</td>
-                                                                                <td><span class="label label-danger">No Stock</span></td>
-                                                                            </tr>
-
-                                                                            <tr style="font-size:12px;">
-                                                                                    <td>3</td>
-                                                                                    <td>PR-0003</td>
-                                                                                    <td><span class="label label-success">20</span></td>
-                                                                                    <td>₱120.00</td>
-                                                                                    <td><span class="label label-success"> Available</span></td>
-                                                                                </tr>
-                
-                                                                            
-                                                                        </tbody>
-                                                                    </table>
-                                                                    
-                                                </div>
-                                                
-                                               
-                                        </div>
-
-                                    {{-- <h1>Total:</h1> --}}
-                                        
-                                </div>
-                                <div class="modal-footer">
-                                    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> --}}
-                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
-                                </div>
-                            {!!Form::close()!!}
-                            
-                        </div>
-                    </div>
-                </div>
-
                 {{-- <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="sysmodal2">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -477,22 +292,25 @@
                                 {{-- <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button> --}}
                                                     
                                 {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
-                                <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>
+                                {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
                                 <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
-                                <div style="margin-top:10px;" class="btn-group btn-group-justified m-b-20"> <a class="btn btn-default btn-outline waves-effect waves-light" role="button">Weekly</a> <a class="btn btn-default btn-outline waves-effect waves-light" role="button">Monthly</a> <a class="btn btn-default btn-outline waves-effect waves-light" role="button">Yearly</a></div>
-                                <p class="text-muted m-b-30"></p>
-                                <div class="example">
-                                        {{-- <h5 class="box-title m-t-30">Date Range picker</h5> --}}
-                                       
-                                        <div class="input-daterange input-group" id="date-range">
-                                            <input type="text" class="form-control" name="start" /> <span class="input-group-addon bg-info b-0 text-white">to</span>
-                                            <input type="text" class="form-control" name="end" /> </div>
+                                {!!Form::open(array('route' => 'appdev.salesreport'))!!}
+                                   <input type="hidden" name="dog" value="hatdug"/>
+                                   {{Form::submit('Generate Report',['class' => 'btn btn-success waves-effect waves-light'])}}
+                                   <p class="text-muted m-b-30"></p>
+                                    <div class="input-daterange input-group" id="date-range">
+                                        <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
+                                        <input type="date" class="form-control" name="end"/> 
                                     </div>
-                                <hr>
-
+                                {!!Form::close() !!}
+                                <p class="text-muted m-b-30"></p>
+                                @if(isset($start))
+                                @endif
+                                @if(isset($end))
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell-C Nutraceutical Corporation</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Sales Report</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>2018-06-30 to 2018-07-30  </b></h4>
+                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>{{$start}} to {{$end}}  </b></h4>
+                                @endif
                                 {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
                                 <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
                                         <thead>
@@ -501,12 +319,26 @@
                                                 <th>Order #</th>
                                                 <th>Client</th>
                                                 <th>Total Ordered Products</th>
-                                                <th>Gross Total Price</th>
+                                                <th>Gross Total Price (in pesos)</th>
                                                 <th>Discount</th>
                                                 <th>Net Total Price</th>
-                                                    </thead>
+                                            </tr>
+                                        </thead>
                                                     <tbody id="addproduct">
-                                                        
+                                                        <?php use \App\Http\Controllers\SalesReportController;?>
+                                                        @if(count($orders) > 0)
+                                                            @foreach($orders as $order)
+                                                            <tr style ="color:black;">
+                                                                <td>Order # {{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</td>
+                                                                <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
+                                                                <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
+                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
+                                                                <td>0</td>
+                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
+                                                            {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
+                                                            @endforeach
+                                                        @endif
+                                                    {{--    
                                                         <tr style="color:black;">
                                                             <td>CLOD-0001</td>
                                                             <td>Mercury Drug Corporation</td>
@@ -609,7 +441,8 @@
                                                                     
                                                             
 
-                                                        
+                                                     --}}
+
                                                     </tbody>
                                                 </table>
                                                 
