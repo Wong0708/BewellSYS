@@ -445,26 +445,26 @@
             }
         });
 
-        count = count + 1;
+        
         $(document).on('click', '#addOrder', function() {
-             
-        $('#orderList').append(
-            '@if(isset($products))<tr style="color:black;">'+ 
-            '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
-            '<td> <select style="font-size:12px;" class="form-control"> @foreach ($products as $product)<option>{{$product->pd_name}}</option> @endforeach</select> </td>' +
-            '<td><select style="font-size:12px;" class="form-control"> @foreach ($products as $product) <option>{{$product->pd_sku}}</option> @endforeach </td>'+
-            '<td><input type="text" style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder=""></td> ' +
-            '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td> ' +
-            '</tr>@endif');
-        });
+            count = count + 1;
+            $('#orderList').append(
+                '@if(isset($products))<tr style="color:black;">'+ 
+                '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
+                '<td> <select style="font-size:12px;" class="form-control"> @foreach ($products as $product)<option>{{$product->pd_name}}</option> @endforeach</select> </td>' +
+                '<td><select style="font-size:12px;" class="form-control"> @foreach ($products as $product) <option>{{$product->pd_sku}}</option> @endforeach </td>'+
+                '<td><input type="text" style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder=""></td> ' +
+                '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td> ' +
+                '</tr>@endif');
+            });
 
-        $('#verifyAddOrder').on('click','',function() {
-            var verify = confirm("Do you wish to add the order?");
-            if(verify==true){
-                $('#activityUpdate').html('A new order has been added to the list!');
-            }else{
-            }
-            return false;
+            $('#verifyAddOrder').on('click','',function() {
+                var verify = confirm("Do you wish to add the order?");
+                if(verify==true){
+                    $('#activityUpdate').html('A new order has been added to the list!');
+                }else{
+                }
+                return false;
         });
     </script>
 
@@ -573,7 +573,7 @@
                         "targets": 2
                     }],
                     "order": [
-                        [2, 'asc']
+                        [2, 'asc']  
                     ],
                     "displayLength": 25,
                     "drawCallback": function(settings) {
