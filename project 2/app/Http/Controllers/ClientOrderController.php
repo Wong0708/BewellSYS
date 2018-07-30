@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Session;
 use App\ClientOrder;
 use App\ClientOrderDetail;
@@ -11,6 +10,7 @@ use App\ClientOrderDetail;
 use App\Client;
 use App\Product;
 use DateTime;
+use DB;
 
 class ClientOrderController extends Controller
 {
@@ -19,6 +19,11 @@ class ClientOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $orders = ClientOrder::all();
@@ -53,60 +58,60 @@ class ClientOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //VALIDATION OF INPUTS
-
-        $ordered_products = $request->all();
+        //OLD IMPLEMENTATION FOR STORAGE
+        // $ordered_products = $request->all();
         
-        $client = Client::where('cl_name',$request->client)->first();
-        $products = array();
-        $i = 0;
-        foreach ($ordered_products['product'] as $ordered_product){
-            $products [0][$i] =  $ordered_product;
-            $i = $i+1;
-        }
+        // $client = Client::where('cl_name',$request->client)->first();
+        // $products = array();
+        // $i = 0;
+        // foreach ($ordered_products['product'] as $ordered_product){
+        //     $products [0][$i] =  $ordered_product;
+        //     $i = $i+1;
+        // }
 
-        $i = 0;
-        foreach ($ordered_products['gram'] as $ordered_product){
-            $products [1][$i] =  $ordered_product;
-            $i = $i+1;
-        }
+        // $i = 0;
+        // foreach ($ordered_products['gram'] as $ordered_product){
+        //     $products [1][$i] =  $ordered_product;
+        //     $i = $i+1;
+        // }
 
-        $i = 0;
-        foreach ($ordered_products['orderqty'] as $ordered_product){
-            $products [2][$i] =  $ordered_product;
-            $i = $i+1;
-        }
+        // $i = 0;
+        // foreach ($ordered_products['orderqty'] as $ordered_product){
+        //     $products [2][$i] =  $ordered_product;
+        //     $i = $i+1;
+        // }
 
-        //Check the Given Product Input
-        // dd($products);
-        $date = new DateTime();
+        // $date = new DateTime();
 
-        $order = new ClientOrder();
-        $order->clientID = $client->id;
-        $order->clod_date = date("Y/m/d");
-        $order->clod_status = 'Processing';
-        $order->clientID = $client->id;
-        $order->created_at = $date->getTimestamp();
-        $order->updated_at = $date->getTimestamp();
-        $order->save();
+        // $order = new ClientOrder();
+        // $order->clientID = $client->id;
+        // $order->clod_date = date("Y/m/d");
+        // $order->clod_status = 'Processing';
+        // $order->clientID = $client->id;
+        // $order->created_at = $date->getTimestamp();
+        // $order->updated_at = $date->getTimestamp();
+        // $order->save();
 
-        $i = 0;
-        for ($row = 0; $row < sizeOf($products[0]); $row++) {
-            $orderdetail = new ClientOrderDetail();
-            $orderdetail->orderID = $order->id;
-            // dd($products[2][$i]);
-            $newproduct = Product::where('pd_name',$products[0][$i])->where('pd_sku',$products[1][$i])->first();
-            $orderdetail->productID = $newproduct->id;
-            $orderdetail->cldt_qty = $products[2][$i];
-            $orderdetail->created_at = $date->getTimestamp();
-            $orderdetail->updated_at = $date->getTimestamp();
-            $orderdetail->save();
+        // $i = 0;
+        // for ($row = 0; $row < sizeOf($products[0]); $row++) {
+        //     $orderdetail = new ClientOrderDetail();
+        //     $orderdetail->orderID = $order->id;
+        //     $newproduct = Product::where('pd_name',$products[0][$i])->where('pd_sku',$products[1][$i])->first();
+        //     $orderdetail->productID = $newproduct->id;
+        //     $orderdetail->cldt_qty = $products[2][$i];
+        //     $orderdetail->created_at = $date->getTimestamp();
+        //     $orderdetail->updated_at = $date->getTimestamp();
+        //     $orderdetail->save();
 
-            $i = $i+1;
-        }
+        //     $i = $i+1;
+        // }
 
-        Session::flash('success','Successfully added an order!');
-        return redirect("/clientorder");
+        // Session::flash('success','Successfully added an order!');
+        // return redirect("/clientorder");
+        
+        $orders = new ClientOrderDetail();
+        
+        return redirect()->json($orders);
     }
 
     /**
@@ -140,15 +145,15 @@ class ClientOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($id);
-        $order = ClientOrder::find($id);
-        $order->clod_status = $request->input('orderStatus');
-        $order->save();
+        // OLD IMPLEMENTATION
+        // $order = ClientOrder::find($id);
+        // $order->clod_status = $request->input('orderStatus');
+        // $order->save();
+        // Session::flash('success','Successfully edited an order!');
+        // return redirect("/clientorder");
 
-        // dd($order);
-
-        Session::flash('success','Successfully edited an order!');
-        return redirect("/clientorder");
+        $order = ClientOrder::where('orderID', $id)->update(['expectedDate'=>$request->expectedDate]);
+        return response()->json($order);
     }
 
     /**
@@ -159,12 +164,13 @@ class ClientOrderController extends Controller
      */
     public function destroy($id)
     {
-        $order = ClientOrder::find($id);
-        $order->delete();
+        // OLD IMPLEMENTATION
+        // $order = ClientOrder::find($id);
+        // $order->delete();
+        // Session::flash('success','Successfully deleted an order!');
+        // return redirect("/clientorder");
 
-        // dd($order);
-
-        Session::flash('success','Successfully deleted an order!');
-        return redirect("/clientorder");
+        $order = ClientOrder::where('orderID', $id)->delete();
+        return response()->json($order);
     }
 }

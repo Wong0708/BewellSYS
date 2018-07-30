@@ -13,7 +13,9 @@ class LogoutController extends Controller
      */
     public function index()
     {
-        //
+        \Auth::logout();
+        session_unset();
+        return redirect('/');
     }
 
     /**

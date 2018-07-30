@@ -171,6 +171,7 @@
                             <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
                             </ul>
                         </li>
+                        @if(Auth::user()->user_id==1)
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
@@ -189,6 +190,7 @@
                                 {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                             </ul>
                         </li>
+                        @endif
     
     
                         {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
