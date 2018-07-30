@@ -63,6 +63,8 @@ Route::post('supplierreport', 'SupplierReportController@generateReport')->name('
 
 Route::resource('manufacturerreport', 'ManufacturerReportController');
 
+Route::post('manufacturerreport', 'ManufacturerReportController@generateReport')->name('appdev.manufacturerreport');
+
 Route::resource('notifications', 'NotificationController');
 
 Route::resource('driverdetail', 'DriverDetailController');

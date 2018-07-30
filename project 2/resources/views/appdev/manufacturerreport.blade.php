@@ -288,14 +288,14 @@
                       
                               
                               @endif
-                            <h3 class="box-title m-b-0" style="color:black;">GENERATE SALES REPORT</h3>
+                            <h3 class="box-title m-b-0" style="color:black;">GENERATE MANUFACTURER REPORT</h3>
                             {{-- <div class="col-sm-12" style="background-color:red;"> --}}
                                 {{-- <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button> --}}
                                                     
                                 {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                                 {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
                                 <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
-                                {!!Form::open(array('route' => 'appdev.salesreport'))!!}
+                                {!!Form::open(array('route' => 'appdev.manufacturerreport'))!!}
                                    <input type="hidden" name="dog" value="hatdug"/>
                                    {{Form::submit('Generate Report',['class' => 'btn btn-success waves-effect waves-light'])}}
                                    <p class="text-muted m-b-30"></p>
@@ -319,26 +319,24 @@
 
                                                 <th>Order #</th>
                                                 <th>Order Date</th>
-                                                <th>Client</th>
-                                                <th>Total Ordered Products</th>
-                                                <th>Gross Total Price (in pesos)</th>
-                                                <th>Discount</th>
-                                                <th>Net Total Price</th>
+                                                <th>Manufacturer</th>
+                                                <th>Total Quantity</th>
+                                                <th>Total Price</th>
+                                                <th>Order Status</th>
                                             </tr>
                                         </thead>
                                                     <tbody id="addproduct">
-                                                        <?php use \App\Http\Controllers\SalesReportController;?>
+                                                        <?php use \App\Http\Controllers\ManufacturerReportController;?>
                                                         @if(count($orders) > 0)
                                                             @foreach($orders as $order)
                                                             <tr style ="color:black;">
                                                                 <td>Order # {{$order->id}}</td>
-                                                                <td>{{$order->clod_date}}</td>
-                                                                <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
-                                                                <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
-                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
-                                                                <td>0</td>
-                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
-                                                            {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
+                                                                <td>{{$order->mnod_date}}</td>
+                                                                <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturer($order->manufacturerID)['mn_name']}}</td>
+                                                                <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}}</td>
+                                                                <td>Need Changes</td>
+                                                                <td>{{$order->mnod_status}}</td>
+                                                                {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
                                                             @endforeach
                                                         @endif
                                                     {{--    

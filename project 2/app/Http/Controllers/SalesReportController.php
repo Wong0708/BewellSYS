@@ -10,7 +10,7 @@ use App\ClientOrderDetail;
 // use App\SecondaryUser;
 use App\Client;
 use App\Product;
-use App\ProductDetail;
+use App\ProductDetails;
 use DateTime;
 
 class SalesReportController extends Controller
@@ -31,7 +31,7 @@ class SalesReportController extends Controller
         $orderdetails =ClientOrderDetail::all();
         $clients = Client::all();
         $products = Product::all();
-        $productdetails = ProductDetail::all();
+        $productdetails = ProductDetails::all();
 
        return view("appdev.salesreport")->with("start","")
        ->with("end","")->with("orders",$orders)->with("clients",$clients)->with("products",$products)->with("orderdetails", $orderdetails)->with("productdetails",$productdetails);
@@ -43,7 +43,7 @@ class SalesReportController extends Controller
         $orderdetails =ClientOrderDetail::all();
         $clients = Client::all();
         $products = Product::all();
-        $productdetails = Product::all();
+        $productdetails = ProductDetails::all();
         $test = $request->dog;
         
         $start = new DateTime($request->start." 00:00:00");

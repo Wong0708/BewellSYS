@@ -161,7 +161,7 @@
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
                                 <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Manufacturer</a> </li>
+                                <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
                                 <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                             </ul>
                         </li>
