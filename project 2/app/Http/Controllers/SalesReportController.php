@@ -47,7 +47,7 @@ class SalesReportController extends Controller
         $test = $request->dog;
         
         $start = new DateTime($request->start." 00:00:00");
-        $end = new DateTime($request->end." 00:00:00");
+        $end = new DateTime($request->end." 23:59:59");
 
         $ords = $orders;
         
