@@ -9,8 +9,17 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illumi
+     *
+     * nate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function index()
     {
         $val = session('username');

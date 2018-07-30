@@ -162,8 +162,8 @@
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
                                 <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Manufacturer</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Supplier</a> </li>
+                                <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
+                                <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                             </ul>
                         </li>
     
@@ -310,7 +310,7 @@
                                 @if(isset($end))
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell-C Nutraceutical Corporation</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Sales Report</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>{{$start}} to {{$end}}  </b></h4>
+                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
                                 @endif
                                 {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
                                 <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
@@ -318,6 +318,7 @@
                                             <tr style="font-size:12px; font-weight:700; ">
 
                                                 <th>Order #</th>
+                                                <th>Order Date</th>
                                                 <th>Client</th>
                                                 <th>Total Ordered Products</th>
                                                 <th>Gross Total Price (in pesos)</th>
@@ -330,7 +331,8 @@
                                                         @if(count($orders) > 0)
                                                             @foreach($orders as $order)
                                                             <tr style ="color:black;">
-                                                                <td>Order # {{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</td>
+                                                                <td>Order # {{$order->id}}</td>
+                                                                <td>{{$order->clod_date}}</td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
                                                                 <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>

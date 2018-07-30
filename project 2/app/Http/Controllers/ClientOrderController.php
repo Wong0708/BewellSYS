@@ -19,6 +19,11 @@ class ClientOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $orders = ClientOrder::all();
@@ -32,7 +37,10 @@ class ClientOrderController extends Controller
         // ->select('BC_Secondary_User.*')
         // ->get();
 
-        return view("appdev.clientorder")->with("orders",$orders)->with("clients",$clients)->with("products",$products);
+        return view("appdev.clientorder")
+                ->with("orders",$orders)
+                ->with("clients",$clients)
+                ->with("products",$products);
     }
 
     /**

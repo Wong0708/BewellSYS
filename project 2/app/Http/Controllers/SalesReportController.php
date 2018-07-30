@@ -20,13 +20,18 @@ class SalesReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $orders = ClientOrder::all();
         $orderdetails =ClientOrderDetail::all();
         $clients = Client::all();
         $products = Product::all();
-        $productdetails = Product::all();
+        $productdetails = ProductDetail::all();
 
        return view("appdev.salesreport")->with("start","")
        ->with("end","")->with("orders",$orders)->with("clients",$clients)->with("products",$products)->with("orderdetails", $orderdetails)->with("productdetails",$productdetails);
@@ -42,7 +47,7 @@ class SalesReportController extends Controller
         $test = $request->dog;
         
         $start = new DateTime($request->start." 00:00:00");
-        $end = new DateTime($request->end." 00:00:00");
+        $end = new DateTime($request->end." 23:59:59");
 
         $ords = $orders;
         

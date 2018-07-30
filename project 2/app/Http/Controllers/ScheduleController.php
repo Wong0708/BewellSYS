@@ -8,6 +8,7 @@ use App\ManufacturerOrder;
 use App\ManufacturerOrderDetail;
 use App\Schedule;
 use App\ScheduleDetail;
+use App\ScheduleManufacturerDetail;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,11 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $trucks = Truck::all();
@@ -48,7 +54,7 @@ class ScheduleController extends Controller
         $latest_id = Schedule::all()->last();
         $latest_id = $latest_id['id'];
 
-        $client_orders = $client_orders->filter(function ($order) {
+        $client_schedules = $client_schedules->filter(function ($order) {
             return $order->schedType == "client";
         });
 
@@ -169,20 +175,20 @@ class ScheduleController extends Controller
         return $total_curr_cap;
     }
 
-    public static function getRestrict($status,$id){
+    public static function getRestrictClient($status,$id){
 
         switch ($status){
             case "Processing":
                 $a='<a href="#" data-toggle="modal" 
                                 data-target="#concludeSchedModal"
-                                scid="'.$id.'" class="conclude" >
+                                scid="'.$id.'" sctype="client" class="conclude" >
                     <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
                 return $a;
                 break;
             case "Scheduled":
                 $a='<a href="#" data-toggle="modal" 
                                 data-target="#concludeSchedModal"
-                                scid="'.$id.'" class="conclude" >
+                                scid="'.$id.'" sctype="client" class="conclude" >
                     <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
                 return $a;
                 break;
@@ -195,16 +201,32 @@ class ScheduleController extends Controller
         }
         return null;
     }
-    /**
-     * return Response::json(array(
-    'success' => $total_curr_cap,
-    'msg' => "gago",
-    'total_curr_cap' => $total_curr_cap,
-    ));
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public static function getRestrictManufacturer($status,$id){
+
+        switch ($status){
+            case "Processing":
+                $a='<a href="#" data-toggle="modal" 
+                                data-target="#concludeSchedModal"
+                                scid="'.$id.'" sctype="manufacturer" class="conclude" >
+                    <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
+                return $a;
+                break;
+            case "Scheduled":
+                $a='<a href="#" data-toggle="modal" 
+                                data-target="#concludeSchedModal"
+                                scid="'.$id.'" sctype="manufacturer" class="conclude" >
+                    <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
+                return $a;
+                break;
+            case "Delivered";
+                return null;
+                break;
+            case "Cancelled";
+                return null;
+                break;
+        }
+        return null;
+    }
     public function create()
     {
         //
@@ -274,7 +296,7 @@ class ScheduleController extends Controller
         return null;
     }
     /**
-     * Store a newly created resource in storage.
+     * Store a newly creat resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -286,39 +308,67 @@ class ScheduleController extends Controller
 
         $schedule = new Schedule();
         $date = new DateTime();
-        // change status of order to processed.
+
         $schedule->scd_date = $fields['delivery_date']." 00:00:00";
         $schedule->scd_status = "Scheduled";
         $schedule->orderID = $fields['order_num'];
         $schedule->truckID = $fields['plate_num'];
         $schedule->driverID = $fields['driver'];
         $schedule->locationID = $fields['address'];
-
         $schedule->created_at = $date->getTimestamp();
         $schedule->updated_at = $date->getTimestamp();
+        $schedule->schedType = $request->sched_type;
+        $type = $request->sched_type;
+        if($type == "manufacturer"){
 
+            $manufacturer_order = ManufacturerOrder::find($fields['order_num']);
+            $manufacturer_order->mnod_status = "Scheduled";
+            $manufacturer_order->save();
 
-        $order = ClientOrder::find($fields['order_num']);
-        $order->clod_status = "Scheduled";
-        $order->save();
+            $schedule->save();
 
-        $schedule->save();
-        $i = 0;
-        $insertID =$schedule->id;
-        foreach ($fields['ids'] as $id){
+            $i = 0;
+            $insertID =$schedule->id;
+            foreach ($fields['ids'] as $id){
 
-            $schedule_det = new ScheduleDetail();
-            $schedule_det->productID = $id;
-            $schedule_det->delivered_qty = $fields['orderqty'][$i];
-            $schedule_det->scheduleID = $insertID;
+                $schedule_det = new ScheduleManufacturerDetail();
+                $schedule_det->supplyID = $id;
+                $schedule_det->delivered_qty = $fields['orderqty'][$i];
+                $schedule_det->scheduleID = $insertID;
 
-            $schedule_det->created_at = $date->getTimestamp();
-            $schedule_det->updated_at = $date->getTimestamp();
+                $schedule_det->created_at = $date->getTimestamp();
+                $schedule_det->updated_at = $date->getTimestamp();
 
-            $schedule_det->save();
-            $i = $i+1;
+                $schedule_det->save();
+                $i = $i+1;
+            }
 
         }
+        else{
+            $client_order = ClientOrder::find($fields['order_num']);
+            $client_order->clod_status = "Scheduled";
+            $client_order->save();
+
+            $schedule->save();
+
+            $i = 0;
+            $insertID =$schedule->id;
+            foreach ($fields['ids'] as $id){
+
+                $schedule_det = new ScheduleDetail();
+                $schedule_det->productID = $id;
+                $schedule_det->delivered_qty = $fields['orderqty'][$i];
+                $schedule_det->scheduleID = $insertID;
+
+                $schedule_det->created_at = $date->getTimestamp();
+                $schedule_det->updated_at = $date->getTimestamp();
+
+                $schedule_det->save();
+                $i = $i+1;
+            }
+
+        }
+
 
         Session::flash('success','New schedule added!');
         return redirect("/schedule");
@@ -357,30 +407,53 @@ class ScheduleController extends Controller
     {
         $MSG = 'Successfully confirmed schedule!';
         $fields = $request->all();
-        $schedule = Schedule::find($fields['id']);
-        $order = ClientOrder::find($schedule['orderID']);
-        if($request->schedule_conclusion == "fulfil"){
+        $type = $request->sc_type;
+        if($type == "client"){
+            $schedule = Schedule::find($fields['id']);
+            $order = ClientOrder::find($schedule['orderID']);
+            if($request->schedule_conclusion == "fulfil"){
 
-            $schedule->dateDelivered = $request->delivery_date;
-            $schedule->scd_status = "Delivered";
-            $schedule->remark = $request->remarks;
+                $schedule->dateDelivered = $request->delivery_date;
+                $schedule->scd_status = "Delivered";
+                $schedule->remark = $request->remarks;
 
-            $order->clod_status = "Delivered";
+                $order->clod_status = "Delivered";
 
-            $MSG = 'Successfully delivered schedule!';
+                $MSG = 'Successfully delivered schedule!';
+            }
+            else{
+                $schedule->scd_status = "Cancelled";
+                $schedule->remark = $request->remarks;
+
+                $order->clod_status = "Cancelled";
+
+                $MSG = 'Successfully cancelled schedule!';
+            }
+            $order->save();
         }
         else{
-            $schedule->scd_status = "Cancelled";
-            $schedule->remark = $request->remarks;
+            $schedule = Schedule::find($fields['id']);
+            $order = ManufacturerOrder::find($schedule['orderID']);
+            if($request->schedule_conclusion == "fulfil"){
 
+                $schedule->dateDelivered = $request->delivery_date;
+                $schedule->scd_status = "Delivered";
+                $schedule->remark = $request->remarks;
 
-            $order->clod_status = "Cancelled";
+                $order->mnod_status = "Delivered";
 
-            $MSG = 'Successfully cancelled schedule!';
+                $MSG = 'Successfully delivered schedule!';
+            }
+            else{
+                $schedule->scd_status = "Cancelled";
+                $schedule->remark = $request->remarks;
+
+                $order->mnod_status = "Cancelled";
+
+                $MSG = 'Successfully cancelled schedule!';
+            }
+            $order->save();
         }
-
-
-        $order->save();
 
         $schedule->save();
 
