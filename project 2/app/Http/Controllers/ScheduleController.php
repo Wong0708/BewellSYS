@@ -8,6 +8,7 @@ use App\ManufacturerOrder;
 use App\ManufacturerOrderDetail;
 use App\Schedule;
 use App\ScheduleDetail;
+use App\ScheduleManufacturerDetail;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -53,7 +54,7 @@ class ScheduleController extends Controller
         $latest_id = Schedule::all()->last();
         $latest_id = $latest_id['id'];
 
-        $client_orders = $client_orders->filter(function ($order) {
+        $client_schedules = $client_schedules->filter(function ($order) {
             return $order->schedType == "client";
         });
 
@@ -291,39 +292,67 @@ class ScheduleController extends Controller
 
         $schedule = new Schedule();
         $date = new DateTime();
-        // change status of order to processed.
+
         $schedule->scd_date = $fields['delivery_date']." 00:00:00";
         $schedule->scd_status = "Scheduled";
         $schedule->orderID = $fields['order_num'];
         $schedule->truckID = $fields['plate_num'];
         $schedule->driverID = $fields['driver'];
         $schedule->locationID = $fields['address'];
-
         $schedule->created_at = $date->getTimestamp();
         $schedule->updated_at = $date->getTimestamp();
+        $schedule->schedType = $request->sched_type;
+        $type = $request->sched_type;
+        if($type == "manufacturer"){
 
+            $manufacturer_order = ManufacturerOrder::find($fields['order_num']);
+            $manufacturer_order->mnod_status = "Scheduled";
+            $manufacturer_order->save();
 
-        $order = ClientOrder::find($fields['order_num']);
-        $order->clod_status = "Scheduled";
-        $order->save();
+            $schedule->save();
 
-        $schedule->save();
-        $i = 0;
-        $insertID =$schedule->id;
-        foreach ($fields['ids'] as $id){
+            $i = 0;
+            $insertID =$schedule->id;
+            foreach ($fields['ids'] as $id){
 
-            $schedule_det = new ScheduleDetail();
-            $schedule_det->productID = $id;
-            $schedule_det->delivered_qty = $fields['orderqty'][$i];
-            $schedule_det->scheduleID = $insertID;
+                $schedule_det = new ScheduleManufacturerDetail();
+                $schedule_det->supplyID = $id;
+                $schedule_det->delivered_qty = $fields['orderqty'][$i];
+                $schedule_det->scheduleID = $insertID;
 
-            $schedule_det->created_at = $date->getTimestamp();
-            $schedule_det->updated_at = $date->getTimestamp();
+                $schedule_det->created_at = $date->getTimestamp();
+                $schedule_det->updated_at = $date->getTimestamp();
 
-            $schedule_det->save();
-            $i = $i+1;
+                $schedule_det->save();
+                $i = $i+1;
+            }
 
         }
+        else{
+            $client_order = ClientOrder::find($fields['order_num']);
+            $client_order->clod_status = "Scheduled";
+            $client_order->save();
+
+            $schedule->save();
+
+            $i = 0;
+            $insertID =$schedule->id;
+            foreach ($fields['ids'] as $id){
+
+                $schedule_det = new ScheduleDetail();
+                $schedule_det->productID = $id;
+                $schedule_det->delivered_qty = $fields['orderqty'][$i];
+                $schedule_det->scheduleID = $insertID;
+
+                $schedule_det->created_at = $date->getTimestamp();
+                $schedule_det->updated_at = $date->getTimestamp();
+
+                $schedule_det->save();
+                $i = $i+1;
+            }
+
+        }
+
 
         Session::flash('success','New schedule added!');
         return redirect("/schedule");

@@ -238,7 +238,7 @@
                                     <br>
                                     <input type="hidden" name="sched_type" value="manufacturer">
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
-                                    <select name="order_num" class="form-control order_dropdown" id="client" style="margin-bottom:10px;">
+                                    <select name="order_num" class="form-control manuf_order_dropdown" id="client" style="margin-bottom:10px;">
                                         @if($manufacturer_orders)
                                             @foreach ($manufacturer_orders as $manufacturer_order)
                                                 <option value="{{$manufacturer_order->id}}"
@@ -254,7 +254,7 @@
                                     <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list to add a schedule. <b style="color:#E53935;">*Required</b></span>
-                                    <select name="address" class="form-control address_dropdown" id="client" style="margin-bottom:10px;">
+                                    <select name="address" class="form-control manuf_address_dropdown" id="client" style="margin-bottom:10px;">
                                         @if($manufacturer_orders)
                                             @foreach ($manufacturer_orders as $manufacturer_order)
                                                 @foreach($manufacturer_order->locations as $locs)
@@ -269,7 +269,7 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
                                     {{csrf_field()}}
-                                    <input type="date" class="form-control delivery_date" name="delivery_date" value="">
+                                    <input type="date" class="form-control manuf_delivery_date" name="delivery_date" value="">
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
@@ -340,7 +340,7 @@
                                                     <th><i class="fa fa-gear"></i></th>
                                                 </tr>
                                                 </thead>
-                                                <tbody id="addproduct" class="prod_table">
+                                                <tbody id="addproduct" class="manuf_prod_table">
                                                 @if($manufacturer_orders)
                                                     @foreach ($manufacturer_orders as $manufacturer_order)
                                                         @foreach($manufacturer_order->order_details as $ord)
@@ -360,49 +360,20 @@
                                             </table>
                                         </div>
                                         <hr>
-                                        <center><h2  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Truck Delivery Schedule Summary</b></h2></center>
-                                        {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced delivery list for the truck delivery.</span>
-
-                                        <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
-                                            <thead>
-                                            <tr style="font-size:12px; font-weight:700;">
-                                                <th>Sched #</th>
-                                                <th>Driver</th>
-                                                <th>Address</th>
-                                                <th>Delivered Date</th>
-                                                <th>Status</th>
-                                                {{-- <th><i class="fa fa-gear"></th> --}}
-                                            </tr>
-                                            </thead>
-                                            <tbody id="addproduct">
-                                            <tr style="font-size:12px;">
-                                                <td>TR-{{$latest_id+1}}</td>
-                                                <td id="prev_driver">
-                                                    @if(isset($drivers))
-                                                        @foreach ($drivers as $driver)
-                                                            <option value="{{$driver->id}}">{{$driver->name}}</option>
-                                                            @break
-                                                        @endforeach
-                                                    @endif
-                                                </td>
-                                                <td><span class="label label-success" id="prev_address">Taft Avenue, Metro Manila</span></td>
-                                                <td id="prev_delivery_date"></td>
-                                                <td><span class="label label-success">Scheduled</span></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
                                         <h2><center><span class="control label" id="alert" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
-
                                     </div>
-
-
                                 </div>
+
 
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" onclick="checkSchedValidity()" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
-                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit" type="submit">Submit</button>
+                                <!--
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light"
+                                              onclick="checkSchedValidity()"
+                                              style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
+                                -->
+
+                                 <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: block" id="schedSubmit" type="submit">Submit</button>
                             </div>
                             {!!Form::close()!!}
 
@@ -1193,12 +1164,40 @@
                             }
                         }
                     });
+                    $('.manuf_order_dropdown').bind('change',function() {
+                        var option_locs = $('option:selected', this).attr('locs').split(";");
+                        var option_id = $('option:selected', this).attr('locs_ids').split(";");
+                        var prod_ids = $('option:selected', this).attr('prod_ids').split(";");
+                        var prod_qty = $('option:selected', this).attr('prod_qty').split(";");
+                        var order_id = $('option:selected', this).attr('value');
+
+                        $('.manuf_address_dropdown').find('option').remove();
+
+                        for (i = 0; i < option_locs.length; i++) {
+                            if(option_locs[i]!=""){
+                                $('.manuf_address_dropdown').append('<option value="'+option_id[i]+'">'+option_locs[i]+'</option>');
+                            }
+                        }
+
+                        $('.manuf_prod_table').find('tr').remove();
+                        for (x = 0; x < prod_ids.length; x++) {
+                            if(prod_ids[x]!=""){
+                                $('.manuf_prod_table').append('<tr style="color:black;">'+
+                                    '<td><span class="label label-info">CLOD-'+order_id+'</span></td>'+
+                                    '<td>RM-'+prod_ids[x]+'</td>'+
+                                    '<td>'+prod_qty[x]+' Boxes</td>'+
+                                    '<input type="hidden" name="ids[]" value="'+prod_ids[x]+'">'+
+                                    '<td><input style="font-size:12px;" class="form-control" placeholder="qty" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>'+
+                                    '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>' +
+                                    '</tr>');
+                            }
+                        }
+                    });
                     $('.driver_dropdown').bind('change',function() {
                         var driver = $('option:selected', this).html();
                         $('#prev_driver').html(driver);
 
                     });
-
                     $('.truck_dropdown').bind('change',function() {
                         var max_cap = parseInt($('option:selected', this).attr('truck_total_cap'));
 
