@@ -280,7 +280,7 @@ class ScheduleController extends Controller
         return null;
     }
     /**
-     * Store a newly created resource in storage.
+     * Store a newly creat resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
