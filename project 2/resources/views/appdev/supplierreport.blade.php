@@ -303,16 +303,18 @@
                                         <input type="date" class="form-control" name="end"/> 
                                     </div>
                                 {!!Form::close() !!}
+                            <!-- printhead -->
+                            <div id="printhead">
                                 <p class="text-muted m-b-30"></p>
                                 @if(isset($start))
                                 @endif
                                 @if(isset($end))
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell-C Nutraceutical Corporation</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Sales Report</b></h4>
+                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
+                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Report</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
                                 @endif
                                 {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
-                                <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
+                                <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
                                         <thead>
                                             <tr style="font-size:12px; font-weight:700; ">
 
@@ -445,8 +447,7 @@
                                                 </table>
                                                 
                                 <h4  style="text-align:center; font-size:14px; color:black; margin-top:20px; font-family:Helvetica,Arial,sans-serif;"><b>----------- END OF THE REPORT -----------</b></h4>
-                                                
-                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -533,10 +534,18 @@
                 </div>
                 <!-- /#page-wrapper -->
             </div>
-            
+
             <script>
                 function myFunction() {
-                    window.print();
+                    var prtContent = document.getElementById("printhead");
+                    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+                    WinPrint.document.write(prtContent.innerHTML);
+                    WinPrint.document.close();
+                    WinPrint.focus();
+                    WinPrint.print();
+                    WinPrint.close();
+
+                    //window.print();
                 }
             </script>
 
