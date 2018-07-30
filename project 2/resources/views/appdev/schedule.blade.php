@@ -607,6 +607,7 @@
                             {!! Form::open(['route'=>['schedule.update',1],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
                             <div class="modal-body">
                                 <div class="form-group">
+                                    <input type="hidden" name="sc_type" id="sc_type" value="">
                                     <label for="truckStatus">Conclusion</label>
                                     <select name="schedule_conclusion" style="font-family: 'FontAwesome', 'Open Sans';font-size: 21px;" class="form-control sched_conc" id="sched_conc">
                                         <option value="fulfil" style="">&#xf274; Fulfill Delivery</option>
@@ -791,7 +792,7 @@
                                                             <td>
 
                                                                 <center>
-                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrict($client_schedule->scd_status, $client_schedule->id) !!}
+                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrictClient($client_schedule->scd_status, $client_schedule->id) !!}
                                                                 </center>
                                                             </td>
                                                         </tr>
@@ -845,7 +846,7 @@
                                                             <td>
 
                                                                 <center>
-                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrict($manufacturer_schedule->scd_status, $manufacturer_schedule->id) !!}
+                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrictManufacturer($manufacturer_schedule->scd_status, $manufacturer_schedule->id) !!}
                                                                 </center>
                                                             </td>
                                                         </tr>
@@ -1396,6 +1397,7 @@
                 $(document).on('click', '.conclude', function() {
 
                     $("#sc_id").val($(this).attr('scid'));
+                    $("#sc_type").val($(this).attr('sctype'));
                     $('#date_conclude').css('display','block');
                 });
                 $(document).on('click', '.truckeditz', function() {

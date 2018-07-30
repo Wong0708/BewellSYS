@@ -37,7 +37,10 @@ class ClientOrderController extends Controller
         // ->select('BC_Secondary_User.*')
         // ->get();
 
-        return view("appdev.clientorder")->with("orders",$orders)->with("clients",$clients)->with("products",$products);
+        return view("appdev.clientorder")
+                ->with("orders",$orders)
+                ->with("clients",$clients)
+                ->with("products",$products);
     }
 
     /**
