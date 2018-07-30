@@ -202,17 +202,17 @@
                                                     <tr style="color:black;">
                                                             
                                                             @if(isset($products))
-                                                                <td><span class="label label-info" id="countAddOrder"></span></td>
+                                                                <td><span id="countAddOrder"  class="label label-info"></span></td>
                                                                 
                                                                     <td> 
-                                                                        <select style="font-size:12px;" class="form-control">
+                                                                        <select style="font-size:12px;" class="form-control orderName">
                                                                             @foreach ($products as $product)
-                                                                                <option>{{$product->pd_name}}</option>
+                                                                                <option >{{$product->pd_name}}</option>
                                                                             @endforeach 
                                                                         </select>
                                                                     </td>
                                                                     <td> 
-                                                                        <select style="font-size:12px;" class="form-control">
+                                                                        <select style="font-size:12px;" class="form-control orderSKU">
                                                                             @foreach ($products as $product)
                                                                                 <option>{{$product->pd_sku}}</option>
                                                                             @endforeach 
@@ -226,7 +226,7 @@
 
                                                 </tbody>
                                                     </table>
-                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b id="orderTotalPrice">Total Price: ₱100.00 </b></h4>
+                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Total Price:</b><b class="totalOrderAmount"></b></h4>
                                                 </div>
                                                 <hr>
                                                     <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Product Inventory Support</b></h4>
@@ -272,7 +272,7 @@
                                         </br>
                                         <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount of the client. <b style="color:#E53935;">*Required</b></span>
                                         <input style="margin-top:10px; " type="text" class="form-control" data-mask="PHP 9,999,999.00 ONLY"/>
-                                        <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total: ₱100.00 </b></h4>
+                                        <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total:</b><b class="totalOrderAmount">100</b></h4>
 
                                         </div>
 
@@ -451,8 +451,8 @@
             $('#orderList').append(
                 '@if(isset($products))<tr style="color:black;">'+ 
                 '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
-                '<td> <select style="font-size:12px;" class="form-control"> @foreach ($products as $product)<option>{{$product->pd_name}}</option> @endforeach</select> </td>' +
-                '<td><select style="font-size:12px;" class="form-control"> @foreach ($products as $product) <option>{{$product->pd_sku}}</option> @endforeach </td>'+
+                '<td> <select style="font-size:12px;" class="form-control orderName"> @foreach ($products as $product)<option>{{$product->pd_name}}</option> @endforeach</select> </td>' +
+                '<td><select style="font-size:12px;" class="form-control orderSKU"> @foreach ($products as $product) <option>{{$product->pd_sku}}</option> @endforeach </td>'+
                 '<td><input type="text" style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder=""></td> ' +
                 '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td> ' +
                 '</tr>@endif');
@@ -485,6 +485,58 @@
         });
     </script>
 
+    <!--SECTION KEYWORD/S:INVENTORY, SUPPORT, MODAL-->
+    <script type='text/javascript'>
+
+        $(document).on('change', '.orderName', function () {
+            var formData = {
+                productSKU:$(this).closest('td').next().find('select').val();
+            }
+
+            $.ajax({
+                type: "POST",
+                url: 'liveOrderUpdate';
+                data: formData,
+                success: function(data){
+                    $('#artist').append(data);
+                }
+            });
+        });
+
+
+        // $('.orderName').change(function(){
+        //     alert('fuck');
+            // console.log('Trial if running');
+            // console.log($(this).closest('td').next().find('select').val());
+
+            // var formData = {
+            //     productSKU: $(this).closest('td').next();
+            // }
+
+            // $.ajax({
+            //     url: "artist_field.php",
+            //     data: { "value": $("#artist").val() },
+            //     dataType:"html",
+            //     type: "post",
+            //     success: function(data){
+            //     $('#artist').append(data);
+            //     }
+            // });
+        // });
+
+        // $('.orderSKU').change(function(){
+        //     $.ajax({
+        //         url: "artist_field.php",
+        //         data: { "value": $("#artist").val() },
+        //         dataType:"html",
+        //         type: "post",
+        //         success: function(data){
+        //         $('#artist').append(data);
+        //         }
+        //     });
+        // });
+    </script>
+    
     <!--SECTION KEYWORD/S: MODAL, UPDATE, ORDER, AJAX, SCRIPT-->
     <script type='text/javascript'>
        $("#updateOrder").click(function (e) {
