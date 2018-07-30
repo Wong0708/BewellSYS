@@ -175,20 +175,20 @@ class ScheduleController extends Controller
         return $total_curr_cap;
     }
 
-    public static function getRestrict($status,$id){
+    public static function getRestrictClient($status,$id){
 
         switch ($status){
             case "Processing":
                 $a='<a href="#" data-toggle="modal" 
                                 data-target="#concludeSchedModal"
-                                scid="'.$id.'" class="conclude" >
+                                scid="'.$id.'" sctype="client" class="conclude" >
                     <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
                 return $a;
                 break;
             case "Scheduled":
                 $a='<a href="#" data-toggle="modal" 
                                 data-target="#concludeSchedModal"
-                                scid="'.$id.'" class="conclude" >
+                                scid="'.$id.'" sctype="client" class="conclude" >
                     <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
                 return $a;
                 break;
@@ -201,16 +201,32 @@ class ScheduleController extends Controller
         }
         return null;
     }
-    /**
-     * return Response::json(array(
-    'success' => $total_curr_cap,
-    'msg' => "gago",
-    'total_curr_cap' => $total_curr_cap,
-    ));
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public static function getRestrictManufacturer($status,$id){
+
+        switch ($status){
+            case "Processing":
+                $a='<a href="#" data-toggle="modal" 
+                                data-target="#concludeSchedModal"
+                                scid="'.$id.'" sctype="manufacturer" class="conclude" >
+                    <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
+                return $a;
+                break;
+            case "Scheduled":
+                $a='<a href="#" data-toggle="modal" 
+                                data-target="#concludeSchedModal"
+                                scid="'.$id.'" sctype="manufacturer" class="conclude" >
+                    <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
+                return $a;
+                break;
+            case "Delivered";
+                return null;
+                break;
+            case "Cancelled";
+                return null;
+                break;
+        }
+        return null;
+    }
     public function create()
     {
         //
@@ -391,30 +407,53 @@ class ScheduleController extends Controller
     {
         $MSG = 'Successfully confirmed schedule!';
         $fields = $request->all();
-        $schedule = Schedule::find($fields['id']);
-        $order = ClientOrder::find($schedule['orderID']);
-        if($request->schedule_conclusion == "fulfil"){
+        $type = $request->sc_type;
+        if($type == "client"){
+            $schedule = Schedule::find($fields['id']);
+            $order = ClientOrder::find($schedule['orderID']);
+            if($request->schedule_conclusion == "fulfil"){
 
-            $schedule->dateDelivered = $request->delivery_date;
-            $schedule->scd_status = "Delivered";
-            $schedule->remark = $request->remarks;
+                $schedule->dateDelivered = $request->delivery_date;
+                $schedule->scd_status = "Delivered";
+                $schedule->remark = $request->remarks;
 
-            $order->clod_status = "Delivered";
+                $order->clod_status = "Delivered";
 
-            $MSG = 'Successfully delivered schedule!';
+                $MSG = 'Successfully delivered schedule!';
+            }
+            else{
+                $schedule->scd_status = "Cancelled";
+                $schedule->remark = $request->remarks;
+
+                $order->clod_status = "Cancelled";
+
+                $MSG = 'Successfully cancelled schedule!';
+            }
+            $order->save();
         }
         else{
-            $schedule->scd_status = "Cancelled";
-            $schedule->remark = $request->remarks;
+            $schedule = Schedule::find($fields['id']);
+            $order = ManufacturerOrder::find($schedule['orderID']);
+            if($request->schedule_conclusion == "fulfil"){
 
+                $schedule->dateDelivered = $request->delivery_date;
+                $schedule->scd_status = "Delivered";
+                $schedule->remark = $request->remarks;
 
-            $order->clod_status = "Cancelled";
+                $order->mnod_status = "Delivered";
 
-            $MSG = 'Successfully cancelled schedule!';
+                $MSG = 'Successfully delivered schedule!';
+            }
+            else{
+                $schedule->scd_status = "Cancelled";
+                $schedule->remark = $request->remarks;
+
+                $order->mnod_status = "Cancelled";
+
+                $MSG = 'Successfully cancelled schedule!';
+            }
+            $order->save();
         }
-
-
-        $order->save();
 
         $schedule->save();
 

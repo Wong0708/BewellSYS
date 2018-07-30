@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
  use App\Product;
+ use App\ScheduleManufacturerDetail;
  use Illuminate\Http\Request;
 
 
@@ -41,27 +42,64 @@ class ScheduleDetailController extends Controller
         if($schedule['id'] == null){
             return view('errors.404');
         }
-        $schedule_dets = ScheduleDetail::all();
-        $date = date_create($schedule->scd_date);
-        $schedule->scd_date = date_format($date, "F j Y");
 
-        if($schedule->dateDelivered){
-            $date = date_create($schedule['dateDelivered']);
-            $schedule['dateDelivered'] = date_format($date, "F j Y");
+        if($schedule['schedType'] == "client"){
+            $schedule_dets = ScheduleDetail::all();
+            $date = date_create($schedule->scd_date);
+            $schedule->scd_date = date_format($date, "F j Y");
+
+            if($schedule->scd_status == "Cancelled"){
+                $schedule['datediff'] = "<p class='text-muted'>Delivery is cancelled</p>";
+            }
+            else if($schedule->dateDelivered){
+                $date = date_create($schedule['dateDelivered']);
+                $schedule['dateDelivered'] = date_format($date, "F j Y");
+            }
+            else{
+                if($schedule->scd_status){
+                    $datetime1 = new DateTime($schedule->scd_date);
+                    $datetime2 = new DateTime("now");
+                    $interval = $datetime1->diff($datetime2);
+                    $schedule['datediff'] = $interval->format('in %a days');
+
+                    if($schedule['datediff'] == "in 0 days" ){
+                        $schedule['datediff'] = "<b style='color: forestgreen'>TODAY</b>";
+                    }
+                }
+            }
+            $schedule_dets = $schedule_dets->filter(function ($schedule_dets) use ($id) {
+                return $schedule_dets->scheduleID == $id;
+            });
         }
         else{
-            $datetime1 = new DateTime($schedule->scd_date);
-            $datetime2 = new DateTime("now");
-            $interval = $datetime1->diff($datetime2);
-            $schedule['datediff'] = $interval->format('in %a days');
+            $schedule_dets = ScheduleManufacturerDetail::all();
+            $date = date_create($schedule->scd_date);
+            $schedule->scd_date = date_format($date, "F j Y");
 
-            if($schedule['datediff'] == "in 0 days" ){
-                $schedule['datediff'] = "<b style='color: forestgreen'>TODAY</b>";
+            if($schedule->scd_status == "Cancelled"){
+                $schedule['datediff'] = "<p class='text-muted'>Delivery is cancelled</p>";
             }
+            else if($schedule->dateDelivered){
+                $date = date_create($schedule['dateDelivered']);
+                $schedule['dateDelivered'] = date_format($date, "F j Y");
+            }
+            else{
+                if($schedule->scd_status){
+                    $datetime1 = new DateTime($schedule->scd_date);
+                    $datetime2 = new DateTime("now");
+                    $interval = $datetime1->diff($datetime2);
+                    $schedule['datediff'] = $interval->format('in %a days');
+
+                    if($schedule['datediff'] == "in 0 days" ){
+                        $schedule['datediff'] = "<b style='color: forestgreen'>TODAY</b>";
+                    }
+                }
+            }
+            $schedule_dets = $schedule_dets->filter(function ($schedule_dets) use ($id) {
+                return $schedule_dets->scheduleID == $id;
+            });
+
         }
-        $schedule_dets = $schedule_dets->filter(function ($schedule_dets) use ($id) {
-            return $schedule_dets->scheduleID == $id;
-        });
 
         return  view("appdev.scheduledetail",['schedule' => $schedule])->with("schedule_dets",$schedule_dets);
     }
