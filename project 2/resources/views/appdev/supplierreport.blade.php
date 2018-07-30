@@ -294,7 +294,7 @@
                                 {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                                 {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
                                 <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
-                                {!!Form::open(array('route' => 'appdev.salesreport'))!!}
+                                {!!Form::open(array('route' => 'appdev.supplierreport'))!!}
                                    <input type="hidden" name="dog" value="hatdug"/>
                                    {{Form::submit('Generate Report',['class' => 'btn btn-success waves-effect waves-light'])}}
                                    <p class="text-muted m-b-30"></p>

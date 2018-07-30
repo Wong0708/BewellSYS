@@ -59,6 +59,8 @@ Route::resource('inventoryreport', 'InventoryReportController');
 
 Route::resource('supplierreport', 'SupplierReportController');
 
+Route::post('supplierreport', 'SupplierReportController@generateReport')->name('appdev.supplierreport');
+
 Route::resource('notifications', 'NotificationController');
 
 Route::resource('driverdetail', 'DriverDetailController');

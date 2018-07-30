@@ -31,7 +31,7 @@ class SalesReportController extends Controller
         $orderdetails =ClientOrderDetail::all();
         $clients = Client::all();
         $products = Product::all();
-        $productdetails = Product::all();
+        $productdetails = ProductDetail::all();
 
        return view("appdev.salesreport")->with("start","")
        ->with("end","")->with("orders",$orders)->with("clients",$clients)->with("products",$products)->with("orderdetails", $orderdetails)->with("productdetails",$productdetails);

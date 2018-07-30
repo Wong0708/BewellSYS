@@ -8,6 +8,7 @@ use App\Supplier;
 use App\SupplierOrder;
 use App\SupplierOrderDetail;
 use App\Supply;
+use DateTime;
 
 class SupplierReportController extends Controller
 {
@@ -27,6 +28,40 @@ class SupplierReportController extends Controller
        ->with("end","")->with("orders",$orders)->with("suppliers",$suppliers)->with("supplies",$supplies)->with("orderdetails",$orderdetails);
     }
 
+    public function generateReport(Request $request)
+    {
+        $suppliers = Supplier::all();
+        $orders = SupplierOrder::all();
+        $orderdetails = SupplierOrderDetail::all();
+        $supplies = Supply::all();
+        $test = $request->dog;
+        
+        $start = new DateTime($request->start." 00:00:00");
+        $end = new DateTime($request->end." 00:00:00");
+
+        $ords = $orders;
+        
+        $orders = array();
+        foreach($ords as $ord){
+            if(new DateTime($ord['spod_date']) >= $start && new DateTime($ord['spod_date']) <= $end){
+                array_push($orders,$ord);
+            }
+        }
+        /*
+        $orders = $orders->filter(function ($order) use($start)  {
+            return $order->clod_date >= $start;
+        });
+
+        $orders = $orders->filter(function ($order) use($end) {
+            return $order->clod_date < $end;
+        });
+        */
+        return view("appdev.supplierreport")->with("orders",$orders)->with("suppliers",$suppliers)
+        ->with("start",$request->start)
+        ->with("end",$request->end)
+        ->with("supplies",$supplies)
+        ->with("orderdetails", $orderdetails);
+    }
     public static function getSupplier($id){
         $supplier = Supplier::where('id', $id)->first();
         return $supplier;
