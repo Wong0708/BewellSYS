@@ -219,182 +219,40 @@
                 </div>
                 <!-- /row -->
                 <!--MODAL STARTS HERE-->
-                <div class="modal fade" id="clientOrderModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
-                    <div class="modal-dialog" role="document">
+
+                <div  class="modal fade" id="concludeSchedModal" role="dialog">
+                    <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Order/s</h4>
-                                <br>
+                                <button type="button" class="close" data-dismiss="modal"></button>
+                                <center ><b><h2 class="modal-title" style="display: inline;">Conclude Schedule
+                                            <i class="fa fa-calendar"></i>
+                                        </h2></b></center>
                             </div>
-                            {!! Form::open(array('route'=>'clientorder.store','id'=>'addproductform'))!!}
+                            {!! Form::open(['route'=>['schedule.update',1],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
-                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Manufacturer Material Order/s</b></h4>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the manufacturer's material order based on the list.</span>
-                                        <br>
-                                        <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Material</button></label>
-                                        <div class="table-responsive" style="margin-top:10px;">
-                                        <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
-                                            <thead>
-                                                <tr style="font-size:12px; font-weight:700; ">
+                                    <input type="hidden" name="sc_type" id="sc_type" value="">
+                                    <label for="truckStatus">Conclusion</label>
+                                    <input name="schedule_conclusion" class="form-control sched_conc" id="sched_conc" type="text" value=""readonly>
 
-                                                    {{--
-                                                    <th></th> --}}
-                                                    {{-- <th>Product Code</th> --}}
-                                                    <th>Order #</th>
-                                                    <th>Material Name</th>
-                                                    <th>SKU</th>
-                                                    {{--
-                                                    <th>Grams</th> --}} {{--
-                                                    <th>Price</th> --}} {{--
-                                                    <th>Current Qty</th> --}}
-                                                    <th>Order Amount (Boxes)</th>
-                                                    <th><i class="fa fa-gear"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="addproduct">
-                                                            
-                                                                <tr style="color:black;">
-                                                                        {{-- @if(isset($products)) --}}
-                                                                        {{-- <td>PR-0001</td> --}}
-                                                                        <td><span class="label label-info">1</span></td>
-                                                                        <td> <select style="font-size:12px;" style="font-size:12px;" class="form-control" name="product[]" class="product"><option>BeWell-C</option> </td>
-                                                                        <td>
-                                                                            <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                                <option>1000 grams</option>
-                                                                                <option>500 grams</option>
-                                                                                <option>250 grams</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td><input style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                        <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                                </tr>
-                                                            <tr style="color:black;">
-                                                                    {{-- @if(isset($products)) --}}
-                                                                    {{-- <td>PR-0001</td> --}}
-                                                                    <td><span class="label label-info">2</span></td>
-                                                                    <td> <select style="font-size:12px;" style="font-size:12px;" class="form-control" name="product[]" class="product"><option>LiverGuard</option> </td>
-                                                                    <td>
-                                                                        <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                            <option>1000 grams</option>
-                                                                            <option>500 grams</option>
-                                                                            <option>250 grams</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input style="font-size:12px;" readonly class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                            </tr>
-
-                                                            <tr style="color:black;">
-                                                                    {{-- @if(isset($products)) --}}
-                                                                    {{-- <td>PR-0001</td> --}}
-                                                                    <td><span class="label label-info">3</span></td>
-                                                                    <td> <select style="font-size:12px;" class="form-control" name="product[]" class="product"><option>BC-Calcium</option> </td>
-                                                                    <td>
-                                                                        <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                            <option>1000 grams</option>
-                                                                            <option>500 grams</option>
-                                                                            <option>250 grams</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                            </tr>
-
-                                                            
-                                                        </tbody>
-                                                    </table>
-                                                {{-- <h4  style="margin-top:20px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Ordered Products: 1 product/s only</b></h4>
-                                                <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b> </b></h4> --}}
-                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Total Price: ₱100.00 </b></h4>
-                                                </div>
-                                                <hr>
-                                                    <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Material Inventory Support</b></h4>
-                                                    {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
-                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced inventory list for the manufacturer's ordered material/s.</span>
-                                                    
-                                                    <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
-                                                            <thead>
-                                                                <tr style="font-size:12px; font-weight:700;">
-                                                                    <th>Order #</th>
-                                                                    {{--
-                                                                    <th></th> --}}
-                                                                    <th>Product Code</th>
-                                                                    <th>Available</th>
-                                                                    {{--
-                                                                    <th>Grams</th> --}} {{--
-                                                                    <th>Price</th> --}} {{--
-                                                                    <th>Current Qty</th> --}}
-                                                                    <th>Unit Price</th>
-                                                                    <th>Status</th>
-                                                                    {{-- <th><i class="fa fa-gear"></th> --}}
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="addproduct">
-                                                                            
-                                                                            <tr style="font-size:12px;">
-                                                                               <td>1</td>
-                                                                               <td>PR-0001</td>
-                                                                               <td><span class="label label-success">70</span></td>
-                                                                               <td>₱100.00</td>
-                                                                               <td><span class="label label-success">On-stock</span></td>
-                                                                            </tr>
-
-                                                                            <tr style="font-size:12px;">
-                                                                                <td>2</td>
-                                                                                <td>PR-0002</td>
-                                                                                <td><span class="label label-danger">0</span></td>
-                                                                                <td>₱70.00</td>
-                                                                                <td><span class="label label-danger">No Stock</span></td>
-                                                                            </tr>
-
-                                                                            <tr style="font-size:12px;">
-                                                                                    <td>3</td>
-                                                                                    <td>PR-0003</td>
-                                                                                    <td><span class="label label-success">20</span></td>
-                                                                                    <td>₱120.00</td>
-                                                                                    <td><span class="label label-success"> Available</span></td>
-                                                                                </tr>
-                
-                                                                            
-                                                                        </tbody>
-                                                                    </table>
-                                                                    
-                                                </div>
-                                                
-                                                <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Status:</b></label>
-                                                <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                                @if(isset($clients))
-                                                                    @foreach ($clients as $client)
-                                                                        <option>{{$client->cl_name}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                                
-                                                </select>
-                                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the manufacturer's payment status on their ordered material/s. <b style="color:#E53935;">*Required</b></span>
-                                            </br>
-                                        <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Paid Amount:</b></label>
-                                        </br>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount of the manufacturer. <b style="color:#E53935;">*Required</b></span>
-                                        <input style="margin-top:10px; " type="text" class="form-control" data-mask="PHP 9,999,999.00 ONLY"/>
-                                        <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total: ₱100.00 </b></h4>
-                                               
-                                        </div>
-
-                                    {{-- <h1>Total:</h1> --}}
-                                        
+                                    <label for="truckStatus">Remarks:</label>
+                                    <textarea class="form-control" class="form-control" placeholder="Write about your transaction details" rows="5" name="remarks" id="comment"></textarea>
+                                    <div id="date_conclude" style="display:block">
+                                        <label for="truckStatus">Delivery Date:</label>
+                                        <input type="date" class="form-control" name="delivery_date"/>
+                                    </div>
                                 </div>
-                                <div class="modal-footer">
-                                    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> --}}
-                                    <button id="submitorder" class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
-                                </div>
+                            </div>
+                            <input id="sc_id" type="hidden" name="id">
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                            </div>
                             {!!Form::close()!!}
-                            
                         </div>
                     </div>
                 </div>
+
 
                 <div class="col-lg-6 col-sm-6">
                     <div class="row">
@@ -402,7 +260,12 @@
                             <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                 <button type="button" class="list-group-item" disabled>
                                     <span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe016;" class="linea-icon linea-basic"></i></span>
-                                    <b>Order Number: </b>CLOD-{{$schedule->orderID}}
+                                    <b>Order Number: </b>
+                                    @if($schedule->schedType==="client")
+                                        CLOD-{{$schedule->orderID}}
+                                    @else
+                                        MLOD-{{$schedule->orderID}}
+                                    @endif
                                 </button>
                                 <button type="button" class="list-group-item" disabled>
                                     <span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-elaborate"></i></span>
@@ -427,7 +290,12 @@
                                 <h3 class="box-title m-b-0" style="color:black;">Ordered Material/s</h3>
                                 <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section contains all the specified order/s.</span>
                                 <hr>
-                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details for Client Order {{$schedule->orderID}}</h3>
+                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details for
+                                    @if($schedule->schedType==="client")
+                                        Client Order {{$schedule->orderID}}
+                                    @else
+                                        Manufacturer Order {{$schedule->orderID}}
+                                    @endif</h3>
                                 <div class="table-responsive">
                                     <table id="myTable" class="table table-striped">
                                         <thead>
@@ -441,10 +309,18 @@
                                         <tbody>
                                         @foreach($schedule_dets as $sched_det)
                                             <tr>
-                                                <td>PR-{{$sched_det->productID}}</td>
-                                                <td>{{\App\Http\Controllers\ScheduleDetailController::getProduct($sched_det->productID)['pd_name']}}</td>
-                                                <td>{{\App\Http\Controllers\ScheduleDetailController::getProduct($sched_det->productID)['pd_sku']}}</td>
-                                                <td>{{$sched_det->delivered_qty}}</td>
+
+                                                @if($schedule->schedType==="client")
+                                                    <td>PR-{{$sched_det->productID}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleDetailController::getProduct($sched_det->productID)['pd_name']}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleDetailController::getProduct($sched_det->productID)['pd_sku']}}</td>
+                                                    <td>{{$sched_det->delivered_qty}}</td>
+                                                @else
+                                                    <td>RM-{{$sched_det->supplyID}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleDetailController::getSupply($sched_det->supplyID)['sp_name']}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleDetailController::getSupply($sched_det->supplyID)['sp_sku']}}</td>
+                                                    <td>{{$sched_det->delivered_qty}}</td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -513,20 +389,26 @@
                 <div class="col-lg-6 col-sm-6">
 
                     <div class="row">
-                        <div class="col-md-6 col-xs-12 col-sm-6">
-                                <button style=" width: 100%"  class="btn btn-info waves-effect waves-light"
-                                        data-toggle="modal" data-target="#clientOrderModal" type="button">
+                        @if($schedule->scd_status==="Scheduled")
+                            <div class="col-md-6 col-xs-12 col-sm-6">
+                                <button style=" width: 100%"  class="btn btn-info waves-effect waves-light conclude"
+                                        data-toggle="modal"
+                                        data-target="#concludeSchedModal"
+                                        scid="{{$schedule->id}}" @if($schedule->schedType==="client")sctype="client"@else sctype="manufacturer"@endif sched_type="fulfil" type="button">
                                     <span class="btn-label"><i class="fa fa-calendar-check-o"></i></span>
                                     Fulfill Schedule
                                 </button>
-                        </div>
-                        <div class="col-md-6 col-xs-12 col-sm-6">
-                                <button style=" width: 100%"  class="btn btn-danger waves-effect waves-light"
-                                        data-toggle="modal" data-target="#clientOrderModal" type="button">
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-6">
+                                <button style=" width: 100%"  class="btn btn-danger waves-effect waves-light conclude"
+                                        data-toggle="modal"
+                                        data-target="#concludeSchedModal"
+                                        scid="{{$schedule->id}}" @if($schedule->schedType==="client") sctype="client"@else sctype="manufacturer"@endif sched_type="cancel" type="button">
                                     <span class="btn-label"><i class="fa fa-calendar-times-o"></i></span>
                                     Cancel Schedule
                                 </button>
-                        </div>
+                            </div>
+                        @endif
 
 
                         <div class="col-md-6 col-xs-12 col-sm-6">
@@ -884,7 +766,22 @@
                     $('.statusModal').modal('show');
                     // alert('1');
                 });
+                $(document).on('click', '.conclude', function() {
 
+                    $("#sc_id").val($(this).attr('scid'));
+                    $("#sc_type").val($(this).attr('sctype'));
+                    $('#date_conclude').css('display','block');
+
+                    var x = $(this).attr('sched_type');
+                    if(x === "cancel"){
+                        $('#date_conclude').css('display','none');
+                        $('#sched_conc').val('cancel');
+                    }
+                    else{
+                        $('#date_conclude').css('display','block');
+                        $('#sched_conc').val('fulfil');
+                    }
+                });
                 $(document).on('click', '.productadd', function() {
                     $('#addproduct').append("<tr>" +
                         '<td> <select name="product[]" class="form-control product">@if(isset($products))@foreach ($products as $product)<option>{{$product->pd_name}}</option>@endforeach @endif </td>' +

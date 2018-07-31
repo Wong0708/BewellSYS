@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
  use App\Product;
+ use App\Supply;
  use App\ScheduleManufacturerDetail;
  use Illuminate\Http\Request;
 
@@ -107,7 +108,10 @@ class ScheduleDetailController extends Controller
         $prod = Product::where('id', $id)->first();
         return $prod;
     }
-
+    public static function getSupply($id){
+        $prod = Supply::where('id', $id)->first();
+        return $prod;
+    }
 
     /**
      * Show the form for creating a new resourc.
