@@ -322,7 +322,7 @@
                                                 foreach ($orders as $order){
                                                     echo 
                                                         '<tr id="order'.$order->orderID.'">'.
-                                                        '<td id="orderID'.$order->orderID.'">'.$order->orderID.'</td>'.
+                                                        '<td id="orderID'.$order->orderID.'"><a href="clientorder/'.$order->orderID.'">'.$order->orderID.'</a></td>'.
                                                         '<td id="client'.$order->orderID.'">';
 
                                                     if(!empty($order->fromClient)){
