@@ -269,7 +269,7 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
                                     {{csrf_field()}}
-                                    <input type="date" class="form-control manuf_delivery_date" name="delivery_date" value="">
+                                    <input type="date" class="form-control delivery_date" id="m_dd" name="delivery_date"  schedtype="manufacturer" value="">
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
@@ -313,7 +313,7 @@
                                         <div class="row">
                                             <center>
                                                 <div class="col-md-4">
-                                                    <p id="truck_total_cap">
+                                                    <p id="mtruck_total_cap">
                                                         @if(isset($trucks))
                                                             @foreach ($trucks as $truck)
                                                                 {{$truck->max_box}}
@@ -322,8 +322,8 @@
                                                         @endif
                                                     </p>
                                                 </div>
-                                                <div class="col-md-4"><b><p id="truck_cur_cap" value="">N/A - select a date</p></b></div>
-                                                <div class="col-md-4"><p id="truck_avail_cap" value="">N/A</p></div>
+                                                <div class="col-md-4"><b><p id="mtruck_cur_cap" value="">N/A - select a date</p></b></div>
+                                                <div class="col-md-4"><p id="mtruck_avail_cap" value="">N/A</p></div>
                                             </center>
                                         </div>
 
@@ -348,7 +348,7 @@
                                                                 <td><span class="label label-info">MLOD-{{$ord->id}}</span></td>
                                                                 <td>RM-{{$ord->supplyID}}</td>
                                                                 <td>{{$ord->mndt_qty}} Boxes</td>
-                                                                <input type="hidden" name="manufacturer_ids[]" value="{{$ord->supplyID}}">
+                                                                <input type="hidden" name="ids[]" sched_type="manufacturer" value="{{$ord->supplyID}}">
                                                                 <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="manuforderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
                                                                 <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
                                                             </tr>
@@ -360,20 +360,18 @@
                                             </table>
                                         </div>
                                         <hr>
-                                        <h2><center><span class="control label" id="alert" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
+                                        <h2><center><span class="control label" id="alert_manufacturer" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
                                     </div>
                                 </div>
 
 
                             </div>
                             <div class="modal-footer">
-                                <!--
-                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light"
-                                              onclick="checkSchedValidity()"
-                                              style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
-                                -->
 
-                                 <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: block" id="schedSubmit" type="submit">Submit</button>
+                                <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light"
+                                              onclick="checkSchedValidity()" sched_type="manufacturer"
+                                              style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
+                                 <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit_manufacturer" type="submit">Submit</button>
                             </div>
                             {!!Form::close()!!}
 
@@ -428,7 +426,7 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
                                     {{csrf_field()}}
-                                    <input type="date" class="form-control delivery_date" name="delivery_date" value="">
+                                    <input type="date" class="form-control delivery_date" id="c_dd" name="delivery_date" schedtype="client" value="">
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
@@ -472,7 +470,7 @@
                                     <div class="row">
                                         <center>
                                             <div class="col-md-4">
-                                                <p id="truck_total_cap">
+                                                <p id="ctruck_total_cap">
                                                     @if(isset($trucks))
                                                         @foreach ($trucks as $truck)
                                                                 {{$truck->max_box}}
@@ -481,8 +479,8 @@
                                                     @endif
                                                 </p>
                                             </div>
-                                            <div class="col-md-4"><b><p id="truck_cur_cap" value="">N/A - select a date</p></b></div>
-                                            <div class="col-md-4"><p id="truck_avail_cap" value="">N/A</p></div>
+                                            <div class="col-md-4"><b><p id="ctruck_cur_cap" value="">N/A - select a date</p></b></div>
+                                            <div class="col-md-4"><p id="ctruck_avail_cap" value="">N/A</p></div>
                                         </center>
                                     </div>
 
@@ -507,9 +505,9 @@
                                                                 <td><span class="label label-info">CLOD-{{$client_order->id}}</span></td>
                                                                 <td>PR-{{$client_order->productID}}</td>
                                                                 <td>{{$client_order->cldt_qty}} Boxes</td>
-                                                                <input type="hidden" name="ids[]" value="{{$client_order->productID}}">
-                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
-                                                                <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
+                                                                <input type="hidden" name="ids[]" sched_type="client"value="{{$client_order->productID}}">
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" sched_type="client" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
+                                                                <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;"></i></td>
                                                             </tr>
                                                         @endforeach
                                                         @break
@@ -551,17 +549,14 @@
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
-                                                                    <h2><center><span class="control label" id="alert" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
-
+                                                                    <h2><center><span class="control label" id="alert_client" style="display: none; color:red">Delivering quantity exceeds the available space</span></center></h2>
                                                 </div>
-
-
                                 </div>
-
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" onclick="checkSchedValidity()" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
-                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit" type="submit">Submit</button>
+
+                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" sched_type="client" onclick="checkSchedValidity()" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
+                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit_client" type="submit">Submit</button>
                                 </div>
                             {!!Form::close()!!}
 
@@ -617,7 +612,7 @@
                                     <textarea class="form-control" class="form-control" placeholder="Write about your transaction details" rows="5" name="remarks" id="comment"></textarea>
                                     <div id="date_conclude" style="display:block">
                                         <label for="truckStatus">Delivery Date:</label>
-                                        <input type="date" class="form-control" name="delivery_date"/>
+                                        <input type="date" class="form-control" name="delivery_date" />
                                     </div>
                                 </div>
                             </div>
@@ -1106,26 +1101,48 @@
                     var boxes = document.getElementsByName('orderqty[]');
 
                     var max_cap = parseInt($('option:selected', $('.truck_dropdown')).attr('truck_total_cap'));
-                    var cur_cap = parseInt($('#truck_cur_cap').val());
 
-                    var date = $(".delivery_date").val();
+                    var cur_cap = null;
 
+                    if($(this).attr("sched_type") === "client"){
+                        cur_cap = parseInt($('#ctruck_cur_cap').val());
+                    }else{
+                        cur_cap = parseInt($('#mtruck_cur_cap').val());
+                    }
+
+                    var date = null;
+
+                    if($(this).attr("sched_type") === "client"){
+                        date = $("c_dd").attr("sched_type").val();
+                    }else{
+                        date = $("m_dd").attr("sched_type").val();
+                    }
                     var sum = 0;
 
 
                     console.log(boxes.length);
                     for(i = 0; i<boxes.length;i++){
-                        sum += parseInt(boxes[i].value);
+                        if(boxes[i].attr('sched_type') === $(this).attr("sched_type")){
+                            sum += parseInt(boxes[i].value);
+                        }
                     }
                     cur_cap += sum;
                     if(date!=null){
                         if (cur_cap<=max_cap){
-                            $('#schedSubmit').click();
+                            console.log('ano ba pota');
+                            if($(this).attr("sched_type") === "client"){
+                                $('#schedSubmit_client').click();
+                            }else{
+                                $('#schedSubmit_manufacturer').click();
+                            }
                         }
                         else{
-                            //$('#alert').click();
-                            //alert("Delivering quantity exceeds the available space.");
-                            $('#alert').css('display','block');
+                            if($(this).attr("sched_type") === "client"){
+
+                                $('#alert_client').css('display','block');
+                            }else{
+                                $('#alert_manufacturer').css('display','block');
+                            }
                         }
                     }else{
                         alert("please select a date")
@@ -1154,6 +1171,7 @@
                         $('.prod_table').find('tr').remove();
                         for (x = 0; x < prod_ids.length; x++) {
                             if(prod_ids[x]!=""){
+                                console.log("wtf");
                                 $('.prod_table').append('<tr style="color:black;">'+
                                     '<td><span class="label label-info">CLOD-'+order_id+'</span></td>'+
                                     '<td>PR-'+prod_ids[x]+'</td>'+
@@ -1264,12 +1282,14 @@
                         }
 
                     });
+
                     $('.delivery_date').bind('change',function(e) {
 
                         var max_cap = parseInt($('option:selected', $('.truck_dropdown')).attr('truck_total_cap'));
 
                         e.preventDefault();
                         var truckID = parseInt($('option:selected', $('.truck_dropdown')).attr('value'));
+                        var type = $(this).attr("schedtype")
 
                         $.ajaxSetup({
                             headers: {
@@ -1288,26 +1308,55 @@
                                 var total_cur = parseInt(result.total_curr_cap);
                                 var avail = max_cap - total_cur;
 
-                                if(total_cur === 0){
-                                    $('#truck_cur_cap').val(0);
-                                    $('#truck_cur_cap').html("no boxes loaded.");
-                                    $('#truck_avail_cap').html("all space available.");
 
-                                    $('#truck_cur_cap').css("color","green");
+                                console.log("wong :'( : "+$(this).attr("schedtype"));
+                                if(type === "client")
+                                {
+                                    console.log("hala ka bobo: "+$(this).attr("schedtype"));
+
+                                    if(total_cur === 0){
+                                        $('#ctruck_cur_cap').val(0);
+                                        $('#ctruck_cur_cap').html("no boxes loaded.");
+                                        $('#ctruck_avail_cap').html("all space available.");
+
+                                        $('#ctruck_cur_cap').css("color","green");
+                                    }
+                                    else if(max_cap===total_cur){
+
+                                        $('#ctruck_cur_cap').val(result.total_curr_cap);
+                                        $('#ctruck_cur_cap').html("fully loaded");
+                                        $('#ctruck_avail_cap').html("all space taken");
+
+                                        $('#ctruck_cur_cap').css("color","red");
+                                    }else{
+                                        $('#ctruck_cur_cap').val(result.total_curr_cap);
+                                        $('#ctruck_cur_cap').html(total_cur);
+                                        $('#ctruck_avail_cap').html(avail);
+                                    }
                                 }
-                                else if(max_cap===total_cur){
+                                else
+                                {
+                                    console.log("hala manufacturer bobo");
+                                    if(total_cur === 0){
+                                        $('#mtruck_cur_cap').val(0);
+                                        $('#mtruck_cur_cap').html("no boxes loaded.");
+                                        $('#mtruck_avail_cap').html("all space available.");
 
-                                    $('#truck_cur_cap').val(result.total_curr_cap);
-                                    $('#truck_cur_cap').html("fully loaded");
-                                    $('#truck_avail_cap').html("all space taken");
+                                        $('#mtruck_cur_cap').css("color","green");
+                                    }
+                                    else if(max_cap===total_cur){
 
-                                    $('#truck_cur_cap').css("color","red");
-                                }else{
-                                    $('#truck_cur_cap').val(result.total_curr_cap);
-                                    $('#truck_cur_cap').html(total_cur);
-                                    $('#truck_avail_cap').html(avail);
+                                        $('#mtruck_cur_cap').val(result.total_curr_cap);
+                                        $('#mtruck_cur_cap').html("fully loaded");
+                                        $('#mtruck_avail_cap').html("all space taken");
+
+                                        $('#mtruck_cur_cap').css("color","red");
+                                    }else{
+                                        $('#mtruck_cur_cap').val(result.total_curr_cap);
+                                        $('#mtruck_cur_cap').html(total_cur);
+                                        $('#mtruck_avail_cap').html(avail);
+                                    }
                                 }
-
                                 console.log(result.success);
                                 console.log(result.total_curr_cap);
                                 console.log(result.msg);
@@ -1408,7 +1457,6 @@
                 $(document).on('click', '.drivereditz', function() {
 
                     $("#dr_id").val($(this).attr('drid'));
-                    //alert($("#dr_id").val());
                 });
                  $(document).on('click', '.removeorder', function() {
                     var verify = confirm("Do you wish to delete this account?");

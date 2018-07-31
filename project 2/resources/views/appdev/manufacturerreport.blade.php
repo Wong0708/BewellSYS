@@ -207,13 +207,13 @@
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title" style="color:black;">Sales Report</h4>
+                        <h4 class="page-title" style="color:black;">Manufacturer Report</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">Report</a></li>
-                            <li class="active" style="color:#4c87ed;">Sales Report</li>
+                            <li class="active" style="color:#4c87ed;">Manufacturer Report</li>
                         </ol>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -288,14 +288,14 @@
                       
                               
                               @endif
-                            <h3 class="box-title m-b-0" style="color:black;">GENERATE SALES REPORT</h3>
+                            <h3 class="box-title m-b-0" style="color:black;">GENERATE MANUFACTURER REPORT</h3>
                             {{-- <div class="col-sm-12" style="background-color:red;"> --}}
                                 {{-- <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button> --}}
                                                     
                                 {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                                 {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
                                 <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
-                                {!!Form::open(array('route' => 'appdev.salesreport'))!!}
+                                {!!Form::open(array('route' => 'appdev.manufacturerreport'))!!}
                                    <input type="hidden" name="dog" value="hatdug"/>
                                    {{Form::submit('Generate Report',['class' => 'btn btn-success waves-effect waves-light'])}}
                                    <p class="text-muted m-b-30"></p>
@@ -304,12 +304,14 @@
                                         <input type="date" class="form-control" name="end"/> 
                                     </div>
                                 {!!Form::close() !!}
+                            <!-- printhead -->
+                            <div id="printhead">
                                 <p class="text-muted m-b-30"></p>
                                 @if(isset($start))
                                 @endif
                                 @if(isset($end))
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell-C Nutraceutical Corporation</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Sales Report</b></h4>
+                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
+                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Manufacturer Report</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
                                 @endif
                                 {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
@@ -319,26 +321,24 @@
 
                                                 <th>Order #</th>
                                                 <th>Order Date</th>
-                                                <th>Client</th>
-                                                <th>Total Ordered Products</th>
-                                                <th>Gross Total Price (in pesos)</th>
-                                                <th>Discount</th>
-                                                <th>Net Total Price</th>
+                                                <th>Manufacturer</th>
+                                                <th>Total Quantity</th>
+                                                <th>Total Price</th>
+                                                <th>Order Status</th>
                                             </tr>
                                         </thead>
                                                     <tbody id="addproduct">
-                                                        <?php use \App\Http\Controllers\SalesReportController;?>
+                                                        <?php use \App\Http\Controllers\ManufacturerReportController;?>
                                                         @if(count($orders) > 0)
                                                             @foreach($orders as $order)
                                                             <tr style ="color:black;">
                                                                 <td>Order # {{$order->id}}</td>
-                                                                <td>{{$order->clod_date}}</td>
-                                                                <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
-                                                                <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
-                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
-                                                                <td>0</td>
-                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
-                                                            {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
+                                                                <td>{{$order->mnod_date}}</td>
+                                                                <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturer($order->manufacturerID)['mn_name']}}</td>
+                                                                <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}}</td>
+                                                                <td>Need Changes</td>
+                                                                <td>{{$order->mnod_status}}</td>
+                                                                {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
                                                             @endforeach
                                                         @endif
                                                     {{--    
@@ -450,8 +450,7 @@
                                                 </table>
                                                 
                                 <h4  style="text-align:center; font-size:14px; color:black; margin-top:20px; font-family:Helvetica,Arial,sans-serif;"><b>----------- END OF THE REPORT -----------</b></h4>
-                                                
-                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -541,7 +540,15 @@
             
             <script>
                 function myFunction() {
-                    window.print();
+                    var prtContent = document.getElementById("printhead");
+                    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+                    WinPrint.document.write(prtContent.innerHTML);
+                    WinPrint.document.close();
+                    WinPrint.focus();
+                    WinPrint.print();
+                    WinPrint.close();
+
+                    //window.print();
                 }
             </script>
 
