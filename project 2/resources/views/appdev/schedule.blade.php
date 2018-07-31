@@ -349,7 +349,7 @@
                                                                 <td>RM-{{$ord->supplyID}}</td>
                                                                 <td>{{$ord->mndt_qty}} Boxes</td>
                                                                 <input type="hidden" name="ids[]" sched_type="manufacturer" value="{{$ord->supplyID}}">
-                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="manuforderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" schedtype="manufacturer" id="manuforderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
                                                                 <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
                                                             </tr>
                                                         @endforeach
@@ -369,7 +369,7 @@
                             <div class="modal-footer">
 
                                 <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light"
-                                              onclick="checkSchedValidity()" sched_type="manufacturer"
+                                              onclick="checkSchedValidity('manufacturer')" sched_type="manufacturer" schedtype="manufacturer"
                                               style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
                                  <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit_manufacturer" type="submit">Submit</button>
                             </div>
@@ -506,7 +506,7 @@
                                                                 <td>PR-{{$client_order->productID}}</td>
                                                                 <td>{{$client_order->cldt_qty}} Boxes</td>
                                                                 <input type="hidden" name="ids[]" sched_type="client"value="{{$client_order->productID}}">
-                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" sched_type="client" id="orderqty[]" name="orderqty[]" type="number" class="orderqty"></td>
+                                                                <td><input style="font-size:12px;" class="form-control" placeholder="quantity" id="clientorderqty[]" sched_type="client" schedtype="client" name="orderqty[]" type="number" class="orderqty"></td>
                                                                 <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;"></i></td>
                                                             </tr>
                                                         @endforeach
@@ -555,7 +555,8 @@
                                 </div>
                                 <div class="modal-footer">
 
-                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" sched_type="client" onclick="checkSchedValidity()" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
+                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light"
+                                            sched_type="client" schedtype="client" onclick="checkSchedValidity('client')" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
                                     <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit_client" type="submit">Submit</button>
                                 </div>
                             {!!Form::close()!!}
@@ -1096,48 +1097,49 @@
                 function  computeBoxes(){
                     return 0;
                 }
-                function checkSchedValidity(){
+                function checkSchedValidity(type){
                     var total_coms = computeBoxes();
                     var boxes = document.getElementsByName('orderqty[]');
-
                     var max_cap = parseInt($('option:selected', $('.truck_dropdown')).attr('truck_total_cap'));
 
+                    var date = null;
                     var cur_cap = null;
 
-                    if($(this).attr("sched_type") === "client"){
+                    if(type === "client"){
+
+                        date = $("#c_dd").val();
                         cur_cap = parseInt($('#ctruck_cur_cap').val());
                     }else{
+
+                        date = $("#m_dd").val();
                         cur_cap = parseInt($('#mtruck_cur_cap').val());
                     }
 
-                    var date = null;
-
-                    if($(this).attr("sched_type") === "client"){
-                        date = $("c_dd").attr("sched_type").val();
-                    }else{
-                        date = $("m_dd").attr("sched_type").val();
-                    }
                     var sum = 0;
 
-
-                    console.log(boxes.length);
+                    console.log("wazuc:"+date);
                     for(i = 0; i<boxes.length;i++){
-                        if(boxes[i].attr('sched_type') === $(this).attr("sched_type")){
+                        console.log("wasak:"+boxes[i].value);
+                        console.log("huhu1:"+boxes[i].getAttribute('schedtype'));
+
+                        if(boxes[i].getAttribute('schedtype') === type){
+                            console.log("xd"+boxes[i].value);
                             sum += parseInt(boxes[i].value);
                         }
                     }
                     cur_cap += sum;
-                    if(date!=null){
+                    if(date!==null){
                         if (cur_cap<=max_cap){
+                            alert("g");
                             console.log('ano ba pota');
-                            if($(this).attr("sched_type") === "client"){
+                            if(type === "client"){
                                 $('#schedSubmit_client').click();
                             }else{
                                 $('#schedSubmit_manufacturer').click();
                             }
                         }
                         else{
-                            if($(this).attr("sched_type") === "client"){
+                            if(type === "client"){
 
                                 $('#alert_client').css('display','block');
                             }else{
