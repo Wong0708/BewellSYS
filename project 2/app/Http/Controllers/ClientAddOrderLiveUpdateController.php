@@ -51,7 +51,7 @@ class ClientAddOrderLiveUpdateController extends Controller
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();
             $new_order_detail->save();
-            array_push($new_order_detail);
+            array_push($json_orders,$new_order_detail);
         }        
         return response()->json([
             'processed_orders' => $json_orders,
