@@ -330,7 +330,7 @@
                                                         @if(count($orders) > 0)
                                                             @foreach($orders as $order)
                                                             <tr style ="color:black;">
-                                                                <td>Supply Order # {{$order->id}}</td>
+                                                                <td><a href="{{route('appdev.supplierreportdetail', ['id' => $order->id])}}">Supply Order # {{$order->id}}</td>
                                                                 <td>{{$order->spod_date}}</td>
                                                                 <td>{{App\Http\Controllers\SupplierReportController::getSupplier($order->supplierID)['sp_name']}}</td>
                                                                 <td>{{App\Http\Controllers\SupplierReportController::getSupplierOrderDetail($order->id)['spdt_qty']}}</td>

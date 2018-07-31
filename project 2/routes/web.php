@@ -59,6 +59,8 @@ Route::resource('inventoryreport', 'InventoryReportController');
 
 Route::resource('supplierreport', 'SupplierReportController');
 
+Route::get('supplierreportdetail/{id}', 'SupplierReportDetailController@getSupplierOrder')->name('appdev.supplierreportdetail');
+
 Route::post('supplierreport', 'SupplierReportController@generateReport')->name('appdev.supplierreport');
 
 Route::resource('manufacturerreport', 'ManufacturerReportController');
