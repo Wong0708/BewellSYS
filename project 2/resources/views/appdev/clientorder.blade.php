@@ -293,7 +293,7 @@
 
                             <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
-                                <table id="myTable" class="table table-striped">
+                                <table id="orderListTable" class="table table-striped">
                                     <thead>
                                         <tr style="color:black;">
                                             <th>Order #</th>
@@ -532,9 +532,8 @@
                         url: 'liveClientAddOrderUpdate',
                         data: formData,
                         success: function(data){
-                            $("#activityUpdate").toggleClass('alert-success alert-success');
                             $('#activityUpdate').html('An order has been successfully added to the list!');
-                            $("#activityUpdate").toggleClass('alert-danger alert-success');
+                            $('#activityUpdate').show();
                             console.log('Data Error:', data);
                             $(".modal-body input").val('');
                             $('#clientOrderModal').modal('hide');
@@ -780,7 +779,7 @@
     <!--SECTION KEYWORD/S: DATA-TABLE -->
     <script>
         $(document).ready(function() {
-            $('#myTable').DataTable();
+            $('#orderListTable').DataTable();
             $(document).ready(function() {
                 var table = $('#example').DataTable({
                     "columnDefs": [{
@@ -807,21 +806,7 @@
                         });
                     }
                 });
-                $('#example tbody').on('click', 'tr.group', function() {
-                    var currentOrder = table.order()[0];
-                    if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
-                        table.order([2, 'desc']).draw();
-                    } else {
-                        table.order([2, 'asc']).draw();
-                    }
-                });
             });
-        });
-        $('#example23').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
         });
     </script>
 

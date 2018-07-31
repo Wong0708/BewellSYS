@@ -13,6 +13,7 @@ class ClientAddOrderLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {   
+        $json_orders = [];
         $date = new DateTime();
         $client = Client::where('cl_name','=',$request->clientInfo[0][0])->first();
 
@@ -27,6 +28,8 @@ class ClientAddOrderLiveUpdateController extends Controller
         $new_order->created_at = $date->getTimestamp();
         $new_order->updated_at = $date->getTimestamp();
         $new_order->save();
+
+        array_push($new_order_detail);
         
         foreach($orderList as $order){
             $new_order_detail = new ClientOrderDetail();
@@ -48,7 +51,10 @@ class ClientAddOrderLiveUpdateController extends Controller
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();
             $new_order_detail->save();
+            array_push($new_order_detail);
         }        
-        return response()->json();
+        return response()->json([
+            'processed_orders' => $json_orders,
+        ]);
     }
 }
