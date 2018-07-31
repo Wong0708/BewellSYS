@@ -220,12 +220,13 @@
 
         <div class="white-box">
             <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
+        <!-- printhead-->
+        <div id="printhead">
             <div class="col-lg-6 col-sm-6">
             <div class="row">
                 <div class="col-lg-12 col-sm-12">
-
                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                        <h3 class="box-title m-b-0" style="color:black;">Order Details</h3>
+                        <h3 class="box-title m-b-0" style="color:black;">Order Report for Supply Order {{$order->id}}</h3>
                         <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the information of this order.</span>
                         <div class="row" style="margin-top:10px; ">
                             <div class="col-md-6 col-xs-6 b-r"> <strong>Supplier Name</strong>
@@ -234,42 +235,32 @@
                             </div>
                             <div class="col-md-6 col-xs-6 b-r"> <strong>Order Date</strong>
                                 <br>
-                                <p class="text-muted">{{'test'.$order->spod_date}}</p>
+                                <p class="text-muted">{{$order->spod_date}}</p>
                             </div>
                             <div class="col-md-6 col-xs-6 b-r"> <strong>Order Status</strong>
                                 <br>
-                                <p class="text-muted">{{'test'.$order->spod_status}}</p>
+                                <p class="text-muted">{{$order->spod_status}}</p>
                             </div>
-                            <div class="col-md-6 col-xs-6 b-r"> <strong>Total Price</strong>
+                            <div class="col-md-6 col-xs-6"> <strong>Total Price</strong>
                                 <br>
                                 <p class="text-muted">hi Boxes</p>
-                            </div>
-                            <div class="col-md-6 col-xs-6"> <strong>Supplier Address</strong>
-                                <br>
-                                <p class="text-muted">Hi</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
+            <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;" align="center">
                 <thead>
                 <tr style="font-size:12px; font-weight:700; ">
 
-                    <th>Supply Order #</th>
-                    <th>Order Date</th>
-                    <th>Supplier</th>
-                    <th>Total Quantity</th>
-                    <th>Order Status</th>
+                    <th>Item Name</th>
+                    <th>Quantity Ordered</th>
                 </tr>
                 </thead>
                 <tbody id="addproduct">
 
                         <tr style ="color:black;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -278,6 +269,7 @@
             <h4  style="text-align:center; font-size:14px; color:black; margin-top:20px; font-family:Helvetica,Arial,sans-serif;"><b>----------- END OF THE REPORT -----------</b></h4>
         </div>
     </div>
+        </div>
 </div>
 
             <!--<div class="row">
@@ -606,6 +598,19 @@
 <!-- Sweet-Alert  -->
 <script src="../plugins/bower_components/sweetalert/sweetalert.min.js"></script>
 <script src="../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
+<script>
+    function myFunction() {
+        var prtContent = document.getElementById("printhead");
+        var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+
+        //window.print();
+    }
+</script>
 
 <script type="text/javascript">
     $(document).on('click', '.ajaxmodal', function() {
