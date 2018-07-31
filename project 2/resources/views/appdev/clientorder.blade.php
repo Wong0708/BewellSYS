@@ -339,7 +339,7 @@
                                                         '<td id="deliveryStatus'.$order->orderID.'">';    
 
                                                     if(!empty($order->fromSchedule)){
-                                                        $order->fromSchedule->scd_status;
+                                                        $order->clod_dstatus;
                                                     }else{
                                                         echo 'N/A';
                                                     }
@@ -540,6 +540,8 @@
                             $('#activityUpdate').html('An order has been successfully added to the list!');
                             $("#activityUpdate").toggleClass('alert-danger alert-success');
                             console.log('Data Error:', data);
+                            $(".modal-body input").val('');
+                            $('#clientOrderModal').modal('hide');
                         },   
                         error: function (data) {
                             console.log('Data Error:', data);
