@@ -669,16 +669,14 @@
                     $(tdEdit).closest('td').next().next().find('input').val('');
                     if(data.status == 1){
                         $(tdEdit).closest('td').next().find('input').prop("readonly", false);
-                        $(tdEdit).closest('td').next().find('input').attr('max', data.inventory);
-                        // $(tdEdit).closest('td').next().find('input').val(data.inventory); //Input for inventory qty
+                        // $(tdEdit).closest('td').next().find('input').attr('placeholder',data.inventory); Inventory quantity
 
                         $('#clientOrderSupport').append(
                             '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.productCode+'</td><td><span class="label label-success">'+data.inventory+'</span></td>'+
                             '<td>₱ '+data.price+'.00</td><td><span class="label label-success">In-Stock</span></td></tr>');
                     }else if(data.status == 2){
                         $(tdEdit).closest('td').next().find('input').prop("readonly", false);
-                        $(tdEdit).closest('td').next().find('input').attr('max', data.inventory);
-                        // $(tdEdit).closest('td').next().find('input').val(data.inventory); //Input for inventory qty
+                        // $(tdEdit).closest('td').next().find('input').attr('placeholder',data.inventory); Inventory quantity
 
                         $('#clientOrderSupport').append(
                             '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.productCode+'</td><td><span class="label label-success">'+data.inventory+'</span></td>'+
