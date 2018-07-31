@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/bewelllogo.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('plugins/images/bewelllogo.ico') }}">
     <title>Bewell</title>
     <!-- Bootstrap Core CSS -->
-    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
     <!-- Menu CSS -->
