@@ -29,8 +29,7 @@ class ClientAddOrderLiveUpdateController extends Controller
         $new_order->updated_at = $date->getTimestamp();
         $new_order->save();
 
-        array_push($new_order_detail);
-        
+        $count = 1;
         foreach($orderList as $order){
             $new_order_detail = new ClientOrderDetail();
             $new_order_detail->orderID = $new_order->id;
@@ -51,7 +50,8 @@ class ClientAddOrderLiveUpdateController extends Controller
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();
             $new_order_detail->save();
-            array_push($json_orders,$new_order_detail);
+            array_push($json_orders,'orderNum'.$count,$new_order_detail);
+            $count = $count + 1;
         }        
         return response()->json([
             'processed_orders' => $json_orders,

@@ -535,7 +535,7 @@
                             $('#activityUpdate').html('An order has been successfully added to the list!');
                             $('#activityUpdate').show();
                             console.log('Data Error:', data);
-                            $(".modal-body input").val('');
+                            $("#orderListTable").find('tbody').find('input').val('');
                             $('#clientOrderModal').modal('hide');
                         },   
                         error: function (data) {
