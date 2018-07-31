@@ -481,14 +481,10 @@
             $('#orderModalID').val($(this).data('orderid'));
             $('#ordermodal').modal('show');
 
-            // Learning/s #1 for JQuery.
+            // Learning/s Reference for JQuery.
             // Prepared By: John Edel B. Tamani
-            // if($(this).data('something') != null){
-            // }
-            // else{
-            //     $('#something').prop("readonly", true); -> To disable an input.
-            //     $('.something').prop("disabled",true); -> To disable a button.
-            // }
+            // $('#something').prop("readonly", true); -> To disable an input.
+            // $('.something').prop("disabled",true); -> To disable a button.
         });
     </script>
 
