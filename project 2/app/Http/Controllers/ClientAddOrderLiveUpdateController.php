@@ -41,7 +41,7 @@ class ClientAddOrderLiveUpdateController extends Controller
             $new_order_detail->cldt_qty = $order[2];
 
             if($order[2]>$product->pd_qty){
-                $product->pd_allocated = $order[2]-$product->pd_qty;
+                $product->pd_allocated = $product->pd_allocated+($order[2]-$product->pd_qty);
                 $product->pd_qty = 0;
                 $product->save();
             }else if($order[2]<=$product->pd_qty){
