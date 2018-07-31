@@ -83,11 +83,11 @@ class ScheduleController extends Controller
         });
 
         $client_orders = $client_orders->filter(function ($order) {
-            return $order->clod_status == "Processing";
+            return $order->clod_status == "Processing" || $order->clod_status == "Cancelled";
         });
 
         $manufacturer_orders = $manufacturer_orders->filter(function ($order) {
-            return $order->mnod_status == "Processing";
+            return $order->mnod_status == "Processing" || $order->clod_status == "Cancelled";
         });
 
         foreach($manufacturer_orders as $manufacturer_order){

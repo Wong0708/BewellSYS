@@ -367,12 +367,11 @@
 
                             </div>
                             <div class="modal-footer">
-                                <!--
+<!--
                                 <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light"
                                               onclick="checkSchedValidity()"
                                               style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
-                                -->
-
+-->
                                  <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: block" id="schedSubmit" type="submit">Submit</button>
                             </div>
                             {!!Form::close()!!}
@@ -559,9 +558,11 @@
                                 </div>
 
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer">f
+                                    <!--
                                     <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" onclick="checkSchedValidity()" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="button">Submit</button>
-                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: none" id="schedSubmit" type="submit">Submit</button>
+                                    -->
+                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="display: block" id="schedSubmit" type="submit">Submit</button>
                                 </div>
                             {!!Form::close()!!}
 
@@ -1120,6 +1121,7 @@
                     cur_cap += sum;
                     if(date!=null){
                         if (cur_cap<=max_cap){
+                            console.log('ano ba pota');
                             $('#schedSubmit').click();
                         }
                         else{
