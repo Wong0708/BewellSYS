@@ -199,34 +199,37 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="orderList">
-                                                    <tr style="color:black;">
+                                                    <tr style="color:black;" id="orderListNum1">
+                                                        @if(isset($products))
+                                                            <td><span id="countAddOrder"  class="label label-info"></span></td>
                                                             
-                                                            @if(isset($products))
-                                                                <td><span id="countAddOrder"  class="label label-info"></span></td>
-                                                                
-                                                                    <td> 
-                                                                        <select style="font-size:12px;" class="form-control orderName">
-                                                                            @foreach ($products as $product)
-                                                                                <option >{{$product->pd_name}}</option>
-                                                                            @endforeach 
-                                                                        </select>
-                                                                    </td>
-                                                                    <td> 
-                                                                        <select style="font-size:12px;" class="form-control orderSKU">
-                                                                            @foreach ($products as $product)
-                                                                                <option>{{$product->pd_sku}}</option>
-                                                                            @endforeach 
-                                                                        </select>
-                                                                    </td>
-                                                            @endif 
-                                                            
-                                                            <td><input type="text" style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder=""></td>
-                                                            <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td>
+                                                                <td> 
+                                                                    <select style="font-size:12px;" class="form-control orderName">
+                                                                        <option selected>Choose a product </option>
+                                                                        @foreach ($products as $product)
+                                                                            <option>{{$product->pd_name}}</option>
+                                                                        @endforeach 
+                                                                    </select>
+                                                                </td>
+                                                                <td> 
+                                                                    <select style="font-size:12px;" class="form-control orderSKU">
+                                                                        <option selected>N/A </option>
+                                                                        <!--OLD IMPLEMENTATION MANUAL MODE-->
+                                                                        {{-- <option selected>Choose product SKU </option>
+                                                                        @foreach ($products as $product)
+                                                                            <option>{{$product->pd_sku}}</option>
+                                                                        @endforeach  --}}
+                                                                    </select>
+                                                                </td>
+                                                        @endif 
+                                                        
+                                                        <td><input value="0" type="number" min="1" style="font-size:12px;" class="form-control orderInventory" placeholder=""></td>
+                                                        <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td>
                                                     </tr>
 
                                                 </tbody>
                                                     </table>
-                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Total Price:</b><b class="totalOrderAmount"></b></h4>
+                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Total Price:</b><b id="totalOrderAmount"></b></h4>
                                                 </div>
                                                 <hr>
                                                     <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Product Inventory Support</b></h4>
@@ -242,43 +245,36 @@
                                                                     <th>Status</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
-                                                                <?php 
-                                                                    $count = 0;
-                                                                    foreach ($products as $product){
-                                                                        $count = $count + 1;
-                                                                        echo 
-                                                                            '<tr style="font-size:12px;">'.
-                                                                                '<td>'.$count.'</td>'.
-                                                                                '<td>'.$product['pd_code'].'</td>'.
-                                                                                '<td><span class="label label-success">'.$product['pd_qty'].'</span></td>'.
-                                                                                '<td>₱ '.$product['pd_price'].'.00</td>'.
-                                                                                '<td><span class="label label-success">'.$product['pd_status'].'</span></td>'.
-                                                                            '</tr>';
-                                                                    }
-                                                                ?>
-                                                            </tbody>
+                                                            <tbody id="clientOrderSupport"></tbody>
                                                     </table>
 
                                                 </div>
-                                                <label for="orderPaymentStatus" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Status:</b></label>
-                                                <select name="orderPaymentStatus" class="form-control" id="orderPaymentStatus" style="margin-bottom:10px;">
-                                                    <option disabled selected> Choose the current payment status of the order</option>
 
-                                                </select>
-                                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the client's payment status on their ordered products. <b style="color:#E53935;">*Required</b></span>
-                                            </br>
-                                        <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Paid Amount:</b></label>
-                                        </br>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount of the client. <b style="color:#E53935;">*Required</b></span>
-                                        <input style="margin-top:10px; " type="text" class="form-control" data-mask="PHP 9,999,999.00 ONLY"/>
-                                        <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total:</b><b class="totalOrderAmount">100</b></h4>
+                                                {{-- 
+                                                    OLD IMPLEMENTATION - PAYMENT STATUS
+                                                    Prepared By: John Edel B. Tamani
+                                                    
+                                                    <label for="orderPaymentStatus" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Status:</b></label>
+                                                    <select name="orderPaymentStatus" class="form-control" id="orderPaymentStatus" style="margin-bottom:10px;">
+                                                        <option disabled selected> Choose the current payment status of the order</option>
+                                                        <option></option>
+                                                        <option></option>
+                                                        <option></option>
+                                                    </select>
+                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the client's payment status on their ordered products. <b style="color:#E53935;">*Required</b></span>
+                                                    </br>
+                                                    <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Paid Amount:</b></label>
+                                                    </br>
+                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount of the client. <b style="color:#E53935;">*Required</b></span>
+                                                    <input style="margin-top:10px; " type="text" class="form-control" data-mask="PHP 9,999,999.00 ONLY"/>
+                                                    <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total:</b><b class="totalOrderAmount">100</b></h4> 
+                                                --}}
 
                                         </div>
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                                    <button id="submitOrderList" class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
                                 </div>
                         </div>
                     </div>
@@ -383,27 +379,33 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="modal-title">Update Order</h4> </div>
-
-                                <div class="modal-body">
-                                        <label for="exp_date" id=""class="control-label">Expected Date:</label>
-                                        <input type="date" class="form-control" id="exp_date" name="expectedDate"> </div>
-                                </div>
+                                <h4 class="modal-title">Update Order</h4> 
+                            </div>
+                            <div class="modal-body">
+                                    <label for="exp_date" id=""class="control-label">Expected Date:</label>
+                                    <input type="date" class="form-control" id="exp_date" name="expectedDate"> 
+                            </div>
+                        
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                <button type="button" id="updateOrder" class="btn btn-danger waves-effect waves-light">Update</button>
+                                <button style="background-color:#4c87ed;" type="button" id="updateOrder" class="btn btn-danger waves-effect waves-light">Update</button>
                             </div>
-                            <input type="hidden" id="orderModalID" name="orderID" value="0">
                         </div>
+                        <input type="hidden" id="orderModalID" name="orderID" value="0">
                     </div>
                 </div>
+                
 
         
                 <footer class="footer text-center"> 2018 &copy; Bewell Nutraceutical Corporation</footer>
             </div>
         </div>
 
-    <!--SECTION KETWORD/S: APPLICATION SCRIPTS-->
+    <!--
+        SECTION KETWORD/S: APPLICATION SCRIPTS
+        Prepared By: John Edel B. Tamani
+    -->
+    
     <script src="../plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
@@ -430,41 +432,46 @@
         var count = 1;
         $('#countAddOrder').html(count);
 
-
+        //SECTION KEYWORD/S: REMOVE ADD ORDER
         $(document).on('click', '.removeAddOrder', function() {
             if(count==1){
                 alert('Sorry you cannot remove this order!')
             }else{
                 var verify = confirm("Do you want to delete the product?");
                 if(verify==true){
+                    var thisVal = $(this).closest('tr').find('td').find('span').text();
                     count = count - 1;
-                    $(this).closest('tr').remove();
+                    count2 = count2 - 1;
+                    if($(this).closest('tr').prev('tr').length){
+                        for(var i =  parseInt(thisVal) ; i<= count; i=i+1 ){
+                            //BUG LOCATED HERE
+                            //By: John Edel B. Tamani
+                            //Purpose: To update the number of the order in the list.
+
+                            console.log('THISVAL:'+i);
+                            console.log('COUNT:'+count);
+                            $('#orderListNum'+(i+1)).find('td').find('span').html(i);
+                            $('#orderListNum'+(i+1)).prop('id','#orderListNum'+i);// toggle also the product inventory support
+                        }
+                        $(this).closest('tr').remove();
+                    }
+                    $('#supportNum'+$(this).closest('tr').find('td').find('span').text()).remove();
                 }
                 return false;
-                console.log(count);
             }
         });
 
-        
+        //SECTION KEYWORD/S: ADD ORDER 
         $(document).on('click', '#addOrder', function() {
             count = count + 1;
             $('#orderList').append(
-                '@if(isset($products))<tr style="color:black;">'+ 
+                '@if(isset($products))<tr id="orderListNum'+count+'" style="color:black;">'+ 
                 '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
-                '<td> <select style="font-size:12px;" class="form-control orderName"> @foreach ($products as $product)<option>{{$product->pd_name}}</option> @endforeach</select> </td>' +
-                '<td><select style="font-size:12px;" class="form-control orderSKU"> @foreach ($products as $product) <option>{{$product->pd_sku}}</option> @endforeach </td>'+
-                '<td><input type="text" style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder=""></td> ' +
+                '<td> <select style="font-size:12px;" class="form-control orderName"><option selected> Choose a product</option>@foreach ($products as $product)<option>{{$product->pd_name}}</option> @endforeach</select> </td>' +
+                '<td><select style="font-size:12px;" class="form-control orderSKU"><option selected>N/A</option></td>'+
+                '<td><input type="text" style="font-size:12px;" class="form-control" placeholder=""></td> ' +
                 '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td> ' +
                 '</tr>@endif');
-            });
-
-            $('#verifyAddOrder').on('click','',function() {
-                var verify = confirm("Do you wish to add the order?");
-                if(verify==true){
-                    $('#activityUpdate').html('A new order has been added to the list!');
-                }else{
-                }
-                return false;
         });
     </script>
 
@@ -485,56 +492,248 @@
         });
     </script>
 
-    <!--SECTION KEYWORD/S:INVENTORY, SUPPORT, MODAL-->
+    <!--SECTION KEYWORD/S: SUBMIT ORDER LIST-->
     <script type='text/javascript'>
+        $('#submitOrderList').on('click','',function(e) {
+            if($('#orderListNum1').find('td:first').next().next().find('select').val()!='N/A' && $('#orderListNum1').find('td:first').next().next().next().find('input').val()!=0){
 
-        $(document).on('change', '.orderName', function () {
-            var formData = {
-                productSKU:$(this).closest('td').next().find('select').val();
+                var verify = confirm("Do you wish to add the following order/s?");
+
+                //VARIABLE PRE-PROCESSING
+                var orders = [];
+                var order =  [];
+                for(var i=1;i<=count;i=i+1){
+                    order.push($('#orderListNum'+i).find('td:first').next().find('select').val(),$('#orderListNum'+i).find('td:first').next().next().find('select').val(),$('#orderListNum'+i).find('td:first').next().next().next().find('input').val())
+                    orders.push(order);
+                    order = [];
+                }
+                console.log(orders);
+
+                var clientDetail = [];
+                var client = [];
+                client.push($('#clientList').val(),$('#clientLocation').val(),$('#orderExpDate').val());
+                clientDetail.push(client);
+
+                console.log(clientDetail);
+
+                if(verify==true){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+
+                    e.preventDefault(); 
+                    var formData = {
+                        orderList:orders,
+                        clientInfo:clientDetail,
+                    }
+                    
+                    var tdEdit = '#clientLocation';
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'liveClientAddOrderUpdate',
+                        data: formData,
+                        success: function(data){
+                            $("#activityUpdate").toggleClass('alert-success alert-success');
+                            $('#activityUpdate').html('An order has been successfully added to the list!');
+                            $("#activityUpdate").toggleClass('alert-danger alert-success');
+                            console.log('Data Error:', data);
+                        },   
+                        error: function (data) {
+                            console.log('Data Error:', data);
+                        }
+                    });
+                }
+                return false;
+            }else{
+                alert('Sorry there are no order/s placed yet!')
             }
+        });
+    </script>
+
+    <!--SECTION KEYWORD/S:CLIENT, LIST, INVENTORY, SUPPORT, MODAL-->
+    <script type='text/javascript'>
+         $(document).on('change', '#clientList', function (e) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            })
+
+            e.preventDefault(); 
+
+            var formData = {
+                clientName:$(this).val(),
+            }
+            
+            var tdEdit = '#clientLocation';
 
             $.ajax({
                 type: "POST",
-                url: 'liveOrderUpdate';
+                url: 'liveClientAddressUpdate',
                 data: formData,
                 success: function(data){
-                    $('#artist').append(data);
+                    if(data.status ==  1){
+                        console.log(data);
+                        $(tdEdit).find('option').remove();
+                        var dataAppend = '<option selected disabled>Choose client location</option>';
+                        
+                        for (var i = 0; i < data.clientLocation.length ; i++){
+                            dataAppend = dataAppend+'<option>'+data.clientLocation[i].loc_address+'</option>';
+                        }
+                        $('#clientLocation').append(dataAppend);
+                    }else{
+                        $(tdEdit).find('option').remove();
+                        var dataAppend = '<option selected disabled>N/A</option>';
+                        $('#clientLocation').append(dataAppend);
+                    }
+                },   
+                error: function (data) {
+                    console.log('Data Error:', data);
+                }
+            });
+        });
+        
+        //SECTION KEYWORD/S: ORDER NAME TABLE
+        $(document).on('change', '.orderName', function (e) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            })
+
+            e.preventDefault(); 
+
+            var formData = {
+                productName:$(this).val(),
+            }
+            
+            var tdEdit = this;
+            var tdEdit2 = $(this).closest('tr').find('td').find('span').text();
+
+            $.ajax({
+                type: "POST",
+                url: 'liveClientOrderNameUpdate',
+                data: formData,
+                success: function(data){
+                    console.log(data);
+
+                    if($('#supportNum'+tdEdit2).length){ //Used length to check if the variable exists
+                        $('#supportNum'+tdEdit2).remove();
+                        count2 = count2 - 1;
+                    }
+                    $(tdEdit).closest('td').next().find('select').find('option').remove();
+                    var dataAppend = '<option selected disabled>Choose product SKU</option>';
+
+                    for (var i = 0; i < data.product.length; i++){
+                        dataAppend = dataAppend+'<option>'+data.product[i].pd_sku+'</option>';
+                    }
+                    $(tdEdit).closest('td').next().find('select').append(dataAppend);
+                },   
+                error: function (data) {
+                    console.log('Data Error:', data);
                 }
             });
         });
 
+        //SECTION KEYWORD/S: ORDER SKU TABLE
+        var count2 = 1;
+        $(document).on('change', '.orderSKU', function (e) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            })
 
-        // $('.orderName').change(function(){
-        //     alert('fuck');
-            // console.log('Trial if running');
-            // console.log($(this).closest('td').next().find('select').val());
+            e.preventDefault(); 
 
-            // var formData = {
-            //     productSKU: $(this).closest('td').next();
-            // }
+            var formData = {
+                productName:$(this).closest('td').prev().find('select').val(),
+                productSKU:$(this).val(),
+            }
+            
+            var tdEdit = this;
+            var tdEdit2 = $(this).closest('tr').find('td').find('span').text();
 
-            // $.ajax({
-            //     url: "artist_field.php",
-            //     data: { "value": $("#artist").val() },
-            //     dataType:"html",
-            //     type: "post",
-            //     success: function(data){
-            //     $('#artist').append(data);
-            //     }
-            // });
-        // });
+            $.ajax({
+                type: "POST",
+                url: 'liveClientOrderSKUUpdate',
+                data: formData,
+                success: function(data){
+                    console.log(data);
 
-        // $('.orderSKU').change(function(){
-        //     $.ajax({
-        //         url: "artist_field.php",
-        //         data: { "value": $("#artist").val() },
-        //         dataType:"html",
-        //         type: "post",
-        //         success: function(data){
-        //         $('#artist').append(data);
-        //         }
-        //     });
-        // });
+                    if($('#supportNum'+tdEdit2).length){ //Used length to check if the variable exists
+                        $('#supportNum'+tdEdit2).remove();
+                        count2 = count2 - 1;
+                    }
+                    $(tdEdit).closest('td').next().next().find('input').val('');
+                    if(data.status == 1){
+                        $(tdEdit).closest('td').next().find('input').prop("readonly", false);
+                        $(tdEdit).closest('td').next().find('input').attr('max', data.inventory);
+                        // $(tdEdit).closest('td').next().find('input').val(data.inventory); //Input for inventory qty
+
+                        $('#clientOrderSupport').append(
+                            '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.productCode+'</td><td><span class="label label-success">'+data.inventory+'</span></td>'+
+                            '<td>₱ '+data.price+'.00</td><td><span class="label label-success">In-Stock</span></td></tr>');
+                    }else if(data.status == 2){
+                        $(tdEdit).closest('td').next().find('input').prop("readonly", false);
+                        $(tdEdit).closest('td').next().find('input').attr('max', data.inventory);
+                        // $(tdEdit).closest('td').next().find('input').val(data.inventory); //Input for inventory qty
+
+                        $('#clientOrderSupport').append(
+                            '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.productCode+'</td><td><span class="label label-success">'+data.inventory+'</span></td>'+
+                            '<td>₱ '+data.price+'.00</td><td><span class="label label-warning">Re-stock</span></td></tr>');
+                    }else {
+                        $(tdEdit).closest('td').next().find('input').val('');
+                        $(tdEdit).closest('td').next().find('input').prop("readonly", true);
+                        $('#clientOrderSupport').append(
+                            '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.productCode+'</td><td><span class="label label-success">'+data.inventory+'</span></td>'+
+                            '<td>₱ '+data.price+'.00</td><td><span class="label label-danger">No Stock</span></td></tr>');
+                    }
+                    count2 = count2 + 1;
+                },
+                error: function (data) {
+                    console.log('Data Error:', data);
+                }
+            });
+
+            
+        });
+
+        //SECTION KEWORD/S: REMOVE ORDER.
+        $(".removeOrder").click(function (e) {
+            var verify = confirm("Do you wish to delete this order?");
+            if(verify ==true){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                })
+           
+                var orderID = $(this).data('orderid');
+
+                $.ajax({
+                    type: "DELETE",
+                    url: window.location.pathname + '/' + orderID,
+                    success: function (data) {
+                        $("#order" + orderID).remove();
+                        $('#activityUpdate').html('An order has been successfully deleted!');
+                        $('#activityUpdate').show();
+                        count2 = count2 - 1;
+                    },
+                    error: function (data) {
+                        $("#activityUpdate").toggleClass('alert-success alert-danger');
+                        $('#activityUpdate').html('Failed to process request an error occured!');
+                        $("#activityUpdate").toggleClass('alert-danger alert-success');
+                        $('#activityUpdate').show();
+                        console.log('Data Error:', data);
+                    }
+                });
+            }
+            return false;
+        });
     </script>
     
     <!--SECTION KEYWORD/S: MODAL, UPDATE, ORDER, AJAX, SCRIPT-->
@@ -575,46 +774,14 @@
                     $("#activityUpdate").toggleClass('alert-success alert-danger');
                     $('#activityUpdate').html('Failed to process request an error occured!');
                     $("#activityUpdate").toggleClass('alert-danger alert-success');
+                    $('#activityUpdate').show();
                     console.log('Data Error:', data);
                 }
             });
         });
     </script>
 
-     <!--SECTION KEYWORD/S: MODAL, REMOVE, ORDER, AJAX, SCRIPT-->
-     <script type='text/javascript'>
-        $(".removeOrder").click(function (e) {
-            var verify = confirm("Do you wish to delete this order?");
-            if(verify ==true){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                })
-           
-                var orderID = $(this).data('orderid');
-                $.ajax({
-                    type: "DELETE",
-                    url: window.location.pathname + '/' + orderID,
-                    success: function (data) {
-                        $("#order" + orderID).remove();
-                        $('#activityUpdate').html('An order has been successfully deleted!');
-                        $('#activityUpdate').show();
-                    },
-                    error: function (data) {
-                        $("#activityUpdate").toggleClass('alert-success alert-danger');
-                        $('#activityUpdate').html('Failed to process request an error occured!');
-                        $("#activityUpdate").toggleClass('alert-danger alert-success');
-                        console.log('Data Error:', data);
-                    }
-                });
-            }
-            return false;
-         });
- 
-     </script>
-
-    <!--SECTION KEYWORD/S: DATABLE -->
+    <!--SECTION KEYWORD/S: DATA-TABLE -->
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();

@@ -79,3 +79,9 @@ Route::get('sched_det/{id}', 'ScheduleDetailController@getSchedule')->name('appd
 Route::post('/schedule/getCapacity','ScheduleController@getCurrCapacity');
 Route::resource('driver', 'DriverController');
 
+Route::post('liveClientOrderNameUpdate','ClientOrderNameLiveUpdateController@liveUpdate');
+Route::post('liveClientOrderSKUUpdate','ClientOrderSKULiveUpdateController@liveUpdate');
+Route::post('liveClientAddressUpdate','ClientAddressLiveUpdateController@liveUpdate');
+Route::post('liveClientAddOrderUpdate','ClientAddOrderLiveUpdateController@liveUpdate');
+
+
