@@ -211,7 +211,8 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h4 style="color:black; margin-bottom:7px;">Order Functions</h4>
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                    <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button>
+                                    {{-- Commented Out for future purposes By: John Edel B. Tamani
+                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button> --}}
                                     <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Delivery Status</button>
                                     {{-- <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span><a href={{route('manufacturerorder.index')}}>Manage Manufacturer Order</a></button>
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span><a href={{route('supplierorder.index')}}>Manage Supplier Order</a></button>
@@ -246,7 +247,7 @@
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     <h3 class="box-title m-b-0" style="color:black;">Order Payment Record</h3>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
-                                    <button id="addPaymentButton" style="margin-top:10px; " class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#addOrderPaymentModal" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>
+                                    <button id="addPaymentButton" style="margin-top:10px; " class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>
                                     <p class="text-muted m-b-30"></p>
                                     <div class="table-responsive">
                                             <table id="orderPaymentListTable" class="table table-striped">
@@ -272,8 +273,10 @@
                                                                 '<td>'.$orderInfo->payment_type.'</td>'.
                                                                 '<td>'.$orderInfo->totalAmount.'</td>'.
                                                                 '<td>'.
-                                                                    // '<i style="color:#4c87ed;" data-payment="'.$orderInfo->totalAmount.'" data-id="'.$orderInfo->id.'" class="fa fa-edit editPayment">'.
-                                                                    '<i style="margin-left:5px; data-id="'.$orderInfo->id.'" color:#E53935;" class="fa fa-trash-o removePayment">'.
+                                                                    //Commented out By: John Edel B. Tamani 
+                                                                    // Edit Function for Payment
+                                                                    // '<i style="color:#4c87ed;" data-payment="'.$orderInfo->totalAmount.'" data-id="'.$orderInfo->id.'" class="fa fa-edit editPayment">'. //
+                                                                    '<i style="margin-left:5px; color:#E53935;" data-id="'.$orderInfo->id.'"  class="fa fa-trash-o removePayment">'.
                                                                     '</td>'.
                                                             '</tr>';
                                                             $count = $count + 1;
@@ -570,8 +573,6 @@
                     var verify = confirm("Do you want to cancel the payment?");
 
                     if(verify == true){
-                        if(verify == true){
-                        
                         $.ajaxSetup({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -583,13 +584,44 @@
                             id: $(this).data('id'),
                         }
                         
+                        var toEdit = this;
+
                         $.ajax({
                             type: "POST",
                             url:  '/ajaxDeletePayment',
                             data: formData,
                             success: function(data){
                                 console.log(data);
-                                window.reload(); // Additional Feature in the future for deletion of product using ID Ajax!::Too lazy
+                                $(toEdit).closest('tr').remove();
+
+                                //AJAX TO UPDATE THE ORDER STATUS
+                                //By: John Edel B. Tamani
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                    }
+                                })
+
+                                e.preventDefault(); 
+                                var formData = {
+                                    id:$('#orderIDPayment').val(),
+                                    funcNum:1,
+                                }
+                                
+                                $.ajax({
+                                    type: "POST",
+                                    url:  '/ajaxUpdatePaymentStatus',
+                                    data: formData,
+                                    success: function(data){
+                                        console.log(data);
+                                        $('#paymentStatus').text(data.status);                                                
+                                    },   
+                                    error: function (data) {
+                                        console.log('Data Error:', data);
+                                    }
+                                });
+                                
+                                $('#paymentStatus').text('Pending');
                             },   
                             error: function (data) {
                                 console.log('Data Error:', data);
@@ -649,8 +681,6 @@
             <script type="text/javascript">
                 $(document).on('click','#addPaymentButton',function(e){
                     var total = $('#grandTotal').text();
-                    //Additional Feature: Put comma or number format  to payment balance;
-                    $('#paymentAmount').attr('max',$('#grandTotal').text());
                     
                     $.ajaxSetup({
                         headers: {
@@ -669,7 +699,13 @@
                         data: formData,
                         success: function(data){
                             console.log(data);
-                            $('#grandTotal').text(data.totalBalance.toFixed(2));
+                            if(data.totalBalance>0){
+                                $('#paymentAmount').attr('max',data.totalBalance);
+                                $('#grandTotal').text(data.totalBalance.toFixed(2));//Additional Feature: Put comma or number format  to payment balance;
+                                $('#addOrderPaymentModal').modal('show');
+                            }else{
+                                alert('Invalid Action Order is Fully Paid!');
+                            }
                         },   
                         error: function (data) {
                             console.log('Data Error:', data);
@@ -704,8 +740,36 @@
                                     console.log(data);
                                     var count = $('#paymentOrderTable').children('tr').length;
                                     $('#paymentOrderTable').append('<tr><td>'+(count+1)+'</td><td>'+data.orderDate+'<td>'+data.orderID+'</td><td>'+data.type+'</td><td>'+data.payment+'</td><td>'+
-                                    '<i style="color:#4c87ed;" class="fa fa-edit editOrder">');
+                                    '<i style="margin-left:5px; color:#E53935;" data-id="'+data.id+'" class="fa fa-trash-o removePayment"></td></tr>');
                                     $('#addOrderPaymentModal').modal('hide');
+                                    if(data.totalBalance==0){
+                                        //AJAX TO UPDATE THE ORDER
+                                        //By: John Edel B. Tamani
+                                        $.ajaxSetup({
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                            }
+                                        })
+
+                                        e.preventDefault(); 
+                                        var formData = {
+                                            id:data.orderID,
+                                            funcNum:2,
+                                        }
+                                        
+                                        $.ajax({
+                                            type: "POST",
+                                            url:  '/ajaxUpdatePaymentStatus',
+                                            data: formData,
+                                            success: function(data){
+                                                console.log(data);
+                                                $('#paymentStatus').text(data.status);                                                
+                                            },   
+                                            error: function (data) {
+                                                console.log('Data Error:', data);
+                                            }
+                                        });
+                                    }
                                 },   
                                 error: function (data) {
                                     console.log('Data Error:', data);

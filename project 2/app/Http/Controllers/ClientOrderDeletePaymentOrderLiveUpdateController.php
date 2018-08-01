@@ -8,7 +8,7 @@ class ClientOrderDeletePaymentOrderLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {
-        $product = Product::destroy($request->id);
+        $product = ClientOrderPayment::destroy($request->id);
         return response()->json();
     }
 }
