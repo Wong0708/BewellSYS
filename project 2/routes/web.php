@@ -87,5 +87,7 @@ Route::post('liveClientOrderNameUpdate','ClientOrderNameLiveUpdateController@liv
 Route::post('liveClientOrderSKUUpdate','ClientOrderSKULiveUpdateController@liveUpdate');
 Route::post('liveClientAddressUpdate','ClientAddressLiveUpdateController@liveUpdate');
 Route::post('liveClientAddOrderUpdate','ClientAddOrderLiveUpdateController@liveUpdate');
+Route::post('liveClientAddPaymentOrderUpdate','ClientOrderPaymentLiveUpdateController@liveUpdate');
+
 
 

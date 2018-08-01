@@ -13,6 +13,10 @@ class ClientOrder extends Model
         return $this->belongsTo(Client::class,'clientID','id');
     }
 
+    public function fromClientOrderDetail(){
+        return $this->belongsTo(ClientOrderDetail::class,'orderID','orderID');
+    }
+
     public function fromSchedule(){
         return $this->belongsTo(Schedule::class,'orderID','id'); 
         //--> Not Working Eloquent Will Result to Trying to get property of non-object: SOLVED on July 29, 2018
