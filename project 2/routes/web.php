@@ -59,6 +59,8 @@ Route::resource('inventoryreport', 'InventoryReportController');
 
 Route::resource('supplierreport', 'SupplierReportController');
 
+Route::get('supplierreportdetail/{id}', 'SupplierReportDetailController@getSupplierOrder')->name('appdev.supplierreportdetail');
+
 Route::post('supplierreport', 'SupplierReportController@generateReport')->name('appdev.supplierreport');
 
 Route::resource('manufacturerreport', 'ManufacturerReportController');
@@ -80,4 +82,10 @@ Route::get('driver/{id}', 'DriverController@getDriver')->name('appdev.driver');
 Route::get('sched_det/{id}', 'ScheduleDetailController@getSchedule')->name('appdev.scheduledetail');
 Route::post('/schedule/getCapacity','ScheduleController@getCurrCapacity');
 Route::resource('driver', 'DriverController');
+
+Route::post('liveClientOrderNameUpdate','ClientOrderNameLiveUpdateController@liveUpdate');
+Route::post('liveClientOrderSKUUpdate','ClientOrderSKULiveUpdateController@liveUpdate');
+Route::post('liveClientAddressUpdate','ClientAddressLiveUpdateController@liveUpdate');
+Route::post('liveClientAddOrderUpdate','ClientAddOrderLiveUpdateController@liveUpdate');
+
 

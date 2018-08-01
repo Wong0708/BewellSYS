@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Session;
 use App\Http\Controllers\Controller;
 use App\Supplier;
 use App\SupplierOrder;
@@ -25,7 +27,10 @@ class SupplierReportController extends Controller
         $supplies = Supply::all();
 
         return view("appdev.supplierreport")->with("start","")
-       ->with("end","")->with("orders",$orders)->with("suppliers",$suppliers)->with("supplies",$supplies)->with("orderdetails",$orderdetails);
+        ->with("end","")->with("orders",$orders)
+        ->with("suppliers",$suppliers)
+        ->with("supplies",$supplies)
+        ->with("orderdetails",$orderdetails);
     }
 
     public function generateReport(Request $request)
@@ -72,9 +77,6 @@ class SupplierReportController extends Controller
         return $orderdetail;
     }
 
-
-    
-
     /**
      * Show the form for creating a new resource.
      *
@@ -105,6 +107,8 @@ class SupplierReportController extends Controller
     public function show($id)
     {
         //
+        $orderdetails = SupplierOrderDetail::all();
+        return view('appdev.supplierreportdetail')->with("orderdetails",$orderdetails);
     }
 
     /**
