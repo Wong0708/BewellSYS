@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\ClientOrderDetail;
 
 class ClientOrder extends Model
 {
@@ -14,7 +15,11 @@ class ClientOrder extends Model
     }
 
     public function fromClientOrderDetail(){
-        return $this->belongsTo(ClientOrderDetail::class,'id','orderID');
+        return $this->hasMany(ClientOrderDetail::class,'orderID','id');//foreign,local key
+    }
+
+    public function fromClientOrderPayment(){
+        return $this->hasMany(ClientOrderPayment::class,'orderID','id');//foreign,local key
     }
 
     public function fromSchedule(){

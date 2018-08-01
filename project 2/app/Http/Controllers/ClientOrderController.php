@@ -125,7 +125,7 @@ class ClientOrderController extends Controller
      */
     public function show($id)
     {
-        $order =  ClientOrder::where('orderID','=',$id)->first();
+        $order =  ClientOrder::where('id','=',$id)->first();
         return view("appdev.clientorderdetail")->with('order',$order);
     }
 
