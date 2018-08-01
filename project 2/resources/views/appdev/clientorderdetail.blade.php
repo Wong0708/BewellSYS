@@ -589,6 +589,7 @@
                             data: formData,
                             success: function(data){
                                 console.log(data);
+                                window.reload(); // Additional Feature in the future for deletion of product using ID Ajax!::Too lazy
                             },   
                             error: function (data) {
                                 console.log('Data Error:', data);

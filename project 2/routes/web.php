@@ -94,9 +94,5 @@ Route::post('/ajaxUpdatePayment','ClientOrderUpdatePaymentOrderLiveUpdateControl
 Route::post('/ajaxDeletePayment','ClientOrderDeletePaymentOrderLiveUpdateController@liveUpdate');
 
 Route::resource('deliveryreport','DeliveryReportController');
-<<<<<<< HEAD
-Route::resource('deliveryreportdetail/','DeliveryReportController');
-=======
 
 Route::post('deliveryreport','DeliveryReportController@generateReport')->name("appdev.deliveryreport");
->>>>>>> 79d28156ea049896db1fd0201aff2d02623b99ab
