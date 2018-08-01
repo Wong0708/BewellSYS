@@ -126,7 +126,17 @@ class SalesReportController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = ClientOrder::find($id);
+        $orderdetail =ClientOrderDetail::find($id);
+        $client = Client::find($id);
+        $product = Product::find($id);
+        $productdetail = ProductDetails::find($id);
+
+       return view("appdev.salesreportdetail")->with("order",$order)
+       ->with("client",$client)
+       ->with("product",$product)
+       ->with("orderdetail", $orderdetail)
+       ->with("productdetail",$productdetail);
     }
 
     /**

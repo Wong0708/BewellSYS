@@ -205,13 +205,13 @@
         <div class="container-fluid" style="background-color:#F5F5F5;">
             <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                 <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
-                    <h4 class="page-title" style="color:black;">{{'Manufacturer Report: Manufacture Order #'.$order->id}} </h4>
+                    <h4 class="page-title" style="color:black;">{{'Sales Report: Sales Order #'.$order->id}} </h4>
                 </div>
                 <div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="#">Dashboard</a></li>
                         <li><a href="#">Inventory</a></li>
-                        <li class="active" style="color:#4c87ed;">Manufacturer Report</li>
+                        <li class="active" style="color:#4c87ed;">Sales Report</li>
                     </ol>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -221,30 +221,30 @@
         <div class="white-box">
             <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
         <!-- printhead-->
-        <?php use \App\Http\Controllers\ManufacturerReportController;?>
+        <?php use \App\Http\Controllers\SalesReportController;?>
         <div id="printhead">
             <div class="col-lg-6 col-sm-6">
             <div class="row">
                 <div class="col-lg-12 col-sm-12">
                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                        <h3 class="box-title m-b-0" style="color:black;">Order Report for Manufacturer Order #{{$order->id}}</h3>
+                        <h3 class="box-title m-b-0" style="color:black;">Order Report for Sales Order #{{$order->id}}</h3>
                         <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the information of this order.</span>
                         <div class="row" style="margin-top:10px; ">
-                            <div class="col-md-6 col-xs-6 b-r"> <strong>Manufacturer Name</strong>
+                            <div class="col-md-6 col-xs-6 b-r"> <strong>Client Name</strong>
                                 <br>
-                                <p class="text-muted">{{App\Http\Controllers\ManufacturerReportController::getManufacturer($order->manufacturerID)['mn_name']}}</p>
+                                <p class="text-muted">{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}}</p>
                             </div>
                             <div class="col-md-6 col-xs-6 b-r"> <strong>Order Date</strong>
                                 <br>
-                                <p class="text-muted">{{$order->mnod_date}}</p>
+                                <p class="text-muted">{{$order->clod_date}}</p>
                             </div>
                             <div class="col-md-6 col-xs-6 b-r"> <strong>Order Status</strong>
                                 <br>
-                                <p class="text-muted">{{$order->mnod_status}}</p>
+                                <p class="text-muted">{{$order->clod_status}}</p>
                             </div>
                             <div class="col-md-6 col-xs-6"> <strong>Total Price</strong>
                                 <br>
-                                <p class="text-muted">P {{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_qty']}} </p>
+                                <p class="text-muted">P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </p>
                             </div>
                         </div>
                     </div>
@@ -262,8 +262,8 @@
                 <tbody id="addproduct">
 
                         <tr style ="color:black;">
-                            <td>{{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_name']}} </td>
-                            <td>{{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_qty']}} </td>
+                            <td>{{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_name']}}</td>
+                            <td>{{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_qty']}}</td>
                         </tr>
                 </tbody>
             </table>

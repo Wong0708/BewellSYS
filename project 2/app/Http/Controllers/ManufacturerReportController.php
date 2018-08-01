@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Manufacturer;
 use App\ManufacturerOrder;
 use App\ManufacturerOrderDetail;
+use App\Supply;
 use Session;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -73,6 +74,11 @@ class ManufacturerReportController extends Controller
     public static function getManufacturerOrder($id){
         $order = ManufacturerOrderDetail::where('orderID',$id)->first();
         return $order;
+    }
+
+    public static function getSupply($id){
+        $supply = Supply::where('id',$id)->first();
+        return $supply;
     }
 
     /**
