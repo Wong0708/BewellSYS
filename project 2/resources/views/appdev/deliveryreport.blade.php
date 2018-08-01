@@ -33,6 +33,16 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .dotted {
+            border:none;
+            border-top:1px dotted #f00;
+            color:#fff;
+            background-color:#fff;
+            height:1px;
+            width:50%;
+        }
+    </style>
 </head>
 
 <body class="fix-sidebar">
@@ -221,30 +231,25 @@
             <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                 <div class="col-sm-12">
                     <div class="white-box">
-                        @if(Session::has('success'))
-                            <div class="alert alert-success"> {{Session::get('success')}} </div>
-
-
-                        @endif
                         <h3 class="box-title m-b-0" style="color:black;">GENERATE SUPPLIER REPORT</h3>
                         {!!Form::open(array('route' => 'appdev.deliveryreport'))!!}
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <button type="submit" class="btn btn-success waves-effect waves-light">Generate Report</button>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="input-daterange input-group" id="date-range">
                                     <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
                                     <input type="date" class="form-control" name="end"/>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
                             </div>
-                    {!!Form::close() !!}
+                        {!!Form::close() !!}
                     <!-- printhead -->
+
                     <div class="row">
                                 <div id="printhead">
-                                    <hr><br>
                                     @if(isset($start))
                                     @endif
                                     @if(isset($end))
@@ -293,6 +298,7 @@
 
                                     <h4  style="text-align:center; font-size:14px; color:black; margin-top:20px; font-family:Helvetica,Arial,sans-serif;"><b>----------- END OF THE REPORT -----------</b></h4>
                                 </div></div>
+
                     </div>
                 </div>
             </div>
