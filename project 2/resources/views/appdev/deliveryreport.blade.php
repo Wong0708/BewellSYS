@@ -33,6 +33,16 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .dotted {
+            border:none;
+            border-top:1px dotted #f00;
+            color:#fff;
+            background-color:#fff;
+            height:1px;
+            width:50%;
+        }
+    </style>
 </head>
 
 <body class="fix-sidebar">
@@ -221,78 +231,74 @@
             <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                 <div class="col-sm-12">
                     <div class="white-box">
-                        @if(Session::has('success'))
-                            <div class="alert alert-success"> {{Session::get('success')}} </div>
-
-
-                        @endif
                         <h3 class="box-title m-b-0" style="color:black;">GENERATE SUPPLIER REPORT</h3>
-                        {{-- <div class="col-sm-12" style="background-color:red;"> --}}
-                        {{-- <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button> --}}
-
-                        {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
-                        {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
-                        <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
                         {!!Form::open(array('route' => 'appdev.deliveryreport'))!!}
-                        <input type="hidden" name="dog" value="hatdug"/>
-                        {{Form::submit('Generate Report',['class' => 'btn btn-success waves-effect waves-light'])}}
-                        <p class="text-muted m-b-30"></p>
-                        <div class="input-daterange input-group" id="date-range">
-                            <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
-                            <input type="date" class="form-control" name="end"/>
-                        </div>
-                    {!!Form::close() !!}
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-success waves-effect waves-light">Generate Report</button>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-daterange input-group" id="date-range">
+                                    <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
+                                    <input type="date" class="form-control" name="end"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
+                            </div>
+                        {!!Form::close() !!}
                     <!-- printhead -->
-                        <div id="printhead">
-                            <p class="text-muted m-b-30"></p>
-                            @if(isset($start))
-                            @endif
-                            @if(isset($end))
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Report</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
-                            @endif
-                            {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
-                            <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
 
-                                <tbody id="addproduct">
-                                <thead>
-                                <tr style="color:black;">
-                                    <th>Tracking #</th>
-                                    <th>Order #</th>
-                                    <th>Truck Plate #</th>
-                                    <th>Driver</th>
-                                    <th>Scheduled Date</th>
-                                    <th>Delivered Date</th>
-                                    <th>Address</th>
-                                    <th>Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if(isset($schedules))
-                                    @foreach($schedules as $schedule)
-                                        <tr>
-                                            <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
-                                            @if($schedule->schedType==="client")
-                                                <td>CLOD-{{$schedule->orderID}}</td>
-                                            @else
-                                                <td>MLOD-{{$schedule->orderID}}</td>
-                                            @endif
-                                            <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
-                                            <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
-                                            <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
-                                            <td>{{$schedule['scd_date']}}</td>
-                                            <td>@if($schedule['dateDelivered']){{$schedule['dateDelivered']}}@else N/A @endif</td>
-                                            <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
-                                                >{{$schedule->scd_status}}</span></td>
+                    <div class="row">
+                                <div id="printhead">
+                                    @if(isset($start))
+                                    @endif
+                                    @if(isset($end))
+                                        <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
+                                        <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Delivery Reports</b></h4>
+                                        <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
+                                    @endif
+                                    {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
+                                    <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
+
+                                        <tbody id="addproduct">
+                                        <thead>
+                                        <tr style="color:black;">
+                                            <th>Tracking #</th>
+                                            <th>Order #</th>
+                                            <th>Truck Plate #</th>
+                                            <th>Driver</th>
+                                            <th>Scheduled Date</th>
+                                            <th>Delivered Date</th>
+                                            <th>Address</th>
+                                            <th>Status</th>
                                         </tr>
-                                    @endforeach
-                                @endif
-                                </tbody>
-                            </table>
+                                        </thead>
+                                        <tbody>
+                                        @if(isset($schedules))
+                                            @foreach($schedules as $schedule)
+                                                <tr>
+                                                    <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
+                                                    @if($schedule->schedType==="client")
+                                                        <td>CLOD-{{$schedule->orderID}}</td>
+                                                    @else
+                                                        <td>MLOD-{{$schedule->orderID}}</td>
+                                                    @endif
+                                                    <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
+                                                    <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
+                                                    <td>{{$schedule['scd_date']}}</td>
+                                                    <td>@if($schedule['dateDelivered']){{$schedule['dateDelivered']}}@else N/A @endif</td>
+                                                    <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
+                                                        >{{$schedule->scd_status}}</span></td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                        </tbody>
+                                    </table>
 
-                            <h4  style="text-align:center; font-size:14px; color:black; margin-top:20px; font-family:Helvetica,Arial,sans-serif;"><b>----------- END OF THE REPORT -----------</b></h4>
-                        </div>
+                                    <h4  style="text-align:center; font-size:14px; color:black; margin-top:20px; font-family:Helvetica,Arial,sans-serif;"><b>----------- END OF THE REPORT -----------</b></h4>
+                                </div></div>
+
                     </div>
                 </div>
             </div>
