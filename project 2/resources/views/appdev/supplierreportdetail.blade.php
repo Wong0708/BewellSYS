@@ -221,7 +221,10 @@
         <div class="white-box">
             <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
         <!-- printhead-->
+<<<<<<< HEAD
         <?php use \App\Http\Controllers\SupplierReportController;?>
+=======
+>>>>>>> d99fa831eaef7caa8b7d8b680fb0fc120398fa8a
         <div id="printhead">
             <div class="col-lg-6 col-sm-6">
             <div class="row">
@@ -262,8 +265,13 @@
                 <tbody id="addproduct">
 
                         <tr style ="color:black;">
+<<<<<<< HEAD
                             <td>{{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_name']}}</td>
                             <td>{{App\Http\Controllers\SupplierReportController::getSupplierOrderDetail($order->id)['spdt_qty']}}</td>
+=======
+                            <td></td>
+                            <td></td>
+>>>>>>> d99fa831eaef7caa8b7d8b680fb0fc120398fa8a
                         </tr>
                 </tbody>
             </table>
