@@ -104,7 +104,14 @@ class ManufacturerReportController extends Controller
      */
     public function show($id)
     {
-        //
+        $manufacturer = Manufacturer::find($id);
+        $order = ManufacturerOrder::find($id);
+        $orderdetail = ManufacturerOrderDetail::find($id);
+
+        return view("appdev.manufacturerreportdetail")
+        ->with("manufacturer",$manufacturer)
+        ->with("order",$order)
+        ->with("orderdetail",$orderdetail);
     }
 
     /**

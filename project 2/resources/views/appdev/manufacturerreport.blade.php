@@ -332,7 +332,7 @@
                                                         @if(count($orders) > 0)
                                                             @foreach($orders as $order)
                                                             <tr style ="color:black;">
-                                                                <td>Order # {{$order->id}}</td>
+                                                                <td><a href="/manufacturerreport/{{$order->id}}">Order # {{$order->id}}</td>
                                                                 <td>{{$order->mnod_date}}</td>
                                                                 <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturer($order->manufacturerID)['mn_name']}}</td>
                                                                 <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}}</td>
