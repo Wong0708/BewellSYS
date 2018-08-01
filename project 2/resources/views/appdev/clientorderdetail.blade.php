@@ -155,15 +155,18 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="paymentType" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Payment Type:</b></label>
-                                    <select name="paymentType" class="form-control" id="paymentType" style="margin-bottom:10px;">
+                                    <select name="paymentType" class="form-control" id="paymentType" style="margin-bottom:10px;" required>
                                         <option selected disabled>Choose a payment type</option>
                                         <option>Cash</option>
                                     </select>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a payment type for your order. <b style="color:#E53935;">*Required</b></span>
                                     <br>
+                                    
                                     <label for="paymentAmount" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Amount:</b></label>
-                                    <input type="number" min="0" name="paymentAmount" class="form-control" id="paymentAmount" style="margin-bottom:10px;"/>
+                                    <input type="number" min="0" name="paymentAmount" class="form-control" id="paymentAmount" style="margin-bottom:10px;" required/>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the total amount for the payment of the order. <b style="color:#E53935;">*Required</b></span>
+                                    <h4 style="margin-top:20px;" id="paymentBalance">
+                                    <b>Total Payment Balance:</b> PHP <span id="grandTotal"></span>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -230,64 +233,82 @@
                                                     <br>
                                                 <p class="text-muted">{{$order->fromClient->cl_name}}</p>
                                                 </div>
-                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Contact Number</strong>
-                                                    <br>
-                                                    {{-- <p class="text-muted">{{$order->fromClient->fromClientDetail->cl_contactnumber}}</p> --}}
-                                                </div>
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Email</strong>
                                                     <br>
                                                     <p class="text-muted">{{$order->fromClient->cl_email}}</p>
-                                                </div>
-                                                <div class="col-md-6 col-xs-6"> <strong>Location</strong>
-                                                    <br>
-                                                    {{-- <p class="text-muted">{{$order->fromClient->fromClientDetail->cl_address}}</p> --}}
                                                 </div>
                                             </div>
                                     </div>
                             </div>
                         </div>
-                      <div class="row">
+                        <div class="row">
                             <div class="col-lg-12 col-sm-12">
-                                
-                                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Order Payment Record</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
-                                        <button style="margin-top:10px; " class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#addOrderPaymentModal" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>
-                                        <p class="text-muted m-b-30"></p>
-                                        <div class="table-responsive">
-                                                <table id="myTable2" class="table table-striped">
-                                                    <thead>
-                                                        <tr style="color:black;">
-                                                        <th>Order #</th>
-                                                        <th>Date</th>
-                                                        <th>Order #</th>
-                                                        <th>Payment Type</th>
-                                                        <th>Payment Amount</th>
-                                                        <th><i class="fa fa-gear"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="paymentOrderTable">
-                                                    @if(isset($order->fromClientOrderPayment))
-                                                        @foreach($order->fromClientOrderPayment as $orderInfo)
-                                                            <tr>
-                                                                <td>{{$orderInfo->payment_date}}</td>
-                                                                <td>{{$orderInfo->payment_date}}</td>
-                                                                <td>{{$orderInfo->orderID}}</td>
-                                                                <td>{{$orderInfo->payment_type}}</td>
-                                                                <td>{{$orderInfo->totalAmount}}</td>
-                                                                <td>
-                                                                    <i style="color:#4c87ed;" class="fa fa-edit">
-                                                                    <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                    </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                                    <h3 class="box-title m-b-0" style="color:black;">Order Payment Record</h3>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
+                                    <button id="addPaymentButton" style="margin-top:10px; " class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#addOrderPaymentModal" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>
+                                    <p class="text-muted m-b-30"></p>
+                                    <div class="table-responsive">
+                                            <table id="orderPaymentListTable" class="table table-striped">
+                                                <thead>
+                                                    <tr style="color:black;">
+                                                    <th>#</th>
+                                                    <th>Date</th>
+                                                    <th>Order #</th>
+                                                    <th>Payment Type</th>
+                                                    <th>Payment Amount</th>
+                                                    <th><i class="fa fa-gear"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="paymentOrderTable">
+                                                <?php 
+                                                    $count= 1;
+                                                    if(isset($order->fromClientOrderPayment)){
+                                                        foreach($order->fromClientOrderPayment as $orderInfo){
+                                                            echo '<tr>'.
+                                                                '<td>'.$count.'</td>'.
+                                                                '<td>'.$orderInfo->payment_date.'</td>'.
+                                                                '<td>'.$orderInfo->orderID.'</td>'.
+                                                                '<td>'.$orderInfo->payment_type.'</td>'.
+                                                                '<td>'.$orderInfo->totalAmount.'</td>'.
+                                                                '<td>'.
+                                                                    // '<i style="color:#4c87ed;" data-payment="'.$orderInfo->totalAmount.'" data-id="'.$orderInfo->id.'" class="fa fa-edit editPayment">'.
+                                                                    '<i style="margin-left:5px; data-id="'.$orderInfo->id.'" color:#E53935;" class="fa fa-trash-o removePayment">'.
+                                                                    '</td>'.
+                                                            '</tr>';
+                                                            $count = $count + 1;
+                                                        }
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <!--SECTION KEYWORD/S: EDIT PAYMENT ORDER, MODAL-->
+                        {{-- <div id='editPaymentOrder' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordermodallabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title">Status</h4> 
+                                    </div>
+                                    <div class="modal-body">
+                                            <label for="previousPaymentAmount" id=""class="control-label">Payment Amount:</label>
+                                            <input type="number" class="form-control" id="previousPaymentAmount" name="previousPaymentAmount"> 
+                                    </div>
+                                
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                        <button style="background-color:#4c87ed;" type="button" id="updatePaymentOrder" class="btn btn-danger waves-effect waves-light">Update</button>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="orderModalID" name="orderID" value="0">
+                            </div>
+                        </div> --}}
+                        
+
                       <div class="row">
                             <div class="col-lg-12 col-sm-12">
                                 
@@ -543,10 +564,14 @@
                 SECTION KEYWORD/S: APPLICATION JET SCRIPT
                 Prepared By: John Edel B. Tamani
             -->
+
             <script type="text/javascript">
-                $(document).on('click','#submitOrderPayment',function(e){
-                    var verify =confirm('Do you want to submit the payment for the order?');
+                $(document).on('click','.removePayment',function(e){
+                    var verify = confirm("Do you want to cancel the payment?");
+
                     if(verify == true){
+                        if(verify == true){
+                        
                         $.ajaxSetup({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -555,20 +580,61 @@
 
                         e.preventDefault(); 
                         var formData = {
-                           paymentType: $('#paymentType').val(),
-                           paymentAmount: $('#paymentAmount').val(),
-                           orderID:$('#orderIDPayment').val(),
+                            id: $(this).data('id'),
                         }
                         
                         $.ajax({
                             type: "POST",
-                            url:  'liveClientAddPaymentOrderUpdate',
+                            url:  '/ajaxDeletePayment',
                             data: formData,
                             success: function(data){
                                 console.log(data);
-                                $('#paymentOrderTable').append('<tr><td>'+data.orderID+'</td><td>'+data.orderDate+'</td><td>'+data.type+'</td><td>'+data.payment+'</td><td>'+
-                                'i style="color:#4c87ed;" class="fa fa-edit editOrder"><i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeOrder"></td></tr>');
-                                $('#addOrderPaymentModal').modal('hide');
+                                window.reload(); // Additional Feature in the future for deletion of product using ID Ajax!::Too lazy
+                            },   
+                            error: function (data) {
+                                console.log('Data Error:', data);
+                            }
+                        });
+                    }
+
+                    return false;
+                    
+                    //Commented out By: John Edel B. Tamani
+                    //For Future Purposes!
+                    // $('#previousPaymentAmount').val($(this).data('payment'));
+                    // $('#updatePaymentOrder').val($(this).data('id'));
+                    // $('#editPaymentOrder').modal('show');
+                });
+            </script>  
+            
+            {{-- 
+                 //Commented out By: John Edel B. Tamani
+                //For Future Purposes!
+                <script type="text/javascript">
+                $(document).on('click','#updatePaymentOrder',function(e){
+                    var verify = confirm("Do you want to update the order?");
+
+                    if(verify == true){
+                        
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        })
+
+                        e.preventDefault(); 
+                        var formData = {
+                            id: $(this).val(),
+                            paymentAmount: $('#previousPaymentAmount').val(),
+                        }
+                        
+                        $.ajax({
+                            type: "POST",
+                            url:  '/ajaxUpdatePayment',
+                            data: formData,
+                            success: function(data){
+                                console.log(data);
+                                $('#editPaymentOrder').modal('hide');
                             },   
                             error: function (data) {
                                 console.log('Data Error:', data);
@@ -576,6 +642,80 @@
                         });
                     }
                     return false;
+                });
+            </script>             --}}
+
+
+            <script type="text/javascript">
+                $(document).on('click','#addPaymentButton',function(e){
+                    var total = $('#grandTotal').text();
+                    //Additional Feature: Put comma or number format  to payment balance;
+                    $('#paymentAmount').attr('max',$('#grandTotal').text());
+                    
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+
+                    e.preventDefault(); 
+                    var formData = {
+                    orderID: $('#orderIDPayment').val(),
+                    }
+                    
+                    $.ajax({
+                        type: "POST",
+                        url:  '/ajaxBalancePayment',
+                        data: formData,
+                        success: function(data){
+                            console.log(data);
+                            $('#grandTotal').text(data.totalBalance.toFixed(2));
+                        },   
+                        error: function (data) {
+                            console.log('Data Error:', data);
+                        }
+                    });
+                   
+                });
+            </script>
+            <script type="text/javascript">
+                $(document).on('click','#submitOrderPayment',function(e){
+                    var verify =confirm('Do you want to submit the payment for the order?');
+                    if($('#paymentAmount').val()<=parseInt($('#grandTotal').text())){//validation for payment.
+                        if(verify == true){
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                }
+                            })
+
+                            e.preventDefault(); 
+                            var formData = {
+                            paymentType: $('#paymentType').val(),
+                            paymentAmount: $('#paymentAmount').val(),
+                            orderID:$('#orderIDPayment').val(),
+                            }
+                            
+                            $.ajax({
+                                type: "POST",
+                                url:  '/ajaxAddPayment',
+                                data: formData,
+                                success: function(data){
+                                    console.log(data);
+                                    var count = $('#paymentOrderTable').children('tr').length;
+                                    $('#paymentOrderTable').append('<tr><td>'+(count+1)+'</td><td>'+data.orderDate+'<td>'+data.orderID+'</td><td>'+data.type+'</td><td>'+data.payment+'</td><td>'+
+                                    '<i style="color:#4c87ed;" class="fa fa-edit editOrder">');
+                                    $('#addOrderPaymentModal').modal('hide');
+                                },   
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }
+                        return false;
+                    }else{
+                        alert('Please Try Again! Invalid Input for Payment Amount!');
+                    }
                 });
             
             </script>
@@ -622,9 +762,9 @@
                 });
 
                 $(document).ready(function() {
-                    $('#myTable2').DataTable();
+                    $('#orderPaymentListTable').DataTable();
                     $(document).ready(function() {
-                        var table = $('#example').DataTable({
+                        var table = $('#paymentList').DataTable({
                             "columnDefs": [{
                                 "visible": false,
                                 "targets": 2

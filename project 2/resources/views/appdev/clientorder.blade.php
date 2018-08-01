@@ -166,13 +166,16 @@
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one client among the list to add an order. <b style="color:#E53935;">*Required</b></span>
 
                                     <br>
-
-                                    <label for="clientLocation" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
+                                    
+                                    {{--
+                                        Commented By: John Edel B. Tamani
+                                        Purpose: ADDRESS FOR CLIENT
+                                        <label for="clientLocation" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
                                     <select name="clientLocation" class="form-control" id="clientLocation" style="margin-bottom:10px;">
                                         <option selected disabled>N/A</option>
                                     </select>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one client among the list to add an order. <b style="color:#E53935;">*Required</b></span>
-                                    <br>
+                                    <br> --}}
 
                                     <label for="orderExpDate" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
                                     <input type="date" name="orderExpDate" class="form-control" id="orderExpDate" style="margin-bottom:10px;"/>
@@ -507,7 +510,7 @@
 
                 var clientDetail = [];
                 var client = [];
-                client.push($('#clientList').val(),$('#clientLocation').val(),$('#orderExpDate').val());
+                client.push($('#clientList').val(),$('#orderExpDate').val());
                 clientDetail.push(client);
 
                 console.log(clientDetail);
@@ -552,46 +555,47 @@
 
     <!--SECTION KEYWORD/S:CLIENT, LIST, INVENTORY, SUPPORT, MODAL-->
     <script type='text/javascript'>
-         $(document).on('change', '#clientList', function (e) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            })
+        //  Commented By: John Edel B. Tamani
+        //  $(document).on('change', '#clientList', function (e) {
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        //         }
+        //     })
 
-            e.preventDefault(); 
+        //     e.preventDefault(); 
 
-            var formData = {
-                clientName:$(this).val(),
-            }
+        //     var formData = {
+        //         clientName:$(this).val(),
+        //     }
             
-            var tdEdit = '#clientLocation';
+        //     var tdEdit = '#clientLocation';
 
-            $.ajax({
-                type: "POST",
-                url: 'liveClientAddressUpdate',
-                data: formData,
-                success: function(data){
-                    if(data.status ==  1){
-                        console.log(data);
-                        $(tdEdit).find('option').remove();
-                        var dataAppend = '<option selected disabled>Choose client location</option>';
+        //     $.ajax({
+        //         type: "POST",
+        //         url: 'liveClientAddressUpdate',
+        //         data: formData,
+        //         success: function(data){
+        //             if(data.status ==  1){
+        //                 console.log(data);
+        //                 $(tdEdit).find('option').remove();
+        //                 var dataAppend = '<option selected disabled>Choose client location</option>';
                         
-                        for (var i = 0; i < data.clientLocation.length ; i++){
-                            dataAppend = dataAppend+'<option>'+data.clientLocation[i].loc_address+'</option>';
-                        }
-                        $('#clientLocation').append(dataAppend);
-                    }else{
-                        $(tdEdit).find('option').remove();
-                        var dataAppend = '<option selected disabled>N/A</option>';
-                        $('#clientLocation').append(dataAppend);
-                    }
-                },   
-                error: function (data) {
-                    console.log('Data Error:', data);
-                }
-            });
-        });
+        //                 for (var i = 0; i < data.clientLocation.length ; i++){
+        //                     dataAppend = dataAppend+'<option>'+data.clientLocation[i].loc_address+'</option>';
+        //                 }
+        //                 $('#clientLocation').append(dataAppend);
+        //             }else{
+        //                 $(tdEdit).find('option').remove();
+        //                 var dataAppend = '<option selected disabled>N/A</option>';
+        //                 $('#clientLocation').append(dataAppend);
+        //             }
+        //         },   
+        //         error: function (data) {
+        //             console.log('Data Error:', data);
+        //         }
+        //     });
+        // });
         
         //SECTION KEYWORD/S: ORDER NAME TABLE
         $(document).on('change', '.orderName', function (e) {

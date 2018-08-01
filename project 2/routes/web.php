@@ -88,8 +88,10 @@ Route::post('liveClientOrderNameUpdate','ClientOrderNameLiveUpdateController@liv
 Route::post('liveClientOrderSKUUpdate','ClientOrderSKULiveUpdateController@liveUpdate');
 Route::post('liveClientAddressUpdate','ClientAddressLiveUpdateController@liveUpdate');
 Route::post('liveClientAddOrderUpdate','ClientAddOrderLiveUpdateController@liveUpdate');
-Route::post('liveClientAddPaymentOrderUpdate','ClientOrderPaymentLiveUpdateController@liveUpdate');
-
+Route::post('/ajaxAddPayment','ClientOrderPaymentLiveUpdateController@liveUpdate');
+Route::post('/ajaxBalancePayment','ClientOrderBalancePaymentLiveUpdateController@liveUpdate');
+Route::post('/ajaxUpdatePayment','ClientOrderUpdatePaymentOrderLiveUpdateController@liveUpdate');
+Route::post('/ajaxDeletePayment','ClientOrderDeletePaymentOrderLiveUpdateController@liveUpdate');
 
 Route::resource('deliveryreport','DeliveryReportController');
 

@@ -21,7 +21,7 @@ class ClientAddOrderLiveUpdateController extends Controller
 
         $new_order = new ClientOrder();
         $new_order->clientID = $client->id;
-        $new_order->expectedDate = $request->clientInfo[0][2];
+        $new_order->expectedDate = $request->clientInfo[0][1];
         $new_order->clod_date = date("Y/m/d");
         $new_order->clod_pstatus = 'Pending';
         $new_order->clod_status = 'Pending';
@@ -39,6 +39,7 @@ class ClientAddOrderLiveUpdateController extends Controller
                         ->first();
             $new_order_detail->productID = $product->id;
             $new_order_detail->cldt_qty = $order[2];
+            $new_order_detail->totalPrice = $product->pd_price * $order[2];
 
             if($order[2]>$product->pd_qty){
                 $product->pd_allocated = $product->pd_allocated+($order[2]-$product->pd_qty);
@@ -48,7 +49,7 @@ class ClientAddOrderLiveUpdateController extends Controller
                 $product->pd_qty = $product->pd_qty-$order[2];
                 $product->save();
             }
-            $new_order_detail->adrDelivery = $request->clientDetail[0][1];
+            // $new_order_detail->adrDelivery = $request->clientDetail[0][1];
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();
             $new_order_detail->save();

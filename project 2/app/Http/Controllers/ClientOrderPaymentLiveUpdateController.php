@@ -11,13 +11,11 @@ class ClientOrderPaymentLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {
-
-        dd('hello');
         $date = new DateTime();
         $order = ClientOrder::where('orderID','=',$request->orderID);
         $orderPayment = new ClientOrderPayment();
         $orderPayment->orderID = $request->orderID;
-        $orderPayment->payment_date = date("Y/m/d");
+        $orderPayment->payment_date = date("Y-m-d");
         $orderPayment->payment_type = $request->paymentType;
         $orderPayment->totalAmount = $request->paymentAmount;
         $orderPayment->save();
