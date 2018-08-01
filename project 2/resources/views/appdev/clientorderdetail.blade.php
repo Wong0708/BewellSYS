@@ -338,13 +338,14 @@
                                                     $count= 1;
                                                     if(isset($order->fromSchedule)){
                                                         foreach($order->fromSchedule as $orderInfo){
+                                                            //Clarrify This Part to Kenneth
                                                             echo '<tr>'.
                                                                 '<td>'.$count.'</td>'.
                                                                 '<td>'.$orderInfo->id.'</td>'.
                                                                 '<td>'.$orderInfo->orderID.'</td>'.
                                                                 '<td>'.$orderInfo->scd_date.'</td>'.
                                                                 '<td><span class="label label-success">'.$orderInfo->scd_status.'</span></td>'.
-                                                                '<td><a href="/schedule/'.$orderInfo->id.'"><i style="color:#4c87ed;"class="fa fa-calendar"></a></td>'.//clarify this
+                                                                '<td><a href="/schedule/'.$orderInfo->id.'"><i style="color:#4c87ed;"class="fa fa-calendar"></a></td>'.
                                                             '</tr>';
                                                             $count = $count + 1;
                                                         }

@@ -19,7 +19,12 @@ class ClientOrder extends Model
     }
 
     public function fromClientOrderPayment(){
-        return $this->hasMany(ClientOrderPayment::class,'orderID','id');//foreign,local key
+        return $this->hasMany(ClientOrderPayment::class,'orderID','id');//foreign,local key 
+    }
+
+    public function fromOneSchedule(){
+        return $this->belongsTo(Schedule::class,'id','orderID'); 
+
     }
 
     public function fromSchedule(){

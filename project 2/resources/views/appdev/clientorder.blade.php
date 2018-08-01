@@ -304,7 +304,13 @@
                                             <th>Order Date</th>
                                             <th>Expected Date</th>
                                             <th>Payment Status</th>
-                                            <th>Delivery Date</th>
+                                            
+                                            {{-- 
+                                                //Commented Out By: John Edel B. Tamani
+                                                // For Future Purposes
+                                                <th>Delivery Date</th> 
+                                            --}}
+                                            
                                             <th>Delivery Status</th>
                                             <th>Last Updated</th>
                                             <th><i class="fa fa-gear"></th>
@@ -350,12 +356,14 @@
                                                     echo 
                                                         '</td>'.
                                                         '<td id="deliveryDate'.$order->id.'">';
-            
-                                                    if(!empty($order->fromSchedule)){
-                                                        $order->fromSchedule->scd_date;
-                                                    }else{
-                                                        echo 'N/A';
-                                                    }
+                                                    
+                                                    //Commented Out By: John Edel B. Tamani
+                                                    // For Future Purposes
+                                                    // if(!empty($order->fromOneSchedule)){
+                                                    //     $order->fromOneSchedule->scd_date;
+                                                    // }else{
+                                                    //     echo 'N/A';
+                                                    // }
 
                                                     echo 
                                                         '</td>'.
