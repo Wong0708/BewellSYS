@@ -93,4 +93,4 @@ Route::post('liveClientAddPaymentOrderUpdate','ClientOrderPaymentLiveUpdateContr
 
 Route::resource('deliveryreport','DeliveryReportController');
 
-Route::resource('deliveryreportdetail/','DeliveryReportController');
+Route::post('deliveryreport','DeliveryReportController@generateReport')->name("appdev.deliveryreport");
