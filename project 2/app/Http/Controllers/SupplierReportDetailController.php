@@ -21,13 +21,14 @@ class SupplierReportDetailController extends Controller
      */
     public function index()
     {
+
         $orderdetails = SupplierOrderDetail::all();
         return view('appdev.supplierreportdetail')->with("orderdetails",$orderdetails);
     }
 
     public function getSupplierOrder($id){
 
-        $order = Supply::find($id);
+        $order = SupplierOrder::find($id);
         if($order['id'] == null) {
             return view('errors.404');
         }

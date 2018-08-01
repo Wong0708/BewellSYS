@@ -161,7 +161,7 @@
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
+                                <li> <a href={{route('deliveryreport.index')}}>Delivery</a> </li>
                                 <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
                                 <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                             </ul>
@@ -241,7 +241,7 @@
                     </div> --}}
 
 
-                
+
                         {{-- <div id="statusModal" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -263,7 +263,7 @@
                                             </div>
 
                                             <input id="orderID" type="hidden" name="orderID">
-                                            
+
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-warning" data-dismiss="modal">
                                                 <span class='glyphicon glyphicon-remove'></span> Close
@@ -277,9 +277,9 @@
                                 </div>
                             </div>
                         </div> --}}
-                    
+
                 <!--MODAL ENDS HERE-->
-                
+
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                     <div class="col-sm-12">
                         <div class="white-box">
