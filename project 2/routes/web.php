@@ -80,6 +80,7 @@ Route::get('truckdetailz/{id}', 'TruckDetailController@getTruck')->name('appdev.
 Route::get('driver/{id}', 'DriverController@getDriver')->name('appdev.driver');
 
 Route::get('sched_det/{id}', 'ScheduleDetailController@getSchedule')->name('appdev.scheduledetail');
+
 Route::post('/schedule/getCapacity','ScheduleController@getCurrCapacity');
 Route::resource('driver', 'DriverController');
 
@@ -88,4 +89,5 @@ Route::post('liveClientOrderSKUUpdate','ClientOrderSKULiveUpdateController@liveU
 Route::post('liveClientAddressUpdate','ClientAddressLiveUpdateController@liveUpdate');
 Route::post('liveClientAddOrderUpdate','ClientAddOrderLiveUpdateController@liveUpdate');
 
-
+Route::resource('deliveryreport','DeliveryReportController');
+Route::get('drdetail/{id}','DeliveryReportController@generateReport');
