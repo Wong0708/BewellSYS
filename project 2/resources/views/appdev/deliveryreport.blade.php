@@ -217,67 +217,6 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /row -->
-        {{-- <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="sysmodal2">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="exampleModalLabel1">Edit Order</h4> </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Customer</label>
-                                    <input type="dropdown" class="form-control" id="recipient-name1"> </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-
-
-        {{-- <div id="statusModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"></button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                            <div class="form-group">
-                                <label for="orderStatus">Order Status:</label>
-                                <select name="orderStatus" class="form-control" id="orderStatus">
-                                    <option>Processing</option>
-                                    <option>Scheduled</option>
-                                    <option>Delivering</option>
-                                    <option>Delivered</option>
-                                    <option>Complete</option>
-                                    <option>Cancelled</option>
-                                </select>
-                            </div>
-
-                            <input id="orderID" type="hidden" name="orderID">
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">
-                                <span class='glyphicon glyphicon-remove'></span> Close
-                            </button>
-                            <button type="submit" class="btn btn-danger">
-                                    <span class='glyphicon glyphicon-remove'></span> Submit
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div> --}}
-
-        <!--MODAL ENDS HERE-->
 
             <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                 <div class="col-sm-12">
@@ -294,7 +233,7 @@
                         {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                         {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
                         <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
-                        {!!Form::open(array('route' => 'appdev.supplierreport'))!!}
+                        {!!Form::open(array('route' => 'appdev.deliveryreport'))!!}
                         <input type="hidden" name="dog" value="hatdug"/>
                         {{Form::submit('Generate Report',['class' => 'btn btn-success waves-effect waves-light'])}}
                         <p class="text-muted m-b-30"></p>
@@ -315,134 +254,40 @@
                             @endif
                             {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
                             <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
-                                <thead>
-                                <tr style="font-size:12px; font-weight:700; ">
 
-                                    <th>Supply Order #</th>
-                                    <th>Order Date</th>
-                                    <th>Supplier</th>
-                                    <th>Total Quantity</th>
-                                    <th>Order Status</th>
+                                <tbody id="addproduct">
+                                <thead>
+                                <tr style="color:black;">
+                                    <th>Tracking #</th>
+                                    <th>Order #</th>
+                                    <th>Truck Plate #</th>
+                                    <th>Driver</th>
+                                    <th>Scheduled Date</th>
+                                    <th>Delivered Date</th>
+                                    <th>Address</th>
+                                    <th>Status</th>
                                 </tr>
                                 </thead>
-                                <tbody id="addproduct">
-                                <?php use \App\Http\Controllers\SupplierReportController;?>
-                                @if(count($orders) > 0)
-                                    @foreach($orders as $order)
-                                        <tr style ="color:black;">
-                                            <td><a href="{{route('appdev.supplierreportdetail', ['id' => $order->id])}}">Supply Order # {{$order->id}}</td>
-                                            <td>{{$order->spod_date}}</td>
-                                            <td>{{App\Http\Controllers\SupplierReportController::getSupplier($order->supplierID)['sp_name']}}</td>
-                                            <td>{{App\Http\Controllers\SupplierReportController::getSupplierOrderDetail($order->id)['spdt_qty']}}</td>
-                                            <td>{{$order->spod_status}}</td>
-                                        {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
+                                <tbody>
+                                @if(isset($schedules))
+                                    @foreach($schedules as $schedule)
+                                        <tr>
+                                            <td><a href="{{ route('appdev.scheduledetail', ['id' => $schedule->id]) }}">TR-{{$schedule->id}}</a></td>
+                                            @if($schedule->schedType==="client")
+                                                <td>CLOD-{{$schedule->orderID}}</td>
+                                            @else
+                                                <td>MLOD-{{$schedule->orderID}}</td>
+                                            @endif
+                                            <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
+                                            <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
+                                            <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
+                                            <td>{{$schedule['scd_date']}}</td>
+                                            <td>@if($schedule['dateDelivered']){{$schedule['dateDelivered']}}@else N/A @endif</td>
+                                            <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
+                                                >{{$schedule->scd_status}}</span></td>
+                                        </tr>
                                     @endforeach
                                 @endif
-                                {{--
-                                    <tr style="color:black;">
-                                        <td>CLOD-0001</td>
-                                        <td>Mercury Drug Corporation</td>
-                                        <td>20 Products</td>
-                                        <td>₱100,000.00</td>
-                                        <td>₱5,000.00</td>
-                                        <td>₱95,000.00</td>
-
-                                    </tr>
-                                    <tr style="color:black;">
-                                            <td>CLOD-0001</td>
-                                            <td>Mercury Drug Corporation</td>
-                                            <td>20 Products</td>
-                                            <td>₱100,000.00</td>
-                                            <td>₱5,000.00</td>
-                                            <td>₱95,000.00</td>
-
-                                        </tr>
-                                        <tr style="color:black;">
-                                                <td>CLOD-0001</td>
-                                                <td>Mercury Drug Corporation</td>
-                                                <td>20 Products</td>
-                                                <td>₱100,000.00</td>
-                                                <td>₱5,000.00</td>
-                                                <td>₱95,000.00</td>
-
-                                            </tr>
-                                            <tr style="color:black;">
-                                                    <td>CLOD-0001</td>
-                                                    <td>Mercury Drug Corporation</td>
-                                                    <td>20 Products</td>
-                                                    <td>₱100,000.00</td>
-                                                    <td>₱5,000.00</td>
-                                                    <td>₱95,000.00</td>
-
-                                                </tr>
-                                                <tr style="color:black;">
-                                                        <td>CLOD-0001</td>
-                                                        <td>Mercury Drug Corporation</td>
-                                                        <td>20 Products</td>
-                                                        <td>₱100,000.00</td>
-                                                        <td>₱5,000.00</td>
-                                                        <td>₱95,000.00</td>
-
-                                                    </tr>
-                                                    <tr style="color:black;">
-                                                            <td>CLOD-0001</td>
-                                                            <td>Mercury Drug Corporation</td>
-                                                            <td>20 Products</td>
-                                                            <td>₱100,000.00</td>
-                                                            <td>₱5,000.00</td>
-                                                            <td>₱95,000.00</td>
-
-                                                        </tr>
-                                                        <tr style="color:black;">
-                                                                <td>CLOD-0001</td>
-                                                                <td>Mercury Drug Corporation</td>
-                                                                <td>20 Products</td>
-                                                                <td>₱100,000.00</td>
-                                                                <td>₱5,000.00</td>
-                                                                <td>₱95,000.00</td>
-
-                                                            </tr>
-                                                            <tr style="color:black;">
-                                                                    <td>CLOD-0001</td>
-                                                                    <td>Mercury Drug Corporation</td>
-                                                                    <td>20 Products</td>
-                                                                    <td>₱100,000.00</td>
-                                                                    <td>₱5,000.00</td>
-                                                                    <td>₱95,000.00</td>
-
-                                                                </tr>
-                                                                <tr style="color:black;">
-                                                                        <td>CLOD-0001</td>
-                                                                        <td>Mercury Drug Corporation</td>
-                                                                        <td>20 Products</td>
-                                                                        <td>₱100,000.00</td>
-                                                                        <td>₱5,000.00</td>
-                                                                        <td>₱95,000.00</td>
-
-                                                                    </tr>
-                                                                    <tr style="color:black;">
-                                                                            <td>CLOD-0001</td>
-                                                                            <td>Mercury Drug Corporation</td>
-                                                                            <td>20 Products</td>
-                                                                            <td>₱100,000.00</td>
-                                                                            <td>₱5,000.00</td>
-                                                                            <td>₱95,000.00</td>
-
-                                                                        </tr>
-                                                                        <tr style="color:black;">
-                                                                                <td>CLOD-0001</td>
-                                                                                <td>Mercury Drug Corporation</td>
-                                                                                <td>20 Products</td>
-                                                                                <td>₱100,000.00</td>
-                                                                                <td>₱5,000.00</td>
-                                                                                <td>₱95,000.00</td>
-
-                                                                            </tr>
-
-
-
-                                 --}}
-
                                 </tbody>
                             </table>
 
@@ -496,35 +341,7 @@
                             <li><a href="javascript:void(0)" theme="purple-dark" class="purple-dark-theme">11</a></li>
                             <li><a href="javascript:void(0)" theme="megna-dark" class="megna-dark-theme">12</a></li>
                         </ul>
-                        {{--
-                        <ul class="m-t-20 chatonline">
-                            <li><b>Chat option</b></li>
-                            <li>
-                                <a href="javascript:void(0)"><img src="../plugins/images/users/varun.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)"><img src="../plugins/images/users/genu.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)"><img src="../plugins/images/users/ritesh.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)"><img src="../plugins/images/users/arijit.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)"><img src="../plugins/images/users/govinda.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)"><img src="../plugins/images/users/hritik.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)"><img src="../plugins/images/users/john.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)"><img src="../plugins/images/users/pawandeep.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
-                            </li>
-                        </ul>
-                    </div> --}}
+
                     </div>
                 </div>
                 <!-- /.right-sidebar -->

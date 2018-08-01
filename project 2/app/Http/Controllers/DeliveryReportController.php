@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Schedule;
 use App\Supplier;
 use App\SupplierOrder;
 use App\SupplierOrderDetail;
@@ -12,23 +13,23 @@ use Illuminate\Http\Request;
 class DeliveryReportController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-
-     * @return \Illunate\Http\Response
-     */
     public function index()
     {
-        $suppliers = Supplier::all();
-        $orders = SupplierOrder::all();
-        $orderdetails = SupplierOrderDetail::all();
-        $supplies = Supply::all();
+
+        $schedules = Schedule::all();
+        
+        foreach($schedules as $schedule){
+            $date = date_create($schedule['scd_date']);
+            $schedule['scd_date'] = date_format($date, "F j Y");
+            if($schedule->dateDelivered){
+                $date = date_create($schedule['dateDelivered']);
+                $schedule['dateDelivered'] = date_format($date, "F j Y");
+            }
+        }
 
         return view("appdev.deliveryreport")->with("start","")
-            ->with("end","")->with("orders",$orders)
-            ->with("suppliers",$suppliers)
-            ->with("supplies",$supplies)
-            ->with("orderdetails",$orderdetails);
+            ->with("end","")
+            ->with("schedules",$schedules);
     }
 
     public function generateReport(Request $request)
