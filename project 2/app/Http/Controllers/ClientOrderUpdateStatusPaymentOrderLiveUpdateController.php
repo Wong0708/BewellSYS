@@ -9,7 +9,7 @@ class ClientOrderUpdateStatusPaymentOrderLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {
-        if($request->status==1){
+        if($request->funcNum==1){
             $order = ClientOrder::where('id','=',$request->id)->first();
             $order->clod_pstatus = 'Pending';
             $order->save();
@@ -17,7 +17,7 @@ class ClientOrderUpdateStatusPaymentOrderLiveUpdateController extends Controller
                 'status'=>$order->clod_pstatus,
             ]);
         }
-        else if($request->status==2){
+        else if($request->funcNum==2){
             $order = ClientOrder::where('id','=',$request->id)->first();
             $order->clod_pstatus = 'Complete';
             $order->save();

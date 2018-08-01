@@ -211,7 +211,8 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h4 style="color:black; margin-bottom:7px;">Order Functions</h4>
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                    <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button>
+                                    {{-- Commented Out for future purposes By: John Edel B. Tamani
+                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button> --}}
                                     <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Delivery Status</button>
                                     {{-- <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span><a href={{route('manufacturerorder.index')}}>Manage Manufacturer Order</a></button>
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span><a href={{route('supplierorder.index')}}>Manage Supplier Order</a></button>
@@ -593,7 +594,8 @@
                                 console.log(data);
                                 $(toEdit).closest('tr').remove();
 
-                                 //AJAX TO UPDATE THE ORDER
+                                //AJAX TO UPDATE THE ORDER STATUS
+                                //By: John Edel B. Tamani
                                 $.ajaxSetup({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -602,8 +604,8 @@
 
                                 e.preventDefault(); 
                                 var formData = {
-                                    id:data.orderID,
-                                    identifier:1,
+                                    id:$('#orderIDPayment').val(),
+                                    funcNum:1,
                                 }
                                 
                                 $.ajax({
@@ -742,6 +744,7 @@
                                     $('#addOrderPaymentModal').modal('hide');
                                     if(data.totalBalance==0){
                                         //AJAX TO UPDATE THE ORDER
+                                        //By: John Edel B. Tamani
                                         $.ajaxSetup({
                                             headers: {
                                                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -751,7 +754,7 @@
                                         e.preventDefault(); 
                                         var formData = {
                                             id:data.orderID,
-                                            identifier:2,
+                                            funcNum:2,
                                         }
                                         
                                         $.ajax({
