@@ -241,7 +241,7 @@
                     </div> --}}
 
 
-                
+
                         {{-- <div id="statusModal" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -263,7 +263,7 @@
                                             </div>
 
                                             <input id="orderID" type="hidden" name="orderID">
-                                            
+
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-warning" data-dismiss="modal">
                                                 <span class='glyphicon glyphicon-remove'></span> Close
@@ -277,9 +277,9 @@
                                 </div>
                             </div>
                         </div> --}}
-                    
+
                 <!--MODAL ENDS HERE-->
-                
+
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                     <div class="col-sm-12">
                         <div class="white-box">

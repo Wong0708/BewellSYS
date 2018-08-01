@@ -90,4 +90,5 @@ Route::post('liveClientAddressUpdate','ClientAddressLiveUpdateController@liveUpd
 Route::post('liveClientAddOrderUpdate','ClientAddOrderLiveUpdateController@liveUpdate');
 
 Route::resource('deliveryreport','DeliveryReportController');
-Route::get('drdetail/{id}','DeliveryReportController@generateReport');
+
+Route::resource('deliveryreportdetail/','DeliveryReportController');
