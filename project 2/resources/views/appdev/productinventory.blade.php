@@ -295,22 +295,22 @@
                                                                 
                                                                 <tr>
                                                                     <td>On-Hand</td>
-                                                                    <td><input type="text" class="form-control" name="onhand[]" data-mask="9999"/></td>
+                                                                    <td><input type="text" class="form-control" name="onhand[]" data-mask="9999" required/></td>
                                                                 </tr>
     
                                                                 <tr>
                                                                     <td>On-order</td>
-                                                                    <td><input type="text" class="form-control" name="onorder[]" data-mask="9999"/></td>
+                                                                    <td><input type="text" class="form-control" name="onorder[]" data-mask="9999" required/></td>
                                                                 </tr>
                                                             
                                                                 <tr>
                                                                     <td>Allocated</td>
-                                                                    <td><input type="text" class="form-control" name="allocated[]" data-mask="9999"/></td>
+                                                                    <td><input type="text" class="form-control" name="allocated[]" data-mask="9999" required/></td>
                                                                 </tr>
     
                                                                 <tr>
                                                                     <td>Available</td>
-                                                                    <td><input type="text" class="form-control" name="available[]" data-mask="9999"/></td>
+                                                                    <td><input type="text" class="form-control" name="available[]" data-mask="9999" required/></td>
                                                                 </tr>
     
                                                                 {{--<tr>
@@ -320,18 +320,18 @@
     
                                                                 <tr>
                                                                     <td>Max</td>
-                                                                    <td><input type="text" class="form-control" name="maximum[]" data-mask="9999"/></td>
+                                                                    <td><input type="text" class="form-control" name="maximum[]" data-mask="9999" required/></td>
                                                                 </tr>
     
                                                                 <tr>
                                                                     <td>ROP</td>
-                                                                    <td><input type="text" class="form-control" name="ROP[]" data-mask="9999"/></td>
+                                                                    <td><input type="text" class="form-control" name="ROP[]" data-mask="9999" required/></td>
                                                                 </tr>
     
-                                                                <tr>
+                                                                {{--<tr>
                                                                     <td>Price</td>
-                                                                    <td><input type="text" class="form-control" name="price[]" data-mask="9999"/></td>
-                                                                </tr>
+                                                                    <td><input type="text" class="form-control" name="price[]" data-mask="9999" required/></td>
+                                                                </tr>--}}
         
     
                                                                 
@@ -477,7 +477,6 @@
                                                 <th>Available</th>
                                                 <th>Max</th>
                                                 <th>ROP</th>
-                                                <th>Price</th>
                                                 <th></th>
                                                 <th></th>
 
@@ -504,7 +503,6 @@
                                                 <td>100</td>
                                                 <td>{{$product->pd_maxQty}}</td>
                                                 <td>{{$product->pd_reorder}}</td>
-                                                <td>{{'₱'.$product->pd_price}}</td>
                                                 <td>
                                                     <i pdid="{{$product->id}}" style="color:#4c87ed;" data-toggle="modal" data-target="#editModal" class="fa fa-edit editz">
                                                 </td>
