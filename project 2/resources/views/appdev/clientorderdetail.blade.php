@@ -592,7 +592,34 @@
                             success: function(data){
                                 console.log(data);
                                 $(toEdit).closest('tr').remove();
-                                // location.reload(); // Additional Feature in the future for deletion of product using ID Ajax!::Too lazy
+
+                                 //AJAX TO UPDATE THE ORDER
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                    }
+                                })
+
+                                e.preventDefault(); 
+                                var formData = {
+                                    id:data.orderID,
+                                    identifier:1,
+                                }
+                                
+                                $.ajax({
+                                    type: "POST",
+                                    url:  '/ajaxUpdatePaymentStatus',
+                                    data: formData,
+                                    success: function(data){
+                                        console.log(data);
+                                        $('#paymentStatus').text(data.status);                                                
+                                    },   
+                                    error: function (data) {
+                                        console.log('Data Error:', data);
+                                    }
+                                });
+                                
+                                $('#paymentStatus').text('Pending');
                             },   
                             error: function (data) {
                                 console.log('Data Error:', data);
@@ -714,6 +741,7 @@
                                     '<i style="margin-left:5px; color:#E53935;" data-id="'+data.id+'" class="fa fa-trash-o removePayment"></td></tr>');
                                     $('#addOrderPaymentModal').modal('hide');
                                     if(data.totalBalance==0){
+                                        //AJAX TO UPDATE THE ORDER
                                         $.ajaxSetup({
                                             headers: {
                                                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -722,7 +750,8 @@
 
                                         e.preventDefault(); 
                                         var formData = {
-                                            id:data.id,
+                                            id:data.orderID,
+                                            identifier:2,
                                         }
                                         
                                         $.ajax({
@@ -731,8 +760,7 @@
                                             data: formData,
                                             success: function(data){
                                                 console.log(data);
-                                                
-                                                
+                                                $('#paymentStatus').text(data.status);                                                
                                             },   
                                             error: function (data) {
                                                 console.log('Data Error:', data);
