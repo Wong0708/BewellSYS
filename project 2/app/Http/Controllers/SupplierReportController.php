@@ -52,15 +52,6 @@ class SupplierReportController extends Controller
                 array_push($orders,$ord);
             }
         }
-        /*
-        $orders = $orders->filter(function ($order) use($start)  {
-            return $order->clod_date >= $start;
-        });
-
-        $orders = $orders->filter(function ($order) use($end) {
-            return $order->clod_date < $end;
-        });
-        */
         return view("appdev.supplierreport")->with("orders",$orders)->with("suppliers",$suppliers)
         ->with("start",$request->start)
         ->with("end",$request->end)
