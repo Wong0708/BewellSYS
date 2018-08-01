@@ -24,7 +24,7 @@ class ClientAddOrderLiveUpdateController extends Controller
         $new_order->expectedDate = $request->clientInfo[0][2];
         $new_order->clod_date = date("Y/m/d");
         $new_order->clod_pstatus = 'Pending';
-        $new_order->clod_dstatus = 'Pending';
+        $new_order->clod_status = 'Pending';
         $new_order->created_at = $date->getTimestamp();
         $new_order->updated_at = $date->getTimestamp();
         $new_order->save();

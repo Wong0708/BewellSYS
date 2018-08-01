@@ -321,9 +321,9 @@
                                                 //Start of Foreach Loop.
                                                 foreach ($orders as $order){
                                                     echo 
-                                                        '<tr id="order'.$order->orderID.'">'.
-                                                        '<td id="orderID'.$order->orderID.'"><a href="clientorder/'.$order->orderID.'">'.$order->orderID.'</a></td>'.
-                                                        '<td id="client'.$order->orderID.'">';
+                                                        '<tr id="order'.$order->id.'">'.
+                                                        '<td id="orderID'.$order->id.'"><a href="clientorder/'.$order->id.'">'.$order->id.'</a></td>'.
+                                                        '<td id="client'.$order->id.'">';
 
                                                     if(!empty($order->fromClient)){
                                                         echo $order->fromClient->cl_name;
@@ -333,20 +333,20 @@
 
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="createdDate'.$order->orderID.'">'.$order->created_at->format('y-m-d').'</td>'.
-                                                        '<td id="expectedDate'.$order->orderID.'">'.$order->expectedDate.'</td>'.
-                                                        '<td id="paymentStatus'.$order->orderID.'">'.$order->clod_pstatus.'</td>'.
-                                                        '<td id="deliveryStatus'.$order->orderID.'">';    
+                                                        '<td id="createdDate'.$order->id.'">'.$order->created_at->format('y-m-d').'</td>'.
+                                                        '<td id="expectedDate'.$order->id.'">'.$order->expectedDate.'</td>'.
+                                                        '<td id="paymentStatus'.$order->id.'">'.$order->clod_pstatus.'</td>'.
+                                                        '<td id="deliveryStatus'.$order->id.'">';    
 
                                                     if(!empty($order->fromSchedule)){
-                                                        $order->clod_dstatus;
+                                                        $order->clod_status;
                                                     }else{
                                                         echo 'N/A';
                                                     }
 
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="deliveryDate'.$order->orderID.'">';
+                                                        '<td id="deliveryDate'.$order->id.'">';
             
                                                     if(!empty($order->fromSchedule)){
                                                         $order->fromSchedule->scd_date;
@@ -356,10 +356,10 @@
 
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="updatedDate'.$order->orderID.'">'.$order->updated_at.'</td>'.
-                                                        '<td id="setting'.$order->orderID.'">'.
-                                                        '<i style="color:#4c87ed;" data-orderid='.$order->orderID.' data-expecteddate='.$order->expectedDate.' class="fa fa-edit editOrder">'.
-                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->orderID.' class="fa fa-trash-o removeOrder">'.
+                                                        '<td id="updatedDate'.$order->id.'">'.$order->updated_at.'</td>'.
+                                                        '<td id="setting'.$order->id.'">'.
+                                                        '<i style="color:#4c87ed;" data-orderid='.$order->id.' data-expecteddate='.$order->expectedDate.' class="fa fa-edit editOrder">'.
+                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder">'.
                                                         '</td>'.
                                                         '</tr>';
                                                 } 

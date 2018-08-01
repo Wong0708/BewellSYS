@@ -129,7 +129,7 @@
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title" style="color:black;">Order Details: {{$order->orderID}}</h4>
+                    <h4 class="page-title" style="color:black;">Order Details: {{$order->id}}</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
@@ -151,7 +151,7 @@
                                 <button type="button"class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Payment</h4>
                             </div>
-                            <input type="hidden" id="orderIDPayment" name="orderIDPayment" value={{$order->orderID}}>
+                            <input type="hidden" id="orderIDPayment" name="orderIDPayment" value={{$order->id}}>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="paymentType" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Payment Type:</b></label>
@@ -331,7 +331,7 @@
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this order.</span>
                                             <p class="text-muted m-b-30"></p>
                                         <hr>
-                                        <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->orderID}}</h3>
+                                        <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                                             <div class="table-responsive">
                                                     <table id="myTable4" class="table table-striped">
                                                         <thead>
@@ -368,7 +368,7 @@
                                     <button id="addClientOrder"style="margin-top:10px; " class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('clientorder.index')}}>Add Order</a></button>
                                     <p class="text-muted m-b-30"></p>
                                     <hr>
-                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->orderID}}</h3>
+                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                                     <div class="table-responsive">
                                         <table id="myTable" class="table table-striped">
                                             <thead>
