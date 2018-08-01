@@ -23,7 +23,7 @@ class ClientOrder extends Model
     }
 
     public function fromSchedule(){
-        return $this->belongsTo(Schedule::class,'id','id'); 
+        return $this->hasMany(Schedule::class,'orderID','id'); 
         //--> Not Working Eloquent Will Result to Trying to get property of non-object: SOLVED on July 29, 2018
 
         //New implementation using DB query.

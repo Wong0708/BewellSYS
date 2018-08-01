@@ -324,23 +324,32 @@
                                                 <table id="myTable3" class="table table-striped">
                                                     <thead>
                                                         <tr style="color:black;">
+                                                            <th>#</th>
                                                             <th>Tracking #</th>
                                                             <th>Order #</th>
-                                                            <th>Plate #</th>
                                                             <th>Delivery Date</th>
                                                             <th>Status</th>
-                                                    </tr>
+                                                            <th>Action <i style="margin-left:5px;" class="fa fa-gavel"></th>
+                                                        </tr>
                                                 </thead>
                                                 <tbody>
-                                                   
-                                                        <tr>
-                                                            <td>TR-0001 </td>
-                                                            <td>CLOD-0001 </td>
-                                                            <td>ABC-3214 </td>
-                                                            <td>2018-04-18 </td>
-                                                            <td><span class="label label-info">Scheduled</span></td>
-                                                               
-                                                        </tr> 
+                                                    <!--DELIVERY MARKER-->
+                                                    <?php 
+                                                    $count= 1;
+                                                    if(isset($order->fromSchedule)){
+                                                        foreach($order->fromSchedule as $orderInfo){
+                                                            echo '<tr>'.
+                                                                '<td>'.$count.'</td>'.
+                                                                '<td>'.$orderInfo->id.'</td>'.
+                                                                '<td>'.$orderInfo->orderID.'</td>'.
+                                                                '<td>'.$orderInfo->scd_date.'</td>'.
+                                                                '<td><span class="label label-success">'.$orderInfo->scd_status.'</span></td>'.
+                                                                '<td><a href="/schedule/'.$orderInfo->id.'"><i style="color:#4c87ed;"class="fa fa-calendar"></a></td>'.//clarify this
+                                                            '</tr>';
+                                                            $count = $count + 1;
+                                                        }
+                                                    }
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
