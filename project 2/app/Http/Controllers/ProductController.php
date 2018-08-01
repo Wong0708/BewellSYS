@@ -109,9 +109,9 @@ class ProductController extends Controller
         foreach ($add_product['ROP'] as $added_product){
             $productarray[9] = $added_product;
         }
-        /*foreach ($add_product['price'] as $added_product){
+        foreach ($add_product['price'] as $added_product){
             $productarray[10] = $added_product;
-        }*/
+        }
 
 
         $date = new DateTime();
@@ -126,7 +126,7 @@ class ProductController extends Controller
         $product->pd_qty = $productarray[3];
         $product->pd_reorder = $productarray[4];
         $product->pd_maxQty = $productarray[8];
-        $product->pd_price = NULL;
+        $product->pd_price = $productarray[10];
         $product->pd_status = 'On Stock';
         $product->created_at = $date->getTimestamp(); 
         $product->updated_at = $date->getTimestamp();

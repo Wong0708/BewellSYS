@@ -699,7 +699,7 @@
                                             <label for="client" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Maximum Load (Boxes):</b></label>
                                             <br>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the maximum delivery load of the car. Ex: 100 Boxes <b style="color:#E53935;">*Required</b></span>
-                                            <input style="margin-top:10px;" class="form-control" name="max_box" type="text" data-mask="999"/>
+                                            <input style="margin-top:10px;" class="form-control" name="max_box" type="number" min="0" max="999999999999999"/>
                                             <label for="client" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Availability:</b></label>
                                             <br>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the weekly availability of the driver. Ex: M-W-F. <b style="color:#E53935;">*Required</b></span>

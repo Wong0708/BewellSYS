@@ -279,6 +279,14 @@
                                     <span><i style="color:#1565C0; margin-right:5px;" data-icon="Z" class="linea-icon linea-basic"></i></span>
                                     <b>Location: </b>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}
                                 </button>
+                                <button type="button" class="list-group-item" disabled>
+                                    <span><i style="color:#1565C0; margin-right:5px;" data-icon="Z" class="icon-user"></i></span>
+                                    <b>Contact Person: </b>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_contactperson}}
+                                </button>
+                                <button type="button" class="list-group-item" disabled>
+                                    <span><i style="color:#1565C0; margin-right:5px;" data-icon="Z" class="icon-phone"></i></span>
+                                    <b>Contact Number: </b>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_contactnumber}}
+                                </button>
 
 
                             </div>

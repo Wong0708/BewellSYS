@@ -328,11 +328,11 @@
                                                                     <td><input type="text" class="form-control" name="ROP[]" data-mask="9999" required/></td>
                                                                 </tr>
     
-                                                                {{--<tr>
+                                                                <tr>
                                                                     <td>Price</td>
                                                                     <td><input type="text" class="form-control" name="price[]" data-mask="9999" required/></td>
-                                                                </tr>--}}
-        
+                                                                </tr>
+
     
                                                                 
                                                             </tbody>
