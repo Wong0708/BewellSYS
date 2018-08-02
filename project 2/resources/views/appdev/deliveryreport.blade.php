@@ -36,11 +36,12 @@
     <style>
         .dotted {
             border:none;
-            border-top:1px dotted #f00;
+            margin-top: 50px;
+            border-top:1px dotted rgba(255, 0, 112, 0.55);
             color:#fff;
             background-color:#fff;
-            height:1px;
-            width:50%;
+            height:2px;
+            width:100%;
         }
     </style>
 </head>
@@ -167,10 +168,10 @@
                         <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
                     </ul>
                 </li>
-                <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
+                <li style="background-color: #E9F0FD;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                     <ul class="nav nav-second-level">
                         <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
-                        <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
+                        <li> <a href={{route('deliveryreport.index')}}>Delivery</a> </li>
                         <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
                         <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                     </ul>
@@ -216,7 +217,7 @@
         <div class="container-fluid" style="background-color:#F5F5F5;">
             <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title" style="color:black;">Supplier Report</h4>
+                    <h4 class="page-title" style="color:black;">Delivery Report</h4>
                 </div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
@@ -231,35 +232,42 @@
             <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                 <div class="col-sm-12">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0" style="color:black;">GENERATE SUPPLIER REPORT</h3>
+                        <h1 class="box-title " style="color:black;">GENERATE DELIVERY REPORT</h1>
                         {!!Form::open(array('route' => 'appdev.deliveryreport'))!!}
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-success waves-effect waves-light">Generate Report</button>
+
+                            <div class="col-md-2" style="align-content: right;" >
+                                <select name="filter" class="form-control">
+                                    <option value="no_filter">No Filter</option>
+                                    <option value="scheduled">To Deliver</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-daterange input-group" id="date-range">
-                                    <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
-                                    <input type="date" class="form-control" name="end"/>
-                                </div>
+                            <div class="col-md-6" >
+                                <center>
+                                    <div class="input-daterange input-group" id="date-range">
+                                        <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
+                                        <input type="date" class="form-control" name="end"/>
+                                    </div>
+                                </center>
                             </div>
-                            <div class="col-md-3">
-                                <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
+                            <div class="col-md-4" style="text-align: right; ">
+                                <button type="submit" class="btn btn-success waves-effect waves-light" style="display: inline"><span class="btn-label"><i class="linea linea-basic" data-icon="L"></i></span>Generate Report</button>
+                                <button style="background-color: #4c87ed;display: inline" class=" btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
                             </div>
                         {!!Form::close() !!}
                     <!-- printhead -->
 
                     <div class="row">
+                        <br>
                                 <div id="printhead">
-                                    @if(isset($start))
+                                    <hr class="dotted">
+                                    <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
+                                    <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>{{$filter}} Delivery Reports</b></h4>
+                                    @if($start!="")
+                                        <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>From {{$start}} to {{$end}}</b></h4>
                                     @endif
-                                    @if(isset($end))
-                                        <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
-                                        <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Delivery Reports</b></h4>
-                                        <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
-                                    @endif
-                                    {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
                                     <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
-
                                         <tbody id="addproduct">
                                         <thead>
                                         <tr style="color:black;">
@@ -267,9 +275,10 @@
                                             <th>Order #</th>
                                             <th>Truck Plate #</th>
                                             <th>Driver</th>
+
+                                            <th>Address</th>
                                             <th>Scheduled Date</th>
                                             <th>Delivered Date</th>
-                                            <th>Address</th>
                                             <th>Status</th>
                                         </tr>
                                         </thead>
@@ -287,7 +296,16 @@
                                                     <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
                                                     <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
                                                     <td>{{$schedule['scd_date']}}</td>
-                                                    <td>@if($schedule['dateDelivered']){{$schedule['dateDelivered']}}@else N/A @endif</td>
+                                                    <td>@if($schedule['dateDelivered']){{$schedule['dateDelivered']}}@else N/A
+                                                            @if(\App\Http\Controllers\DeliveryReportController::checkOverdue($schedule->id))
+                                                                <i class="fa fa-circle" style="display: inline;color: red;font-size: 10px"></i>
+                                                                <p style="display: inline; font-size: 10px" class="text-muted">Overdue</p>
+                                                            @else
+                                                                <i class="fa fa-circle" style="display: inline;color: green;font-size: 10px"></i>
+                                                                <p style="display: inline; font-size: 10px" class="text-muted">On-time</p>
+                                                            @endif
+
+                                                        @endif</td>
                                                     <td><span class="label {{\App\Http\Controllers\ScheduleController::getSchedClassColor($schedule->id)}}"
                                                         >{{$schedule->scd_status}}</span></td>
                                                 </tr>

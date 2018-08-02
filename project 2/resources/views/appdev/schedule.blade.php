@@ -165,9 +165,9 @@
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Manufacturer</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Supplier</a> </li>
+                                <li> <a href={{route('deliveryreport.index')}}>Delivery</a> </li>
+                                <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
+                                <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                             </ul>
                         </li>
 
@@ -699,7 +699,7 @@
                                             <label for="client" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Maximum Load (Boxes):</b></label>
                                             <br>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the maximum delivery load of the car. Ex: 100 Boxes <b style="color:#E53935;">*Required</b></span>
-                                            <input style="margin-top:10px;" class="form-control" name="max_box" type="text" data-mask="999"/>
+                                            <input style="margin-top:10px;" class="form-control" name="max_box" type="number" min="0" max="999999999999999"/>
                                             <label for="client" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Availability:</b></label>
                                             <br>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the weekly availability of the driver. Ex: M-W-F. <b style="color:#E53935;">*Required</b></span>

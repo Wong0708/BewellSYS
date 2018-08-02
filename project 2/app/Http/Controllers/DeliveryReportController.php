@@ -12,12 +12,14 @@ use Illuminate\Http\Request;
 
 class DeliveryReportController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
 
         $schedules = Schedule::all();
-        
         foreach($schedules as $schedule){
             $date = date_create($schedule['scd_date']);
             $schedule['scd_date'] = date_format($date, "F j Y");
@@ -26,45 +28,82 @@ class DeliveryReportController extends Controller
                 $schedule['dateDelivered'] = date_format($date, "F j Y");
             }
         }
-
-        return view("appdev.deliveryreport")->with("start","")
-            ->with("end","")
+        return view("appdev.deliveryreport")->with("start","N/A")
+            ->with("end","N/A")
+            ->with("filter")
             ->with("schedules",$schedules);
     }
+    public static function checkOverdue($id){
+        $schedule = Schedule::find($id);
 
+        if($schedule->scd_status){
+            $datetime1 = new DateTime($schedule->scd_date);
+            $datetime2 = new DateTime("now");
+            $interval = $datetime2->diff($datetime1);
+            $schedule['datediff'] = $interval->format('%r%a');
+
+            $val = intval($schedule['datediff']);
+            if($val<0){
+                return true;
+            }
+        }
+        return false;
+    }
     public function generateReport(Request $request)
     {
-        $suppliers = Supplier::all();
-        $orders = SupplierOrder::all();
-        $orderdetails = SupplierOrderDetail::all();
-        $supplies = Supply::all();
-        $test = $request->dog;
+        $schedules = Schedule::all();
 
         $start = new DateTime($request->start." 00:00:00");
         $end = new DateTime($request->end." 23:59:59");
 
-        $ords = $orders;
+        $filter = $request->filter;
+        $fltr = null;
 
-        $orders = array();
-        foreach($ords as $ord){
-            if(new DateTime($ord['spod_date']) >= $start && new DateTime($ord['spod_date']) <= $end){
-                array_push($orders,$ord);
+        switch($filter){
+            case 'no_filter':
+                $fltr = "General";
+                break;
+            case 'scheduled':
+                $fltr = "Scheduled";
+                $schedules = $schedules->filter(function ($sched) use ($fltr) {
+                    return $sched->scd_status == $fltr;
+                });
+                break;
+            case 'delivered':
+                $fltr = "Delivered";
+                $schedules = $schedules->filter(function ($sched) use ($fltr) {
+                    return $sched->scd_status == $fltr;
+                });
+                break;
+            case 'cancelled':
+                $fltr= "Cancelled";
+                $schedules = $schedules->filter(function ($sched) use ($fltr) {
+                    return $sched->scd_status == $fltr;
+                });
+                break;
+        }
+
+        $scheds = array();
+        foreach($schedules as $ord){
+            if(new DateTime($ord['scd_date']) >= $start && new DateTime($ord['scd_date']) <= $end){
+                array_push($scheds,$ord);
+            }
+
+        }
+        foreach($scheds as $schedule){
+            $date = date_create($schedule['scd_date']);
+            $schedule['scd_date'] = date_format($date, "F j Y");
+            if($schedule->dateDelivered){
+                $date = date_create($schedule['dateDelivered']);
+                $schedule['dateDelivered'] = date_format($date, "F j Y");
             }
         }
-        /*
-        $orders = $orders->filter(function ($order) use($start)  {
-            return $order->clod_date >= $start;
-        });
 
-        $orders = $orders->filter(function ($order) use($end) {
-            return $order->clod_date < $end;
-        });
-        */
-        return view("appdev.supplierreport")->with("orders",$orders)->with("suppliers",$suppliers)
+        return view("appdev.deliveryreport")
             ->with("start",$request->start)
             ->with("end",$request->end)
-            ->with("supplies",$supplies)
-            ->with("orderdetails", $orderdetails);
+            ->with("schedules",$scheds)
+            ->with("filter",$fltr);
     }
     public static function getSupplier($id){
         $supplier = Supplier::where('id', $id)->first();
