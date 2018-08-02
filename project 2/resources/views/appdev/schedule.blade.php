@@ -741,7 +741,7 @@
                         @endif
                     <div class="col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                            <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL ORDER SCHEDULES</h3>
+                            <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL SCHEDULES</h3>
                             <ul class="nav customtab nav-tabs" role="tablist">
                                 <li role="presentation" class="active"><a href="#client_table" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Client</span></a></li>
                                 <li role="presentation" class=""><a href="#manuf_table" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Manufacturer</span></a></li>
