@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\SupplierOrder;
+use App\Supplier;
+use App\Supply;
 
 class SupplierOrderController extends Controller
 {
@@ -18,7 +21,13 @@ class SupplierOrderController extends Controller
 
     public function index()
     {
-        return view('appdev.supplierorder');
+        $orders = SupplierOrder::all();
+        $suppliers = Supplier::all();
+        $supplies = Supply::all();
+        return view("appdev.supplierorder")
+            ->with("orders",$orders)
+            ->with("suppliers",$suppliers)
+            ->with("materials",$supplies);
     }
 
     /**
