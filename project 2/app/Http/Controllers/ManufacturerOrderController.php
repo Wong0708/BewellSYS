@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use App\ManufacturerOrder;
 use App\ManufacturerOrderDetail;
-// use App\SecondaryUser;
 use App\Manufacturer;
 use App\Supply;
+use App\ClientOrder;
 use DateTime;
 
 class ManufacturerOrderController extends Controller
@@ -27,17 +27,14 @@ class ManufacturerOrderController extends Controller
     public function index()
     {
         $orders = ManufacturerOrder::all();
+        $clientOrders = ClientOrder::all();
         $manufacturers = Manufacturer::all();
         $supplies = Supply::all();
-
-        //JOIN: BC_Secondary_User - BC_Location
-        // $clients = DB::table('BC_Secondary_User')
-        // ->join('BC_Location', 'BC_Secondary_User.refID', '=', 'BC_Location.companyID')
-        // ->where('BC_Location.companyID', '=', '1')
-        // ->select('BC_Secondary_User.*')
-        // ->get();
-
-        return view("appdev.manufacturerorder")->with("orders",$orders)->with("manufacturers",$manufacturers)->with("supplies",$supplies);
+        return view("appdev.manufacturerorder")
+            ->with("orders",$orders)
+            ->with("manufacturers",$manufacturers)
+            ->with("materials",$supplies)
+            ->with("clientOrders",$clientOrders);
     }
 
     /**
@@ -58,56 +55,7 @@ class ManufacturerOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //VALIDATION OF INPUTS
 
-        $ordered_supplies = $request->all();
-        
-        $manufacturer = Manufacturer::where('mn_name',$request->manufacturer)->first();
-        // dd($request->manufacturer);
-        $supplies = array();
-        $i = 0;
-        foreach ($ordered_supplies['supply'] as $ordered_supply){
-            $supplies [0][$i] =  $ordered_supply;
-            $i = $i+1;
-        }
-
-        $i = 0;
-        foreach ($ordered_supplies['gram'] as $ordered_supply){
-            $supplies [1][$i] =  $ordered_supply;
-            $i = $i+1;
-        }
-
-        $i = 0;
-        foreach ($ordered_supplies['orderqty'] as $ordered_supply){
-            $supplies [2][$i] =  $ordered_supply;
-            $i = $i+1;
-        }
-
-        //Check the Given Product Input
-        // dd($products);
-        $date = new DateTime();
-
-        $order = new ManufacturerOrder();
-        $order->manufacturerID = $manufacturer->id;
-        $order->mnod_date = date("Y/m/d");
-        $order->mnod_status = 'Processing';
-        $order->save();
-
-        $i = 0;
-        for ($row = 0; $row < sizeOf($supplies[0]); $row++) {
-            $orderdetail = new ManufacturerOrderDetail();
-            $orderdetail->orderID = $order->id;
-            // dd($products[2][$i]);
-            $newproduct = Supply::where('sp_name',$supplies[0][$i])->where('sp_sku',$supplies[1][$i])->first();
-            $orderdetail->supplyID = $newproduct->id;
-            $orderdetail->mndt_qty = $supplies[2][$i];
-            $orderdetail->save();
-
-            $i = $i+1;
-        }
-
-        Session::flash('success','Successfully added an order!');
-        return redirect("/manufacturerorder");
     }
 
     /**
@@ -118,7 +66,8 @@ class ManufacturerOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order =  ManufacturerOrder::where('id','=',$id)->first();
+        return view("appdev.manufacturerorderdetail")->with('order',$order);
     }
 
     /**

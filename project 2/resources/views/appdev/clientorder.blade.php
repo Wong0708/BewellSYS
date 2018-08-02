@@ -204,7 +204,7 @@
                                                 <tbody id="orderList">
                                                     <tr style="color:black;" id="orderListNum1">
                                                         @if(isset($products))
-                                                            <td><span id="countAddOrder"  class="label label-info"></span></td>
+                                                            <td><span id="countAddOrder" class="label label-info"></span></td>
                                                             
                                                                 <td> 
                                                                     <select style="font-size:12px;" class="form-control orderName">
@@ -462,7 +462,7 @@
             if(count==1){
                 alert('Sorry you cannot remove this order!')
             }else{
-                var verify = confirm("Do you want to delete the product?");
+                var verify = confirm("Do you want to delete this material?");
                 if(verify==true){
                     var thisVal = $(this).closest('tr').find('td').find('span').text();
                     count = count - 1;
@@ -728,7 +728,7 @@
 
         //SECTION KEWORD/S: REMOVE ORDER.
         $(".removeOrder").click(function (e) {
-            var verify = confirm("Do you wish to delete this order?");
+            var verify = confirm("WARNING! Order will be Deleted Permanently! Do you wish to continue?");
             if(verify ==true){
                 $.ajaxSetup({
                     headers: {

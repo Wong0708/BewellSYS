@@ -166,7 +166,7 @@
     
                         <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="V" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
-                                <li> <a href={{route('useraccount.index')}}>User</a> </li>
+                            <li> <a href={{route('useraccount.index')}}>User</a> </li>
                                 <li> <a href={{route('clientaccount.index')}}>Client</a> </li>
                                 <li> <a href={{route('manufactureraccount.index')}}>Manufacturer</a> </li>
                                 <li> <a href={{route('supplieraccount.index')}}>Supplier</a> </li>
@@ -174,6 +174,7 @@
                             </ul>
                         </li>
                         @endif
+    
     
                         {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
                             {{-- <ul class="nav nav-second-level">
@@ -204,13 +205,13 @@
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title" style="color:black;">Order Details: MLOD-1</h4>
+                        <h4 class="page-title" style="color:black;">Order Details: SPOD-1</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">Order</a></li>
-                            <li class="active" style="color:#4c87ed;">Manufacturer</li>
+                            <li class="active" style="color:#4c87ed;">Supplier</li>
                         </ol>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -229,10 +230,10 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
-                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Manufacturer Material Order/s</b></h4>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the manufacturer's material order based on the list.</span>
+                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Material Order/s</b></h4>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the supplier's material order based on the list.</span>
                                         <br>
-                                        <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Material</button></label>
+                                        <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button></label>
                                         <div class="table-responsive" style="margin-top:10px;">
                                         <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
                                             <thead>
@@ -242,7 +243,7 @@
                                                     <th></th> --}}
                                                     {{-- <th>Product Code</th> --}}
                                                     <th>Order #</th>
-                                                    <th>Material Name</th>
+                                                    <th>Product Name</th>
                                                     <th>SKU</th>
                                                     {{--
                                                     <th>Grams</th> --}} {{--
@@ -311,7 +312,7 @@
                                                 <hr>
                                                     <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Material Inventory Support</b></h4>
                                                     {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
-                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced inventory list for the manufacturer's ordered material/s.</span>
+                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced inventory list for the supplier's ordered material/s.</span>
                                                     
                                                     <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
                                                             <thead>
@@ -371,11 +372,11 @@
                                                                 @endif
                                                                 
                                                 </select>
-                                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the manufacturer's payment status on their ordered material/s. <b style="color:#E53935;">*Required</b></span>
+                                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the supplier's payment status on their ordered products. <b style="color:#E53935;">*Required</b></span>
                                             </br>
                                         <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Paid Amount:</b></label>
                                         </br>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount of the manufacturer. <b style="color:#E53935;">*Required</b></span>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount of the supplier. <b style="color:#E53935;">*Required</b></span>
                                         <input style="margin-top:10px; " type="text" class="form-control" data-mask="PHP 9,999,999.00 ONLY"/>
                                         <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total: ₱100.00 </b></h4>
                                                
@@ -490,7 +491,7 @@
                                     <h4 style="color:black; margin-bottom:7px;">Order Functions</h4>
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i></span>Manage Raw Material Inventory</button>
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span>Manage Supplier Order</button>
+                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span>Manage Manufacturer Order</button>
                                     </div>
                                 </div>
                       </div>
@@ -499,12 +500,12 @@
                             <div class="col-lg-12 col-sm-12">
                                 
                                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Manufacturer Details</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the contact information of the manufacturer.</span>
+                                        <h3 class="box-title m-b-0" style="color:black;">Supplier Details</h3>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the contact information of the supplier.</span>
                                         <div class="row" style="margin-top:10px; ">
-                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Manufacturer</strong>
+                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Supplier</strong>
                                                     <br>
-                                                    <p class="text-muted">Acadia Pharmaceuticals</p>
+                                                    <p class="text-muted">Sinopharm Group</p>
                                                 </div>
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Contact Number</strong>
                                                     <br>
@@ -512,11 +513,11 @@
                                                 </div>
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Email</strong>
                                                     <br>
-                                                    <p class="text-muted">Acadia Pharmaceuticals@gmail.com</p>
+                                                    <p class="text-muted">Sinopharm Group@gmail.com</p>
                                                 </div>
                                                 <div class="col-md-6 col-xs-6"> <strong>Location</strong>
                                                     <br>
-                                                    <p class="text-muted">17 Venus Ave Tagum City, Philippines</p>
+                                                    <p class="text-muted">79 Batal Ave Santiago City, Philippines</p>
                                                 </div>
                                             </div>
                                     </div>
@@ -527,7 +528,7 @@
                                 
                                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                         <h3 class="box-title m-b-0" style="color:black;">Order Payment Report</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the manufacturer order/s.</span><br>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the supplier order/s.</span><br>
                                         
                                     <button style="margin-top:10px; " class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>
                                         {{-- <h3 class="box-title">Order Update History</h3> --}}
@@ -551,7 +552,7 @@
                                                    
                                                             <tr>
                                                                 <td>1</td>
-                                                                <td>MLOD-0001</td>
+                                                                <td>SPOD-0001</td>
                                                                 <td>₱49,291</td>
                                                                 <td>₱20,000 </td>
                                                                 <td>₱29,291</td>
@@ -575,56 +576,7 @@
                                     </div>
                                 </div>
                             </div>
-                      <div class="row">
-                            <div class="col-lg-12 col-sm-12">
-                                
-                                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Order Delivery Report</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the schedule for the manufacturer order/s.</span><br>
-                                        <button  style="margin-top:10px; "  class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i data-icon="r" class="linea linea-basic"></i></span>Add Schedule</button>
-                                        {{-- <h3 class="box-title">Order Update History</h3> --}}
-                                        <p class="text-muted m-b-30"></p>
-                                        {{-- <hr> --}}
-                                       {{-- <hr> --}}
-                                        {{-- <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Client Order Details</h3> --}}
-                                        <div class="table-responsive">
-                                                <table id="myTable3" class="table table-striped">
-                                                    <thead>
-                                                        <tr style="color:black;">
-                                                            <th>Tracking #</th>
-                                                            <th>Order #</th>
-                                                            <th>Plate #</th>
-                                                            <th>Delivery Date</th>
-                                                            <th>Status</th>
-                                                            <th><i class="fa fa-gear"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                   
-                                                            <tr>
-                                                                    <td>TR-0001 </td>
-                                                                    <td>MLOD-0001 </td>
-                                                                    <td>ABC-3214 </td>
-                                                                    <td>2018-04-18 </td>
-                                                                <td><span class="label label-info">Scheduled</span></td>
-                                                                {{-- <td>Just Now!</td> --}}
-                                                                <td>
-                                                                        <i style="color:#4c87ed;" class="fa fa-edit">
-                
-                                                                                {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
-                                                                                <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                                {{-- {!!Form::close()!!} --}}
-                                                                        
-                                                                    </td>
-                                                             
-                                                               
-                                                            </tr> 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                  
                         <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                     
@@ -633,7 +585,7 @@
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this order.</span>
                                             <p class="text-muted m-b-30"></p>
                                         <hr>
-                                            <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: MLOD-1</h3>
+                                            <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: SPOD-1</h3>
                                             <div class="table-responsive">
                                                     <table id="myTable4" class="table table-striped">
                                                         <thead>
@@ -684,12 +636,12 @@
                                     
                                     {{-- <h3 class="box-title">Ordered Products</h3> --}}
                                     <h3 class="box-title m-b-0" style="color:black;">Ordered Material/s</h3>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section contains all the manufacturer order/s.</span>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section contains all the supplier order/s.</span>
                                     <br>
                                     <button style="margin-top:10px;"  class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
                                     {{-- <p class="text-muted m-b-30"></p> --}}
                                     <hr>
-                                    <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: MLOD-1</h3>
+                                    <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: SPOD-1</h3>
                                     <div class="table-responsive">
                                             <table id="myTable" class="table table-striped">
                                                 <thead>
@@ -729,7 +681,7 @@
                     <div class="col-lg-12">
                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                         <h3 class="box-title m-b-0" style="color:black;">Purchased Order Report</h3>
-                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section for the purchased order report for the manufacturer order/s.</span>
+                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section for the purchased order report for the supplier order/s.</span>
                                 <br>
                         <button style="margin-top:10px;" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe00b;"></i></span>Print Purchase Order Form (POF)</button>          
                         <button style="margin-top:10px;" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="|"></i></span>Update Raw Material Inventory</button>                        
@@ -737,7 +689,7 @@
                         {{-- <p class="text-muted m-b-30"></p>
                          --}}
                          <hr>
-                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: MLOD-1</h3>
+                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: SPOD-1</h3>
                          
                            <table class="table table-bordered">
                                <thead style="color:black;">

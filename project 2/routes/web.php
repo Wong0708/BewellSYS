@@ -97,6 +97,10 @@ Route::post('/ajaxUpdatePayment','ClientOrderDeletePaymentOrderLiveUpdateControl
 Route::post('/ajaxUpdatePaymentStatus','ClientOrderUpdateStatusPaymentOrderLiveUpdateController@liveUpdate');
 Route::post('/ajaxUpdatePaymentStatus','ClientOrderUpdateStatusPaymentOrderLiveUpdateController@liveUpdate');
 Route::post('/ajaxUpdateOrderStatus','ClientOrderStatusLiveUpdateController@liveUpdate');
+Route::post('liveManufacturerOrderNameUpdate','ManufacturerOrderNameLiveUpdateController@liveUpdate');
+Route::post('liveManufacturerOrderSKUUpdate','ManufacturerOrderSKULiveUpdateController@liveUpdate');
+Route::post('liveManufacturerAddOrderUpdate','ManufacturerAddOrderLiveUpdateController@liveUpdate');
+// ManufacturerAddOrderLiveUpdateController
 
 //End of Ajax Routes
 

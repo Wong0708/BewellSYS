@@ -347,7 +347,7 @@
                                         <button style="margin-top:10px; " class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="r" class="linea linea-basic"></i></span><a style="color:white;" href={{route('schedule.index')}}>Manage Schedule</a></button>
                                         <p class="text-muted m-b-30"></p>
                                         <div class="table-responsive">
-                                                <table id="myTable3" class="table table-striped">
+                                                <table id="orderDeliveryList" class="table table-striped">
                                                     <thead>
                                                         <tr style="color:black;">
                                                             <th>#</th>
@@ -393,7 +393,7 @@
                                         <hr>
                                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                                             <div class="table-responsive">
-                                                    <table id="myTable4" class="table table-striped">
+                                                    <table id="orderNotificationList" class="table table-striped">
                                                         <thead>
                                                             <tr style="color:black;">
                                                                 <th>#</th>
@@ -430,7 +430,7 @@
                             <hr>
                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                             <div class="table-responsive">
-                                <table id="myTable" class="table table-striped">
+                                <table id="orderDetailList" class="table table-striped">
                                     <thead>
                                         <tr style="color:black;">
                                             <th>#</th>
@@ -882,9 +882,9 @@
 
             <script>
                 $(document).ready(function() {
-                    $('#myTable').DataTable();
+                    $('#orderDetailList').DataTable();
                     $(document).ready(function() {
-                        var table = $('#example').DataTable({
+                        var table = $('#orderDetails').DataTable({
                             "columnDefs": [{
                                 "visible": false,
                                 "targets": 2
@@ -910,7 +910,7 @@
                             }
                         });
                         // Order by the grouping
-                        $('#example tbody').on('click', 'tr.group', function() {
+                        $('#orderDetails tbody').on('click', 'tr.group', function() {
                             var currentOrder = table.order()[0];
                             if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                                 table.order([2, 'desc']).draw();
@@ -950,7 +950,7 @@
                             }
                         });
                         // Order by the grouping
-                        $('#example tbody').on('click', 'tr.group', function() {
+                        $('#paymentList tbody').on('click', 'tr.group', function() {
                             var currentOrder = table.order()[0];
                             if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                                 table.order([2, 'desc']).draw();
@@ -962,9 +962,9 @@
                 });
 
                   $(document).ready(function() {
-                    $('#myTable4').DataTable();
+                    $('#orderNotificationList').DataTable();
                     $(document).ready(function() {
-                        var table = $('#example').DataTable({
+                        var table = $('#orderNotification').DataTable({
                             "columnDefs": [{
                                 "visible": false,
                                 "targets": 2
@@ -990,7 +990,7 @@
                             }
                         });
                         // Order by the grouping
-                        $('#example tbody').on('click', 'tr.group', function() {
+                        $('#orderNotification tbody').on('click', 'tr.group', function() {
                             var currentOrder = table.order()[0];
                             if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                                 table.order([2, 'desc']).draw();
@@ -1004,9 +1004,9 @@
 
 
                  $(document).ready(function() {
-                    $('#myTable3').DataTable();
+                    $('#orderDeliveryList').DataTable();
                     $(document).ready(function() {
-                        var table = $('#example').DataTable({
+                        var table = $('#orderDelivery').DataTable({
                             "columnDefs": [{
                                 "visible": false,
                                 "targets": 2
@@ -1032,7 +1032,7 @@
                             }
                         });
                         // Order by the grouping
-                        $('#example tbody').on('click', 'tr.group', function() {
+                        $('#orderDelivery tbody').on('click', 'tr.group', function() {
                             var currentOrder = table.order()[0];
                             if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                                 table.order([2, 'desc']).draw();
@@ -1041,12 +1041,6 @@
                             }
                         });
                     });
-                });
-                $('#example23').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
                 });
             </script>
             <script src="../plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>

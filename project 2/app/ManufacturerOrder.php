@@ -8,7 +8,7 @@ class ManufacturerOrder extends Model
 {
     protected $table="BC_Manufacturer_Order";
 
-    public function fromClient(){
-        return $this->belongsTo(Manufacturer::class,'manufacturerID');
+    public function fromManufacturer(){
+        return $this->belongsTo(Manufacturer::class,'id','id');
     }
 }
