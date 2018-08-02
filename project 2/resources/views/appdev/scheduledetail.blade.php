@@ -158,9 +158,9 @@
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Manufacturer</a> </li>
-                                <li> <a href={{route('inventoryreport.index')}}>Supplier</a> </li>
+                                <li> <a href={{route('deliveryreport.index')}}>Delivery</a> </li>
+                                <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
+                                <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                             </ul>
                         </li>
     
@@ -278,6 +278,14 @@
                                 <button type="button" class="list-group-item" disabled>
                                     <span><i style="color:#1565C0; margin-right:5px;" data-icon="Z" class="linea-icon linea-basic"></i></span>
                                     <b>Location: </b>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}
+                                </button>
+                                <button type="button" class="list-group-item" disabled>
+                                    <span><i style="color:#1565C0; margin-right:5px;" data-icon="Z" class="icon-user"></i></span>
+                                    <b>Contact Person: </b>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_contactperson}}
+                                </button>
+                                <button type="button" class="list-group-item" disabled>
+                                    <span><i style="color:#1565C0; margin-right:5px;" data-icon="Z" class="icon-phone"></i></span>
+                                    <b>Contact Number: </b>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_contactnumber}}
                                 </button>
 
 

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\ClientOrderDetail;
 
 class ClientOrder extends Model
 {
@@ -13,8 +14,21 @@ class ClientOrder extends Model
         return $this->belongsTo(Client::class,'clientID','id');
     }
 
+    public function fromClientOrderDetail(){
+        return $this->hasMany(ClientOrderDetail::class,'orderID','id');//foreign,local key
+    }
+
+    public function fromClientOrderPayment(){
+        return $this->hasMany(ClientOrderPayment::class,'orderID','id');//foreign,local key 
+    }
+
+    public function fromOneSchedule(){
+        return $this->belongsTo(Schedule::class,'id','orderID'); 
+
+    }
+
     public function fromSchedule(){
-        return $this->belongsTo(Schedule::class,'orderID','id'); 
+        return $this->hasMany(Schedule::class,'orderID','id'); 
         //--> Not Working Eloquent Will Result to Trying to get property of non-object: SOLVED on July 29, 2018
 
         //New implementation using DB query.

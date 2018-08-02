@@ -166,13 +166,16 @@
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one client among the list to add an order. <b style="color:#E53935;">*Required</b></span>
 
                                     <br>
-
-                                    <label for="clientLocation" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
+                                    
+                                    {{--
+                                        Commented By: John Edel B. Tamani
+                                        Purpose: ADDRESS FOR CLIENT
+                                        <label for="clientLocation" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
                                     <select name="clientLocation" class="form-control" id="clientLocation" style="margin-bottom:10px;">
                                         <option selected disabled>N/A</option>
                                     </select>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one client among the list to add an order. <b style="color:#E53935;">*Required</b></span>
-                                    <br>
+                                    <br> --}}
 
                                     <label for="orderExpDate" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
                                     <input type="date" name="orderExpDate" class="form-control" id="orderExpDate" style="margin-bottom:10px;"/>
@@ -292,7 +295,10 @@
                             <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> 
 
                             <p class="text-muted m-b-30"></p>
-                            <div class="table-responsive">
+                            <d
+                            
+                            
+                            iv class="table-responsive">
                                 <table id="orderListTable" class="table table-striped">
                                     <thead>
                                         <tr style="color:black;">
@@ -300,8 +306,15 @@
                                             <th>Client</th>
                                             <th>Order Date</th>
                                             <th>Expected Date</th>
+                                            <th>Date Completed</th>
                                             <th>Payment Status</th>
-                                            <th>Delivery Date</th>
+                                            
+                                            {{-- 
+                                                //Commented Out By: John Edel B. Tamani
+                                                // For Future Purposes
+                                                <th>Delivery Date</th> 
+                                            --}}
+                                            
                                             <th>Delivery Status</th>
                                             <th>Last Updated</th>
                                             <th><i class="fa fa-gear"></th>
@@ -321,9 +334,9 @@
                                                 //Start of Foreach Loop.
                                                 foreach ($orders as $order){
                                                     echo 
-                                                        '<tr id="order'.$order->orderID.'">'.
-                                                        '<td id="orderID'.$order->orderID.'"><a href="clientorder/'.$order->orderID.'">'.$order->orderID.'</a></td>'.
-                                                        '<td id="client'.$order->orderID.'">';
+                                                        '<tr id="order'.$order->id.'">'.
+                                                        '<td id="orderID'.$order->id.'"><a href="clientorder/'.$order->id.'">'.$order->id.'</a></td>'.
+                                                        '<td id="client'.$order->id.'">';
 
                                                     if(!empty($order->fromClient)){
                                                         echo $order->fromClient->cl_name;
@@ -333,33 +346,42 @@
 
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="createdDate'.$order->orderID.'">'.$order->created_at->format('y-m-d').'</td>'.
-                                                        '<td id="expectedDate'.$order->orderID.'">'.$order->expectedDate.'</td>'.
-                                                        '<td id="paymentStatus'.$order->orderID.'">'.$order->clod_pstatus.'</td>'.
-                                                        '<td id="deliveryStatus'.$order->orderID.'">';    
+                                                        '<td id="createdDate'.$order->id.'">'.$order->created_at->format('y-m-d').'</td>'.
+                                                        '<td id="expectedDate'.$order->id.'">'.$order->expectedDate.'</td>'.
+                                                        '<td id="dateCompleted'.$order->id.'">';
 
-                                                    if(!empty($order->fromSchedule)){
-                                                        $order->clod_dstatus;
+                                                    if(!empty($order->clod_completed)){
+                                                        echo $order->clod_completed;
                                                     }else{
                                                         echo 'N/A';
                                                     }
 
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="deliveryDate'.$order->orderID.'">';
-            
-                                                    if(!empty($order->fromSchedule)){
-                                                        $order->fromSchedule->scd_date;
-                                                    }else{
-                                                        echo 'N/A';
-                                                    }
+                                                        '<td id="paymentStatus'.$order->id.'">'.$order->clod_pstatus.'</td>'.
+                                                        '<td id="deliveryStatus'.$order->id.'">'.$order->clod_status.'</td>';
+
+                                                    //Commented Out By: John Edel B. Tamani
+                                                    // For Future Purposes
+                                                    // echo 
+                                                    //     '</td>'.r
+                                                    //     '<td id="deliveryDate'.$order->id.'">';
+                                                    // if(!empty($order->fromOneSchedule)){
+                                                    //     $order->fromOneSchedule->scd_date;
+                                                    // }else{
+                                                    //     echo 'N/A';
+                                                    // }
 
                                                     echo 
-                                                        '</td>'.
-                                                        '<td id="updatedDate'.$order->orderID.'">'.$order->updated_at.'</td>'.
-                                                        '<td id="setting'.$order->orderID.'">'.
-                                                        '<i style="color:#4c87ed;" data-orderid='.$order->orderID.' data-expecteddate='.$order->expectedDate.' class="fa fa-edit editOrder">'.
-                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->orderID.' class="fa fa-trash-o removeOrder">'.
+                                                        // '</td>'.//For future purposes
+                                                        '<td id="updatedDate'.$order->id.'">'.$order->updated_at.'</td>'.
+                                                        '<td id="setting'.$order->id.'">'.
+                                                        '<a href="/clientorder/'.$order->id.'" <i style="color:#4c87ed;" class="fa fa-edit editOrder">'.
+
+                                                        //Commented Out By: John Edel B. Tamani
+                                                        // For Future purposes of Edit 
+                                                        // '<i style="color:#4c87ed;" data-orderid='.$order->id.' data-expecteddate='.$order->expectedDate.' class="fa fa-edit editOrder">'.
+                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder">'.
                                                         '</td>'.
                                                         '</tr>';
                                                 } 
@@ -373,17 +395,20 @@
                     </div>
                 </div>
 
-                <!--SECTION KEYWORD/S: ORDER, MODAL-->
-                <div id='ordermodal' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordermodallabel" aria-hidden="true" style="display: none;">
+                <!--SECTION KEYWORD/S: ORDER, MODAL 
+                    Commented Out For future purposes By: John Edel B. Tamani
+                -->
+                {{-- <div id='ordermodal' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordermodallabel" aria-hidden="true" style="display: none;">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="modal-title">Update Order</h4> 
+                                <h4 class="modal-title">Update Order Deadline</h4> 
                             </div>
                             <div class="modal-body">
-                                    <label for="exp_date" id=""class="control-label">Expected Date:</label>
-                                    <input type="date" class="form-control" id="exp_date" name="expectedDate"> 
+                                    <label for="exp_date" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
+                                
+                                    <input type="date" class="form-control" id="exp_date" name="exp_date"> 
                             </div>
                         
                             <div class="modal-footer">
@@ -393,7 +418,7 @@
                         </div>
                         <input type="hidden" id="orderModalID" name="orderID" value="0">
                     </div>
-                </div>
+                </div> --}}
                 
 
         
@@ -475,18 +500,21 @@
         });
     </script>
 
-    <script type='text/javascript'>
+
+    {{-- SECTION COMMENTED OUT FOR FUTURE PURPOSES 
+         Prepared By: John Edel B. Tamani
+        <script type='text/javascript'>
         $(document).on('click','.editOrder',function(){
             $('#exp_date').val($(this).data('expecteddate'));
             $('#orderModalID').val($(this).data('orderid'));
             $('#ordermodal').modal('show');
 
-            // Learning/s Reference for JQuery.
-            // Prepared By: John Edel B. Tamani
-            // $('#something').prop("readonly", true); -> To disable an input.
-            // $('.something').prop("disabled",true); -> To disable a button.
+            Learning/s Reference for JQuery.
+            Prepared By: John Edel B. Tamani
+            $('#something').prop("readonly", true); -> To disable an input.
+            $('.something').prop("disabled",true); -> To disable a button.
         });
-    </script>
+    </script> --}}
 
     <!--SECTION KEYWORD/S: SUBMIT ORDER LIST-->
     <script type='text/javascript'>
@@ -507,7 +535,7 @@
 
                 var clientDetail = [];
                 var client = [];
-                client.push($('#clientList').val(),$('#clientLocation').val(),$('#orderExpDate').val());
+                client.push($('#clientList').val(),$('#orderExpDate').val());
                 clientDetail.push(client);
 
                 console.log(clientDetail);
@@ -552,46 +580,47 @@
 
     <!--SECTION KEYWORD/S:CLIENT, LIST, INVENTORY, SUPPORT, MODAL-->
     <script type='text/javascript'>
-         $(document).on('change', '#clientList', function (e) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            })
+        //  Commented By: John Edel B. Tamani
+        //  $(document).on('change', '#clientList', function (e) {
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        //         }
+        //     })
 
-            e.preventDefault(); 
+        //     e.preventDefault(); 
 
-            var formData = {
-                clientName:$(this).val(),
-            }
+        //     var formData = {
+        //         clientName:$(this).val(),
+        //     }
             
-            var tdEdit = '#clientLocation';
+        //     var tdEdit = '#clientLocation';
 
-            $.ajax({
-                type: "POST",
-                url: 'liveClientAddressUpdate',
-                data: formData,
-                success: function(data){
-                    if(data.status ==  1){
-                        console.log(data);
-                        $(tdEdit).find('option').remove();
-                        var dataAppend = '<option selected disabled>Choose client location</option>';
+        //     $.ajax({
+        //         type: "POST",
+        //         url: 'liveClientAddressUpdate',
+        //         data: formData,
+        //         success: function(data){
+        //             if(data.status ==  1){
+        //                 console.log(data);
+        //                 $(tdEdit).find('option').remove();
+        //                 var dataAppend = '<option selected disabled>Choose client location</option>';
                         
-                        for (var i = 0; i < data.clientLocation.length ; i++){
-                            dataAppend = dataAppend+'<option>'+data.clientLocation[i].loc_address+'</option>';
-                        }
-                        $('#clientLocation').append(dataAppend);
-                    }else{
-                        $(tdEdit).find('option').remove();
-                        var dataAppend = '<option selected disabled>N/A</option>';
-                        $('#clientLocation').append(dataAppend);
-                    }
-                },   
-                error: function (data) {
-                    console.log('Data Error:', data);
-                }
-            });
-        });
+        //                 for (var i = 0; i < data.clientLocation.length ; i++){
+        //                     dataAppend = dataAppend+'<option>'+data.clientLocation[i].loc_address+'</option>';
+        //                 }
+        //                 $('#clientLocation').append(dataAppend);
+        //             }else{
+        //                 $(tdEdit).find('option').remove();
+        //                 var dataAppend = '<option selected disabled>N/A</option>';
+        //                 $('#clientLocation').append(dataAppend);
+        //             }
+        //         },   
+        //         error: function (data) {
+        //             console.log('Data Error:', data);
+        //         }
+        //     });
+        // });
         
         //SECTION KEYWORD/S: ORDER NAME TABLE
         $(document).on('change', '.orderName', function (e) {
@@ -732,7 +761,7 @@
     </script>
     
     <!--SECTION KEYWORD/S: MODAL, UPDATE, ORDER, AJAX, SCRIPT-->
-    <script type='text/javascript'>
+    {{-- <script type='text/javascript'>
        $("#updateOrder").click(function (e) {
             $.ajaxSetup({
                 headers: {
@@ -774,7 +803,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
     <!--SECTION KEYWORD/S: DATA-TABLE -->
     <script>

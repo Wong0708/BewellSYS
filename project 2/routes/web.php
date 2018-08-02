@@ -80,12 +80,26 @@ Route::get('truckdetailz/{id}', 'TruckDetailController@getTruck')->name('appdev.
 Route::get('driver/{id}', 'DriverController@getDriver')->name('appdev.driver');
 
 Route::get('sched_det/{id}', 'ScheduleDetailController@getSchedule')->name('appdev.scheduledetail');
+
 Route::post('/schedule/getCapacity','ScheduleController@getCurrCapacity');
 Route::resource('driver', 'DriverController');
 
+//AJAX ROUTES BY: John Edel B. Tamani
 Route::post('liveClientOrderNameUpdate','ClientOrderNameLiveUpdateController@liveUpdate');
 Route::post('liveClientOrderSKUUpdate','ClientOrderSKULiveUpdateController@liveUpdate');
 Route::post('liveClientAddressUpdate','ClientAddressLiveUpdateController@liveUpdate');
 Route::post('liveClientAddOrderUpdate','ClientAddOrderLiveUpdateController@liveUpdate');
+Route::post('/ajaxAddPayment','ClientOrderPaymentLiveUpdateController@liveUpdate');
+Route::post('/ajaxBalancePayment','ClientOrderBalancePaymentLiveUpdateController@liveUpdate');
+Route::post('/ajaxUpdatePayment','ClientOrderUpdatePaymentOrderLiveUpdateController@liveUpdate');
+Route::post('/ajaxDeletePayment','ClientOrderDeletePaymentOrderLiveUpdateController@liveUpdate');
+Route::post('/ajaxUpdatePayment','ClientOrderDeletePaymentOrderLiveUpdateController@liveUpdate');
+Route::post('/ajaxUpdatePaymentStatus','ClientOrderUpdateStatusPaymentOrderLiveUpdateController@liveUpdate');
+Route::post('/ajaxUpdatePaymentStatus','ClientOrderUpdateStatusPaymentOrderLiveUpdateController@liveUpdate');
+Route::post('/ajaxUpdateOrderStatus','ClientOrderStatusLiveUpdateController@liveUpdate');
 
+//End of Ajax Routes
 
+//Other Routes
+Route::resource('deliveryreport','DeliveryReportController');
+Route::post('deliveryreport','DeliveryReportController@generateReport')->name("appdev.deliveryreport");
