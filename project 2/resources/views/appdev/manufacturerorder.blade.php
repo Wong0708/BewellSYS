@@ -171,7 +171,7 @@
                                         <option selected disabled>Choose a Client Order</option>
                                         @if(isset($clientOrders)) 
                                             @foreach ($clientOrders as $clientOrder)
-                                                <option><b>{{$clientOrder->id}}</b>:{{$clientOrder->fromClient->cl_name}}</option>
+                                                <option data-id={{$clientOrder->id}}>{{$clientOrder->id}}:{{$clientOrder->fromClient->cl_name}}</option>
                                             @endforeach 
                                         @endif
                                     </select>
@@ -284,7 +284,7 @@
                                                     <th><i class="fa fa-gear"></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="allOrderList">
                                         <?php 
                                             //Debugging Tool Developed by Jet for PHP tags.
                                                 #echo "<script>console.log( 'Debug Objects: " . <PHP Variable Here> . "' );</script>";
@@ -524,7 +524,7 @@
 
                         var manufacturerDetail = [];
                         var manufacturer = [];
-                        manufacturer.push($('#manufacturerList').val(),$('#orderExpDate').val(),$('#totalAmountPayed').val(),$('#orderList').val());//tite
+                        manufacturer.push($('#manufacturerList').val(),$('#orderExpDate').val(),$('#totalAmountPayed').val(),$('#orderList').find('option:selected').data('id'));//jet
                         manufacturerDetail.push(manufacturer);
 
                         console.log(manufacturerDetail);

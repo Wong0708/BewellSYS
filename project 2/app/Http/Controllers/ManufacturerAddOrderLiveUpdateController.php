@@ -32,19 +32,19 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
 
         $count = 1;
         foreach($orderList as $order){
-            $new_order_detail = new ClientOrderDetail();
+            $new_order_detail = new ManufacturerOrderDetail();
             $new_order_detail->orderID = $new_order->id;
 
             $material = Supply::where('sp_name','=',$order[0])
                         ->where('sp_sku','=',$order[1])
                         ->first();
-            $new_order_detail->supplyID = $supply->id;
+
+            $new_order_detail->supplyID = $material->id;
             $new_order_detail->mndt_qty = $order[2];
 
-            $material->pd_qty = $product->pd_qty-$order[2];//assume that every input is correct
+            $material->sp_qty = $material->sp_qty-$request->order[2];//assume that every input is correct
             $material->save();
 
-            // $new_order_detail->adrDelivery = $request->clientDetail[0][1];
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();
             $new_order_detail->save();
@@ -53,6 +53,7 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
         }        
         return response()->json([
             'processed_orders' => $json_orders,
+            'order'=>$new_order,
         ]);
     }
 }
