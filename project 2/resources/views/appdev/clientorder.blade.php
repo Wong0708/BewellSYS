@@ -102,26 +102,23 @@
                             <li> <a href={{route( 'supply.index')}}>Raw Material</a> </li>
                         </ul>
                     </li>
-                    @if(Auth::user()->user_id==1)
-                        <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
-                            <ul class="nav nav-second-level">
-                                <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
-                                <li> <a href={{route('deliveryreport.index')}}>Delivery</a> </li>
-                                <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
-                                <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
-                            </ul>
-                        </li>
+                    <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
+                        <ul class="nav nav-second-level">
+                            <li> <a href={{route( 'useraccount.index')}}>User</a> </li>
+                            <li> <a href={{route( 'clientaccount.index')}}>Client</a> </li>
+                            <li> <a href={{route( 'manufactureraccount.index')}}>Manufacturer</a> </li>
+                            <li> <a href={{route( 'supplieraccount.index')}}>Supplier</a> </li>
+                        </ul>
+                    </li>
 
-                        <li style="border-bottom:1px solid #E8EAED; background-color: #E9F0FD;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#4c87ed;" data-icon="V" class="linea-icon linea-basic fa-fw"></i> <span style="color:#4c87ed;" class="hide-menu">Account<span class="fa arrow"></span></span></a>
-                            <ul class="nav nav-second-level">
-                                <li> <a href={{route('useraccount.index')}}>User</a> </li>
-                                <li> <a href={{route('clientaccount.index')}}>Client</a> </li>
-                                <li> <a href={{route('manufactureraccount.index')}}>Manufacturer</a> </li>
-                                <li> <a href={{route('supplieraccount.index')}}>Supplier</a> </li>
-                                {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
-                            </ul>
-                        </li>
-                    @endif
+                    <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="V" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account<span class="fa arrow"></span></span></a>
+                        <ul class="nav nav-second-level">
+                            <li> <a href={{route( 'inventoryreport.index')}}>User</a> </li>
+                            <li> <a href={{route( 'salesreport.index')}}>Client</a> </li>
+                            <li> <a href={{route( 'inventoryreport.index')}}>Manufacturer</a> </li>
+                            <li> <a href={{route( 'inventoryreport.index')}}>Supplier</a> </li>
+                        </ul>
+                    </li>
                     <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">FAQs</span></a></li>
                     <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Documentation</span></a></li>
                 </ul>
@@ -298,7 +295,10 @@
                             <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> 
 
                             <p class="text-muted m-b-30"></p>
-                            <div class="table-responsive">
+                            <d
+                            
+                            
+                            iv class="table-responsive">
                                 <table id="orderListTable" class="table table-striped">
                                     <thead>
                                         <tr style="color:black;">
@@ -359,18 +359,12 @@
                                                     echo 
                                                         '</td>'.
                                                         '<td id="paymentStatus'.$order->id.'">'.$order->clod_pstatus.'</td>'.
-                                                        '<td id="deliveryStatus'.$order->id.'">';    
-
-                                                    if(!empty($order->fromSchedule)){
-                                                        $order->clod_status;
-                                                    }else{
-                                                        echo 'N/A';
-                                                    }
+                                                        '<td id="deliveryStatus'.$order->id.'">'.$order->clod_status.'</td>';
 
                                                     //Commented Out By: John Edel B. Tamani
                                                     // For Future Purposes
                                                     // echo 
-                                                    //     '</td>'.
+                                                    //     '</td>'.r
                                                     //     '<td id="deliveryDate'.$order->id.'">';
                                                     // if(!empty($order->fromOneSchedule)){
                                                     //     $order->fromOneSchedule->scd_date;
