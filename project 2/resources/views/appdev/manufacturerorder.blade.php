@@ -322,8 +322,8 @@
                                                     echo 
                                                         '<td id="updatedDate'.$order->id.'">'.$order->updated_at.'</td>'.
                                                         '<td id="setting'.$order->id.'">'.
-                                                        '<a href="/manufacturerorder/'.$order->id.'" <i style="color:#4c87ed;" class="fa fa-edit editOrder">'.
-                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder">'.
+                                                        '<i style="color:#4c87ed;" data-id="'.$order->id.'" class="fa fa-edit editOrder"/>'.' '.
+                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder"/>'.
                                                         '</td>'.
                                                         '</tr>';
                                                 } 
@@ -463,6 +463,12 @@
             </script>
 
             <script type="text/javascript">
+                $(document).on('click', '.editOrder', function() {
+                    window.location.href ='manufacturerorder/'+$(this).data('id');
+                });
+            </script>
+            
+            <script type="text/javascript">
                 //jump4
                 $(document).on('click', '#materialAdd', function() {
                     count = count +1;
@@ -527,6 +533,7 @@
                         manufacturer.push($('#manufacturerList').val(),$('#orderExpDate').val(),$('#totalAmountPayed').val(),$('#orderList').find('option:selected').data('id'));//jet
                         manufacturerDetail.push(manufacturer);
 
+
                         console.log(manufacturerDetail);
 
                         if(verify==true){
@@ -554,6 +561,18 @@
                                     $('#activityStatus').show();
                                     $("#materialOrderTable").find('tbody').find('input').val('');
                                     $('#manufacturerOrderModal').modal('hide');
+
+                                    var completed = '';
+                                    if((data.order.mnod_completed!='null')){
+                                        completed = completed + data.order.mnod_completed;
+                                    }else{
+                                        completed = completed + 'N/A';
+                                    }
+                                    alert(data.order.id);
+                                    $('#allOrderList').append(
+                                        '<tr><td><a href="manufacturerorder/'+data.order.id+'"></a>'+data.order.id+'</td><td>'+data.manufacturer+'</td><td>'+data.order.mnod_date+'</td><td>'+data.order.mnod_expected+'</td>'+
+                                        '<td>'+completed+'</td><td><span class="label label-info">'+data.order.mnod_status +'</span></td><td>'+data.order.updated_at +'</td>'+
+                                        '<td><i data-id="'+data.order.id+'" style="color:#4c87ed;" class="fa fa-edit editOrder"/><i style="margin-left:5px; color:#E53935;" data-orderid='+data.order.id+' class="fa fa-trash-o removeOrder"/></td></tr>');
                                 },   
                                 error: function (data) {
                                     console.log('Data Error:', data);

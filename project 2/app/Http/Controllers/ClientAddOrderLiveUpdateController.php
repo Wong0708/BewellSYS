@@ -39,16 +39,18 @@ class ClientAddOrderLiveUpdateController extends Controller
                         ->first();
             $new_order_detail->productID = $product->id;
             $new_order_detail->cldt_qty = $order[2];
+            $new_order_detail->received = 0;
             $new_order_detail->totalPrice = $product->pd_price * $order[2];
 
-            if($order[2]>$product->pd_qty){
-                $product->pd_allocated = $product->pd_allocated+($order[2]-$product->pd_qty);
-                $product->pd_qty = 0;
-                $product->save();
-            }else if($order[2]<=$product->pd_qty){
-                $product->pd_qty = $product->pd_qty-$order[2];
-                $product->save();
-            }
+            //Minus calculations Commented out by: John Edel B. Tamani
+            // if($order[2]>$product->pd_qty){
+            //     $product->pd_allocated = $product->pd_allocated+($order[2]-$product->pd_qty);
+            //     $product->pd_qty = 0;
+            //     $product->save();
+            // }else if($order[2]<=$product->pd_qty){
+            //     $product->pd_qty = $product->pd_qty-$order[2];
+            //     $product->save();
+            // }
             // $new_order_detail->adrDelivery = $request->clientDetail[0][1];
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();

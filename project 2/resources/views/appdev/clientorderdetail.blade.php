@@ -435,10 +435,11 @@
                                         <tr style="color:black;">
                                             <th>#</th>
                                             <th>Order #</th>
-                                            <th>Product Code</th>
                                             <th>Product Name</th>
                                             <th>SKU</th>
-                                            <th>Quantity (Boxes)</th>
+                                            <th>Total</th>
+                                            <th>Remaining</th>
+                                            <th>Received</th>
                                             {{-- <th><i class="fa fa-gear"></th> --}}
                                         </tr>
                                     </thead>
@@ -450,10 +451,12 @@
                                                     echo '<tr>'.
                                                         '<td>'.$count.'</td>'.
                                                         '<td>'.$orderInfo->orderID.'</td>'.
-                                                        '<td>'.$orderInfo->fromProduct->pd_code.'</td>'.
                                                         '<td>'.$orderInfo->fromProduct->pd_name.'</td>'.
                                                         '<td>'.$orderInfo->fromProduct->pd_sku.'</td>'.
                                                         '<td>'.$orderInfo->cldt_qty.'</td>'.
+                                                        '<td>'.($orderInfo->cldt_qty-$orderInfo->received).'</td>'.
+                                                        '<td>'.$orderInfo->received.'</td>'.
+
                                                         // '<td>'.
                                                             //Commented out By: John Edel B. Tamani 
                                                             // Edit Function for Payment

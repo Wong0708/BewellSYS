@@ -9,6 +9,6 @@ class ManufacturerOrder extends Model
     protected $table="BC_Manufacturer_Order";
 
     public function fromManufacturer(){
-        return $this->belongsTo(Manufacturer::class,'id','id');
+        return $this->belongsTo(Manufacturer::class,'manufacturerID','id');
     }
 }

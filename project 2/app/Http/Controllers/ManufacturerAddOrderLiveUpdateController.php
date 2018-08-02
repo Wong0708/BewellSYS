@@ -16,11 +16,11 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
         $json_orders = [];
         $date = new DateTime();
         $manufacturer = Manufacturer::where('mn_name','=',$request->manufacturerInfo[0][0])->first();
-
         $orderList = $request->orderList;
 
         $new_order = new ManufacturerOrder();
         $new_order->orderID= $request->manufacturerInfo[0][3];
+        $new_order->manufacturerID= $manufacturer->id;
         $new_order->mnod_date = date("Y/m/d");
         $new_order->mnod_status = 'Processing';
         $new_order->mnod_completed = null;
@@ -30,7 +30,7 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
         $new_order->updated_at = $date->getTimestamp();
         $new_order->save();
 
-        $count = 1;
+        $count = 0;
         foreach($orderList as $order){
             $new_order_detail = new ManufacturerOrderDetail();
             $new_order_detail->orderID = $new_order->id;
@@ -41,19 +41,19 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
 
             $new_order_detail->supplyID = $material->id;
             $new_order_detail->mndt_qty = $order[2];
-
-            $material->sp_qty = $material->sp_qty-$request->order[2];//assume that every input is correct
+            $material->sp_qty = $material->sp_qty-$order[2];//assume that every input is correct
             $material->save();
 
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();
             $new_order_detail->save();
-            array_push($json_orders,'orderNum'.$count,$new_order_detail);
+
             $count = $count + 1;
         }        
+
         return response()->json([
-            'processed_orders' => $json_orders,
             'order'=>$new_order,
+            'manufacturer'=>$manufacturer->mn_name,
         ]);
     }
 }
