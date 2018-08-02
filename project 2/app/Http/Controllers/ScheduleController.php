@@ -69,7 +69,6 @@ class ScheduleController extends Controller
             foreach ($order_det as $det){
                 array_push($order_det_id, $det['orderID']);
             }
-
             return in_array($manufacturer_order->id,$order_det_id,TRUE);
         });
         $client_orders = $client_orders->filter(function ($client_order) {
@@ -149,11 +148,21 @@ class ScheduleController extends Controller
 
         foreach ($schedules as $schedule){
             $schedule_dets = ScheduleDetail::all();
+            $schedule_dets_m = ScheduleManufacturerDetail::all();
             $sid = $schedule['id'];
+
+
+            $schedule_dets_m = $schedule_dets_m->filter(function ($sched) use ($sid) {
+                return $sched->scheduleID == $sid;
+            });
 
             $schedule_dets = $schedule_dets->filter(function ($sched) use ($sid) {
                 return $sched->scheduleID == $sid;
             });
+
+            foreach ($schedule_dets_m as $schedule_det_m){
+                $total_curr_cap += $schedule_det_m['delivered_qty'];
+            }
 
             foreach ($schedule_dets as $schedule_det){
                 $total_curr_cap += $schedule_det['delivered_qty'];
