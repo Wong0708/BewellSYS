@@ -269,7 +269,7 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
                                     {{csrf_field()}}
-                                    <input type="date" class="form-control delivery_date" id="m_dd" name="delivery_date"  schedtype="manufacturer" value="">
+                                    <input type="date" class="form-control delivery_date" id="mdd" name="delivery_date"  schedtype="manufacturer" value="">
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
@@ -399,6 +399,7 @@
                                             @if($client_orders)
                                                 @foreach ($client_orders as $client_order)
                                                     <option value="{{$client_order->id}}"
+                                                            expectdate="{{$client_order->expectedDate}}"
                                                             locs="@foreach($client_order->locations as $locs){{$locs->loc_address}};@endforeach"
                                                             locs_ids="@foreach($client_order->locations as $locs){{$locs->id}};@endforeach"
                                                             prod_ids="@foreach($client_order->order_details as $prod){{$prod->productID}};@endforeach"
@@ -426,7 +427,7 @@
                                     <br>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a date to schedule a delivery. <b style="color:#E53935;">*Required</b></span>
                                     {{csrf_field()}}
-                                    <input type="date" class="form-control delivery_date" id="c_dd" name="delivery_date" schedtype="client" value="">
+                                    <input type="date" id="cdd" class="form-control delivery_date" name="delivery_date" schedtype="client"/>
 
                                     <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Truck Plate Number:</b></label>
                                     <br>
@@ -1091,6 +1092,22 @@
 
                     //console.log( "ready!" );
                     $("#prev_address").html(loc);
+
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth()+1; //January is 0!
+
+                    var yyyy = today.getFullYear();
+                    if(dd<10){
+                        dd='0'+dd;
+                    }
+                    if(mm<10){
+                        mm='0'+mm;
+                    }
+                    var today = yyyy+'-'+mm+'-'+dd;
+
+                    $("#cdd").val(today);
+                    $("#mdd").val(today);
                 });
             </script>
             <script>
@@ -1107,11 +1124,11 @@
 
                     if(type === "client"){
 
-                        date = $("#c_dd").val();
+                        date = $("#cdd").val();
                         cur_cap = parseInt($('#ctruck_cur_cap').val());
                     }else{
 
-                        date = $("#m_dd").val();
+                        date = $("#mdd").val();
                         cur_cap = parseInt($('#mtruck_cur_cap').val());
                     }
 
@@ -1158,6 +1175,13 @@
                         var prod_ids = $('option:selected', this).attr('prod_ids').split(";");
                         var prod_qty = $('option:selected', this).attr('prod_qty').split(";");
                         var order_id = $('option:selected', this).attr('value');
+
+                        var expectedDate = $('option:selected', this).attr('expectdate');
+
+                        $('.address_dropdown').find('option').remove();
+
+                        $("#cdd").val(expectedDate);
+                        jQuery('.delivery_date').trigger('change');
 
                         $('.address_dropdown').find('option').remove();
 
