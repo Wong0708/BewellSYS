@@ -192,19 +192,44 @@
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center">
-                            <h1 class="counter">{{$order->expectedDate}}</h1>
+                            <h1 id="orderDeadlineStatus" dclass="counter">{{$order->expectedDate}}</h1>
                                 <p class="text-muted">Order Deadline</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-success">
                             <h1 class="text-white counter">N/A</h1>
-                                <p class="text-white">Date Delivered</p>
+                                <p class="text-white">Date Completed</p>
                             </div>
                         </div>
                     </div>
                     
-              
+                
+                <!--SECTION KEYWORD/S: ORDER, MODAL 
+                    Prepared By: John Edel B. Tamani
+                -->
+                <div id='orderDeadlineModal' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordermodallabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Update Order Deadline</h4> 
+                            </div>
+                            <div class="modal-body">
+                                    <label for="exp_date" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
+                                    <input type="date" class="form-control" id="exp_date" name="exp_date"> 
+                                    <input type="hidden" id="previousexpdate" name="previousexpdate" value=''>
+
+                            </div>
+                        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                <button style="background-color:#4c87ed;" type="button" id="updateOrderStatus" class="btn btn-danger waves-effect waves-light">Update</button>
+                            </div>
+                        </div>
+                    <input type="hidden" id="orderModalIDUpdateStatus" name="orderModalIDUpdateStatus" value={{$order->id}}>
+                    </div>
+                </div>
                   <div class="col-lg-6 col-sm-6">
                       <div class="row">
 
@@ -213,7 +238,8 @@
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     {{-- Commented Out for future purposes By: John Edel B. Tamani
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button> --}}
-                                    <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Delivery Status</button>
+                                    <button id="orderDeadlineButton" data-expecteddate={{$order->expectedDate}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
+                                    <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="|" class="linea-icon linea-basic"></i></span>Update Delivery Status</button>
                                     {{-- <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span><a href={{route('manufacturerorder.index')}}>Manage Manufacturer Order</a></button>
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span><a href={{route('supplierorder.index')}}>Manage Supplier Order</a></button>
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span><a href={{route('schedule.index')}}>Manage Schedule</a></button>
@@ -345,7 +371,7 @@
                                                                 '<td>'.$orderInfo->orderID.'</td>'.
                                                                 '<td>'.$orderInfo->scd_date.'</td>'.
                                                                 '<td><span class="label label-success">'.$orderInfo->scd_status.'</span></td>'.
-                                                                '<td><a href="/schedule/'.$orderInfo->id.'"><i style="color:#4c87ed;"class="fa fa-calendar"></a></td>'.
+                                                                '<td><a href="/sched_det/'.$orderInfo->id.'"><i style="color:#4c87ed;"class="fa fa-calendar"></a></td>'.
                                                             '</tr>';
                                                             $count = $count + 1;
                                                         }
@@ -399,7 +425,7 @@
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     <h3 class="box-title m-b-0" style="color:black;">Order Details Record</h3>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
-                                    <button id="addClientOrder"style="margin-top:10px; " class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('clientorder.index')}}>Add Order</a></button>
+                                    <button id="addClientOrder"style="margin-top:10px; " class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('clientorder.index')}}>Manage Order List</a></button>
                                     <p class="text-muted m-b-30"></p>
                                     <hr>
                                 <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
@@ -408,29 +434,53 @@
                                             <thead>
                                                 <tr style="color:black;">
                                                     <th>#</th>
+                                                    <th>Order #</th>
                                                     <th>Product Code</th>
                                                     <th>Product Name</th>
                                                     <th>SKU</th>
                                                     <th>Quantity (Boxes)</th>
-                                                    <th><i class="fa fa-gear"></th>
+                                                    {{-- <th><i class="fa fa-gear"></th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if(isset($$order->fromClientOrderDetail))
+                                                <?php 
+                                                    $count= 1;
+                                                    if(isset($order->fromClientOrderDetail)){
+                                                        foreach($order->fromClientOrderDetail as $orderInfo){
+                                                            echo '<tr>'.
+                                                                '<td>'.$count.'</td>'.
+                                                                '<td>'.$orderInfo->orderID.'</td>'.
+                                                                '<td>'.$orderInfo->fromProduct->pd_code.'</td>'.
+                                                                '<td>'.$orderInfo->fromProduct->pd_name.'</td>'.
+                                                                '<td>'.$orderInfo->fromProduct->pd_sku.'</td>'.
+                                                                '<td>'.$orderInfo->cldt_qty.'</td>'.
+                                                                // '<td>'.
+                                                                    //Commented out By: John Edel B. Tamani 
+                                                                    // Edit Function for Payment
+                                                                    // '<i style="color:#4c87ed;" data-payment="'.$orderInfo->totalAmount.'" data-id="'.$orderInfo->id.'" class="fa fa-edit editPayment">'. //
+                                                                    // '<i style="margin-left:5px; color:#E53935;" data-id="'.$orderInfo->id.'"  class="fa fa-trash-o removePayment">'.
+                                                                    // '</td>'.
+                                                            '</tr>';
+                                                            $count = $count + 1;
+                                                        }
+                                                    }
+                                                ?>
+                                                {{-- Commented Out Old Implementation of Client Order Detail
+                                                    @if(isset($$order->fromClientOrderDetail))
                                                     @foreach($order->fromClientOrderDetail as $orderInfo)
                                                         <tr>
                                                             <td>{{$orderInfo->id}}</td>
                                                             <td>{{$orderInfo->fromProduct->pd_code}}</td>
                                                             <td>{{$orderInfo->fromProduct->pd_name}}</td>
                                                             <td>{{$orderInfo->fromProduct->sku}}</td>
-                                                            <td>{{$orderInfo->cldt_qty}}</td>
-                                                            <td>
+                                                            <td>{{$orderInfo->cldt_qty}}</td> --}}
+                                                            {{-- <td>
                                                                 <i style="color:#4c87ed;" class="fa fa-edit">
                                                                 <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                            </td>
-                                                        </tr>
+                                                            </td> --}}
+                                                        {{-- </tr>
                                                     @endforeach
-                                                @endif
+                                                @endif --}}
                                             </tbody>
                                         </table>
                                     </div>
@@ -577,6 +627,56 @@
                 SECTION KEYWORD/S: APPLICATION JET SCRIPT
                 Prepared By: John Edel B. Tamani
             -->
+            <script type="text/javascript">
+                $(document).on('click','#orderDeadlineButton',function(e){
+                    $('#exp_date').val($(this).data('expecteddate'));
+                    $('#previousexpdate').val($(this).data('expecteddate'));
+                    $('#orderDeadlineModal').modal('show');
+                });
+
+                $(document).on('click','#updateOrderStatus',function(e){
+                    //jump
+                    var verify = confirm("Do you want to update the order?");
+                    if(verify==true){
+                        if($('#previousexpdate').val()!=$('#exp_date').val()){
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                }
+                            })
+
+                            e.preventDefault(); 
+
+                            var formData = {
+                                expectedDate: $('#exp_date').val(),
+                                id: $('#orderModalIDUpdateStatus').val(),
+
+                            }
+                            
+                            var type = "POST"; 
+                            var orderID = $('#orderModalIDUpdateStatus').val();
+                            var process_url = '/ajaxUpdateOrderStatus';
+
+                            $.ajax({
+                                type: type,
+                                url: process_url,
+                                data: formData,
+                                dataType: 'json',
+                                success: function (data) {
+                                    $("#orderDeadlineStatus").text(data.expdate);
+                                    $('#orderDeadlineModal').modal('hide');
+                                },
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }else{
+                            alert('Invalid Input Update Order Status is the Same! Please Try Again!');
+                        }
+                    }
+                });
+                
+            </script>
 
             <script type="text/javascript">
                 $(document).on('click','.removePayment',function(e){

@@ -156,7 +156,7 @@ class ClientOrderController extends Controller
         // Session::flash('success','Successfully edited an order!');
         // return redirect("/clientorder");
 
-        $order = ClientOrder::where('orderID', $id)->update(['expectedDate'=>$request->expectedDate]);
+        $order = ClientOrder::where('id', $id)->update(['expectedDate'=>$request->expectedDate]);
         return response()->json($order);
     }
 

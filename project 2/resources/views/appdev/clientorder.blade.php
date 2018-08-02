@@ -303,6 +303,7 @@
                                             <th>Client</th>
                                             <th>Order Date</th>
                                             <th>Expected Date</th>
+                                            <th>Date Completed</th>
                                             <th>Payment Status</th>
                                             
                                             {{-- 
@@ -344,6 +345,16 @@
                                                         '</td>'.
                                                         '<td id="createdDate'.$order->id.'">'.$order->created_at->format('y-m-d').'</td>'.
                                                         '<td id="expectedDate'.$order->id.'">'.$order->expectedDate.'</td>'.
+                                                        '<td id="dateCompleted'.$order->id.'">';
+
+                                                    if(!empty($order->clod_completed)){
+                                                        echo $order->clod_completed;
+                                                    }else{
+                                                        echo 'N/A';
+                                                    }
+
+                                                    echo 
+                                                        '</td>'.
                                                         '<td id="paymentStatus'.$order->id.'">'.$order->clod_pstatus.'</td>'.
                                                         '<td id="deliveryStatus'.$order->id.'">';    
 
@@ -353,12 +364,11 @@
                                                         echo 'N/A';
                                                     }
 
-                                                    echo 
-                                                        '</td>'.
-                                                        '<td id="deliveryDate'.$order->id.'">';
-                                                    
                                                     //Commented Out By: John Edel B. Tamani
                                                     // For Future Purposes
+                                                    // echo 
+                                                    //     '</td>'.
+                                                    //     '<td id="deliveryDate'.$order->id.'">';
                                                     // if(!empty($order->fromOneSchedule)){
                                                     //     $order->fromOneSchedule->scd_date;
                                                     // }else{
@@ -366,10 +376,14 @@
                                                     // }
 
                                                     echo 
-                                                        '</td>'.
+                                                        // '</td>'.//For future purposes
                                                         '<td id="updatedDate'.$order->id.'">'.$order->updated_at.'</td>'.
                                                         '<td id="setting'.$order->id.'">'.
-                                                        '<i style="color:#4c87ed;" data-orderid='.$order->id.' data-expecteddate='.$order->expectedDate.' class="fa fa-edit editOrder">'.
+                                                        '<a href="/clientorder/'.$order->id.'" <i style="color:#4c87ed;" class="fa fa-edit editOrder">'.
+
+                                                        //Commented Out By: John Edel B. Tamani
+                                                        // For Future purposes of Edit 
+                                                        // '<i style="color:#4c87ed;" data-orderid='.$order->id.' data-expecteddate='.$order->expectedDate.' class="fa fa-edit editOrder">'.
                                                         '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder">'.
                                                         '</td>'.
                                                         '</tr>';
@@ -384,17 +398,20 @@
                     </div>
                 </div>
 
-                <!--SECTION KEYWORD/S: ORDER, MODAL-->
-                <div id='ordermodal' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordermodallabel" aria-hidden="true" style="display: none;">
+                <!--SECTION KEYWORD/S: ORDER, MODAL 
+                    Commented Out For future purposes By: John Edel B. Tamani
+                -->
+                {{-- <div id='ordermodal' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordermodallabel" aria-hidden="true" style="display: none;">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="modal-title">Update Order</h4> 
+                                <h4 class="modal-title">Update Order Deadline</h4> 
                             </div>
                             <div class="modal-body">
-                                    <label for="exp_date" id=""class="control-label">Expected Date:</label>
-                                    <input type="date" class="form-control" id="exp_date" name="expectedDate"> 
+                                    <label for="exp_date" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
+                                
+                                    <input type="date" class="form-control" id="exp_date" name="exp_date"> 
                             </div>
                         
                             <div class="modal-footer">
@@ -404,7 +421,7 @@
                         </div>
                         <input type="hidden" id="orderModalID" name="orderID" value="0">
                     </div>
-                </div>
+                </div> --}}
                 
 
         
@@ -486,18 +503,21 @@
         });
     </script>
 
-    <script type='text/javascript'>
+
+    {{-- SECTION COMMENTED OUT FOR FUTURE PURPOSES 
+         Prepared By: John Edel B. Tamani
+        <script type='text/javascript'>
         $(document).on('click','.editOrder',function(){
             $('#exp_date').val($(this).data('expecteddate'));
             $('#orderModalID').val($(this).data('orderid'));
             $('#ordermodal').modal('show');
 
-            // Learning/s Reference for JQuery.
-            // Prepared By: John Edel B. Tamani
-            // $('#something').prop("readonly", true); -> To disable an input.
-            // $('.something').prop("disabled",true); -> To disable a button.
+            Learning/s Reference for JQuery.
+            Prepared By: John Edel B. Tamani
+            $('#something').prop("readonly", true); -> To disable an input.
+            $('.something').prop("disabled",true); -> To disable a button.
         });
-    </script>
+    </script> --}}
 
     <!--SECTION KEYWORD/S: SUBMIT ORDER LIST-->
     <script type='text/javascript'>
@@ -744,7 +764,7 @@
     </script>
     
     <!--SECTION KEYWORD/S: MODAL, UPDATE, ORDER, AJAX, SCRIPT-->
-    <script type='text/javascript'>
+    {{-- <script type='text/javascript'>
        $("#updateOrder").click(function (e) {
             $.ajaxSetup({
                 headers: {
@@ -786,7 +806,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
     <!--SECTION KEYWORD/S: DATA-TABLE -->
     <script>
