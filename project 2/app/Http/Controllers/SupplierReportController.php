@@ -72,14 +72,11 @@ class SupplierReportController extends Controller
         return $orderdetail;
     }
 
-<<<<<<< HEAD
     public static function getSupply($id){
         $supply = Supply::where('id',$id)->first();
         return $supply;
     }
 
-=======
->>>>>>> d99fa831eaef7caa8b7d8b680fb0fc120398fa8a
     /**
      * Show the form for creating a new resource.
      *
