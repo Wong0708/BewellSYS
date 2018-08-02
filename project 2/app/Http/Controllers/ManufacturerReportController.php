@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Manufacturer;
 use App\ManufacturerOrder;
 use App\ManufacturerOrderDetail;
+use App\Supply;
 use Session;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -79,6 +80,11 @@ class ManufacturerReportController extends Controller
         return $order;
     }
 
+    public static function getSupply($id){
+        $supply = Supply::where('id',$id)->first();
+        return $supply;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -108,7 +114,14 @@ class ManufacturerReportController extends Controller
      */
     public function show($id)
     {
-        //
+        $manufacturer = Manufacturer::find($id);
+        $order = ManufacturerOrder::find($id);
+        $orderdetail = ManufacturerOrderDetail::find($id);
+
+        return view("appdev.manufacturerreportdetail")
+        ->with("manufacturer",$manufacturer)
+        ->with("order",$order)
+        ->with("orderdetail",$orderdetail);
     }
 
     /**

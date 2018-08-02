@@ -333,7 +333,7 @@
                                                         @if(count($orders) > 0)
                                                             @foreach($orders as $order)
                                                             <tr style ="color:black;">
-                                                                <td>Order # {{$order->id}}</td>
+                                                                <td><a href="salesreport/{{$order->id}}">Order # {{$order->id}}</td>
                                                                 <td>{{$order->clod_date}}</td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
