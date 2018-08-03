@@ -175,6 +175,7 @@ class ClientOrderController extends Controller
         // return redirect("/clientorder");
 
         $order = ClientOrder::where('orderID', $id)->delete();
+
         return response()->json($order);
     }
 }

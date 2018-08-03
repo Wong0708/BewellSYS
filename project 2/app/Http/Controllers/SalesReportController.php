@@ -33,6 +33,11 @@ class SalesReportController extends Controller
         $products = Product::all();
         $productdetails = ProductDetails::all();
 
+        foreach($orders as $order){
+            $date = date_create($order['clod_date']);
+            $order['clod_date'] = date_format($date, "F j Y");
+        }
+
        return view("appdev.salesreport")->with("start","")
        ->with("end","")->with("orders",$orders)->with("clients",$clients)->with("products",$products)->with("orderdetails", $orderdetails)->with("productdetails",$productdetails);
     }
@@ -45,6 +50,11 @@ class SalesReportController extends Controller
         $products = Product::all();
         $productdetails = ProductDetails::all();
         $test = $request->dog;
+
+        foreach($orders as $order){
+            $date = date_create($order['clod_date']);
+            $order['clod_date'] = date_format($date, "F j Y");
+        }
         
         $start = new DateTime($request->start." 00:00:00");
         $end = new DateTime($request->end." 23:59:59");
@@ -131,6 +141,8 @@ class SalesReportController extends Controller
         $client = Client::find($id);
         $product = Product::find($id);
         $productdetail = ProductDetails::find($id);
+        
+        
 
        return view("appdev.salesreportdetail")->with("order",$order)
        ->with("client",$client)

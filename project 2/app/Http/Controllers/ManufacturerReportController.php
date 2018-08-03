@@ -29,6 +29,11 @@ class ManufacturerReportController extends Controller
         $orders = ManufacturerOrder::all();
         $orderdetails = ManufacturerOrderDetail::all();
 
+        foreach($orders as $order){
+            $date = date_create($order['mnod_date']);
+            $order['mnod_date'] = date_format($date, "F j Y");
+        }
+
         return view("appdev.manufacturerreport")
         ->with("manufacturers",$manufacturers)
         ->with("orders",$orders)
@@ -41,6 +46,11 @@ class ManufacturerReportController extends Controller
         $manufacturers = Manufacturer::all();
         $orders = ManufacturerOrder::all();
         $orderdetails = ManufacturerOrderDetail::all();
+
+        foreach($orders as $order){
+            $date = date_create($order['mnod_date']);
+            $order['mnod_date'] = date_format($date, "F j Y");
+        }
         
         $start = new DateTime($request->start." 00:00:00");
         $end = new DateTime($request->end." 23:59:59");
