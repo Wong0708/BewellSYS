@@ -422,6 +422,17 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function cancelSchedule($sched_id){
+        $schedule = Schedule::find($sched_id);
+        if($schedule->schedType == "client"){
+            $order_details =DB::table("bc_client_order_detail")->where('orderID', $schedule['orderID'])->get()->toArray();
+            foreach ($order_details as $order_detail){
+                $product = Product::find($order_detail['productID']);
+                $product->pd_allocated = $product->pd_allocated - $order_detail[''];
+            }
+        }
+        else{}
+    }
     public function update(Request $request, $id)
     {
         $MSG = 'Successfully confirmed schedule!';
@@ -443,6 +454,8 @@ class ScheduleController extends Controller
             else{
                 $schedule->scd_status = "Cancelled";
                 $schedule->remark = $request->remarks;
+
+                //$this->cancelSchedule($schedule->id);
 
                 $order->clod_status = "Cancelled";
 

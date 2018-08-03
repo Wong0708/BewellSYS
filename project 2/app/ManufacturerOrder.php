@@ -11,4 +11,7 @@ class ManufacturerOrder extends Model
     public function fromManufacturer(){
         return $this->belongsTo(Manufacturer::class,'manufacturerID','id');
     }
+    public function fromManufacturerOrderDetail(){
+        return $this->hasMany(ManufacturerOrderDetail::class,'orderID','id');//foreign,local key
+    }
 }

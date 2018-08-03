@@ -166,7 +166,9 @@
                                     </select>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one manufacturer among the list to add an order. <b style="color:#E53935;">*Required</b></span>
                                     <br>
-                                    <label for="orderList" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Order:</b></label>
+                                    {{-- 
+                                        Commented Out For Future Purposes
+                                        <label for="orderList" class="control-label" style="margin-top:10px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Order:</b></label>
                                     <select name="orderList" class="form-control" id="orderList" style="margin-bottom:10px;">
                                         <option selected disabled>Choose a Client Order</option>
                                         @if(isset($clientOrders)) 
@@ -177,7 +179,7 @@
                                     </select>
 
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one order among the list of client order/s. <b style="color:#E53935;">*Required</b></span>
-                                    <br>
+                                    <br> --}}
                                     <label for="orderExpDate" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
                                     <input type="date" name="orderExpDate" class="form-control" id="orderExpDate" style="margin-bottom:10px;"/>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the expected date of delivery for this order. <b style="color:#E53935;">*Required</b>
@@ -317,13 +319,19 @@
 
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="deliveryStatus'.$order->id.'"><span class="label label-success">'.$order->mnod_status.'</span></td>';
+                                                        '<td id="deliveryStatus'.$order->id.'">';
+
+                                                    if($order->mnod_status=='Complete'){
+                                                        echo '<span class="label label-success">'.$order->mnod_status.'</span></td>';
+                                                    }else{
+                                                        echo '<span class="label label-info">'.$order->mnod_status.'</span></td>';
+                                                    }
 
                                                     echo 
                                                         '<td id="updatedDate'.$order->id.'">'.$order->updated_at.'</td>'.
                                                         '<td id="setting'.$order->id.'">'.
-                                                        '<i style="color:#4c87ed;" data-id="'.$order->id.'" class="fa fa-edit editOrder"/>'.' '.
-                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder"/>'.
+                                                        '<a href="/manufacturerorder/'.$order->id.'" <i style="color:#4c87ed;" class="fa fa-edit editOrder">'.
+                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder">'.
                                                         '</td>'.
                                                         '</tr>';
                                                 } 
@@ -355,7 +363,40 @@
             <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+            <script type="text/javascript">
+                $(".removeOrder").click(function (e) {
+                   var verify = confirm("WARNING! Order will be Deleted Permanently! Do you wish to continue?");
+                    if(verify ==true){
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        })
+                
+                        var orderID = $(this).data('orderid');
 
+                        $.ajax({
+                            type: "DELETE",
+                            url: window.location.pathname + '/' + orderID,
+                            success: function (data) {
+                                $("#order" + orderID).remove();
+                                $('#activityStatus').html('An order has been successfully deleted!');
+                                $('#activityStatus').show();
+                                count2 = count2 - 1;
+                            },
+                            error: function (data) {
+                                $("#activityStatus").toggleClass('alert-success alert-danger');
+                                $('#activityStatus').html('Failed to process request an error occured!');
+                                $("#activityStatus").toggleClass('alert-danger alert-success');
+                                $('#activityStatus').show();
+                                console.log('Data Error:', data);
+                            }
+                        });
+                    }
+                    return false;
+                });
+            
+            </script>
             <!--jump3-->
             <script type='text/javascript'>
                 var count = 1;
@@ -472,7 +513,7 @@
                 //jump4
                 $(document).on('click', '#materialAdd', function() {
                     count = count +1;
-                    $('#orderMaterialList').append(
+                    $('#orderMaterialList').find('tr:last').append(
                         '@if(isset($materials))<tr id="orderListNum'+count+'" style="color:black;">'+ 
                         '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
                         '<td> <select style="font-size:12px;" class="form-control orderName"><option selected> Choose a Material</option>@foreach ($materials as $material)<option>{{$material->sp_name}}</option> @endforeach</select> </td>' +
@@ -569,6 +610,7 @@
                                         completed = completed + 'N/A';
                                     }
                                     alert(data.order.id);
+                                    location.reload();//caching on datatable error
                                     $('#allOrderList').append(
                                         '<tr><td><a href="manufacturerorder/'+data.order.id+'"></a>'+data.order.id+'</td><td>'+data.manufacturer+'</td><td>'+data.order.mnod_date+'</td><td>'+data.order.mnod_expected+'</td>'+
                                         '<td>'+completed+'</td><td><span class="label label-info">'+data.order.mnod_status +'</span></td><td>'+data.order.updated_at +'</td>'+

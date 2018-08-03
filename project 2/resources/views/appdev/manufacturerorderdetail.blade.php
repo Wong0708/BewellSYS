@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="_token" content="{!! csrf_token() !!}">
     <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/bewelllogo.ico">
     <title>Bewell</title>
     <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +17,7 @@
     <link href="../css/animate.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/colors/blue.css" id="theme" rel="stylesheet">
+
     <link href="../plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -35,7 +37,6 @@
                             </li>
                     </ul>
                     <ul class="nav navbar-top-links navbar-right pull-right">
-    
                         <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i>
               <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
               </a>
@@ -55,18 +56,12 @@
                                 </li>
                             </ul>
                         </li>
-    
-    
-                        
                         <li class="dropdown">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="../plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
-                                
                                 @if(Auth::user()->access==1)
                                    Logistics Head
                                 @endif
-        
                             </b> </a>
-    
                             <ul class="dropdown-menu dropdown-user animated flipInY">
                                 <li><a href="#"><i class="ti-user"></i> Manage Account</a></li>
                                 <li role="separator" class="divider"></li>
@@ -76,6 +71,7 @@
                     </ul>
                 </div>
             </nav>
+        <!-- Left navbar-header -->
         <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                     <ul class="nav" id="side-menu">
@@ -104,7 +100,7 @@
                             <li> <a href={{route('supply.index')}}>Raw Material</a> </li>
                             </ul>
                         </li>
-                        @if(Auth::user()->user_id==1)
+                        @if(Auth::user()->access==1)
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu">Report<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
@@ -116,7 +112,7 @@
     
                         <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="V" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
-                            <li> <a href={{route('useraccount.index')}}>User</a> </li>
+                                <li> <a href={{route('useraccount.index')}}>User</a> </li>
                                 <li> <a href={{route('clientaccount.index')}}>Client</a> </li>
                                 <li> <a href={{route('manufactureraccount.index')}}>Manufacturer</a> </li>
                                 <li> <a href={{route('supplieraccount.index')}}>Supplier</a> </li>
@@ -133,198 +129,116 @@
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title" style="color:black;">Order Details: SPOD-1</h4>
+                    <h4 class="page-title" style="color:black;">Order Details: {{$order->id}}</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">Order</a></li>
-                            <li class="active" style="color:#4c87ed;">Supplier</li>
+                            <li class="active" style="color:#4c87ed;">Client</li>
                         </ol>
                     </div>
                 </div>
-                <div class="modal fade" id="clientOrderModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
+                <!--
+                    SECTION KEYWORD/S: ADD PAYMENT MODAL
+                    Prepared By: John Edel B. Tamani
+                -->
+                <!--START OF THE PAYMENT MODAL-->
+                <div class="modal fade" id="addOrderPaymentModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Order/s</h4>
-                                <br>
+                                <button type="button"class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Payment</h4>
                             </div>
+                            <input type="hidden" id="orderIDPayment" name="orderIDPayment" value={{$order->id}}>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
-                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Material Order/s</b></h4>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the supplier's material order based on the list.</span>
-                                        <br>
-                                        <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button></label>
-                                        <div class="table-responsive" style="margin-top:10px;">
-                                        <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
-                                            <thead>
-                                                <tr style="font-size:12px; font-weight:700; ">
-                                                    <th>Order #</th>
-                                                    <th>Product Name</th>
-                                                    <th>SKU</th>
-                                                    <th>Order Amount (Boxes)</th>
-                                                    <th><i class="fa fa-gear"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="addproduct">
-                                                            
-                                                                <tr style="color:black;">
-                                                                        <td><span class="label label-info">1</span></td>
-                                                                        <td> <select style="font-size:12px;" style="font-size:12px;" class="form-control" name="product[]" class="product"><option>BeWell-C</option> </td>
-                                                                        <td>
-                                                                            <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                                <option>1000 grams</option>
-                                                                                <option>500 grams</option>
-                                                                                <option>250 grams</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td><input style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                        <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                                </tr>
-                                                            <tr style="color:black;">
-                                                                    <td><span class="label label-info">2</span></td>
-                                                                    <td> <select style="font-size:12px;" style="font-size:12px;" class="form-control" name="product[]" class="product"><option>LiverGuard</option> </td>
-                                                                    <td>
-                                                                        <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                            <option>1000 grams</option>
-                                                                            <option>500 grams</option>
-                                                                            <option>250 grams</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input style="font-size:12px;" readonly class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                            </tr>
-
-                                                            <tr style="color:black;">
-                                                                    <td><span class="label label-info">3</span></td>
-                                                                    <td> <select style="font-size:12px;" class="form-control" name="product[]" class="product"><option>BC-Calcium</option> </td>
-                                                                    <td>
-                                                                        <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                            <option>1000 grams</option>
-                                                                            <option>500 grams</option>
-                                                                            <option>250 grams</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                            </tr>
-
-                                                            
-                                                        </tbody>
-                                                    </table>
-                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Total Price: ₱100.00 </b></h4>
-                                                </div>
-                                                <hr>
-                                                    <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Material Inventory Support</b></h4>
-                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced inventory list for the supplier's ordered material/s.</span>
-                                                    
-                                                    <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
-                                                            <thead>
-                                                                <tr style="font-size:12px; font-weight:700;">
-                                                                    <th>Order #</th>
-                                                                    <th>Product Code</th>
-                                                                    <th>Available</th>
-                                                                    <th>Unit Price</th>
-                                                                    <th>Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id="addproduct">
-                                                                            
-                                                                            <tr style="font-size:12px;">
-                                                                               <td>1</td>
-                                                                               <td>PR-0001</td>
-                                                                               <td><span class="label label-success">70</span></td>
-                                                                               <td>₱100.00</td>
-                                                                               <td><span class="label label-success">On-stock</span></td>
-                                                                            </tr>
-
-                                                                            <tr style="font-size:12px;">
-                                                                                <td>2</td>
-                                                                                <td>PR-0002</td>
-                                                                                <td><span class="label label-danger">0</span></td>
-                                                                                <td>₱70.00</td>
-                                                                                <td><span class="label label-danger">No Stock</span></td>
-                                                                            </tr>
-
-                                                                            <tr style="font-size:12px;">
-                                                                                    <td>3</td>
-                                                                                    <td>PR-0003</td>
-                                                                                    <td><span class="label label-success">20</span></td>
-                                                                                    <td>₱120.00</td>
-                                                                                    <td><span class="label label-success"> Available</span></td>
-                                                                                </tr>
-                
-                                                                            
-                                                                        </tbody>
-                                                                    </table>
-                                                                    
-                                                </div>
-                                                
-                                                <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Status:</b></label>
-                                                <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                                @if(isset($clients))
-                                                                    @foreach ($clients as $client)
-                                                                        <option>{{$client->cl_name}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                                
-                                                </select>
-                                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the supplier's payment status on their ordered products. <b style="color:#E53935;">*Required</b></span>
-                                            </br>
-                                        <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Paid Amount:</b></label>
-                                        </br>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount of the supplier. <b style="color:#E53935;">*Required</b></span>
-                                        <input style="margin-top:10px; " type="text" class="form-control" data-mask="PHP 9,999,999.00 ONLY"/>
-                                        <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total: ₱100.00 </b></h4>
-                                               
-                                        </div>
+                                    <label for="paymentType" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Payment Type:</b></label>
+                                    <select name="paymentType" class="form-control" id="paymentType" style="margin-bottom:10px;" required>
+                                        <option selected disabled>Choose a payment type</option>
+                                        <option>Cash</option>
+                                    </select>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a payment type for your order. <b style="color:#E53935;">*Required</b></span>
+                                    <br>
+                                    
+                                    <label for="paymentAmount" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Amount:</b></label>
+                                    <input type="number" min="0" name="paymentAmount" class="form-control" id="paymentAmount" style="margin-bottom:10px;" required/>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the total amount for the payment of the order. <b style="color:#E53935;">*Required</b></span>
+                                    <h4 style="margin-top:20px;" id="paymentBalance">
+                                    <b>Total Payment Balance:</b> PHP <span id="grandTotal"></span>
                                 </div>
-                                <div class="modal-footer">
-                                    <button id="submitorder" class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="submitOrderPayment" class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+                <!--END OF THE PAYMENT MODAL-->
+            
                 <div class="row">
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
-                                <h1 class="text-white counter">Unpaid</h1>
-                                <p class="text-white">Client Order ID</p>
+                            <h1 id="orderStatus" class="text-white counter">{{$order->mnod_status}}</h1>
+                                <p class="text-white">Order Status</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-info">
-                                <h1 class="text-white counter">Processing</h1>
-                                <p class="text-white"></p>
+                                <h1 class="text-white counter">₱ {{$order->mnod_payment}}</h1>
+                                <p class="text-white">Total Payment</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center">
-                                <h1 class="counter">15</h1>
+                            <h1 id="orderDeadlineStatus" dclass="counter">{{$order->mnod_expected}}</h1>
                                 <p class="text-muted">Order Deadline</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-success">
-                                <h1 class="text-white counter">₱6,321</h1>
-                                <p class="text-white">Order Completed</p>
+                            <h1 id="orderCompleted" class="text-white counter">@if(isset($order->mnod_completed)){{$order->mnod_completed}}@else N/A @endif</h1>
+                                <p class="text-white">Date Completed</p>
                             </div>
                         </div>
                     </div>
                     
-              
+                
+                <!--SECTION KEYWORD/S: ORDER, MODAL 
+                    Prepared By: John Edel B. Tamani
+                -->
+                <div id='orderDeadlineModal' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordermodallabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Update Order Deadline</h4> 
+                            </div>
+                            <div class="modal-body">
+                                    <label for="exp_date" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
+                                    <input type="date" class="form-control" id="exp_date" name="exp_date"> 
+                                    <input type="hidden" id="previousexpdate" name="previousexpdate" value=''>
+
+                            </div>
+                        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                <button style="background-color:#4c87ed;" type="button" id="updateOrderStatus" class="btn btn-danger waves-effect waves-light">Update</button>
+                            </div>
+                        </div>
+                    <input type="hidden" id="orderModalIDUpdateStatus" name="orderModalIDUpdateStatus" value={{$order->id}}>
+                    </div>
+                </div>
                   <div class="col-lg-6 col-sm-6">
                       <div class="row">
 
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h4 style="color:black; margin-bottom:7px;">Order Functions</h4>
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="@" class="linea-icon linea-basic"></i></span>Manage Raw Material Inventory</button>
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span>Manage Manufacturer Order</button>
+                                    {{-- Commented Out for future purposes By: John Edel B. Tamani
+                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button> --}}
+                                    <button id="orderDeadlineButton" data-expecteddate={{$order->mnod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
                                     </div>
                                 </div>
                       </div>
@@ -333,93 +247,39 @@
                             <div class="col-lg-12 col-sm-12">
                                 
                                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Supplier Details</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the contact information of the supplier.</span>
+                                        <h3 class="box-title m-b-0" style="color:black;">Manufacturer Details</h3>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the contact information of the manufacturer.</span>
                                         <div class="row" style="margin-top:10px; ">
-                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Supplier</strong>
+                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Manufacturer</strong>
                                                     <br>
-                                                    <p class="text-muted">Sinopharm Group</p>
-                                                </div>
-                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Contact Number</strong>
-                                                    <br>
-                                                    <p class="text-muted">+63 945 326 7890</p>
+                                                <p class="text-muted">{{$order->fromManufacturer->smnname}}</p>
                                                 </div>
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Email</strong>
                                                     <br>
-                                                    <p class="text-muted">Sinopharm Group@gmail.com</p>
-                                                </div>
-                                                <div class="col-md-6 col-xs-6"> <strong>Location</strong>
-                                                    <br>
-                                                    <p class="text-muted">79 Batal Ave Santiago City, Philippines</p>
+                                                    <p class="text-muted">{{$order->fromManufacturer->mn_email}}</p>
                                                 </div>
                                             </div>
                                     </div>
                             </div>
                         </div>
-                      <div class="row">
-                            <div class="col-lg-12 col-sm-12">
-                                
-                                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Order Payment Report</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the supplier order/s.</span><br>
-                                        
-                                    <button style="margin-top:10px; " class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>
-                                        <p class="text-muted m-b-30"></p>
-                                        <div class="table-responsive">
-                                                <table id="myTable2" class="table table-striped">
-                                                    <thead>
-                                                        <tr style="color:black;">
-                                                            <th>#</th>
-                                                            <th>Order #</th>
-                                                            <th>Grand Total</th>
-                                                            <th>Paid</th>
-                                                            <th>Balance</th>
-                                                            <th>Status</th>
-                                                            <th><i class="fa fa-gear"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                   
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>SPOD-0001</td>
-                                                                <td>₱49,291</td>
-                                                                <td>₱20,000 </td>
-                                                                <td>₱29,291</td>
-                                                                
-                                                                <td><span class="label label-warning">Unpaid</span></td>
-                                                                <td>
-                                                                        <i style="color:#4c87ed;" class="fa fa-edit">
-                                                                                <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                    </td>
-                                                             
-                                                               
-                                                            </tr> 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                  
+                       
                         <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                     
                                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                            <h3 class="box-title m-b-0" style="color:black;">Order Update History</h3>
+                                            <h3 class="box-title m-b-0" style="color:black;">Order Update Logs</h3>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this order.</span>
-                                            <p class="text-muted m-b-30"></p>
                                         <hr>
-                                            <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: SPOD-1</h3>
+                                        <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                                             <div class="table-responsive">
-                                                    <table id="myTable4" class="table table-striped">
+                                                    <table id="orderNotificationList" class="table table-striped">
                                                         <thead>
                                                             <tr style="color:black;">
                                                                 <th>#</th>
                                                                 <th>User</th>
                                                                 <th>Update</th>
                                                                 <th>Timestamp</th>
-                                                        </tr>
+                                                              
                                                     </thead>
                                                     <tbody>
                                                        
@@ -439,188 +299,60 @@
                     </div>
                     
                 <div class="col-lg-6 col-sm-6">
-                        <div class="row">
-                                <div class="col-lg-12 col-sm-12">
-                                <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                    
-                                    <h3 class="box-title m-b-0" style="color:black;">Ordered Material/s</h3>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section contains all the supplier order/s.</span>
-                                    <br>
-                                    <button style="margin-top:10px;"  class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
-                                    <hr>
-                                    <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: SPOD-1</h3>
-                                    <div class="table-responsive">
-                                            <table id="myTable" class="table table-striped">
-                                                <thead>
-                                                    <tr style="color:black;">
-                                                        <th>#</th>
-                                                        <th>Material Code</th>
-                                                        <th>Material Name</th>
-                                                        <th>SKU</th>
-                                                        <th>Quantity (Boxes)</th>
-                                                        <th><i class="fa fa-gear"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>BC-Calcium</td>
-                                                            <td>Bewell-C Calcium</td>
-                                                            <td>500 grams</td>
-                                                            <td>500</td>
-                                                            <td>
-                                                                    <i style="color:#4c87ed;" class="fa fa-edit">
-                                                                            <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                </td>
-                                                        </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
                     <div class="row">
-                    <div class="col-lg-12">
-                    <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                        <h3 class="box-title m-b-0" style="color:black;">Purchased Order Report</h3>
-                                <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is section for the purchased order report for the supplier order/s.</span>
-                                <br>
-                        <button style="margin-top:10px;" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe00b;"></i></span>Print Purchase Order Form (POF)</button>          
-                        <button style="margin-top:10px;" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="|"></i></span>Update Raw Material Inventory</button>                        
-                                      
-                         <hr>
-                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: SPOD-1</h3>
-                         
-                           <table class="table table-bordered">
-                               <thead style="color:black;">
-                                   <tr style="color:black;">
-                                        <th>#</th>
-                                       <th>Material Code</th>
-                                       <th>Material Name</th>
-                                       <th>Material SKU</th>
-                                       <th>Unit Price</th>
-                                       <th>Qty</th>
-                                       <th>Grand Total Price</th>
-                                   </tr>
-                               </thead>
-                               <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>BC-Calcium</td>
-                                        <td>₱100.00</td>
-                                        <td>100</10,td>
-                                        <td>₱10,000</td>
-                                        <td>₱500</td>
-                                        <td>₱9,500</td>
-                                    </tr>
-                                    <tr>
-                                            <td>1</td>
-                                            <td>BC-Calcium</td>
-                                            <td>₱100.00</td>
-                                            <td>100</10,td>
-                                            <td>₱10,000</td>
-                                            <td>₱500</td>
-                                            <td>₱9,500</td>
+                        <div class="col-lg-12 col-sm-12">
+                        <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                            <h3 class="box-title m-b-0" style="color:black;">Order Details Record</h3>
+                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
+                            <button id="addClientOrder"style="margin-top:10px; margin-left:10px;" class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('manufacturerorder.index')}}>Manage Order List</a></button>
+                            <p class="text-muted m-b-30"></p>
+                            <hr>
+                        <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
+                            <div class="table-responsive">
+                                <table id="orderDetailList" class="table table-striped">
+                                    <thead>
+                                        <tr style="color:black;">
+                                            <th>#</th>
+                                            <th>Order #</th>
+                                            <th>Product Name</th>
+                                            <th>SKU</th>
+                                            <th>Total</th>
+                                            <th>Remaining</th>
+                                            <th>Received</th> 
+                                            <!--tite-->
                                         </tr>
-                                        <tr>
-                                                <td>1</td>
-                                                <td>BC-Calcium</td>
-                                                <td>₱100.00</td>
-                                                <td>100</10,td>
-                                                <td>₱10,000</td>
-                                                <td>₱500</td>
-                                                <td>₱9,500</td>
-                                            </tr>
-                                            <tr>
-                                                    <td>1</td>
-                                                    <td>BC-Calcium</td>
-                                                    <td>₱100.00</td>
-                                                    <td>100</10,td>
-                                                    <td>₱10,000</td>
-                                                    <td>₱500</td>
-                                                    <td>₱9,500</td>
-                                                </tr>
-                                                <tr>
-                                                        <td>1</td>
-                                                        <td>BC-Calcium</td>
-                                                        <td>₱100.00</td>
-                                                        <td>100</10,td>
-                                                        <td>₱10,000</td>
-                                                        <td>₱500</td>
-                                                        <td>₱9,500</td>
-                                                    </tr>
-                                                    <tr>
-                                                            <td>1</td>
-                                                            <td>BC-Calcium</td>
-                                                            <td>₱100.00</td>
-                                                            <td>100</10,td>
-                                                            <td>₱10,000</td>
-                                                            <td>₱500</td>
-                                                            <td>₱9,500</td>
-                                                        </tr>
-
-                               </tbody>
-                           </table>
-                           <hr>
-                           
-        </div>
-                           
-                    </div>
-                </div>
-            </div>
-                </div>
-                
-            </div>
-                    
-                <div class="right-sidebar">
-                        <div class="slimscrollright">
-                            <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span>
-                                </div>
-                                <div class="r-panel-body">
-                                    <ul>
-                                        <li><b>Layout Options</b></li>
-                                        <li>
-                                            <div class="checkbox checkbox-info">
-                                                <input id="checkbox1" type="checkbox" class="fxhdr">
-                                                <label for="checkbox1"> Fix Header </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="checkbox checkbox-warning">
-                                                <input id="checkbox2" type="checkbox" class="fxsdr">
-                                                <label for="checkbox2"> Fix Sidebar </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="checkbox checkbox-success">
-                                                <input id="checkbox4" type="checkbox" class="open-close">
-                                                <label for="checkbox4"> Toggle Sidebar </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ul id="themecolors" class="m-t-20">
-                                        <li><b>With Light sidebar</b></li>
-                                        <li><a href="javascript:void(0)" theme="default" class="default-theme">1</a></li>
-                                        <li><a href="javascript:void(0)" theme="green" class="green-theme">2</a></li>
-                                        <li><a href="javascript:void(0)" theme="gray" class="yellow-theme">3</a></li>
-                                        <li><a href="javascript:void(0)" theme="blue" class="blue-theme">4</a></li>
-                                        <li><a href="javascript:void(0)" theme="purple" class="purple-theme">5</a></li>
-                                        <li><a href="javascript:void(0)" theme="megna" class="megna-theme">6</a></li>
-                                        <li><b>With Dark sidebar</b></li>
-                                        <br/>
-                                        <li><a href="javascript:void(0)" theme="default-dark" class="default-dark-theme">7</a></li>
-                                        <li><a href="javascript:void(0)" theme="green-dark" class="green-dark-theme">8</a></li>
-                                        <li><a href="javascript:void(0)" theme="gray-dark" class="yellow-dark-theme">9</a></li>
-                                        <li><a href="javascript:void(0)" theme="blue-dark" class="blue-dark-theme">10</a></li>
-                                        <li><a href="javascript:void(0)" theme="purple-dark" class="purple-dark-theme">11</a></li>
-                                        <li><a href="javascript:void(0)" theme="megna-dark" class="megna-dark-theme">12</a></li>
-                                    </ul>
+                                    </thead>
+                                    <tbody id="receiveList">
+                                        <?php 
+                                            $count= 1;
+                                            if(isset($order->fromManufacturerOrderDetail)){
+                                                foreach($order->fromManufacturerOrderDetail as $orderInfo){
+                                                    echo '<tr>'.
+                                                        '<td>'.$count.'</td>'.
+                                                        '<td>'.$orderInfo->id.'</td>'.
+                                                        '<td>'.$orderInfo->fromSupply->sp_name.'</td>'.
+                                                        '<td>'.$orderInfo->fromSupply->sp_sku.'</td>'.
+                                                        '<td>'.$orderInfo->spdt_qty.'</td>'.
+                                                        '<td id="remaining'.$orderInfo->id.'">'.($orderInfo->mndt_qty-$orderInfo->received).'</td>'.
+                                                        '<td id="receive'.$orderInfo->id.'">'.$orderInfo->received.'</td>'.
+                                                    '</tr>';
+                                                    $count = $count + 1;
+                                                }
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <footer class="footer text-center"> 2018 &copy; Bewell Nutraceutical Corporation</footer>
                 </div>
+        </div>
+                
+    </div>
+    <footer class="footer text-center"> 2018 &copy; Bewell Nutraceutical Corporation</footer>
             </div>
+            </div>
+
 
             <script src="../plugins/bower_components/jquery/dist/jquery.min.js"></script>
             <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
@@ -637,11 +369,405 @@
             <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+
+            <!--
+                SECTION KEYWORD/S: APPLICATION JET SCRIPT
+                Prepared By: John Edel B. Tamani
+            -->
+            <script type="text/javascript">
+                //jump
+                $(document).on('click','#receiveSupplierOrder',function(){
+
+                });
+            </script>
+            <script type="text/javascript">
+                //jump
+                $(document).on('click','#printCustomerInvoice',function(){
+                    var divToPrint=document.getElementById('customerInvoiceTable')
+                    
+                    var newWindow=window.open('','Print-Window');
+                    newWindow.document.open();
+                    newWindow.document.write(
+                        '<html>'+
+                            '<body onload="window.print()">'+
+                                divToPrint.outerHTML+
+                            '</body>'+
+                        '</html>');
+                    newWindow.document.close();
+                    setTimeout(function(){
+                        newWindow.close();
+                    },10);
+                });
+            </script>
+
+            <script type="text/javascript">
+            //jet
+            $(document).on('click','#receiveOrderList',function(e){
+                var verify = confirm("Do you want to receive the orders?");
+                if(verify==true){
+                    var orders = [];//gags
+                    for(var i=1;i<=$('#receiveListBody').find('tr').length;i++){
+                        orders.push([$('#editable'+i).find('td:first').next().text(),
+                        $('#editable'+i).find('td:first').next().next().text(),
+                        $('#editable'+i).find('td:first').next().next().next().text(),
+                        $('#editable'+i).find('td:first').next().next().next().next().find('input').val()]);
+                    }
+                    //check for wrong input
+                    // if($('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().find('input').val()<=$('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().find('input').attr('max')){
+                        $.ajaxSetup({
+                            headers: 
+                            {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        })
+
+                        e.preventDefault(); 
+                        
+                        var formData = {
+                            orders:orders,
+                        }
+                        
+                        var type = "POST"; 
+                        var process_url = '/ajaxReceiveOrder';//tite
+
+                        $.ajax({
+                            type: type,
+                            url: process_url,
+                            data: formData,
+                            dataType: 'json',
+                            success: function (data) {
+                                $('#receiveSupplierOrder').modal('hide');
+                                var checker = false;
+                                console.log(data.supplierOrder);
+                                for(var i = 0; i<data.supplierOrder.length;i++){
+                                    var remaining = data.supplierOrder[i][0];
+                                    var receive = data.supplierOrder[i][1];
+                                    $('#remaining'+data.supplierOrder[i][2]).text(remaining);
+                                    $('#receive'+data.supplierOrder[i][2]).text(receive);
+                                    if($('#remaining'+data.supplierOrder[i][2]).text()==0){
+                                        checker = true;
+                                    }else{
+                                        checker = false;
+                                    }
+                                }
+
+                                if(checker==true){
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                        }
+                                    })
+
+                                    e.preventDefault(); 
+
+                                    var formData = {
+                                        id:$('#orderIDPayment').val(),
+                                    }
+                                    
+                                    var type = "POST"; 
+                                    var process_url = '/ajaxCompleteSupplierOrder';
+
+                                    $.ajax({
+                                        type: type,
+                                        url: process_url,
+                                        data: formData,
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            console.log(data);
+                                            $('#orderStatus').text(data.status);
+                                            $('#orderCompleted').text(data.completed);
+                                            $('#receiveInventoryButton').hide();
+                                        },
+                                        error: function (data) {
+                                            console.log('Data Error:', data);
+                                        }
+                                    });
+                                }
+                            },
+                            error: function (data) {
+                                console.log('Data Error:', data);
+                            }
+                        });
+                    }else{
+                        alert("Error Invalid Input! Please Try Again!");
+                    }
+                // }
+
+                return false;
+            });
+
+            </script>
+            <script type="text/javascript">
+                $(document).on('click','#orderDeadlineButton',function(e){
+                    $('#exp_date').val($(this).data('expecteddate'));
+                    $('#previousexpdate').val($(this).data('expecteddate'));
+                    $('#orderDeadlineModal').modal('show');
+                });
+
+                $(document).on('click','#updateOrderStatus',function(e){
+                    var verify = confirm("Do you want to update the order?");
+                    if(verify==true){
+                        if($('#previousexpdate').val()!=$('#exp_date').val()){
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                }
+                            })
+
+                            e.preventDefault(); 
+
+                            var formData = {
+                                expectedDate: $('#exp_date').val(),
+                                id: $('#orderModalIDUpdateStatus').val(),
+
+                            }
+                            
+                            var type = "POST"; 
+                            var orderID = $('#orderModalIDUpdateStatus').val();
+                            var process_url = '/ajaxUpdateOrderStatus3';
+
+                            $.ajax({
+                                type: type,
+                                url: process_url,
+                                data: formData,
+                                dataType: 'json',
+                                success: function (data) {
+                                    $("#orderDeadlineStatus").text(data.expdate);
+                                    $('#orderDeadlineModal').modal('hide');
+                                },
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }else{
+                            alert('Invalid Input Update Order Status is the Same! Please Try Again!');
+                        }
+                    }
+                });
+                
+            </script>
+
+            <script type="text/javascript">
+                $(document).on('click','.removePayment',function(e){
+                    var verify = confirm("Do you want to cancel the payment?");
+
+                    if(verify == true){
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        })
+
+                        e.preventDefault(); 
+                        var formData = {
+                            id: $(this).data('id'),
+                        }
+                        
+                        var toEdit = this;
+
+                        $.ajax({
+                            type: "POST",
+                            url:  '/ajaxDeletePayment',
+                            data: formData,
+                            success: function(data){
+                                console.log(data);
+                                $(toEdit).closest('tr').remove();
+
+                                //AJAX TO UPDATE THE ORDER STATUS
+                                //By: John Edel B. Tamani
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                    }
+                                })
+
+                                e.preventDefault(); 
+                                var formData = {
+                                    id:$('#orderIDPayment').val(),
+                                    funcNum:1,
+                                }
+                                
+                                $.ajax({
+                                    type: "POST",
+                                    url:  '/ajaxUpdatePaymentStatus',
+                                    data: formData,
+                                    success: function(data){
+                                        console.log(data);
+                                        $('#paymentStatus').text(data.status);                                                
+                                    },   
+                                    error: function (data) {
+                                        console.log('Data Error:', data);
+                                    }
+                                });
+                                
+                                $('#paymentStatus').text('Pending');
+                            },   
+                            error: function (data) {
+                                console.log('Data Error:', data);
+                            }
+                        });
+                    }
+
+                    return false;
+                    
+                    //Commented out By: John Edel B. Tamani
+                    //For Future Purposes!
+                    // $('#previousPaymentAmount').val($(this).data('payment'));
+                    // $('#updatePaymentOrder').val($(this).data('id'));
+                    // $('#editPaymentOrder').modal('show');
+                });
+            </script>  
+            
+            {{-- 
+                 //Commented out By: John Edel B. Tamani
+                //For Future Purposes!
+                <script type="text/javascript">
+                $(document).on('click','#updatePaymentOrder',function(e){
+                    var verify = confirm("Do you want to update the order?");
+
+                    if(verify == true){
+                        
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        })
+
+                        e.preventDefault(); 
+                        var formData = {
+                            id: $(this).val(),
+                            paymentAmount: $('#previousPaymentAmount').val(),
+                        }
+                        
+                        $.ajax({
+                            type: "POST",
+                            url:  '/ajaxUpdatePayment',
+                            data: formData,
+                            success: function(data){
+                                console.log(data);
+                                $('#editPaymentOrder').modal('hide');
+                            },   
+                            error: function (data) {
+                                console.log('Data Error:', data);
+                            }
+                        });
+                    }
+                    return false;
+                });
+            </script>             --}}
+
+
+            <script type="text/javascript">
+                $(document).on('click','#addPaymentButton',function(e){
+                    var total = $('#grandTotal').text();
+                    
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+
+                    e.preventDefault(); 
+                    var formData = {
+                    orderID: $('#orderIDPayment').val(),
+                    }
+                    
+                    $.ajax({
+                        type: "POST",
+                        url:  '/ajaxBalancePayment',
+                        data: formData,
+                        success: function(data){
+                            console.log(data);
+                            if(data.totalBalance>0){
+                                $('#paymentAmount').attr('max',data.totalBalance);
+                                $('#grandTotal').text(data.totalBalance.toFixed(2));//Additional Feature: Put comma or number format  to payment balance;
+                                $('#addOrderPaymentModal').modal('show');
+                            }else{
+                                alert('Invalid Action Order is Fully Paid!');
+                            }
+                        },   
+                        error: function (data) {
+                            console.log('Data Error:', data);
+                        }
+                    });
+                   
+                });
+            </script>
+            <script type="text/javascript">
+                $(document).on('click','#submitOrderPayment',function(e){
+                    var verify =confirm('Do you want to submit the payment for the order?');
+                    if($('#paymentAmount').val()<=parseInt($('#grandTotal').text())){//validation for payment.
+                        if(verify == true){
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                }
+                            })
+
+                            e.preventDefault(); 
+                            var formData = {
+                            paymentType: $('#paymentType').val(),
+                            paymentAmount: $('#paymentAmount').val(),
+                            orderID:$('#orderIDPayment').val(),
+                            }
+                            
+                            $.ajax({
+                                type: "POST",
+                                url:  '/ajaxAddPayment',
+                                data: formData,
+                                success: function(data){
+                                    console.log(data);
+                                    var count = $('#paymentOrderTable').children('tr').length;
+                                    $('#paymentOrderTable').append('<tr><td>'+(count+1)+'</td><td>'+data.orderDate+'<td>'+data.orderID+'</td><td>'+data.type+'</td><td>'+data.payment+'</td><td>'+
+                                    '<i style="margin-left:5px; color:#E53935;" data-id="'+data.id+'" class="fa fa-trash-o removePayment"></td></tr>');
+                                    $('#addOrderPaymentModal').modal('hide');
+                                    if(data.totalBalance==0){
+                                        //AJAX TO UPDATE THE ORDER
+                                        //By: John Edel B. Tamani
+                                        $.ajaxSetup({
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                            }
+                                        })
+
+                                        e.preventDefault(); 
+                                        var formData = {
+                                            id:data.orderID,
+                                            funcNum:2,
+                                        }
+                                        
+                                        $.ajax({
+                                            type: "POST",
+                                            url:  '/ajaxUpdatePaymentStatus',
+                                            data: formData,
+                                            success: function(data){
+                                                console.log(data);
+                                                $('#paymentStatus').text(data.status);                                                
+                                            },   
+                                            error: function (data) {
+                                                console.log('Data Error:', data);
+                                            }
+                                        });
+                                    }
+                                },   
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }
+                        return false;
+                    }else{
+                        alert('Please Try Again! Invalid Input for Payment Amount!');
+                    }
+                });
+            
+            </script>
+
             <script>
                 $(document).ready(function() {
-                    $('#myTable').DataTable();
+                    $('#orderDetailList').DataTable();
                     $(document).ready(function() {
-                        var table = $('#example').DataTable({
+                        var table = $('#orderDetails').DataTable({
                             "columnDefs": [{
                                 "visible": false,
                                 "targets": 2
@@ -667,7 +793,7 @@
                             }
                         });
                         // Order by the grouping
-                        $('#example tbody').on('click', 'tr.group', function() {
+                        $('#orderDetails tbody').on('click', 'tr.group', function() {
                             var currentOrder = table.order()[0];
                             if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                                 table.order([2, 'desc']).draw();
@@ -677,16 +803,11 @@
                         });
                     });
                 });
-                $('#example23').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
-                });
+
                 $(document).ready(function() {
-                    $('#myTable2').DataTable();
+                    $('#orderPaymentListTable').DataTable();
                     $(document).ready(function() {
-                        var table = $('#example').DataTable({
+                        var table = $('#paymentList').DataTable({
                             "columnDefs": [{
                                 "visible": false,
                                 "targets": 2
@@ -712,7 +833,7 @@
                             }
                         });
                         // Order by the grouping
-                        $('#example tbody').on('click', 'tr.group', function() {
+                        $('#paymentList tbody').on('click', 'tr.group', function() {
                             var currentOrder = table.order()[0];
                             if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                                 table.order([2, 'desc']).draw();
@@ -724,9 +845,9 @@
                 });
 
                   $(document).ready(function() {
-                    $('#myTable4').DataTable();
+                    $('#orderNotificationList').DataTable();
                     $(document).ready(function() {
-                        var table = $('#example').DataTable({
+                        var table = $('#orderNotification').DataTable({
                             "columnDefs": [{
                                 "visible": false,
                                 "targets": 2
@@ -752,7 +873,7 @@
                             }
                         });
                         // Order by the grouping
-                        $('#example tbody').on('click', 'tr.group', function() {
+                        $('#orderNotification tbody').on('click', 'tr.group', function() {
                             var currentOrder = table.order()[0];
                             if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                                 table.order([2, 'desc']).draw();
@@ -766,9 +887,9 @@
 
 
                  $(document).ready(function() {
-                    $('#myTable3').DataTable();
+                    $('#orderDeliveryList').DataTable();
                     $(document).ready(function() {
-                        var table = $('#example').DataTable({
+                        var table = $('#orderDelivery').DataTable({
                             "columnDefs": [{
                                 "visible": false,
                                 "targets": 2
@@ -794,7 +915,7 @@
                             }
                         });
                         // Order by the grouping
-                        $('#example tbody').on('click', 'tr.group', function() {
+                        $('#orderDelivery tbody').on('click', 'tr.group', function() {
                             var currentOrder = table.order()[0];
                             if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                                 table.order([2, 'desc']).draw();
@@ -804,57 +925,10 @@
                         });
                     });
                 });
-                $('#example23').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
-                });
             </script>
             <script src="../plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
             <script src="../plugins/bower_components/sweetalert/sweetalert.min.js"></script>
             <script src="../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
-
-            <script type="text/javascript">
-                $(document).on('click', '.ajaxmodal', function() {
-                    $('.modal-title').text('Update Order Status');
-                    $('.statusModal').modal('show');
-                });
-
-                $(document).on('click', '.productadd', function() {
-                    $('#addproduct').append("<tr>" +
-                        '<td> <select name="product[]" class="form-control product">@if(isset($products))@foreach ($products as $product)<option>{{$product->pd_name}}</option>@endforeach @endif </td>' +
-                        '<td><select name="gram[]" class="form-control gram"><option>500g</option><option>250g</option></select></td><td><input name="orderqty[]" type="number" value="0" class="form-control orderqty"></td>' +
-                        '<td><i class="fa fa-times removeproduct"></td>' +
-                        '</tr>');
-                });
-
-                $(document).on('click', '.removeproduct', function() {
-                    $(this).closest('tr').remove();
-                });
-
-                $('#addproductform').submit(function() {
-                    var verify = confirm("Do you wish to proceed to add the following products?");
-                    return verify;
-                });
-
-                $(document).on('click', '.removeorder', function() {
-                    $( ".deleteOrder" ).submit();
-                    var verify = confirm("Do you wish to delete this order?");
-                    return verify;
-
-                });
-
-                $(document).on('click', '.statusSubmit', function() {
-                    var verify = confirm("Do you wish to edit this order?");
-                    return verify;
-                });
-
-                  $(document).on('click', '#submitorder', function() {
-                    var verify = confirm("Do you wish to add this order to this client?");
-                    return verify;
-                });
-            </script>
 </body>
 
 </html>

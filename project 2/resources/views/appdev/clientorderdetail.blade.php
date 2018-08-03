@@ -198,7 +198,7 @@
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-success">
-                            <h1 class="text-white counter">N/A</h1>
+                            <h1 class="text-white counter">@if(isset($order->clod_completed)){{$order->clod_completed}}@else N/A @endif</h1>
                                 <p class="text-white">Date Completed</p>
                             </div>
                         </div>
@@ -273,7 +273,7 @@
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     <h3 class="box-title m-b-0" style="color:black;">Order Payment Record</h3>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
-                                    <button id="addPaymentButton" style="margin-top:10px; " class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>
+                                    @if(!isset($order->clod_completed))<button id="addPaymentButton" style="margin-top:10px; " class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="1" class="linea linea-ecommerce"></i></span>Add Payment</button>@endif
                                     <p class="text-muted m-b-30"></p>
                                     <div class="table-responsive">
                                             <table id="orderPaymentListTable" class="table table-striped">

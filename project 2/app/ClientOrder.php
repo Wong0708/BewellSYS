@@ -24,7 +24,6 @@ class ClientOrder extends Model
 
     public function fromOneSchedule(){
         return $this->belongsTo(Schedule::class,'id','orderID'); 
-
     }
 
     public function fromSchedule(){

@@ -287,6 +287,9 @@
                                     <span><i style="color:#1565C0; margin-right:5px;" data-icon="Z" class="icon-phone"></i></span>
                                     <b>Contact Number: </b>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_contactnumber}}
                                 </button>
+                                <button type="button" class="list-group-item" disabled>
+                                    <b> Schedule Remark: </b>{{$schedule->remark }}
+                                </button>
 
 
                             </div>
