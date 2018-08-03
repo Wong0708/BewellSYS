@@ -33,6 +33,17 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+<style>
+        .dotted {
+            border:none;
+            margin-top: 50px;
+            border-top:1px dotted rgba(255, 0, 112, 0.55);
+            color:#fff;
+            background-color:#fff;
+            height:2px;
+            width:100%;
+        }
+    </style>
 </head>
 
 <body class="fix-sidebar">
@@ -294,18 +305,25 @@
                                                     
                                 {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
                                 {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
-                                <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
                                 {!!Form::open(array('route' => 'appdev.salesreport'))!!}
-                                   <input type="hidden" name="dog" value="hatdug"/>
-                                   {{Form::submit('Generate Report',['class' => 'btn btn-success waves-effect waves-light'])}}
-                                   <p class="text-muted m-b-30"></p>
-                                    <div class="input-daterange input-group" id="date-range">
-                                        <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
-                                        <input type="date" class="form-control" name="end"/> 
+                                <div class="col-md-6" >
+                                        <center>
+                                            <div class="input-daterange input-group" id="date-range">
+                                                <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
+                                                <input type="date" class="form-control" name="end"/>
+                                            </div>
+                                        </center>
+                                    </div>
+                                    <div class="col-md-6" style="text-align: right; ">
+                                        <button type="submit" class="btn btn-success waves-effect waves-light" style="display: inline"><span class="btn-label"><i class="linea linea-basic" data-icon="L"></i></span>Generate Report</button>
+                                        <button style="background-color: #4c87ed;display: inline" class=" btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
                                     </div>
                                 {!!Form::close() !!}
                             <!-- print head -->
+                            <div class="row">
+                                <br>
                             <div id="printhead">
+                                <hr class="dotted">
                                 <p class="text-muted m-b-30"></p>
                                 @if(isset($start))
                                 @endif
@@ -448,7 +466,7 @@
                                                 </table>
                                                 
                                 <h4  style="text-align:center; font-size:14px; color:black; margin-top:20px; font-family:Helvetica,Arial,sans-serif;"><b>----------- END OF THE REPORT -----------</b></h4>
-                            </div>
+                            </div></div>
                         </div>
                     </div>
                 </div>

@@ -158,7 +158,7 @@
                     <li style="background-color: #E9F0FD;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#4c87ed;"data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu" style="color:#4c87ed;">Report<span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                             <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
-                            <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
+                            <li> <a href={{route('deliveryreport.index')}}>Delivery</a> </li>
                             <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
                             <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                         </ul>
@@ -244,7 +244,7 @@
                             </div>
                             <div class="col-md-6 col-xs-6"> <strong>Total Price</strong>
                                 <br>
-                                <p class="text-muted">P {{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_qty']}} </p>
+                                <p class="text-muted">P {{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_price'] * App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}} </p>
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@
 
                         <tr style ="color:black;">
                             <td>{{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_name']}} </td>
-                            <td>{{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_qty']}} </td>
+                            <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}} </td>
                         </tr>
                 </tbody>
             </table>
