@@ -180,7 +180,7 @@
                 <div class="row">
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
-                            <h1 id="paymentStatus" class="text-white counter">{{$order->spod_status}}</h1>
+                            <h1 id="orderStatus" class="text-white counter">{{$order->spod_status}}</h1>
                                 <p class="text-white">Order Status</p>
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-success">
-                            <h1 class="text-white counter">@if(isset($order->completed)){{$order->completed}}@else N/A @endif</h1>
+                            <h1 id="orderCompleted" class="text-white counter">@if(isset($order->spod_completed)){{$order->spod_completed}}@else N/A @endif</h1>
                                 <p class="text-white">Date Completed</p>
                             </div>
                         </div>
@@ -290,14 +290,14 @@
                                                     <tbody id="receiveListBody">
                                                         <?php
                                                             $count = 1;
-                                                            foreach($orderdetail as $detail){
+                                                            foreach($orderdetail as $detail){//tite
                                                                 echo 
-                                                                    '<tr>'.
+                                                                    '<tr id="editable'.$count.'">'.
                                                                         '<td id="count'.$count.'">'.$count.'</td>'.
                                                                         '<td data-id="'.$detail->id.'" id="data'.$count.'">'.$detail->id.'</td>'.
                                                                         '<td id="name'.$count.'">'.$detail->fromSupply->sp_name.'</td>'.
                                                                         '<td id="sku'.$count.'">'.$detail->fromSupply->sp_sku.'</td>'.
-                                                                        '<td><input min="1" max"'.($detail->spdt_qty-$detail->received).'" id="retrieve'.$count.'"></td>'.
+                                                                        '<td><input min="1" max="'.($detail->spdt_qty-$detail->received).'" id="retrieve'.$count.'"></td>'.
                                                                     '</tr>';
                                                                 $count = $count +1;
                                                             }
@@ -371,22 +371,23 @@
                                             <th>SKU</th>
                                             <th>Total</th>
                                             <th>Remaining</th>
-                                            <th>Received</th>
+                                            <th>Received</th> 
+                                            <!--tite-->
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="receiveList">
                                         <?php 
                                             $count= 1;
                                             if(isset($order->fromSupplierOrderDetail)){
                                                 foreach($order->fromSupplierOrderDetail as $orderInfo){
                                                     echo '<tr>'.
                                                         '<td>'.$count.'</td>'.
-                                                        '<td>'.$orderInfo->orderID.'</td>'.
+                                                        '<td>'.$orderInfo->id.'</td>'.
                                                         '<td>'.$orderInfo->fromSupply->sp_name.'</td>'.
                                                         '<td>'.$orderInfo->fromSupply->sp_sku.'</td>'.
                                                         '<td>'.$orderInfo->spdt_qty.'</td>'.
-                                                        '<td>'.($orderInfo->spdt_qty-$orderInfo->received).'</td>'.
-                                                        '<td>'.$orderInfo->received.'</td>'.
+                                                        '<td id="remaining'.$orderInfo->id.'">'.($orderInfo->spdt_qty-$orderInfo->received).'</td>'.
+                                                        '<td id="receive'.$orderInfo->id.'">'.$orderInfo->received.'</td>'.
                                                     '</tr>';
                                                     $count = $count + 1;
                                                 }
@@ -459,12 +460,13 @@
                 if(verify==true){
                     var orders = [];//gags
                     for(var i=1;i<=$('#receiveListBody').find('tr').length;i++){
-                        orders.push($('#receiveListBody').find('tr:first').find('td:first').next().text(),
-                        $('#receiveListBody').find('tr:first').find('td:first').next().next().text(),
-                        $('#receiveListBody').find('tr:first').find('td:first').next().next().next().text());
-                        $('#receive'+i).val();
+                        orders.push([$('#editable'+i).find('td:first').next().text(),
+                        $('#editable'+i).find('td:first').next().next().text(),
+                        $('#editable'+i).find('td:first').next().next().next().text(),
+                        $('#editable'+i).find('td:first').next().next().next().next().find('input').val()]);
                     }
-                    if($('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().val()<=$('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().attr('max')){
+                    //check for wrong input
+                    // if($('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().find('input').val()<=$('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().find('input').attr('max')){
                         $.ajaxSetup({
                             headers: 
                             {
@@ -475,13 +477,11 @@
                         e.preventDefault(); 
                         
                         var formData = {
-                            
-
+                            orders:orders,
                         }
                         
                         var type = "POST"; 
-                        var orderID = $('#orderModalIDUpdateStatus').val();
-                        var process_url = '/ajaxReceiveOrder';
+                        var process_url = '/ajaxReceiveOrder';//tite
 
                         $.ajax({
                             type: type,
@@ -489,8 +489,53 @@
                             data: formData,
                             dataType: 'json',
                             success: function (data) {
-                                $("#orderDeadlineStatus").text(data.expdate);
-                                $('#orderDeadlineModal').modal('hide');
+                                $('#receiveSupplierOrder').modal('hide');
+                                var checker = false;
+                                console.log(data.supplierOrder);
+                                for(var i = 0; i<data.supplierOrder.length;i++){
+                                    var remaining = data.supplierOrder[i][0];
+                                    var receive = data.supplierOrder[i][1];
+                                    $('#remaining'+data.supplierOrder[i][2]).text(remaining);
+                                    $('#receive'+data.supplierOrder[i][2]).text(receive);
+                                    if($('#remaining'+data.supplierOrder[i][2]).text()==0){
+                                        checker = true;
+                                    }else{
+                                        checker = false;
+                                    }
+                                }
+
+                                if(checker==true){
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                        }
+                                    })
+
+                                    e.preventDefault(); 
+
+                                    var formData = {
+                                        id:$('#orderIDPayment').val(),
+                                    }
+                                    
+                                    var type = "POST"; 
+                                    var process_url = '/ajaxCompleteSupplierOrder';
+
+                                    $.ajax({
+                                        type: type,
+                                        url: process_url,
+                                        data: formData,
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            console.log(data);
+                                            $('#orderStatus').text(data.status);
+                                            $('#orderCompleted').text(data.completed);
+                                            
+                                        },
+                                        error: function (data) {
+                                            console.log('Data Error:', data);
+                                        }
+                                    });
+                                }
                             },
                             error: function (data) {
                                 console.log('Data Error:', data);
@@ -499,7 +544,7 @@
                     }else{
                         alert("Error Invalid Input! Please Try Again!");
                     }
-                }
+                // }
 
                 return false;
             });

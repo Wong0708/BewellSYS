@@ -103,6 +103,8 @@ Route::post('liveManufacturerOrderSKUUpdate','ManufacturerOrderSKULiveUpdateCont
 Route::post('liveManufacturerAddOrderUpdate','ManufacturerAddOrderLiveUpdateController@liveUpdate');
 Route::post('liveSupplierOrderUpdate','SupplierAddOrderSupportLiveUpdateController@liveUpdate');
 Route::post('liveSupplierAddOrderUpdate','SupplierAddOrderLiveUpdateController@liveUpdate');
+Route::post('/ajaxReceiveOrder','SupplierOrderReceiveLiveUpdateController@liveUpdate');
+Route::post('/ajaxCompleteSupplierOrder','SupplierOrderCompleteLiveUpdateController@liveUpdate');
 // ManufacturerAddOrderLiveUpdateController
 
 //End of Ajax Routes
