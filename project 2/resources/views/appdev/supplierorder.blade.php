@@ -323,8 +323,14 @@
 
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="deliveryStatus'.$order->id.'"><span class="label label-success">'.$order->spod_status.'</span></td>';
-
+                                                        '<td id="deliveryStatus'.$order->id.'">';
+                                                        
+                                                    if($order->spod_status=='Complete'){
+                                                        echo '<span class="label label-success">'.$order->spod_status.'</span></td>';
+                                                    }else{
+                                                        echo '<span class="label label-info">'.$order->spod_status.'</span></td>';
+                                                    }
+                                                    
                                                     echo 
                                                         '<td id="updatedDate'.$order->id.'">'.$order->updated_at.'</td>'.
                                                         '<td id="setting'.$order->id.'">'.
@@ -574,15 +580,15 @@
                             url: window.location.pathname + '/' + orderID,
                             success: function (data) {
                                 $("#order" + orderID).remove();
-                                $('#activityUpdate').html('An order has been successfully deleted!');
-                                $('#activityUpdate').show();
+                                $('#activityStatus').html('An order has been successfully deleted!');
+                                $('#activityStatus').show();
                                 count2 = count2 - 1;
                             },
                             error: function (data) {
-                                $("#activityUpdate").toggleClass('alert-success alert-danger');
-                                $('#activityUpdate').html('Failed to process request an error occured!');
-                                $("#activityUpdate").toggleClass('alert-danger alert-success');
-                                $('#activityUpdate').show();
+                                $("#activityStatus").toggleClass('alert-success alert-danger');
+                                $('#activityStatus').html('Failed to process request an error occured!');
+                                $("#activityStatus").toggleClass('alert-danger alert-success');
+                                $('#activityStatus').show();
                                 console.log('Data Error:', data);
                             }
                         });
