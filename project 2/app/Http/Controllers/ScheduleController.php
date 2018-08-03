@@ -82,11 +82,11 @@ class ScheduleController extends Controller
         });
 
         $client_orders = $client_orders->filter(function ($order) {
-            return $order->clod_status == "Processing" || $order->clod_status == "Cancelled";
+            return $order->clod_status == "Processing" || $order->clod_status == "Cancelled" || $order->clod_status == "Scheduled";
         });
 
         $manufacturer_orders = $manufacturer_orders->filter(function ($order) {
-            return $order->mnod_status == "Processing" || $order->clod_status == "Cancelled";
+            return $order->mnod_status == "Processing" || $order->mnod_status == "Cancelled" || $order->mnod_status;
         });
 
         foreach($manufacturer_orders as $manufacturer_order){
@@ -105,17 +105,22 @@ class ScheduleController extends Controller
             $client_order['locations']= DB::table('bc_client_location')->where('companyID', $client_order['clientID'])->get()->toArray();
             $client_order['order_details']=DB::table("bc_client_order_detail")->where('orderID', $client_order['id'])->get()->toArray();
 
+            $date = date_create($client_order['expectedDate']);
+            $client_order['expectedDate'] = date_format($date, "Y-m-d");
+
             $a = Client::find($client_order['clientID']);
             $client_order['client_name'] = $a['cl_name'];
         }
 
         foreach($client_schedules as $client_schedule){
             $date = date_create($client_schedule['scd_date']);
+
             $client_schedule['scd_date'] = date_format($date, "F j Y");
             if($client_schedule->dateDelivered){
                 $date = date_create($client_schedule['dateDelivered']);
                 $client_schedule['dateDelivered'] = date_format($date, "F j Y");
             }
+
         }
         foreach($manufacturer_schedules as $manufacturer_schedule){
             $date = date_create($manufacturer_schedule['scd_date']);
@@ -184,20 +189,25 @@ class ScheduleController extends Controller
         return $total_curr_cap;
     }
 
-    public static function getRestrictClient($status,$id){
+    public static function getRestrictClient($status,$id,$scid){
+        $schedule = Schedule::find($id);
+
+
+        $date = date_create($schedule['scd_date']);
+        $schedule['expectedDate'] = date_format($date, "Y-m-d");
 
         switch ($status){
             case "Processing":
                 $a='<a href="#" data-toggle="modal" 
                                 data-target="#concludeSchedModal"
-                                scid="'.$id.'" sctype="client" class="conclude" >
+                                scid="'.$id.'" sctype="client" expectdate="'.$schedule->expectedDate.'" class="conclude">
                     <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
                 return $a;
                 break;
             case "Scheduled":
                 $a='<a href="#" data-toggle="modal" 
                                 data-target="#concludeSchedModal"
-                                scid="'.$id.'" sctype="client" class="conclude" >
+                                scid="'.$id.'" sctype="client" expectdate="'.$schedule->expectedDate.'" class="conclude" >
                     <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
                 return $a;
                 break;
@@ -210,7 +220,7 @@ class ScheduleController extends Controller
         }
         return null;
     }
-    public static function getRestrictManufacturer($status,$id){
+    public static function getRestrictManufacturer($status,$id,$scid){
 
         switch ($status){
             case "Processing":
