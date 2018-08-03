@@ -12,7 +12,4 @@ class ManufacturerOrderDetail extends Model
     public function fromSupply(){
         return $this->belongsTo(Supply::class,'supplyID','id');
     }
-    public function fromSupplierOrderDetail(){
-        return $this->hasMany(ManufacturerOrderDetail::class,'orderID','id');//foreign,local key
-    }
 }
