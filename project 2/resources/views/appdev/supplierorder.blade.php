@@ -151,7 +151,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add New Order/s</h4>
+                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add New Supplier Order/s</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
@@ -172,10 +172,28 @@
                                     <br>
 
                                     <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
+                                        <!--jet-->
+                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Material Ordered Product/s Support</b></h4>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section shows the material/s needed to fulfill the order of the clients <b style="color:#E53935;"></b></span>
+                                        <br>
+                                        <table id="materialProductSupport"class="table color-bordered-table info-bordered-table" style="margin-top:10px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
+                                            <thead>
+                                                <tr style="font-size:12px; font-weight:700; ">
+                                                    <th>#</th>
+                                                    <th>Material Name</th>
+                                                    <th>SKU</th>
+                                                    <th>Total Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="materialProductSupportList"></tbody>
+                                        </table>
+                                        <h4  style="color:#E53935; text-align:center; font-size:14px; font-family:Helvetica,Arial,sans-serif;"><b>System Generated Supplier Order Prediction</b></h4>
+                                        
+                                        <hr>
                                         <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Material Order/s</b></h4>
                                         <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the supplier's material order based on the list. <b style="color:#E53935;">*Required</b></span>
                                         <br>
-                                        <label for="order" class="control-label"> <button id="materialAdd" style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Material</button></label>
+                                        <label for="order" class="control-label"> <button id="materialAdd" style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; min-width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Material</button></label>
                                         <div class="table-responsive" style="margin-top:10px;">
 
                                         <!--jump2-->
@@ -252,10 +270,10 @@
                         <div class="white-box">
                                 <div id="activityStatus" class="alert alert-success"> </div>
                               
-                            <h3 class="box-title m-b-0" style="color:black;">LIST OF MANUFACTURER ORDERS</h3>
+                            <h3 class="box-title m-b-0" style="color:black;">LIST OF SUPPLIER ORDERS</h3>
                                 <button id="addSupplierOrder" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#supplierOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
                                                     
-                                <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order to supplier! </span> </a> {{-- </div> --}} {{-- </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
+                                <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order to supplier! </span> </a>
 
                                 <p class="text-muted m-b-30"></p>
                                 <div class="table-responsive">
@@ -282,7 +300,7 @@
                                                 foreach ($orders as $order){
                                                     echo 
                                                         '<tr id="order'.$order->id.'">'.
-                                                        '<td id="orderID'.$order->id.'"><a href="manufacturerorder/'.$order->id.'">'.$order->id.'</a></td>'.
+                                                        '<td id="orderID'.$order->id.'"><a href="supplierorder/'.$order->id.'">'.$order->id.'</a></td>'.
                                                         '<td id="manufacturer'.$order->id.'">';
 
                                                     if(isset($order->fromSupplier)){
@@ -347,8 +365,7 @@
 
 
             <script type='text/javascript'>
-                $(document).on('change', '#addSupplierOrder', function (e) {//jet
-                    $('#supplierOrderModal').show();
+                $(document).on('click', '#addSupplierOrder', function (e) {//jet
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -366,7 +383,16 @@
                         url: 'liveSupplierOrderUpdate',
                         data: formData,
                         success: function(data){
-                           
+                            console.log(data);
+                            var dataAppend = '<tr>';
+                            var count = 1;
+                         
+                            for(var i=1;i<data.materialOrders.length;i++){
+                                dataAppend=dataAppend+'<td>'+count+'</td><td>'+data.materialOrders[i][0]+'</td><td>500 Grams</td><td>'+data.materialOrders[i][1]+'</td></tr>';
+                                count = count + 1;
+                            }
+
+                            $('#materialProductSupportList').append(dataAppend);
                         },   
                         error: function (data) {
                             console.log('Data Error:', data);
@@ -482,7 +508,7 @@
 
             <script type="text/javascript">
                 $(document).on('click', '.editOrder', function() {
-                    window.location.href ='manufacturerorder/'+$(this).data('id');
+                    window.location.href ='supplierorder/'+$(this).data('id');
                 });
             </script>
             
@@ -546,13 +572,13 @@
                         }
                         console.log(orders);
 
-                        var manufacturerDetail = [];
-                        var manufacturer = [];
-                        manufacturer.push($('#manufacturerList').val(),$('#orderExpDate').val(),$('#totalAmountPayed').val(),$('#orderList').find('option:selected').data('id'));//jet
-                        manufacturerDetail.push(manufacturer);
+                        var supplierDetail = [];
+                        var supplier = [];
+                        supplier.push($('#supplierList').val(),$('#orderExpDate').val(),$('#totalAmountPayed').val());//jet
+                        supplierDetail.push(supplier);
 
 
-                        console.log(manufacturerDetail);
+                        console.log(supplierDetail);
 
                         if(verify==true){
                             $.ajaxSetup({
@@ -564,7 +590,7 @@
                             e.preventDefault(); 
                             var formData = {
                                 orderList:orders,
-                                manufacturerInfo:manufacturerDetail,
+                                supplierInfo:supplierDetail,
                             }
                             
                             var tdEdit = '#clientLocation';
@@ -572,25 +598,12 @@
                             //jump5
                             $.ajax({
                                 type: "POST",
-                                url: 'liveManufacturerAddOrderUpdate',
+                                url: 'liveSupplierAddOrderUpdate',
                                 data: formData,
                                 success: function(data){
                                     $('#activityStatus').html('An order has been successfully added to the list!');
                                     $('#activityStatus').show();
-                                    $("#materialOrderTable").find('tbody').find('input').val('');
-                                    $('#manufacturerOrderModal').modal('hide');
-
-                                    var completed = '';
-                                    if((data.order.mnod_completed!='null')){
-                                        completed = completed + data.order.mnod_completed;
-                                    }else{
-                                        completed = completed + 'N/A';
-                                    }
-                                    alert(data.order.id);
-                                    $('#allOrderList').append(
-                                        '<tr><td><a href="manufacturerorder/'+data.order.id+'"></a>'+data.order.id+'</td><td>'+data.manufacturer+'</td><td>'+data.order.mnod_date+'</td><td>'+data.order.mnod_expected+'</td>'+
-                                        '<td>'+completed+'</td><td><span class="label label-info">'+data.order.mnod_status +'</span></td><td>'+data.order.updated_at +'</td>'+
-                                        '<td><i data-id="'+data.order.id+'" style="color:#4c87ed;" class="fa fa-edit editOrder"/><i style="margin-left:5px; color:#E53935;" data-orderid='+data.order.id+' class="fa fa-trash-o removeOrder"/></td></tr>');
+                                    $('#supplierOrderModal').modal('hide');
                                 },   
                                 error: function (data) {
                                     console.log('Data Error:', data);

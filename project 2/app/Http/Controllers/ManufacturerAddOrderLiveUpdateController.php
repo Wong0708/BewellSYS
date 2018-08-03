@@ -41,8 +41,6 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
 
             $new_order_detail->supplyID = $material->id;
             $new_order_detail->mndt_qty = $order[2];
-            $material->sp_qty = $material->sp_qty-$order[2];//assume that every input is correct
-            $material->save();
 
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();

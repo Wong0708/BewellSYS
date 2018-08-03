@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SupplierOrder;
+use App\SupplierOrderDetail;
 use App\Supplier;
 use App\Supply;
 
@@ -59,7 +60,11 @@ class SupplierOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order =  SupplierOrder::where('id','=',$id)->first();
+        $orderdetail =  SupplierOrderDetail::where('orderID','=',$order->id)->get();
+        return view("appdev.supplierorderdetail")
+                ->with('order',$order)
+                ->with('orderdetail',$orderdetail);
     }
 
     /**
