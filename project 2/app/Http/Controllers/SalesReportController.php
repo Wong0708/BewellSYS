@@ -142,7 +142,8 @@ class SalesReportController extends Controller
         $product = Product::find($id);
         $productdetail = ProductDetails::find($id);
         
-        
+        $date = date_create($order['clod_date']);
+        $order['clod_date'] = date_format($date, "F j Y");
 
        return view("appdev.salesreportdetail")->with("order",$order)
        ->with("client",$client)

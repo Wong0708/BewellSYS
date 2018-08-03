@@ -128,6 +128,11 @@ class ManufacturerReportController extends Controller
         $order = ManufacturerOrder::find($id);
         $orderdetail = ManufacturerOrderDetail::find($id);
 
+        
+        $date = date_create($order['mnod_date']);
+        $order['mnod_date'] = date_format($date, "F j Y");
+        
+
         return view("appdev.manufacturerreportdetail")
         ->with("manufacturer",$manufacturer)
         ->with("order",$order)

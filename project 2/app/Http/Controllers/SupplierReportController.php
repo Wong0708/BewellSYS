@@ -117,8 +117,6 @@ class SupplierReportController extends Controller
     public function show($id)
     {
         //
-        $orderdetails = SupplierOrderDetail::all();
-        return view('appdev.supplierreportdetail')->with("orderdetails",$orderdetails);
     }
 
     /**

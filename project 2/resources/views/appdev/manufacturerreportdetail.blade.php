@@ -158,7 +158,7 @@
                     <li style="background-color: #E9F0FD;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#4c87ed;"data-icon="R" class="linea-icon linea-ecommerce fa-fw"></i> <span class="hide-menu" style="color:#4c87ed;">Report<span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                             <li> <a href={{route('salesreport.index')}}>Sales</a> </li>
-                            <li> <a href={{route('inventoryreport.index')}}>Delivery</a> </li>
+                            <li> <a href={{route('deliveryreport.index')}}>Delivery</a> </li>
                             <li> <a href={{route('manufacturerreport.index')}}>Manufacturer</a> </li>
                             <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                         </ul>
