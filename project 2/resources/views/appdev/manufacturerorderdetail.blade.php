@@ -180,25 +180,25 @@
                 <div class="row">
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
-                            <h1 id="orderStatus" class="text-white counter">{{$order->spod_status}}</h1>
+                            <h1 id="orderStatus" class="text-white counter">{{$order->mnod_status}}</h1>
                                 <p class="text-white">Order Status</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-info">
-                                <h1 class="text-white counter">₱ {{$order->spod_payment}}</h1>
+                                <h1 class="text-white counter">₱ {{$order->mnod_payment}}</h1>
                                 <p class="text-white">Total Payment</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center">
-                            <h1 id="orderDeadlineStatus" dclass="counter">{{$order->spod_expected}}</h1>
+                            <h1 id="orderDeadlineStatus" dclass="counter">{{$order->mnod_expected}}</h1>
                                 <p class="text-muted">Order Deadline</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-success">
-                            <h1 id="orderCompleted" class="text-white counter">@if(isset($order->spod_completed)){{$order->spod_completed}}@else N/A @endif</h1>
+                            <h1 id="orderCompleted" class="text-white counter">@if(isset($order->mnod_completed)){{$order->mnod_completed}}@else N/A @endif</h1>
                                 <p class="text-white">Date Completed</p>
                             </div>
                         </div>
@@ -238,7 +238,7 @@
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     {{-- Commented Out for future purposes By: John Edel B. Tamani
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button> --}}
-                                    <button id="orderDeadlineButton" data-expecteddate={{$order->spod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
+                                    <button id="orderDeadlineButton" data-expecteddate={{$order->mnod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
                                     </div>
                                 </div>
                       </div>
@@ -247,74 +247,22 @@
                             <div class="col-lg-12 col-sm-12">
                                 
                                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        <h3 class="box-title m-b-0" style="color:black;">Supplier Details</h3>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the contact information of the supplier.</span>
+                                        <h3 class="box-title m-b-0" style="color:black;">Manufacturer Details</h3>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the contact information of the manufacturer.</span>
                                         <div class="row" style="margin-top:10px; ">
-                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Supplier</strong>
+                                                <div class="col-md-6 col-xs-6 b-r"> <strong>Manufacturer</strong>
                                                     <br>
-                                                <p class="text-muted">{{$order->fromSupplier->sp_name}}</p>
+                                                <p class="text-muted">{{$order->fromManufacturer->smnname}}</p>
                                                 </div>
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Email</strong>
                                                     <br>
-                                                    <p class="text-muted">{{$order->fromSupplier->sp_email}}</p>
+                                                    <p class="text-muted">{{$order->fromManufacturer->mn_email}}</p>
                                                 </div>
                                             </div>
                                     </div>
                             </div>
                         </div>
                        
-                        <!--SECTION KEYWORD/S: RECEIVE PAYMENT ORDER, MODAL-->
-                        <div id='receiveSupplierOrder' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveSupplierOrder" aria-hidden="true" style="display: none;">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Receive Supplier Order </h4> 
-                                    </div>
-
-                                    <!--jet-->
-
-                                    <div class="modal-body">
-                                            <h4 style="text-align:center; margin-bottom:10px; font-weight:700; color:black;">Update Supplies Inventory </h4> 
-                                            <h6 style="text-align:center; margin-bottom:10px; color:black;">Note: This section updates all the supplier orders. </h6> 
-                                            <hr>
-                                            <table id="orderNotificationList" class="table color-bordered-table info-bordered-table">
-                                                    <thead>
-                                                        <tr style="color:black;">
-                                                            <th>#</th>
-                                                            <th>Order #</th>
-                                                            <th>Material Name</th>
-                                                            <th>Material SKU</th>
-                                                            <th>Retrieve Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="receiveListBody">
-                                                        <?php
-                                                            $count = 1;
-                                                            foreach($orderdetail as $detail){//tite
-                                                                echo 
-                                                                    '<tr id="editable'.$count.'">'.
-                                                                        '<td id="count'.$count.'">'.$count.'</td>'.
-                                                                        '<td data-id="'.$detail->id.'" id="data'.$count.'">'.$detail->id.'</td>'.
-                                                                        '<td id="name'.$count.'">'.$detail->fromSupply->sp_name.'</td>'.
-                                                                        '<td id="sku'.$count.'">'.$detail->fromSupply->sp_sku.'</td>'.
-                                                                        '<td><input min="1" max="'.($detail->spdt_qty-$detail->received).'" id="retrieve'.$count.'"></td>'.
-                                                                    '</tr>';
-                                                                $count = $count +1;
-                                                            }
-                                                        ?>
-                                                    </tbody>
-                                                </table>
-                                    </div>
-                                
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                        <button style="background-color:#4c87ed;" type="button" id="receiveOrderList" class="btn btn-danger waves-effect waves-light">Receive</button>
-                                    </div>
-                                </div>
-                                <input type="hidden" id="orderModalID" name="orderID" value="0">
-                            </div>
-                        </div>
-                        
                         <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                     
@@ -356,7 +304,6 @@
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                             <h3 class="box-title m-b-0" style="color:black;">Order Details Record</h3>
                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
-                            @if(!isset($order->spod_completed))<button id="receiveInventoryButton"style="margin-top:10px; " data-toggle="modal" data-target="#receiveSupplierOrder"class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="&#xe01b;" class="linea linea-basic"></i></span>Receive Inventory</button>@endif
                             <button id="addClientOrder"style="margin-top:10px; margin-left:10px;" class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('supplierorder.index')}}>Manage Order List</a></button>
                             <p class="text-muted m-b-30"></p>
                             <hr>
@@ -378,15 +325,15 @@
                                     <tbody id="receiveList">
                                         <?php 
                                             $count= 1;
-                                            if(isset($order->fromSupplierOrderDetail)){
-                                                foreach($order->fromSupplierOrderDetail as $orderInfo){
+                                            if(isset($order->fromManufacturerOrderDetail)){
+                                                foreach($order->fromManufacturerOrderDetail as $orderInfo){
                                                     echo '<tr>'.
                                                         '<td>'.$count.'</td>'.
                                                         '<td>'.$orderInfo->id.'</td>'.
                                                         '<td>'.$orderInfo->fromSupply->sp_name.'</td>'.
                                                         '<td>'.$orderInfo->fromSupply->sp_sku.'</td>'.
                                                         '<td>'.$orderInfo->spdt_qty.'</td>'.
-                                                        '<td id="remaining'.$orderInfo->id.'">'.($orderInfo->spdt_qty-$orderInfo->received).'</td>'.
+                                                        '<td id="remaining'.$orderInfo->id.'">'.($orderInfo->mndt_qty-$orderInfo->received).'</td>'.
                                                         '<td id="receive'.$orderInfo->id.'">'.$orderInfo->received.'</td>'.
                                                     '</tr>';
                                                     $count = $count + 1;
@@ -577,7 +524,7 @@
                             
                             var type = "POST"; 
                             var orderID = $('#orderModalIDUpdateStatus').val();
-                            var process_url = '/ajaxUpdateOrderStatus2';
+                            var process_url = '/ajaxUpdateOrderStatus3';
 
                             $.ajax({
                                 type: type,
