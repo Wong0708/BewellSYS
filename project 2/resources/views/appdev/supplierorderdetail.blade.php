@@ -356,8 +356,8 @@
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                             <h3 class="box-title m-b-0" style="color:black;">Order Details Record</h3>
                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
-                            <button id="receiveInventoryButton"style="margin-top:10px; " data-toggle="modal" data-target="#receiveSupplierOrder"class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="&#xe01b;" class="linea linea-basic"></i></span>Receive Inventory</button>
-                            <button id="addClientOrder"style="margin-top:10px; margin-left:10px;" class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('clientorder.index')}}>Manage Order List</a></button>
+                            @if(!isset($order->spod_completed))<button id="receiveInventoryButton"style="margin-top:10px; " data-toggle="modal" data-target="#receiveSupplierOrder"class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="&#xe01b;" class="linea linea-basic"></i></span>Receive Inventory</button>@endif
+                            <button id="addClientOrder"style="margin-top:10px; margin-left:10px;" class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('supplierorder.index')}}>Manage Order List</a></button>
                             <p class="text-muted m-b-30"></p>
                             <hr>
                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
@@ -529,7 +529,7 @@
                                             console.log(data);
                                             $('#orderStatus').text(data.status);
                                             $('#orderCompleted').text(data.completed);
-                                            
+                                            $('#receiveInventoryButton').hide();
                                         },
                                         error: function (data) {
                                             console.log('Data Error:', data);

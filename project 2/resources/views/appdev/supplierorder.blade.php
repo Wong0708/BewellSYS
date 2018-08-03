@@ -328,8 +328,8 @@
                                                     echo 
                                                         '<td id="updatedDate'.$order->id.'">'.$order->updated_at.'</td>'.
                                                         '<td id="setting'.$order->id.'">'.
-                                                        '<i style="color:#4c87ed;" data-id="'.$order->id.'" class="fa fa-edit editOrder"/>'.' '.
-                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder"/>'.
+                                                        '<a href="/supplierorder/'.$order->id.'" <i style="color:#4c87ed;" class="fa fa-edit editOrder">'.
+                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder">'.
                                                         '</td>'.
                                                         '</tr>';
                                                 } 
@@ -555,6 +555,41 @@
                         return false;
                     }
                 });
+            </script>
+
+            <script type="text/javascript">
+             $(".removeOrder").click(function (e) {
+                var verify = confirm("WARNING! Order will be Deleted Permanently! Do you wish to continue?");
+                    if(verify ==true){
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        })
+                
+                        var orderID = $(this).data('orderid');
+
+                        $.ajax({
+                            type: "DELETE",
+                            url: window.location.pathname + '/' + orderID,
+                            success: function (data) {
+                                $("#order" + orderID).remove();
+                                $('#activityUpdate').html('An order has been successfully deleted!');
+                                $('#activityUpdate').show();
+                                count2 = count2 - 1;
+                            },
+                            error: function (data) {
+                                $("#activityUpdate").toggleClass('alert-success alert-danger');
+                                $('#activityUpdate').html('Failed to process request an error occured!');
+                                $("#activityUpdate").toggleClass('alert-danger alert-success');
+                                $('#activityUpdate').show();
+                                console.log('Data Error:', data);
+                            }
+                        });
+                    }
+                    return false;
+                });
+            
             </script>
 
             <script type='text/javascript'>

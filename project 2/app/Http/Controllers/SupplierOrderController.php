@@ -98,6 +98,7 @@ class SupplierOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = SupplierOrder::where('id', $id)->delete();
+        return response()->json($order);
     }
 }
