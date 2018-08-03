@@ -319,8 +319,10 @@
                                     </div>
                                 {!!Form::close() !!}
                             <!-- printhead -->
+                            <div class="row">
+                                <br>
                             <div id="printhead">
-                                <p class="text-muted m-b-30"></p>
+                                <hr class="dotted">
                                 @if(isset($start))
                                 @endif
                                 @if(isset($end))
@@ -462,7 +464,7 @@
                                                 </table>
                                                 
                                 <h4  style="text-align:center; font-size:14px; color:black; margin-top:20px; font-family:Helvetica,Arial,sans-serif;"><b>----------- END OF THE REPORT -----------</b></h4>
-                            </div>
+                            </div> </div>
                         </div>
                     </div>
                 </div>

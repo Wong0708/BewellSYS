@@ -244,7 +244,7 @@
                             </div>
                             <div class="col-md-6 col-xs-6"> <strong>Total Price</strong>
                                 <br>
-                                <p class="text-muted">hi Boxes</p>
+                                <p class="text-muted">P {{App\Http\Controllers\SupplierReportController::getSupply(App\Http\Controllers\SupplierReportController::getSupplierOrderDetail($order->id)['supplyID'])['sp_price'] * App\Http\Controllers\SupplierReportController::getSupplierOrderDetail($order->id)['spdt_qty']}}</p>
                             </div>
                         </div>
                     </div>
@@ -262,7 +262,7 @@
                 <tbody id="addproduct">
 
                         <tr style ="color:black;">
-                            <td>{{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_name']}}</td>
+                            <td>{{App\Http\Controllers\SupplierReportController::getSupply(App\Http\Controllers\SupplierReportController::getSupplierOrderDetail($order->id)['supplyID'])['sp_name']}}</td>
                             <td>{{App\Http\Controllers\SupplierReportController::getSupplierOrderDetail($order->id)['spdt_qty']}}</td>
                         </tr>
                 </tbody>

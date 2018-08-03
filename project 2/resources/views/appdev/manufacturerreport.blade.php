@@ -353,7 +353,7 @@
                                                                 <td>{{$order->mnod_date}}</td>
                                                                 <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturer($order->manufacturerID)['mn_name']}}</td>
                                                                 <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}}</td>
-                                                                <td>Need Changes</td>
+                                                                <td>P {{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_price'] * App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}}</td>
                                                                 <td>{{$order->mnod_status}}</td>
                                                                 {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
                                                             @endforeach
