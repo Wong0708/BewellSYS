@@ -511,7 +511,7 @@
 
         //     if(verify){
 
-        //     }
+        //    bg }
         // });
 
         // $('.updatestatusform').submit(function() {
