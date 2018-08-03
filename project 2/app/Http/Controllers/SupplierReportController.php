@@ -30,6 +30,11 @@ class SupplierReportController extends Controller
         $orderdetails = SupplierOrderDetail::all();
         $supplies = Supply::all();
 
+        foreach($orders as $order){
+            $date = date_create($order['spod_date']);
+            $order['spod_date'] = date_format($date, "F j Y");
+        }
+
         return view("appdev.supplierreport")->with("start","")
         ->with("end","")->with("orders",$orders)
         ->with("suppliers",$suppliers)
@@ -44,6 +49,11 @@ class SupplierReportController extends Controller
         $orderdetails = SupplierOrderDetail::all();
         $supplies = Supply::all();
         $test = $request->dog;
+
+        foreach($orders as $order){
+            $date = date_create($order['spod_date']);
+            $order['spod_date'] = date_format($date, "F j Y");
+        }
         
         $start = new DateTime($request->start." 00:00:00");
         $end = new DateTime($request->end." 23:59:59");

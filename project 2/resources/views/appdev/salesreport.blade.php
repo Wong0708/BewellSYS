@@ -324,8 +324,6 @@
                                                 <th>Client</th>
                                                 <th>Total Ordered Products</th>
                                                 <th>Gross Total Price (in pesos)</th>
-                                                <th>Discount</th>
-                                                <th>Net Total Price</th>
                                             </tr>
                                         </thead>
                                                     <tbody id="addproduct">
@@ -338,9 +336,7 @@
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
                                                                 <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
-                                                                <td>0</td>
-                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
-                                                            {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
+                                                                {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
                                                             @endforeach
                                                         @endif
                                                     {{--    
