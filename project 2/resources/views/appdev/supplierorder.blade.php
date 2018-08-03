@@ -7,38 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="_token" content="{!! csrf_token() !!}">
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/bewelllogo.ico">
     <title>Bewell</title>
-    <!-- Bootstrap Core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-    <!-- Menu CSS -->
     <link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
-    <!-- animation CSS -->
     <link href="css/animate.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
-    <!-- color CSS -->
     <link href="css/colors/blue.css" id="theme" rel="stylesheet">
-
     <link href="plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 
 <body class="fix-sidebar">
-    <!-- Preloader -->
     <div class="preloader">
         <div class="cssload-speeding-wheel"></div>
     </div>
     <div id="wrapper">
-        <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top m-b-0">
                 <div class="navbar-header" style="background:#64B5F6;  border-radius: 2px; position:relative;"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
                     <div class="top-left-part" style="background-color:#BBDEFB; opacity:1;"><a class="logo" href="index.html"><b><img src="plugins/images/bewelllogos.png"  width="35px" alt="home" /></b><span class="hidden-xs"><img src="plugins/images/bewelllogol.png" width="110px" alt="home" /></span></a></div>
@@ -50,8 +36,6 @@
                             </li>
                     </ul>
                     <ul class="nav navbar-top-links navbar-right pull-right">
-                        <!-- /.dropdown -->
-    
                         <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i>
               <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
               </a>
@@ -70,10 +54,7 @@
                                     <a class="text-center" href="#"> <strong>See All Notifications</strong> <i class="fa fa-angle-right"></i> </a>
                                 </li>
                             </ul>
-                            <!-- /.dropdown-tasks -->
                         </li>
-    
-    
                         
                         <li class="dropdown">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
@@ -84,52 +65,24 @@
         
                             </b> </a>
     
-                            <!--DROPDOWN OF THE CLASS-->
                             <ul class="dropdown-menu dropdown-user animated flipInY">
                                 <li><a href="#"><i class="ti-user"></i> Manage Account</a></li>
-                                {{-- <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                                <li><a href="#"><i class="ti-email"></i> Inbox</a></li> --}}
-                                {{-- <li role="separator" class="divider"></li>
-                                <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li> --}}
                                 <li role="separator" class="divider"></li>
                             <li><a href={{route('logout.index')}}><i class="fa fa-power-off"></i> Logout</a></li>
                             </ul>
-                            <!-- /.dropdown-user -->
                         </li>
-                        <!-- /.Megamenu -->
-                        {{-- <li class="right-side-toggle"> <a class="waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li> --}}
-                        <!-- /.dropdown -->
                     </ul>
                 </div>
-                <!-- /.navbar-header -->
-                <!-- /.navbar-top-links -->
-                <!-- /.navbar-static-side -->
             </nav>
-        <!-- Left navbar-header -->
         <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-                            <!-- input-group -->
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
                 <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
                 </span> </div>
-                            <!-- /input-group -->
                         </li>
-                        {{-- <li class="user-pro">
-                        <a href="#" class="waves-effect"><img src="plugins/images/jet.jpg" alt="user-img" class="img-circle"> <span class="hide-menu">
-                            @if(Auth::user()->access==1)
-                                Administrator
-                            @endif
-    
-                            <span class="fa arrow"></span></span>
-                            </a>
-                            <ul class="nav nav-second-level">
-                                <li><a href="javascript:void(0)"><i class="ti-user"></i> Manage Account</a></li>
-                            </ul>
-                        </li> --}}
-                        {{-- <li class="nav-small-cap m-t-10">--- Main Menu</li> --}}
                         <span style=" position:absolute; bottom: 50px; width:100%; text-align: center; font-size:14px;">Powered by</span>
                         <span style=" position:absolute; bottom: 30px; width:100%; text-align: center; font-size:12px;"><strong>AIMinds</strong></span>
                         <span style=" position:absolute; bottom: 10px; width:100%; text-align: center; font-size:10px;">BCOFSYS - Version 1.0.1</span>
@@ -142,11 +95,6 @@
                             </ul>
                         </li>
                         <li> <a href={{route('schedule.index')}} class="waves-effect"><i style="color:#5F6367;" data-icon="r" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Schedule</span></a>
-                            {{-- <ul class="nav nav-second-level">
-                                <li> <a href="javascript:void(0)">Client</a> </li>
-                                <li> <a href="javascript:void(0)">Manufacturer</a> </li>
-                                <li> <a href="javascript:void(0)">Supplier</a> </li>
-                            </ul> --}}
                         </li>
                         <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="f" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Inventory<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
@@ -163,43 +111,24 @@
                                 <li> <a href={{route('supplierreport.index')}}>Supplier</a> </li>
                             </ul>
                         </li>
-
+    
                         <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="V" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
                                 <li> <a href={{route('useraccount.index')}}>User</a> </li>
                                 <li> <a href={{route('clientaccount.index')}}>Client</a> </li>
                                 <li> <a href={{route('manufactureraccount.index')}}>Manufacturer</a> </li>
                                 <li> <a href={{route('supplieraccount.index')}}>Supplier</a> </li>
-                                {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                             </ul>
                         </li>
                         @endif
     
-                        {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
-                            {{-- <ul class="nav nav-second-level">
-                                <li> <a href={{route('inventoryreport.index')}}>Truck</a> </li> --}}
-                                {{-- <li> <a href={{route('salesreport.index')}}>Driver</a> </li> --}}
-                                {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
-                            {{-- </ul>
-                        </li> --}}
                         
                         <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">FAQs</span></a></li>
                         <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Documentation</span></a></li>
                     
-                        {{-- <li> <a href={{route('schedule.index')}} class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Settings</span></a> --}}
-                            {{-- <ul class="nav nav-second-level">
-                                <li> <a href="javascript:void(0)">Client</a> </li>
-                                <li> <a href="javascript:void(0)">Manufacturer</a> </li>
-                                <li> <a href="javascript:void(0)">Supplier</a> </li>
-                            </ul> --}}
-                        {{-- </li> --}}
-                        {{-- <li><a href={{route('logout.index')}} class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li> --}}
                     </ul>
                 </div>
             </div>
-
-        <!-- Left navbar-header end -->
-        <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -213,450 +142,224 @@
                             <li class="active" style="color:#4c87ed;">Supplier</li>
                         </ol>
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /row -->
-                <!--MODAL STARTS HERE-->
-                <div class="modal fade" id="clientOrderModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add New Order/s</h4>
-                                </div>
-                                {!! Form::open(array('route'=>'clientorder.store','id'=>'addproductform'))!!}
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier:</b></label>
-                                        <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                        @if(isset($clients))
-                                                            @foreach ($clients as $client)
-                                                                <option>{{$client->cl_name}}</option>
-                                                            @endforeach
-                                                        @endif
-                                                        
-                                        </select>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one supplier among the list to add an order. <b style="color:#E53935;">*Required</b></span>
-                                        
-    
+
+                <!--jump-->
+                <!--SECTION KEYWORD/S: ORDER MODAL-->
+                <div class="modal fade" id="supplierOrderModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel1" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add New Supplier Order/s</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="supplierList" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier:</b></label>
+                                    <select name="supplierList" class="form-control" id="supplierList" style="margin-bottom:10px;">
+                                        <option selected disabled>Choose a Supplier</option>
+                                        @if(isset($suppliers)) 
+                                            @foreach ($suppliers as $supplier)
+                                                <option>{{$supplier->sp_name}}</option>
+                                            @endforeach 
+                                        @endif
+                                    </select>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one supplier among the list to add an order. <b style="color:#E53935;">*Required</b></span>
+                                    <br>
+                                    <label for="orderExpDate" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
+                                    <input type="date" name="orderExpDate" class="form-control" id="orderExpDate" style="margin-bottom:10px;"/>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the expected date of delivery for this order. <b style="color:#E53935;">*Required</b>
+                                    <br>
+
+                                    <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
+                                        <!--jet-->
+                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Material Ordered Product/s Support</b></h4>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section shows the material/s needed to fulfill the order of the clients <b style="color:#E53935;"></b></span>
                                         <br>
-    
-                                        <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Address:</b></label>
-                                        <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                        @if(isset($clients))
-                                                            @foreach ($clients as $client)
-                                                                <option>{{$client->cl_name}}</option>
-                                                            @endforeach
-                                                        @endif
-                                                        
-                                        </select>
-                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the supplier's address as this will serve also as the shipping address. <b style="color:#E53935;">*Required</b></span>
-                                        <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
-                                            <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Material Order/s</b></h4>
-                                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the supplier's material order based on the list. <b style="color:#E53935;">*Required</b></span>
-                                            <br>
-                                            <label for="order" class="control-label"> <button style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Material</button></label>
-                                            <label for="order" class="control-label"> <button style="margin-top:10px; margin-left:5px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:140px; height:30px;"class="btn btn-info btn-rounded waves-effect waves-light productadd" type="button"><span class="btn-label"><i data-icon="&#xe00a;" class="linea linea-basic"></i></span>Auto Generate</button></label>
+                                        <table id="materialProductSupport"class="table color-bordered-table info-bordered-table" style="margin-top:10px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
+                                            <thead>
+                                                <tr style="font-size:12px; font-weight:700; ">
+                                                    <th>#</th>
+                                                    <th>Material Name</th>
+                                                    <th>SKU</th>
+                                                    <th>Total Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="materialProductSupportList"></tbody>
+                                        </table>
+                                        <h4  style="color:#E53935; text-align:center; font-size:14px; font-family:Helvetica,Arial,sans-serif;"><b>System Generated Supplier Order Prediction</b></h4>
+                                        
+                                        <hr>
+                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Material Order/s</b></h4>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the supplier's material order based on the list. <b style="color:#E53935;">*Required</b></span>
+                                        <br>
+                                        <label for="order" class="control-label"> <button id="materialAdd" style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; min-width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Material</button></label>
+                                        <div class="table-responsive" style="margin-top:10px;">
+
+                                        <!--jump2-->
+                                        
                                            
-                                            <div class="table-responsive" style="margin-top:10px;">
-                                            <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
-                                                <thead>
-                                                    <tr style="font-size:12px; font-weight:700; ">
-    
-                                                        {{--
-                                                        <th></th> --}}
-                                                        {{-- <th>Product Code</th> --}}
-                                                        <th>Order #</th>
-                                                        <th>Material Name</th>
-                                                        {{-- <th> Name</th> --}}
-                                                        <th>SKU</th>
-                                                        {{--
-                                                        <th>Grams</th> --}} {{--
-                                                        <th>Price</th> --}} {{--
-                                                        <th>Current Qty</th> --}}
-                                                        <th>Order Amount (Boxes)</th>
-                                                        <th><i class="fa fa-gear"></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="addproduct">
-                                                                
-                                                                <tr style="color:black;">
-                                                                    {{-- @if(isset($products)) --}}
-                                                                    {{-- <td>PR-0001</td> --}}
-                                                                    <td><span class="label label-info">1</span></td>
-                                                                    <td> <select style="font-size:12px;" class="form-control" name="product[]" class="product"><option>Vitamin-C Powder</option> </td>
-                                                                    <td>
-                                                                        <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                            <option>1000 grams</option>
-                                                                            <option>500 grams</option>
-                                                                            <option>250 grams</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                                </tr>
-                                                                <tr style="color:black;">
-                                                                        {{-- @if(isset($products)) --}}
-                                                                        {{-- <td>PR-0001</td> --}}
-                                                                        <td><span class="label label-info">2</span></td>
-                                                                        <td> <select style="font-size:12px;" style="font-size:12px;" class="form-control" name="product[]" class="product"><option>Vitamin-D Powder</option> </td>
-                                                                        <td>
-                                                                            <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                                <option>1000 grams</option>
-                                                                                <option>500 grams</option>
-                                                                                <option>250 grams</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td><input style="font-size:12px;" readonly class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                        <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                                </tr>
-    
-                                                                <tr style="color:black;">
-                                                                        {{-- @if(isset($products)) --}}
-                                                                        {{-- <td>PR-0001</td> --}}
-                                                                        <td><span class="label label-info">2</span></td>
-                                                                        <td> <select style="font-size:12px;" class="form-control" name="product[]" class="product"><option>Vitamin-E Powder</option> </td>
-                                                                        <td>
-                                                                            <select style="font-size:12px;" class="form-control" name="gram[]" class="gram">
-                                                                                <option>1000 grams</option>
-                                                                                <option>500 grams</option>
-                                                                                <option>250 grams</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td><input style="font-size:12px;" class="form-control" data-mask="9,999 ONLY" placeholder="" name="orderqty[]" type="text" class="orderqty"></td>
-                                                                        <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeproduct" data-icon="&#xe04a;">  </td>
-                                                                </tr>
-    
-                                                                
-                                                            </tbody>
-                                                        </table>
-                                                    {{-- <h4  style="margin-top:20px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Ordered Products: 1 product/s only</b></h4>
-                                                    <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b> </b></h4> --}}
-                                                    <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Total Price: ₱100.00 </b></h4>
-                                                    </div>
-                                                    <hr>
-                                                        <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Material Inventory Support</b></h4>
-                                                        {{-- <h3 class="box-title">Product Inventory Support</h3> --}}
-                                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced inventory list for the supplier's ordered product/s.</span>
-                                                        
-                                                        <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
-                                                                <thead>
-                                                                    <tr style="font-size:12px; font-weight:700;">
-                                                                        <th>Order #</th>
-                                                                        {{--
-                                                                        <th></th> --}}
-                                                                        <th>Material Code</th>
-                                                                        <th>Available</th>
-                                                                        {{--
-                                                                        <th>Grams</th> --}} {{--
-                                                                        <th>Price</th> --}} {{--
-                                                                        <th>Current Qty</th> --}}
-                                                                        <th>Price</th>
-                                                                        <th>Status</th>
-                                                                        {{-- <th><i class="fa fa-gear"></th> --}}
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody id="addproduct">
-                                                                                
-                                                                                <tr style="font-size:12px;">
-                                                                                   <td>1</td>
-                                                                                   <td>RM-0001</td>
-                                                                                   <td><span class="label label-success">70</span></td>
-                                                                                   <td>₱100.00</td>
-                                                                                   <td><span class="label label-success">On-stock</span></td>
-                                                                                </tr>
-    
-                                                                                <tr style="font-size:12px;">
-                                                                                    <td>2</td>
-                                                                                    <td>RM-0002</td>
-                                                                                    <td><span class="label label-danger">0</span></td>
-                                                                                    <td>₱70.00</td>
-                                                                                    <td><span class="label label-danger">No Stock</span></td>
-                                                                                </tr>
-    
-                                                                                <tr style="font-size:12px;">
-                                                                                        <td>3</td>
-                                                                                        <td>PR-0003</td>
-                                                                                        <td><span class="label label-success">20</span></td>
-                                                                                        <td>₱120.00</td>
-                                                                                        <td><span class="label label-success"> Available</span></td>
-                                                                                    </tr>
-                    
-                                                                                
-                                                                            </tbody>
-                                                                        </table>
-                                                                        
-                                                    </div>
-                                                    <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Status:</b></label>
-                                                    <select name="client" class="form-control" id="client" style="margin-bottom:10px;">
-                                                                    @if(isset($clients))
-                                                                        @foreach ($clients as $client)
-                                                                            <option>{{$client->cl_name}}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                    
-                                                    </select>
-                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the supplier's payment status on their ordered products. <b style="color:#E53935;">*Required</b></span>
-                                                </br>
-                                            <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Paid Amount:</b></label>
-                                            </br>
-                                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount to the supplier. <b style="color:#E53935;">*Required</b></span>
-                                            <input style="margin-top:10px; " type="text" class="form-control" data-mask="PHP 9,999,999.00 ONLY"/>
-                                            <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total: ₱100.00 </b></h4>
-                                                   
-                                                   
-                                            </div>
-    
-                                        {{-- <h1>Total:</h1> --}}
-                                            
+                                        <table id="materialOrderTable"class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
+                                            <thead>
+                                                <tr style="font-size:12px; font-weight:700; ">
+                                                    <th>Order #</th>
+                                                    <th>Material Name</th>
+                                                    <th>SKU</th>
+                                                    <th>Order Amount (Boxes)</th>
+                                                    <th><i class="fa fa-gear"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="orderMaterialList">
+                                                <tr style="color:black;" id="orderListNum1">
+                                                @if(isset($materials))
+                                                    <td><span id="countAddOrder"  class="label label-info"></span></td>
+                                                    <td> 
+                                                        <select style="font-size:12px;" class="form-control orderName">
+                                                            <option selected disabled>Choose a Material </option>
+                                                            @foreach ($materials as $material)
+                                                                <option>{{$material->sp_name}}</option>
+                                                            @endforeach 
+                                                        </select>
+                                                    </td>
+                                                    <td> 
+                                                        <select style="font-size:12px;" class="form-control orderSKU">
+                                                            <option selected>N/A</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input value="0" type="number" min="1" style="font-size:12px;" class="form-control orderInventory" placeholder=""></td>
+                                                    <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td>
+                                                @endif 
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="modal-footer">
-                                        {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> --}}
-                                        <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
-                                    </div>
-                                {!!Form::close()!!}
-                                
-                            </div>
+                                    <hr>
+                                    <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Material Inventory Support</b></h4>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This is the referenced inventory list for the supplier's ordered material/s.</span>
+                                    
+                                    <table class="table full-color-table full-info-table hover-table" data-height="250" data-mobile-responsive="true" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); margin-top:10px; font-family:Helvetica,Arial,sans-serif;">
+                                        <thead>
+                                            <tr style="font-size:12px; font-weight:700;">
+                                                <th>Order #</th>
+                                                <th>Material Code</th>
+                                                <th>Available</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="materialOrderSupport"></tbody>
+                                    </table>
+                                </div>
+                            </br>
+                        <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Total Payment Amount:</b></label>
+                        </br>
+                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount to the supplier. <b style="color:#E53935;">*Required</b></span>
+                        <input id="totalAmountPayed" style="margin-top:10px; " type="number" min="1" class="form-control"/>
                         </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="submitOrderList" class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
+                        </div>
+                    
                     </div>
-
-                {{-- <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="sysmodal2">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="exampleModalLabel1">Edit Order</h4> </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">Customer</label>
-                                            <input type="dropdown" class="form-control" id="recipient-name1"> </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-
-
-                
-                        {{-- <div id="statusModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"></button>
-                                        <h4 class="modal-title"></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="orderStatus">Order Status:</label>
-                                                <select name="orderStatus" class="form-control" id="orderStatus">
-                                                    <option>Processing</option>
-                                                    <option>Scheduled</option>
-                                                    <option>Delivering</option>
-                                                    <option>Delivered</option>
-                                                    <option>Complete</option>
-                                                    <option>Cancelled</option>
-                                                </select>
-                                            </div>
-
-                                            <input id="orderID" type="hidden" name="orderID">
-                                            
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning" data-dismiss="modal">
-                                                <span class='glyphicon glyphicon-remove'></span> Close
-                                            </button>
-                                            <button type="submit" class="btn btn-danger">
-                                                    <span class='glyphicon glyphicon-remove'></span> Submit
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> --}}
-                    
+                </div>
+            </div>
                 <!--MODAL ENDS HERE-->
                 
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            @if(Session::has('success'))
-                                <div class="alert alert-success"> {{Session::get('success')}} </div>
-                      
+                                <div id="activityStatus" class="alert alert-success"> </div>
                               
-                              @endif
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF SUPPLIER ORDERS</h3>
-                            {{-- <div class="col-sm-12" style="background-color:red;"> --}}
-                                <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
+                                <button id="addSupplierOrder" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#supplierOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
                                                     
-                                <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order to supplier! </span> </a> {{-- </div> --}} {{-- </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
+                                <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order to supplier! </span> </a>
 
                                 <p class="text-muted m-b-30"></p>
                                 <div class="table-responsive">
                                     <table id="myTable" class="table table-striped">
                                         <thead>
-                                                <tr style="color:black;">
-                                                        <th>Transaction #</th>
-                                                        <th>Order #</th>
-                                                        <th>Supplier</th>
-                                                        {{--
-                                                        <th>No. of Orders</th> --}}
-                                                        <th>Order Date</th>
-                                                        <th>Expected Date</th>
-                                                        <th>Delivery Date</th>
-                                                        
-                                                        {{--
-                                                        <th>Ship Date</th> --}}
-                                                        <th>Payment Status</th>
-                                                        {{-- <th>Delivery Status</th> --}}
-                                                        {{-- <th>Grand Total</th> --}}
-                                                        <th>Last Updated</th>
-                                                        {{-- <th></th> --}}
-                                                        {{-- <th></th> --}}
-                                                        <th><i class="fa fa-gear"></th>
-                                                        {{-- <th><i class="fa fa-gear"></th> --}}
-                                            </tr>
+                                            <tr style="color:black;">
+                                                    <th>Order #</th>
+                                                    <th>Supplier</th>
+                                                    <th>Order Date</th>
+                                                    <th>Expected Date</th>
+                                                    <th>Date Completed</th>
+                                                    <th>Delivery Status</th>
+                                                    <th>Last Updated</th>
+                                                    <th><i class="fa fa-gear"></th>
+                                        </tr>
                                     </thead>
-                                    <tbody>
-                                        {{-- @if(isset($orders)) --}}
-                                            {{-- @foreach ($orders as $order) --}}
-                                            <tr>
-                                                    <td>TR-0001</td>
-                                                
-                                                    <td><a href={{ url('supplierorderdetail') }}>SPOD-1</td>
-
-                                                    <td>Sinopharm Group</td>
-                                                    <td>2018-04-17</td> 
-                                                    <td>2018-04-17</td> 
-                                                    <td>2018-04-29</td> 
-                                                    {{-- <td>N/A</td>  --}}
-                                                    <td><span class="label label-warning">Unpaid</span></td>
-                                                    {{-- <td><span class="label label-info">Processing</span></td> --}}
-                                                    {{-- <th>100</th> --}}
-                                                    <td>2018-04-18 09:23:42</td>
-                                                    <td>
-                                                        {{-- <i style="color:#4c87ed;" data-order={{$order->id}} class="fa fa-edit"> --}}
-
-                                                                {{-- {!! Form::open(['route'=>['clientorder.destroy',$order->id],'method'=>'DELETE','enctype'=>'multipart/form-data','class'=>'deleteOrder']) !!} --}}
-                                                                <i style="margin-left:5px; color:#E53935;" class="fa fa-trash-o removeorder">
-                                                                {{-- {!!Form::close()!!} --}}
-                                                        
-                                                    </td>
-                                                {{-- <td>  --}}
-                                            </tr> 
+                                    <tbody id="allOrderList">
+                                        <?php 
+                                            //Debugging Tool Developed by Jet for PHP tags.
+                                                #echo "<script>console.log( 'Debug Objects: " . <PHP Variable Here> . "' );</script>";
                                             
+                                            if(isset($orders)){
+                                                //Start of Foreach Loop.
+                                                foreach ($orders as $order){
+                                                    echo 
+                                                        '<tr id="order'.$order->id.'">'.
+                                                        '<td id="orderID'.$order->id.'"><a href="supplierorder/'.$order->id.'">'.$order->id.'</a></td>'.
+                                                        '<td id="manufacturer'.$order->id.'">';
+
+                                                    if(isset($order->fromSupplier)){
+                                                        echo $order->fromSupplier->sp_name;
+                                                    }else{
+                                                        echo 'N/A';
+                                                    }
+
+                                                    echo 
+                                                        '</td>'.
+                                                        '<td id="createdDate'.$order->id.'">'.$order->spod_date.'</td>'.
+                                                        '<td id="expectedDate'.$order->id.'">'.$order->spod_expected.'</td>'.
+                                                        '<td id="dateCompleted'.$order->id.'">';
+
+                                                    if(!empty($order->spod_completed)){
+                                                        echo $order->spod_completed;
+                                                    }else{
+                                                        echo 'N/A';
+                                                    }
+
+                                                    echo 
+                                                        '</td>'.
+                                                        '<td id="deliveryStatus'.$order->id.'">';
+                                                        
+                                                    if($order->spod_status=='Complete'){
+                                                        echo '<span class="label label-success">'.$order->spod_status.'</span></td>';
+                                                    }else{
+                                                        echo '<span class="label label-info">'.$order->spod_status.'</span></td>';
+                                                    }
+                                                    
+                                                    echo 
+                                                        '<td id="updatedDate'.$order->id.'">'.$order->updated_at.'</td>'.
+                                                        '<td id="setting'.$order->id.'">'.
+                                                        '<a href="/supplierorder/'.$order->id.'" <i style="color:#4c87ed;" class="fa fa-edit editOrder">'.
+                                                        '<i style="margin-left:5px; color:#E53935;" data-orderid='.$order->id.' class="fa fa-trash-o removeOrder">'.
+                                                        '</td>'.
+                                                        '</tr>';
+                                                } 
+                                            }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- /.row -->
-                <!-- .right-sidebar -->
-                <div class="right-sidebar">
-                        <div class="slimscrollright">
-                            <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span>
-                                </div>
-                                <div class="r-panel-body">
-                                    <ul>
-                                        <li><b>Layout Options</b></li>
-                                        <li>
-                                            <div class="checkbox checkbox-info">
-                                                <input id="checkbox1" type="checkbox" class="fxhdr">
-                                                <label for="checkbox1"> Fix Header </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="checkbox checkbox-warning">
-                                                <input id="checkbox2" type="checkbox" class="fxsdr">
-                                                <label for="checkbox2"> Fix Sidebar </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="checkbox checkbox-success">
-                                                <input id="checkbox4" type="checkbox" class="open-close">
-                                                <label for="checkbox4"> Toggle Sidebar </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ul id="themecolors" class="m-t-20">
-                                        <li><b>With Light sidebar</b></li>
-                                        <li><a href="javascript:void(0)" theme="default" class="default-theme">1</a></li>
-                                        <li><a href="javascript:void(0)" theme="green" class="green-theme">2</a></li>
-                                        <li><a href="javascript:void(0)" theme="gray" class="yellow-theme">3</a></li>
-                                        <li><a href="javascript:void(0)" theme="blue" class="blue-theme">4</a></li>
-                                        <li><a href="javascript:void(0)" theme="purple" class="purple-theme">5</a></li>
-                                        <li><a href="javascript:void(0)" theme="megna" class="megna-theme">6</a></li>
-                                        <li><b>With Dark sidebar</b></li>
-                                        <br/>
-                                        <li><a href="javascript:void(0)" theme="default-dark" class="default-dark-theme">7</a></li>
-                                        <li><a href="javascript:void(0)" theme="green-dark" class="green-dark-theme">8</a></li>
-                                        <li><a href="javascript:void(0)" theme="gray-dark" class="yellow-dark-theme">9</a></li>
-                                        <li><a href="javascript:void(0)" theme="blue-dark" class="blue-dark-theme">10</a></li>
-                                        <li><a href="javascript:void(0)" theme="purple-dark" class="purple-dark-theme">11</a></li>
-                                        <li><a href="javascript:void(0)" theme="megna-dark" class="megna-dark-theme">12</a></li>
-                                    </ul>
-                                    {{--
-                                    <ul class="m-t-20 chatonline">
-                                        <li><b>Chat option</b></li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/varun.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/genu.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/ritesh.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/arijit.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/govinda.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/hritik.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/john.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><img src="../plugins/images/users/pawandeep.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
-                                        </li>
-                                    </ul>
-                                </div> --}}
-                            </div>
-                        </div>
-                        <!-- /.right-sidebar -->
                     </div>
-                    <!-- /.container-fluid -->
                     <footer class="footer text-center"> 2018 &copy; Bewell Nutraceutical Corporation</footer>
                 </div>
-                <!-- /#page-wrapper -->
             </div>
 
-
-            <!-- /#wrapper -->
-            <!-- jQuery -->
             <script src="../plugins/bower_components/jquery/dist/jquery.min.js"></script>
-            <!-- Bootstrap Core JavaScript -->
             <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-            <!-- Menu Plugin JavaScript -->
             <script src="../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
-            <!--slimscroll JavaScript -->
             <script src="js/jquery.slimscroll.js"></script>
-            <!--Wave Effects -->
             <script src="js/waves.js"></script>
-            <!-- Custom Theme JavaScript -->
             <script src="js/custom.min.js"></script>
             <script src="js/mask.js"></script>
             <script src="../plugins/bower_components/datatables/jquery.dataTables.min.js"></script>
-            <!-- start - This is for export functionality only -->
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
@@ -664,7 +367,296 @@
             <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
-            <!-- end - This is for export functionality only -->
+
+
+
+            <script type='text/javascript'>
+                $(document).on('click', '#addSupplierOrder', function (e) {//jet
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+
+                    e.preventDefault(); 
+
+                    var formData = {
+
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'liveSupplierOrderUpdate',
+                        data: formData,
+                        success: function(data){
+                            console.log(data);
+                            var dataAppend = '<tr>';
+                            var count = 1;
+                         
+                            for(var i=1;i<data.materialOrders.length;i++){
+                                dataAppend=dataAppend+'<td>'+count+'</td><td>'+data.materialOrders[i][0]+'</td><td>500 Grams</td><td>'+data.materialOrders[i][1]+'</td></tr>';
+                                count = count + 1;
+                            }
+
+                            $('#materialProductSupportList').append(dataAppend);
+                        },   
+                        error: function (data) {
+                            console.log('Data Error:', data);
+                        }
+                    });
+                });
+            </script>
+            <!--jump3-->
+            <script type='text/javascript'>
+                var count = 1;
+                var count2 = 1;
+                $('#countAddOrder').html(count);
+                $('#activityStatus').hide();
+            </script>
+
+            <script type='text/javascript'>
+                $(document).on('change', '.orderName', function (e) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+
+                    e.preventDefault(); 
+
+                    var formData = {
+                        name: ($(this).val()),
+                    }
+                    
+                    var toEdit = this;
+                    var tdEdit2 = $(this).closest('tr').find('td').find('span').text();
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'liveManufacturerOrderNameUpdate',
+                        data: formData,
+                        success: function(data){
+                            console.log(data);
+                            if($('#supportNum'+tdEdit2).length){ //Used length to check if the variable exists
+                                $('#supportNum'+tdEdit2).remove();
+                                count2 = count2 - 1;
+                            }
+
+                            $(toEdit).closest('td').next().find('select').find('option').remove();
+                             var dataAppend = '<option selected disabled>Choose Material SKU</option>';
+
+                            for (var i = 0; i < data.sku.length; i++){
+                                dataAppend = dataAppend+'<option>'+data.sku[i].sp_sku+'</option>';
+                            }   
+                            $(toEdit).closest('td').next().find('select').append(dataAppend);
+                        },   
+                        error: function (data) {
+                            console.log('Data Error:', data);
+                        }
+                    });
+                });
+            </script>
+
+            <script type='text/javascript'>
+                //jump SKU
+                $(document).on('change', '.orderSKU', function (e) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+
+                    e.preventDefault(); 
+
+                    var formData = {
+                        name:$(this).closest('td').prev().find('select').val(),
+                        sku: $(this).val(),
+                    }
+                    
+                    var tdEdit = this;
+                    var tdEdit2 = $(this).closest('tr').find('td').find('span').text();
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'liveManufacturerOrderSKUUpdate',
+                        data: formData,
+                        success: function(data){
+                            $(this).closest('td').next().find('input').val(data.inventory);
+
+                            if($('#supportNum'+tdEdit2).length){ //Used length to check if the variable exists
+                                $('#supportNum'+tdEdit2).remove();
+                                count2 = count2 - 1;
+                            }
+
+                            if(data.status == 1){
+                                $(tdEdit).closest('td').next().find('input').prop("readonly", false);
+                                $('#materialOrderSupport').append(
+                                '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.code+'</td><td>'+data.inventory+'</td><td><span class="label label-success">In-Stock</span></td>');
+                                count2 =  count2 + 1;
+                            }else if(data.status == 2){
+                                $(tdEdit).closest('td').next().find('input').prop("readonly", false);
+                                $('#materialOrderSupport').append(
+                                '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.code+'</td><td>'+data.inventory+'</td><td><span class="label label-warning">Re-stock</span></td>');
+                                count2 =  count2 + 1;
+                            }else{
+                                $(tdEdit).closest('td').next().find('input').prop("readonly", true);
+                                $('#materialOrderSupport').append(
+                                '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.code+'</td><td>'+data.inventory+'</td><td><span class="label label-danger">No Stock</span></td>');
+                                count2 =  count2 + 1;
+                            }
+                        },   
+                        error: function (data) {
+                            console.log('Data Error:', data);
+                        }
+                    });
+                });
+            </script>
+
+            <script type="text/javascript">
+                $(document).on('click', '.editOrder', function() {
+                    window.location.href ='supplierorder/'+$(this).data('id');
+                });
+            </script>
+            
+            <script type="text/javascript">
+                //jump4
+                $(document).on('click', '#materialAdd', function() {
+                    count = count +1;
+                    $('#orderMaterialList').append(
+                        '@if(isset($materials))<tr id="orderListNum'+count+'" style="color:black;">'+ 
+                        '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
+                        '<td> <select style="font-size:12px;" class="form-control orderName"><option selected> Choose a Material</option>@foreach ($materials as $material)<option>{{$material->sp_name}}</option> @endforeach</select> </td>' +
+                        '<td><select style="font-size:12px;" class="form-control orderSKU"><option selected>N/A</option></td>'+
+                        '<td><input type="text" style="font-size:12px;" class="form-control" placeholder=""></td> ' +
+                        '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td> ' +
+                        '</tr>@endif');
+                });
+            </script>
+
+            <script type="text/javascript">
+                $(document).on('click', '.removeAddOrder', function() {
+                    if(count==1){
+                        alert('Sorry you cannot remove this order!')
+                    }else{
+                        var verify = confirm("Do you want to delete this material?");
+                        if(verify==true){
+                            var thisVal = $(this).closest('tr').find('td').find('span').text();
+                            count = count - 1;
+                            count2 = count2 - 1;
+                            if($(this).closest('tr').prev('tr').length){
+                                for(var i =  parseInt(thisVal) ; i<= count; i=i+1 ){
+                                    //BUG LOCATED HERE
+                                    //By: John Edel B. Tamani
+                                    //Purpose: To update the number of the order in the list.
+
+                                    console.log('THISVAL:'+i);
+                                    console.log('COUNT:'+count);
+                                    $('#orderListNum'+(i+1)).find('td').find('span').html(i);
+                                    $('#orderListNum'+(i+1)).prop('id','#orderListNum'+i);// toggle also the product inventory support
+                                }
+                                $(this).closest('tr').remove();
+                            }
+                            $('#supportNum'+$(this).closest('tr').find('td').find('span').text()).remove();
+                        }
+                        return false;
+                    }
+                });
+            </script>
+
+            <script type="text/javascript">
+             $(".removeOrder").click(function (e) {
+                var verify = confirm("WARNING! Order will be Deleted Permanently! Do you wish to continue?");
+                    if(verify ==true){
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        })
+                
+                        var orderID = $(this).data('orderid');
+
+                        $.ajax({
+                            type: "DELETE",
+                            url: window.location.pathname + '/' + orderID,
+                            success: function (data) {
+                                $("#order" + orderID).remove();
+                                $('#activityStatus').html('An order has been successfully deleted!');
+                                $('#activityStatus').show();
+                                count2 = count2 - 1;
+                            },
+                            error: function (data) {
+                                $("#activityStatus").toggleClass('alert-success alert-danger');
+                                $('#activityStatus').html('Failed to process request an error occured!');
+                                $("#activityStatus").toggleClass('alert-danger alert-success');
+                                $('#activityStatus').show();
+                                console.log('Data Error:', data);
+                            }
+                        });
+                    }
+                    return false;
+                });
+            
+            </script>
+
+            <script type='text/javascript'>
+                $('#submitOrderList').on('click','',function(e) {
+                    if($('#orderListNum1').find('td:first').next().next().find('select').val()!='N/A' && $('#orderListNum1').find('td:first').next().next().next().find('input').val()!=0){
+                        var verify = confirm("Do you wish to add the following order/s?");
+
+                        //VARIABLE PRE-PROCESSING
+                        var orders = [];
+                        var order =  [];
+                        for(var i=1;i<=count;i=i+1){
+                            order.push($('#orderListNum'+i).find('td:first').next().find('select').val(),$('#orderListNum'+i).find('td:first').next().next().find('select').val(),$('#orderListNum'+i).find('td:first').next().next().next().find('input').val())
+                            orders.push(order);
+                            order = [];
+                        }
+                        console.log(orders);
+
+                        var supplierDetail = [];
+                        var supplier = [];
+                        supplier.push($('#supplierList').val(),$('#orderExpDate').val(),$('#totalAmountPayed').val());//jet
+                        supplierDetail.push(supplier);
+
+
+                        console.log(supplierDetail);
+
+                        if(verify==true){
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                }
+                            })
+
+                            e.preventDefault(); 
+                            var formData = {
+                                orderList:orders,
+                                supplierInfo:supplierDetail,
+                            }
+                            
+                            var tdEdit = '#clientLocation';
+                            
+                            //jump5
+                            $.ajax({
+                                type: "POST",
+                                url: 'liveSupplierAddOrderUpdate',
+                                data: formData,
+                                success: function(data){
+                                    $('#activityStatus').html('An order has been successfully added to the list!');
+                                    $('#activityStatus').show();
+                                    $('#supplierOrderModal').modal('hide');
+                                },   
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }
+                        return false;
+                    }else{
+                        alert('Sorry there are no order/s placed yet!')
+                    }
+                });
+            </script>
             <script>
                 $(document).ready(function() {
                     $('#myTable').DataTable();
@@ -705,71 +697,10 @@
                         });
                     });
                 });
-                $('#example23').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
-                });
             </script>
-            <!--Style Switcher -->
             <script src="plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
-            <!-- Sweet-Alert  -->
             <script src="plugins/bower_components/sweetalert/sweetalert.min.js"></script>
             <script src="plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
-
-            <script type="text/javascript">
-                $(document).on('click', '.ajaxmodal', function() {
-                    $('.modal-title').text('Update Order Status');
-                    // $('#defStatus').val($(this).data('order'));
-                    // $('#orderID').attr('value',$(this).data('order'));
-                    $('.statusModal').modal('show');
-                    // alert('1');
-                });
-
-                $(document).on('click', '.productadd', function() {
-                    $('#addproduct').append("<tr>" +
-                        '<td> <select name="product[]" class="form-control product">@if(isset($products))@foreach ($products as $product)<option>{{$product->pd_name}}</option>@endforeach @endif </td>' +
-                        '<td><select name="gram[]" class="form-control gram"><option>500g</option><option>250g</option></select></td><td><input name="orderqty[]" type="number" value="0" class="form-control orderqty"></td>' +
-                        '<td><i class="fa fa-times removeproduct"></td>' +
-                        '</tr>');
-                });
-
-                $(document).on('click', '.removeproduct', function() {
-                    $(this).closest('tr').remove();
-                });
-
-                $('#addproductform').submit(function() {
-                    var verify = confirm("Do you wish to proceed to add the following products?");
-                    return verify;
-                });
-
-                $(document).on('click', '.removeorder', function() {
-                    $( ".deleteOrder" ).submit();
-                    var verify = confirm("Do you wish to delete this order?");
-                    return verify;
-
-                });
-
-                $(document).on('click', '.statusSubmit', function() {
-                    var verify = confirm("Do you wish to edit this order?");
-                    return verify;
-                });
-
-                // $(document).on('click', '.statusSubmit', function() {
-                //     var verify = confirm("Do you wish to update the status of this order?");
-                //     return verify;
-
-                //     if(verify){
-
-                //     }
-                // });
-
-                // $('.updatestatusform').submit(function() {
-                //     var verify = confirm("Do you wish to update the status of this order?");
-                //     return verify;
-                // });
-            </script>
 </body>
 
 </html>

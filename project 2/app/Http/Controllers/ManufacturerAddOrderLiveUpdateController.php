@@ -19,7 +19,6 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
         $orderList = $request->orderList;
 
         $new_order = new ManufacturerOrder();
-        $new_order->orderID= $request->manufacturerInfo[0][3];
         $new_order->manufacturerID= $manufacturer->id;
         $new_order->mnod_date = date("Y/m/d");
         $new_order->mnod_status = 'Processing';
@@ -41,8 +40,6 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
 
             $new_order_detail->supplyID = $material->id;
             $new_order_detail->mndt_qty = $order[2];
-            $material->sp_qty = $material->sp_qty-$order[2];//assume that every input is correct
-            $material->save();
 
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();
