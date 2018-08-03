@@ -189,20 +189,25 @@ class ScheduleController extends Controller
         return $total_curr_cap;
     }
 
-    public static function getRestrictClient($status,$id){
+    public static function getRestrictClient($status,$id,$scid){
+        $schedule = Schedule::find($id);
+
+
+        $date = date_create($schedule['scd_date']);
+        $schedule['expectedDate'] = date_format($date, "Y-m-d");
 
         switch ($status){
             case "Processing":
                 $a='<a href="#" data-toggle="modal" 
                                 data-target="#concludeSchedModal"
-                                scid="'.$id.'" sctype="client" class="conclude" >
+                                scid="'.$id.'" sctype="client" expectdate="'.$schedule->expectedDate.'" class="conclude">
                     <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
                 return $a;
                 break;
             case "Scheduled":
                 $a='<a href="#" data-toggle="modal" 
                                 data-target="#concludeSchedModal"
-                                scid="'.$id.'" sctype="client" class="conclude" >
+                                scid="'.$id.'" sctype="client" expectdate="'.$schedule->expectedDate.'" class="conclude" >
                     <i style=" font-size: 20px; color:#011fe5;" class="fa fa-book"></i></a>';
                 return $a;
                 break;
@@ -215,7 +220,7 @@ class ScheduleController extends Controller
         }
         return null;
     }
-    public static function getRestrictManufacturer($status,$id){
+    public static function getRestrictManufacturer($status,$id,$scid){
 
         switch ($status){
             case "Processing":

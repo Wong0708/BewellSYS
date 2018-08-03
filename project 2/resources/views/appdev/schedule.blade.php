@@ -614,7 +614,7 @@
                                     <textarea class="form-control" class="form-control" placeholder="Write about your transaction details" rows="5" name="remarks" id="comment"></textarea>
                                     <div id="date_conclude" style="display:block">
                                         <label for="truckStatus">Delivery Date:</label>
-                                        <input type="date" class="form-control" name="delivery_date" />
+                                        <input type="date" class="form-control" id="conclude_date_inp" name="delivery_date" />
                                     </div>
                                 </div>
                             </div>
@@ -789,7 +789,7 @@
                                                             <td>
 
                                                                 <center>
-                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrictClient($client_schedule->scd_status, $client_schedule->id) !!}
+                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrictClient($client_schedule->scd_status, $client_schedule->id, $client_schedule->orderID) !!}
                                                                 </center>
                                                             </td>
                                                         </tr>
@@ -843,7 +843,7 @@
                                                             <td>
 
                                                                 <center>
-                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrictManufacturer($manufacturer_schedule->scd_status, $manufacturer_schedule->id) !!}
+                                                                    {!!  \App\Http\Controllers\ScheduleController::getRestrictManufacturer($manufacturer_schedule->scd_status, $manufacturer_schedule->id, $manufacturer_schedule->orderID) !!}
                                                                 </center>
                                                             </td>
                                                         </tr>
@@ -1469,11 +1469,12 @@
                     return verify;
                 });
 
-                $(document).on('click', '.conclude', function() {
+                $(document).on('click', '.conclude', function(date) {
 
                     $("#sc_id").val($(this).attr('scid'));
                     $("#sc_type").val($(this).attr('sctype'));
                     $('#date_conclude').css('display','block');
+                    $('#conclude_date_inp').val($(this).attr('expectdate'));
                 });
                 $(document).on('click', '.truckeditz', function() {
 
