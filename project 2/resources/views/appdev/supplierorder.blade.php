@@ -645,6 +645,7 @@
                                     $('#activityStatus').html('An order has been successfully added to the list!');
                                     $('#activityStatus').show();
                                     $('#supplierOrderModal').modal('hide');
+                                    location.reload();
                                 },   
                                 error: function (data) {
                                     console.log('Data Error:', data);

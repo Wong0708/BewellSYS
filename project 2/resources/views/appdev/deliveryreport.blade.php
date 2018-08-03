@@ -292,9 +292,9 @@
                                                     @else
                                                         <td>MLOD-{{$schedule->orderID}}</td>
                                                     @endif
-                                                    <td>{{\App\Http\Controllers\ScheduleController::getTruck($schedule->truckID)->plate_num}}</td>
-                                                    <td>{{\App\Http\Controllers\ScheduleController::getDriver($schedule->driverID)->name}}</td>
-                                                    <td>{{\App\Http\Controllers\ScheduleController::getLocation($schedule->locationID)->loc_address}}</td>
+                                                    <td>@if(isset($schedule->fromTruck)){{$schedule->fromTruck->plate_num}}@endif</td>
+                                                    <td>@if(isset($schedule->fromDriver)){{$schedule->fromDriver->name}}@endif</td>
+                                                    <td>@if(isset($schedule->fromLocation)){{$schedule->fromLocation->loc_address}}@endif</td>
                                                     <td>{{$schedule['scd_date']}}</td>
                                                     <td>@if($schedule['dateDelivered']){{$schedule['dateDelivered']}}@else N/A
                                                             @if(\App\Http\Controllers\DeliveryReportController::checkOverdue($schedule->id))

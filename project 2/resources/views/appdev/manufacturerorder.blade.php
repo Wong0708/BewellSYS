@@ -186,10 +186,65 @@
                                     <br>
 
                                     <div class="white-box" style="background-color:#F5F5F5; margin-top:10px;">
+                                        <h4 style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Manufacturer Product Order/s</b></h4>
+                                        <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the manufacturer's product order based on the list. <b style="color:#E53935;">*Required</b></span>
+                                        <br>
+                                        <label for="order" class="control-label">
+                                            <button id="addOrder" style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; min-width:130px; height:30px; margin-bottom:10px;" class="btn btn-success btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Product</button>
+                                        </label>
+                                            <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
+                                                <thead>
+                                                    <tr style="font-size:12px; font-weight:700; ">
+                                                        <th>Order #</th>
+                                                        <th>Product Name</th>
+                                                        <th>SKU</th>
+                                                        <th>Order Amount (Boxes)</th>
+                                                        <th><i class="fa fa-gear"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="orderList">
+                                                    <tr style="color:black;" id="xorderListNum1">
+                                                        @if(isset($products))
+                                                            <td><span id="countAddOrder3" class="label label-info"></span></td>
+                                                            
+                                                                <td> 
+                                                                    <select style="font-size:12px;" class="form-control orderName2">
+                                                                        <option selected>Choose a product </option>
+                                                                        @foreach ($products as $product)
+                                                                            <option>{{$product->pd_name}}</option>
+                                                                        @endforeach 
+                                                                    </select>
+                                                                </td>
+                                                                <td> 
+                                                                    <select style="font-size:12px;" class="form-control orderSKU2">
+                                                                        <option selected>N/A </option>
+                                                                        <!--OLD IMPLEMENTATION MANUAL MODE-->
+                                                                        {{-- <option selected>Choose product SKU </option>
+                                                                        @foreach ($products as $product)
+                                                                            <option>{{$product->pd_sku}}</option>
+                                                                        @endforeach tanginamo --}}
+                                                                    </select>
+                                                                </td>
+                                                        @endif 
+                                                        
+                                                        <td><input value="0" type="number" min="1" style="font-size:12px;" class="form-control orderInventory" placeholder=""></td>
+                                                        <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                         <hr>
+
+
+
+
+
+
+
                                         <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Manufacturer Material Order/s</b></h4>
                                         <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Select the manufacturer's material order based on the list. <b style="color:#E53935;">*Required</b></span>
                                         <br>
-                                        <label for="order" class="control-label"> <button id="materialAdd" style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Material</button></label>
+                                        <label for="order" class="control-label"> <button id="materialAdd" style="margin-top:10px; font-size:12px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; min-width:130px; height:30px;"class="btn btn-success btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add Material</button></label>
                                         <div class="table-responsive" style="margin-top:10px;">
 
                                         <!--jump2-->
@@ -401,7 +456,8 @@
             <script type='text/javascript'>
                 var count = 1;
                 var count2 = 1;
-                $('#countAddOrder').html(count);
+                var count3 = 1;
+                $('#countAddOrder3').html(count3);
                 $('#activityStatus').hide();
             </script>
 
@@ -513,7 +569,7 @@
                 //jump4
                 $(document).on('click', '#materialAdd', function() {
                     count = count +1;
-                    $('#orderMaterialList').find('tr:last').append(
+                    $('#orderMaterialList').append(
                         '@if(isset($materials))<tr id="orderListNum'+count+'" style="color:black;">'+ 
                         '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
                         '<td> <select style="font-size:12px;" class="form-control orderName"><option selected> Choose a Material</option>@foreach ($materials as $material)<option>{{$material->sp_name}}</option> @endforeach</select> </td>' +
@@ -561,20 +617,29 @@
 
                         //VARIABLE PRE-PROCESSING
                         var orders = [];
+                        var orders2 = [];
+
                         var order =  [];
+                        var order2 =  [];
+
                         for(var i=1;i<=count;i=i+1){
-                            order.push($('#orderListNum'+i).find('td:first').next().find('select').val(),$('#orderListNum'+i).find('td:first').next().next().find('select').val(),$('#orderListNum'+i).find('td:first').next().next().next().find('input').val())
+                            order.push($('#orderListNum'+i).find('td:first').next().find('select').val(),$('#orderListNum'+i).find('td:first').next().next().find('select').val(),$('#orderListNum'+i).find('td:first').next().next().next().find('input').val());
                             orders.push(order);
                             order = [];
                         }
-                        console.log(orders);
+
+                        for(var i=1;i<=count3;i=i+1){
+                            order2.push($('#xorderListNum'+i).find('td:first').next().find('select').val(),$('#xorderListNum'+i).find('td:first').next().next().find('select').val(),$('#xorderListNum'+i).find('td:first').next().next().next().find('input').val());
+                            orders2.push(order2);
+                            order2 = [];
+                        }
+                        console.log(orders2);
+                        
 
                         var manufacturerDetail = [];
                         var manufacturer = [];
                         manufacturer.push($('#manufacturerList').val(),$('#orderExpDate').val(),$('#totalAmountPayed').val(),$('#orderList').find('option:selected').data('id'));//jet
                         manufacturerDetail.push(manufacturer);
-
-
                         console.log(manufacturerDetail);
 
                         if(verify==true){
@@ -587,6 +652,7 @@
                             e.preventDefault(); 
                             var formData = {
                                 orderList:orders,
+                                orderList2:orders2,
                                 manufacturerInfo:manufacturerDetail,
                             }
                             
@@ -602,14 +668,13 @@
                                     $('#activityStatus').show();
                                     $("#materialOrderTable").find('tbody').find('input').val('');
                                     $('#manufacturerOrderModal').modal('hide');
-
+                                    
                                     var completed = '';
                                     if((data.order.mnod_completed!='null')){
                                         completed = completed + data.order.mnod_completed;
                                     }else{
                                         completed = completed + 'N/A';
                                     }
-                                    alert(data.order.id);
                                     location.reload();//caching on datatable error
                                     $('#allOrderList').append(
                                         '<tr><td><a href="manufacturerorder/'+data.order.id+'"></a>'+data.order.id+'</td><td>'+data.manufacturer+'</td><td>'+data.order.mnod_date+'</td><td>'+data.order.mnod_expected+'</td>'+
@@ -671,6 +736,101 @@
             <script src="plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
             <script src="plugins/bower_components/sweetalert/sweetalert.min.js"></script>
             <script src="plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
+
+
+
+            <!---BOBO-->
+            <script>
+                var count = 1;
+                $('#countAddOrder').html(count);
+
+
+
+
+                  $(document).on('click', '.removeAddOrder', function() {
+            if(count==1){
+                alert('Sorry you cannot remove this order!')
+            }else{
+                var verify = confirm("Do you want to delete this material?");
+                if(verify==true){
+                    var thisVal = $(this).closest('tr').find('td').find('span').text();
+                    count = count - 1;
+                    count2 = count2 - 1;
+                    if($(this).closest('tr').prev('tr').length){
+                        for(var i =  parseInt(thisVal) ; i<= count; i=i+1 ){
+                            //BUG LOCATED HERE
+                            //By: John Edel B. Tamani
+                            //Purpose: To update the number of the order in the list.
+
+                            console.log('THISVAL:'+i);
+                            console.log('COUNT:'+count);
+                            $('#orderListNum'+(i+1)).find('td').find('span').html(i);
+                            $('#orderListNum'+(i+1)).prop('id','#orderListNum'+i);// toggle also the product inventory support
+                        }
+                        $(this).closest('tr').remove();
+                    }
+                    $('#supportNum'+$(this).closest('tr').find('td').find('span').text()).remove();
+                }
+                return false;
+            }
+        });
+            </script>
+
+            <script>
+              $(document).on('click', '#addOrder', function() {
+                count3 = count3 + 1;
+                $('#orderList').append(
+                '@if(isset($products))<tr id="xorderListNum'+count3+'" style="color:black;">'+ 
+                '<td><span class="label label-info" id="xcountAddOrder">'+count3+'</span></td> ' +
+                '<td> <select style="font-size:12px;" class="form-control orderName2"><option selected> Choose a product</option>@foreach ($products as $product)<option>{{$product->pd_name}}</option> @endforeach</select> </td>' +
+                '<td><select style="font-size:12px;" class="form-control"><option selected>N/A</option></td>'+
+                '<td><input type="text" style="font-size:12px;" class="form-control" placeholder=""></td> ' +
+                '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td> ' +
+                '</tr>@endif');
+            });
+            
+            </script>
+
+
+
+
+<script type='text/javascript'>
+    $(document).on('change', '.orderName2', function (e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+
+        e.preventDefault(); 
+        var formData = {
+            productName: ($(this).val()),
+        }
+        
+        var tdEdit = this;
+
+        $.ajax({
+            type: "POST",
+            url: 'liveClientOrderNameUpdate',
+            data: formData,
+            success: function(data){
+                console.log(data);
+
+                $(tdEdit).closest('td').next().find('select').find('option').remove();
+                var dataAppend = '<option selected disabled>Choose product SKU</option>';
+
+                for (var i = 0; i < data.product.length; i++){
+                    dataAppend = dataAppend+'<option>'+data.product[i].pd_sku+'</option>';
+                }
+                $(tdEdit).closest('td').next().find('select').append(dataAppend);
+            },   
+            error: function (data) {
+                console.log('Data Error:', data);
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

@@ -10,6 +10,8 @@ use App\ManufacturerOrderDetail;
 use App\Manufacturer;
 use App\Supply;
 use App\ClientOrder;
+use App\Product;
+
 use DateTime;
 
 class ManufacturerOrderController extends Controller
@@ -27,6 +29,7 @@ class ManufacturerOrderController extends Controller
     public function index()
     {
         $orders = ManufacturerOrder::all();
+        $products = Product::all();
         $clientOrders = ClientOrder::all();
         $manufacturers = Manufacturer::all();
         $supplies = Supply::all();
@@ -34,6 +37,7 @@ class ManufacturerOrderController extends Controller
             ->with("orders",$orders)
             ->with("manufacturers",$manufacturers)
             ->with("materials",$supplies)
+            ->with("products",$products)
             ->with("clientOrders",$clientOrders);
     }
 
@@ -67,7 +71,11 @@ class ManufacturerOrderController extends Controller
     public function show($id)
     {
         $order =  ManufacturerOrder::where('id','=',$id)->first();
-        return view("appdev.manufacturerorderdetail")->with('order',$order);
+        $orderdetail =  ManufacturerOrderDetail::where('orderID','=',$order->id)->get();
+        return view("appdev.manufacturerorderdetail")
+                    ->with('order',$order)
+                    ->with('orderdetail',$orderdetail);
+      
     }
 
     /**

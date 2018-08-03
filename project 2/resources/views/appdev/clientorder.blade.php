@@ -567,6 +567,7 @@
                             console.log('Data Error:', data);
                             $("#orderListTable").find('tbody').find('input').val('');
                             $('#clientOrderModal').modal('hide');
+                            location.reload();
                         },   
                         error: function (data) {
                             console.log('Data Error:', data);

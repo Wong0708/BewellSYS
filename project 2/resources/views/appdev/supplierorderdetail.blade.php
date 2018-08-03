@@ -284,7 +284,7 @@
                                                             <th>Order #</th>
                                                             <th>Material Name</th>
                                                             <th>Material SKU</th>
-                                                            <th>Retrieve Amount</th>
+                                                            <th>Receive Amount</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="receiveListBody">

@@ -39,7 +39,7 @@ Route::resource('supplierorder', 'SupplierOrderController');
 
 Route::resource('supplierorderdetail', 'SupplierOrderDetailController');
 
-Route::resource('schedule', 'ScheduleController');
+Route::resource('schedule', 'ScheduleController');//tite
 
 Route::resource('scheduledetail', 'ScheduleDetailController');
 
@@ -88,6 +88,7 @@ Route::resource('driver', 'DriverController');
 Route::post('liveClientOrderNameUpdate','ClientOrderNameLiveUpdateController@liveUpdate');
 Route::post('liveClientOrderSKUUpdate','ClientOrderSKULiveUpdateController@liveUpdate');
 Route::post('liveClientAddressUpdate','ClientAddressLiveUpdateController@liveUpdate');
+Route::post('liveClientAddress2Update','ClientAddress2LiveUpdateController@liveUpdate');
 Route::post('liveClientAddOrderUpdate','ClientAddOrderLiveUpdateController@liveUpdate');
 Route::post('/ajaxAddPayment','ClientOrderPaymentLiveUpdateController@liveUpdate');
 Route::post('/ajaxBalancePayment','ClientOrderBalancePaymentLiveUpdateController@liveUpdate');
@@ -105,8 +106,20 @@ Route::post('liveManufacturerAddOrderUpdate','ManufacturerAddOrderLiveUpdateCont
 Route::post('liveSupplierOrderUpdate','SupplierAddOrderSupportLiveUpdateController@liveUpdate');
 Route::post('liveSupplierAddOrderUpdate','SupplierAddOrderLiveUpdateController@liveUpdate');
 Route::post('/ajaxReceiveOrder','SupplierOrderReceiveLiveUpdateController@liveUpdate');
+Route::post('/ajaxReceiveOrder2','SupplierOrderReceive2LiveUpdateController@liveUpdate');
 Route::post('/ajaxCompleteSupplierOrder','SupplierOrderCompleteLiveUpdateController@liveUpdate');
+Route::post('liveTruckCapacityUpdate','TruckCapacityLiveUpdateController@liveUpdate');
+Route::post('liveTruckCapacityUpdate2','TruckCapacity2LiveUpdateController@liveUpdate');
+Route::post('liveTruckScheduleSummary','TruckSummaryLiveUpdateController@liveUpdate');
+Route::post('liveTruckScheduleSummary2','TruckSummary2LiveUpdateController@liveUpdate');
+Route::post('liveAddScheduleUpdate','ScheduleAddClientOrderLiveUpdateController@liveUpdate');
+Route::post('liveAddScheduleUpdate2','ScheduleAddClientOrder2LiveUpdateController@liveUpdate');
+Route::post('liveFulfillDeliveryUpdate2','ScheduleFulfill2DeliveryLiveUpdateController@liveUpdate');
+Route::post('liveFulfillDeliveryUpdate','ScheduleFulfillDeliveryLiveUpdateController@liveUpdate');
+Route::post('liveCancelDeliveryUpdate','ScheduleCancelDeliveryLiveUpdateController@liveUpdate');
+Route::post('liveCancelledScheduleUpdate','ScheduleRescheduleLiveUpdateController@liveUpdate');
 // ManufacturerAddOrderLiveUpdateController
+
 
 //End of Ajax Routes
 
