@@ -70,7 +70,7 @@ class DeliveryReportController extends Controller
                 });
                 break;
             case 'delivered':
-                $fltr = "Delivered";
+                $fltr = "Fulfilled";
                 $schedules = $schedules->filter(function ($sched) use ($fltr) {
                     return $sched->scd_status == $fltr;
                 });
