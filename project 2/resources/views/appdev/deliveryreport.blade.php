@@ -246,8 +246,8 @@
                             <div class="col-md-6" >
                                 <center>
                                     <div class="input-daterange input-group" id="date-range">
-                                        <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
-                                        <input type="date" class="form-control" name="end"/>
+                                        <input type="date" class="form-control dt" id="sd" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
+                                        <input type="date" class="form-control dt" id="ed" name="end"/>
                                     </div>
                                 </center>
                             </div>
@@ -526,6 +526,16 @@
     <script src="plugins/bower_components/timepicker/bootstrap-timepicker.min.js"></script>
     <script src="plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script>
+        $(".dt").change(function() {
+            var startDate = document.getElementById("sd").value;
+            var endDate = document.getElementById("ed").value;
+            if(startDate != null && endDate!= null){
+                if ((Date.parse(endDate) <= Date.parse(startDate))) {
+                    alert("End date should be greater than Start date");
+                    document.getElementById("ed").value = "";
+                }
+            }
+        });
         // Clock pickers
         $('#single-input').clockpicker({
             placement: 'bottom',
