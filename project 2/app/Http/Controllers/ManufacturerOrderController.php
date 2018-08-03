@@ -109,12 +109,7 @@ class ManufacturerOrderController extends Controller
      */
     public function destroy($id)
     {
-        $order = Manufacturer::find($id);
-        $order->delete();
-
-        // dd($order);
-
-        Session::flash('success','Successfully deleted an order!');
-        return redirect("/manufacturerorder");
+        $order = ManufacturerOrder::where('id', $id)->delete();
+        return response()->json($order);
     }
 }

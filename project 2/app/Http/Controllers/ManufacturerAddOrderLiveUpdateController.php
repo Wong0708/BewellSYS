@@ -19,7 +19,6 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
         $orderList = $request->orderList;
 
         $new_order = new ManufacturerOrder();
-        $new_order->orderID= $request->manufacturerInfo[0][3];
         $new_order->manufacturerID= $manufacturer->id;
         $new_order->mnod_date = date("Y/m/d");
         $new_order->mnod_status = 'Processing';
