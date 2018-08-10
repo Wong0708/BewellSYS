@@ -7,12 +7,14 @@ use App\Product;
 use App\ClientOrder;
 use App\ClientOrderDetail;
 use App\Client;
+use App\ClientOrderLogs;
 use DateTime;
 
 class ClientAddOrderLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {   
+        $logs = new ClientOrderLogs();
         $json_orders = [];
         $date = new DateTime();
         $client = Client::where('cl_name','=',$request->clientInfo[0][0])->first();
@@ -36,8 +38,6 @@ class ClientAddOrderLiveUpdateController extends Controller
                                 ->first();
             $new_order_detail = new ClientOrderDetail();
             $new_order_detail->orderID = $new_order->id;
-
-           
             $new_order_detail->productID = $product->id;
             $new_order_detail->cldt_qty = $order[2];
             $new_order_detail->received = 0;
