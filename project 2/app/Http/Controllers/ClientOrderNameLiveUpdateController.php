@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Material;
 
 class ClientOrderNameLiveUpdateController extends Controller
 {
@@ -24,10 +25,15 @@ class ClientOrderNameLiveUpdateController extends Controller
         //Logic for Material Order List Update
         //Done by: PrivateAirJET
 
-        
-     
+        $materialNameList =  [];
 
-
-        return response()->json();
+        $productMaterialList = 
+        $push = array(
+            
+         );
+         array_push($materialList,$push);
+        return response()->json([
+            'materialList'=>$materialNameList,
+        ]);
     }
 }
