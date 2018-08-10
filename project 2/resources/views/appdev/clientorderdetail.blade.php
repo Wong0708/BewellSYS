@@ -688,6 +688,9 @@
                             })
 
                             e.preventDefault(); 
+
+                            //BUGS STILL EXIST HERE!
+                            //BY: JOHN EDEL B. TAMANI
                             alert($(this).data('payment'));
                             var formData = {
                                 id: $(this).data('id'),
