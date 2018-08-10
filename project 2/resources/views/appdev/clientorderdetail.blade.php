@@ -677,63 +677,70 @@
                     var verify = confirm("Do you want to cancel the payment?");
 
                     if(verify == true){
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                            }
-                        })
-
-                        e.preventDefault(); 
-                        var formData = {
-                            id: $(this).data('id'),
+                        var reason = prompt("Please enter the reason for the cancellation?");
+                        if (reason == null || reason == "") {
+                            
+                        } else {
+                            txt = "Hello " + person + "! How are you today?";
                         }
-                        
-                        var toEdit = this;
 
-                        $.ajax({
-                            type: "POST",
-                            url:  '/ajaxDeletePayment',
-                            data: formData,
-                            success: function(data){
-                                console.log(data);
-                                $(toEdit).closest('tr').remove();
-
-                                //AJAX TO UPDATE THE ORDER STATUS
-                                //By: John Edel B. Tamani
-                                $.ajaxSetup({
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                                    }
-                                })
-
-                                e.preventDefault(); 
-                                var formData = {
-                                    id:$('#orderIDPayment').val(),
-                                    funcNum:1,
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                                 }
-                                
-                                $.ajax({
-                                    type: "POST",
-                                    url:  '/ajaxUpdatePaymentStatus',
-                                    data: formData,
-                                    success: function(data){
-                                        console.log(data);
-                                        $('#paymentStatus').text(data.status);                                                
-                                    },   
-                                    error: function (data) {
-                                        console.log('Data Error:', data);
-                                    }
-                                });
-                                
-                                $('#paymentStatus').text('Pending');
-                            },   
-                            error: function (data) {
-                                console.log('Data Error:', data);
-                            }
-                        });
-                    }
+                            })
 
-                    return false;
+                            e.preventDefault(); 
+                            var formData = {
+                                id: $(this).data('id'),
+                            }
+                            
+                            var toEdit = this;
+
+                            $.ajax({
+                                type: "POST",
+                                url:  '/ajaxDeletePayment',
+                                data: formData,
+                                success: function(data){
+                                    console.log(data);
+                                    $(toEdit).closest('tr').remove();
+
+                                    //AJAX TO UPDATE THE ORDER STATUS
+                                    //By: John Edel B. Tamani
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                        }
+                                    })
+
+                                    e.preventDefault(); 
+                                    var formData = {
+                                        id:$('#orderIDPayment').val(),
+                                        funcNum:1,
+                                    }
+                                    
+                                    $.ajax({
+                                        type: "POST",
+                                        url:  '/ajaxUpdatePaymentStatus',
+                                        data: formData,
+                                        success: function(data){
+                                            console.log(data);
+                                            $('#paymentStatus').text(data.status);                                                
+                                        },   
+                                        error: function (data) {
+                                            console.log('Data Error:', data);
+                                        }
+                                    });
+                                    
+                                    $('#paymentStatus').text('Pending');
+                                },   
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }
+
+                        return false;
                     
                     //Commented out By: John Edel B. Tamani
                     //For Future Purposes!
