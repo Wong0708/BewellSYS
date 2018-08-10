@@ -26,10 +26,7 @@ class ClientOrderController extends Controller
 
     public function index()
     {
-        $orders = ClientOrder::all();
-        $clients = Client::all();
-        $products = Product::all();
-
+        //OLD IMPLEMENTATION OF THE CODE
         //JOIN: BC_Secondary_User - BC_Location
         // $clients = DB::table('BC_Secondary_User')
         // ->join('BC_Location', 'BC_Secondary_User.refID', '=', 'BC_Location.companyID')
@@ -37,11 +34,14 @@ class ClientOrderController extends Controller
         // ->select('BC_Secondary_User.*')
         // ->get();
 
+        $orders = ClientOrder::all();
+        $clients = Client::all();
+        $products = Product::all();
+
         return view("appdev.clientorder")
                 ->with("orders",$orders)
                 ->with("clients",$clients)
-                ->with("products",$products)
-                ->with("orderLogs",$orderLogs);
+                ->with("products",$products);
     }
 
     /**
@@ -126,12 +126,11 @@ class ClientOrderController extends Controller
      */
     public function show($id)
     {
-        $orderLogs = ClientOrderLogs::all();
         $order =  ClientOrder::where('id','=',$id)->first();
+        $orderLogs =  ClientOrderLogs::all();
         return view("appdev.clientorderdetail")
                     ->with('order',$order)
-                    ->with('orderLogs',$orderLogs);
-
+                    ->with("orderLogs",$orderLogs);
     }
 
     /**
