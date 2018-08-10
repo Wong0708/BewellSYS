@@ -376,8 +376,10 @@
                                                         '</td>'.
                                                         '<td id="deliveryStatus'.$order->id.'">';
 
-                                                    if($order->mnod_status=='Complete'){
+                                                    if($order->mnod_status=='Delivered'){
                                                         echo '<span class="label label-success">'.$order->mnod_status.'</span></td>';
+                                                    }else if($order->mnod_status=='Cancelled'){
+                                                        echo '<span class="label label-warning">'.$order->mnod_status.'</span></td>';
                                                     }else{
                                                         echo '<span class="label label-info">'.$order->mnod_status.'</span></td>';
                                                     }

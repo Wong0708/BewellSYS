@@ -357,6 +357,18 @@
                                                     }else{
                                                         echo 'N/A';
                                                     }
+                                                    
+                                                    echo 
+                                                        '</td>'.
+                                                        '<td id="deliveryStatus'.$order->id.'">';
+
+                                                    if($order->clod_pstatus=='Delivered'){
+                                                        echo '<span class="label label-success">'.$order->clod_pstatus.'</span></td>';
+                                                    }else if($order->mnod_status=='Cancelled'){
+                                                        echo '<span class="label label-warning">'.$order->clod_pstatus.'</span></td>';
+                                                    }else{
+                                                        echo '<span class="label label-info">'.$order->clod_pstatus.'</span></td>';
+                                                    }
 
                                                     echo 
                                                         '</td>'.
