@@ -36,16 +36,16 @@ class ClientOrderNameLiveUpdateController extends Controller
     
         //Logic for Product Details and retrieve the materials needed.
         //Loop the id here and retrieve the ingredients.
-        //Done by: PrivateAirJET
+        //Done by: PrivateAirJET.
         $materialNameList = [];
-        dd($materialNameList);
+
         if(isset($productList)){
             foreach($productList as $info){
                 $ingredients = ProductDetails::where('pd_id','=',$info[0])->get();
                 foreach($ingredients as $info2){
                     $material = Material::where('id','=',$info2->sp_id)->first();
                     //Loop again to check if the material is present on the list of added material list.
-                    if(isset($materialNameList)){
+                    if(count($materialNameList)==0){
                         foreach($materialNameList as $info3){
                             if($info3 != $material->name){
                                 $push = array(
