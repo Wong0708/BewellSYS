@@ -801,7 +801,6 @@
 
 <script type='text/javascript'>
     $(document).on('change', '.orderName2', function (e) {
-        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')

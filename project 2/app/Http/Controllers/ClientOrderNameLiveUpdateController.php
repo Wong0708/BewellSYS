@@ -9,6 +9,9 @@ class ClientOrderNameLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {
+        //General Logic for Product SKU live update here at Manufacturer Order.
+        //By: PrivateAirJET
+
         $product = Product::where('pd_name','=',$request->productName)
                     ->select('pd_sku')
                     ->get();
@@ -17,6 +20,14 @@ class ClientOrderNameLiveUpdateController extends Controller
                 'product' => $product,
             ]);
         }
+
+        //Logic for Material Order List Update
+        //Done by: PrivateAirJET
+
+        
+     
+
+
         return response()->json();
     }
 }
