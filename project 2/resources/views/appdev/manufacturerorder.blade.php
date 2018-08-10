@@ -818,7 +818,7 @@
         e.preventDefault(); 
         var formData = {
             productName: ($(this).val()),
-            materialList:holder,
+            materialList:updatedList,
         }
         
         var tdEdit = this;
