@@ -194,7 +194,7 @@
                                         </label>
                                             <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
                                                 <thead>
-                                                    <tr style="font-size:12px; font-weight:700; ">
+                                                    <tr style="font-size:12px; ">
                                                         <th>Order #</th>
                                                         <th>Product Name</th>
                                                         <th>SKU</th>
