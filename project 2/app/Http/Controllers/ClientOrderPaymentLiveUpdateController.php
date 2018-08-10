@@ -13,6 +13,7 @@ class ClientOrderPaymentLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {
+        //Initialization of variables here.
         $date = new DateTime();
         $orderPayment = new ClientOrderPayment();
         $orderPayment->orderID = $request->orderID;
@@ -27,6 +28,8 @@ class ClientOrderPaymentLiveUpdateController extends Controller
         $totalOrder = 0;
         $totalPayment = 0;
 
+
+        //Logic to check the remaining blance for the specific order before update to complete,
         if(isset($orders)){
             foreach($orders as $order){
                 $totalOrder = $totalOrder + $order->totalPrice;
