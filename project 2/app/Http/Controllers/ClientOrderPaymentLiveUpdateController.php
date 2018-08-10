@@ -25,6 +25,8 @@ class ClientOrderPaymentLiveUpdateController extends Controller
         // For processing on the view side.
         $orders = ClientOrderDetail::where('orderID','=',$request->orderID)->get();
         $orderPayments = ClientOrderPayment::where('orderID','=',$request->orderID)->get();
+
+        //Initialization of variables.
         $totalOrder = 0;
         $totalPayment = 0;
 
