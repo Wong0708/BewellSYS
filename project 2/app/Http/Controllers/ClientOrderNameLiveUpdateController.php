@@ -54,7 +54,7 @@ class ClientOrderNameLiveUpdateController extends Controller
                     $push2 = array(
                         $info2
                     );
-                    array_push($materialNameList,$push);
+                    array_push($audit,$push2);
                     //Loop again to check if the material is present on the list of added material list.
                     if(count($materialNameList)==0){
                         $push = array(
