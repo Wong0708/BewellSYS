@@ -127,7 +127,7 @@ class ClientOrderController extends Controller
     public function show($id)
     {
         $order =  ClientOrder::where('id','=',$id)->first();
-        $orderLogs =  ClientOrderLogs::where('id','=',$id)->get();
+        $orderLogs =  ClientOrderLogs::where('orderID','=',$id)->get();
         return view("appdev.clientorderdetail")
                     ->with('order',$order)
                     ->with("orderLogs",$orderLogs);
@@ -160,7 +160,7 @@ class ClientOrderController extends Controller
         // Session::flash('success','Successfully edited an order!');
         // return redirect("/clientorder");
 
-        $order = ClientOrder::where('orderID', $id)->update(['expectedDate'=>$request->expectedDate]);
+        $order = ClientOrder::where('orderidID', $id)->update(['expectedDate'=>$request->expectedDate]);
         return response()->json($order);
     }
 
