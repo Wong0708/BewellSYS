@@ -8,13 +8,13 @@ use App\ClientOrder;
 use App\ClientOrderDetail;
 use App\Client;
 use App\ClientOrderLogs;
+use App\User;
 use DateTime;
 
 class ClientAddOrderLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {   
-        $logs = new ClientOrderLogs();
         $json_orders = [];
         $date = new DateTime();
         $client = Client::where('cl_name','=',$request->clientInfo[0][0])->first();
@@ -59,6 +59,19 @@ class ClientAddOrderLiveUpdateController extends Controller
             array_push($json_orders,'orderNum'.$count,$new_order_detail);
             $count = $count + 1;
         }        
+
+        //Logs section of the order By: John Edel B. Tamani
+        $logs = new ClientOrderLogs();
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= $date->getTimestamp();
+        $logs->query_type= 'Insert';
+        $logs->notification= 'Order has been added to the list!';
+        $logs->save();
+
+
+        
+
+
         return response()->json([
             'processed_orders' => $json_orders,
         ]);
