@@ -26,6 +26,7 @@ class ClientOrderNameLiveUpdateController extends Controller
         //Logic for the loop on the live material list updated based on product ordered.
         //Note: The algorithm for this is pretty greedy. Memory Lost!
         //Process is looping again and again until it finish a product.
+        //Retrieves all the name of the order then find it here and save the id.
         //Done by: PrivateAirJET
         $productList = [];
         if(isset($request->materialList)){
@@ -37,18 +38,21 @@ class ClientOrderNameLiveUpdateController extends Controller
                 array_push($productList,$push);
             }
         }
-
-        //Logic for Material Order List Update
+    
+        //Logic for Product Details and retrieve the materials needed.
+        //Loop the id here and retrieve the ingredients.
         //Done by: PrivateAirJET
-        $materialNameList =  [];
+        $productDetails =  [];
         if(isset($productList)){
-            foreach($productMaterialList as $info){
-                $product = Product::where('pd_name','=',$info[0])->first();
-                $material = Material::where('id','=',$product->sp_id)->first();
-                $push = array(
-                    $material->sp_name
-                );
-                array_push($materialNameList,$push);
+            foreach($productList as $info){
+                $ingredients = ProductDetails::where('pd_id','=',$info[0])->get();
+                foreach($ingredients as $info2){
+                    $material = Material::where('id','=',$info2->sp_id)->first();
+                    $push = array(
+                        $material->sp_name
+                    );
+                    array_push($materialNameList,$push);
+                }
             }
         }
 
