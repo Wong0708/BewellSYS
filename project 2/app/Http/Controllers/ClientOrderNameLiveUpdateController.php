@@ -17,11 +17,6 @@ class ClientOrderNameLiveUpdateController extends Controller
         $product = Product::where('pd_name','=',$request->productName)
                     ->select('pd_sku')
                     ->get();
-        if(!empty($product)){
-            return response()->json([
-                'product' => $product,
-            ]);
-        }
 
         //Logic for the loop on the live material list updated based on product ordered.
         //Note: The algorithm for this is pretty greedy. Memory Lost!
@@ -64,8 +59,12 @@ class ClientOrderNameLiveUpdateController extends Controller
             }
         }
 
-        return response()->json([
-            'materialList'=>$materialNameList,
-        ]);
+        //Return Statement of JSON
+        if(!empty($product)){
+            return response()->json([
+                'materialList'=>$materialNameList,
+                'product' => $product,
+            ]);
+        }
     }
 }
