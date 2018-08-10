@@ -56,6 +56,7 @@ class ClientOrderNameLiveUpdateController extends Controller
                         );
                         array_push($materialNameList,$push);
                     }else if (count($materialNameList)>0){
+                        //Greedy Code here.
                         foreach($materialNameList as $info3){
                             if($info3[0] != $material->name){
                                 $push = array(

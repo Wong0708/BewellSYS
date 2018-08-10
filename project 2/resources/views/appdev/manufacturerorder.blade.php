@@ -803,7 +803,7 @@
         var updatedList = [];
         for(var i = 1; i <=count3; i++){
             var holder = $('#xorderListNum'+i).find('td:first').next().find('select').find('option:selected').text();
-            if(holder!='Choose a product'){
+            if(holder!=("Choose a product")){//Bug exist here
                 updatedList.push(holder);
             }
         }
