@@ -66,6 +66,8 @@ class ClientAddOrderLiveUpdateController extends Controller
         $logs->query_date= $date->getTimestamp();
         $logs->query_type= 'Insert';
         $logs->notification= 'Order has been added to the list!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
         $logs->save();
 
         return response()->json([
