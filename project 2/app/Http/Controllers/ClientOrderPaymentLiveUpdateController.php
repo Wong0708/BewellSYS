@@ -14,6 +14,7 @@ class ClientOrderPaymentLiveUpdateController extends Controller
     public function liveUpdate(Request $request)
     {
         $date = new DateTime();
+        $orderPayment = new ClientOrderPayment();
         $orderPayment->orderID = $request->orderID;
         $orderPayment->payment_date = date("Y-m-d");
         $orderPayment->payment_type = $request->paymentType;
@@ -42,7 +43,7 @@ class ClientOrderPaymentLiveUpdateController extends Controller
         $logs->userID= auth()->user()->id;
         $logs->query_date= date('Y-m-d H:i:s');
         $logs->query_type= 'Insert';
-        $logs->notification=  $request->paymentType.' Payment Amount of PHP'.  $request->paymentType.' has been added!';
+        $logs->notification=  $request->paymentType.' Payment Amount of PHP'.  $request->paymentAmount.' has been added!';
         $logs->created_at= $date->getTimestamp();
         $logs->updated_at= $date->getTimestamp();
         $logs->save();
