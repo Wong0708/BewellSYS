@@ -801,11 +801,9 @@
 <script type='text/javascript'>
     $(document).on('change', '.orderName2', function (e) {
 
-        for(var i =  0; i <count3; i++){
-            var holder = $('xorderListNum);;'
+        for(var i = 1; i <=count3; i++){//quick
+            var holder = $('xorderListNum'+i).val();
         }
-
-
 
         $.ajaxSetup({
             headers: {
