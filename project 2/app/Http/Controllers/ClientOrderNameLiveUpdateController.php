@@ -46,7 +46,7 @@ class ClientOrderNameLiveUpdateController extends Controller
                 $ingredients = ProductDetails::where('pd_id','=',$productList[$i][0])
                                                 ->select('sp_id')
                                                 ->get();
-                //Target: To filter out similar material lsit from $ingredients sp_id.
+                //Target: To filter out similar material list from $ingredients sp_id.
                 foreach($ingredients as $info2){
                     $material = Supply::where('id','=',$info2->sp_id)->first();
                     //Loop again to check if the material is present on the list of added material list.
