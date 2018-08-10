@@ -23,7 +23,7 @@ class ClientOrderPaymentLiveUpdateController extends Controller
         $orderPayment->save();
 
         // For processing on the view side.
-        $orders = ClientOrderDetail::where('orderID','=',$request->orderID)->get();
+        $orderDetails = ClientOrderDetail::where('orderID','=',$request->orderID)->get();
         $orderPayments = ClientOrderPayment::where('orderID','=',$request->orderID)->get();
 
         //Initialization of variables.
@@ -32,9 +32,9 @@ class ClientOrderPaymentLiveUpdateController extends Controller
 
 
         //Logic to check the remaining blance for the specific order before update to complete,
-        if(isset($orders)){
-            foreach($orders as $order){
-                $totalOrder = $totalOrder + $order->totalPrice;
+        if(isset($orderDetails)){
+            foreach($orderDetails as $info){
+                $totalOrder = $totalOrder + $info->totalPrice;
             }
         }
 
