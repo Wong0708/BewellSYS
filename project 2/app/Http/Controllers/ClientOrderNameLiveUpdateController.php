@@ -25,20 +25,18 @@ class ClientOrderNameLiveUpdateController extends Controller
 
         //Logic for Material Order List Update
         //Done by: PrivateAirJET
-
         $materialNameList =  [];
-
         $productMaterialList = ProductDetails::where('pd_id','=',$product->id)->get();
         if(isset($productMaterialList)){
-            foreach($i=0;$i<count($productMaterialList);$i=$i+1){
-
+            foreach($productMaterialList as $info){
+                $material = Material::where('id','=',$info->sp_id)->first();
+                $push = array(
+                    $material->sp_name
+                );
+                array_push($materialNameList,$push);
             }
         }
-        $push = array(
-            
-        );
 
-        array_push($materialList,$push);
         return response()->json([
             'materialList'=>$materialNameList,
         ]);
