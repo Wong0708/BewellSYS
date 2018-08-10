@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\ProductDetails;
-use App\Material;
+use App\Supply;
 
 class ClientOrderNameLiveUpdateController extends Controller
 {
@@ -34,19 +34,28 @@ class ClientOrderNameLiveUpdateController extends Controller
                 array_push($productList,$push);
             }
         }
+        
         //Logic for Product Details and retrieve the materials needed.
         //Loop the id here and retrieve the ingredients.
         //Done by: PrivateAirJET.
         $materialNameList = [];
         if(isset($productList)){
             for($i=0;$i<count($productList);$i=$i+1){
-                $ingredients = ProductDetails::where('pd_id','=',$productList[$i][0])->get();
+                $ingredients = ProductDetails::where('pd_id','=',$productList[$i][0])
+                                                ->select('sp_id')
+                                                ->get();
+                //Target: To filter out similar material lsit from $ingredients sp_id.
                 foreach($ingredients as $info2){
-                    $material = Material::where('id','=',$info2->sp_id)->first();
+                    $material = Supply::where('id','=',$info2->sp_id)->first();
                     //Loop again to check if the material is present on the list of added material list.
-                    if(isset($materialNameList)){
+                    if(count($materialNameList)==0){
+                        $push = array(
+                            $material->sp_name
+                        );
+                        array_push($materialNameList,$push);
+                    }else if (count($materialNameList)>0){
                         foreach($materialNameList as $info3){
-                            if($info3 != $material->name){
+                            if($info3[0] != $material->name){
                                 $push = array(
                                     $material->sp_name
                                 );
