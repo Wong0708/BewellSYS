@@ -11,6 +11,7 @@
 |
 */
 
+//Main Routes
 Route::resource('/', 'IndexController');
 Route::resource('dashboard', 'DashboardController');
 Route::resource('login', 'LoginController');
@@ -83,7 +84,6 @@ Route::post('liveFulfillDeliveryUpdate2','ScheduleFulfill2DeliveryLiveUpdateCont
 Route::post('liveFulfillDeliveryUpdate','ScheduleFulfillDeliveryLiveUpdateController@liveUpdate');
 Route::post('liveCancelDeliveryUpdate','ScheduleCancelDeliveryLiveUpdateController@liveUpdate');
 Route::post('liveCancelledScheduleUpdate','ScheduleRescheduleLiveUpdateController@liveUpdate');
-// ManufacturerAddOrderLiveUpdateController
 
 //Other Routes
 Route::resource('deliveryreport','DeliveryReportController');
