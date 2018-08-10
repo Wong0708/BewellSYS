@@ -85,9 +85,6 @@ Route::post('liveCancelDeliveryUpdate','ScheduleCancelDeliveryLiveUpdateControll
 Route::post('liveCancelledScheduleUpdate','ScheduleRescheduleLiveUpdateController@liveUpdate');
 // ManufacturerAddOrderLiveUpdateController
 
-
-//End of Ajax Routes
-
 //Other Routes
 Route::resource('deliveryreport','DeliveryReportController');
 Route::post('deliveryreport','DeliveryReportController@generateReport')->name("appdev.deliveryreport");
