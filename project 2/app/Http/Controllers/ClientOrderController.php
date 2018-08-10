@@ -178,8 +178,19 @@ class ClientOrderController extends Controller
         // Session::flash('success','Successfully deleted an order!');
         // return redirect("/clientorder");
 
-        $order = ClientOrder::where('orderID', $id)->delete();
+        //For the logic of the order Logs.
+        //For future purposes of data retention on deleted orders.
+        $logs = new ClientOrderLogs();
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification= 'Order has been deleted successfully'.$request->value. 'was cancelled!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
 
+
+        $order = ClientOrder::where('orderID', $id)->delete();
         return response()->json($order);
     }
 }
