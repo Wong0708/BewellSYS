@@ -689,6 +689,7 @@
                             var formData = {
                                 id: $(this).data('id'),
                                 reason: reason,
+                                value: $(this).data('payment'),
                             }
                             
                             var toEdit = this;
@@ -848,7 +849,7 @@
                                     console.log(data);
                                     var count = $('#paymentOrderTable').children('tr').length;
                                     $('#paymentOrderTable').append('<tr><td>'+(count+1)+'</td><td>'+data.orderDate+'<td>'+data.orderID+'</td><td>'+data.type+'</td><td>'+data.payment+'</td><td>'+
-                                    '<i style="margin-left:5px; color:#E53935;" data-id="'+data.id+'" class="fa fa-trash-o removePayment"></td></tr>');
+                                    '<i style="margin-left:5px; color:#E53935;" data-id="'+data.id+'" data-payment="'+data.payment+'" class="fa fa-trash-o removePayment"></td></tr>');
                                     $('#addOrderPaymentModal').modal('hide');
                                     if(data.totalBalance==0){
                                         //AJAX TO UPDATE THE ORDER
