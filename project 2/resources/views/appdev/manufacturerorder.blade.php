@@ -206,7 +206,6 @@
                                                     <tr style="color:black;" id="xorderListNum1">
                                                         @if(isset($products))
                                                             <td><span id="countAddOrder3" class="label label-info"></span></td>
-                                                            
                                                                 <td>
                                                                     <select style="font-size:12px;" class="form-control orderName2">
                                                                         <option selected>Choose a product </option>
@@ -801,6 +800,13 @@
 
 <script type='text/javascript'>
     $(document).on('change', '.orderName2', function (e) {
+
+        for(var i =  0; i <count3; i++){
+            var holder = $('xorderListNum);;'
+        }
+
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
