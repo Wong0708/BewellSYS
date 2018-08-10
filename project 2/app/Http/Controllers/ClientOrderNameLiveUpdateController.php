@@ -23,6 +23,9 @@ class ClientOrderNameLiveUpdateController extends Controller
         //Process is looping again and again until it finish a product.
         //Retrieves all the name of the order then find it here and save the id.
         //Done by: PrivateAirJET
+
+        //Future Updates:
+        //- Delete Similar Products like 101 and 101.
         $productList = [];
         $refList = $request->materialList;
         if(isset($request->materialList)){
@@ -34,7 +37,6 @@ class ClientOrderNameLiveUpdateController extends Controller
                 array_push($productList,$push);
             }
         }
-        
         //Logic for Product Details and retrieve the materials needed.
         //Loop the id here and retrieve the ingredients.
         //Done by: PrivateAirJET.
@@ -66,6 +68,7 @@ class ClientOrderNameLiveUpdateController extends Controller
                 }
             }
         }
+        dd($materialNameList);
 
         //Return Statement of JSON
         if(!empty($product)){
