@@ -63,7 +63,7 @@ class ClientAddOrderLiveUpdateController extends Controller
         //Logs section of the order By: John Edel B. Tamani
         $logs = new ClientOrderLogs();
         $logs->userID= auth()->user()->id;
-        $logs->query_date= $date->getTimestamp();
+        $logs->query_date= date('Y-m-d H:i:s');
         $logs->query_type= 'Insert';
         $logs->notification= 'Order has been added to the list!';
         $logs->created_at= $date->getTimestamp();

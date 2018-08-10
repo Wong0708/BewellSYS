@@ -29,7 +29,6 @@ class ClientOrderController extends Controller
         $orders = ClientOrder::all();
         $clients = Client::all();
         $products = Product::all();
-        $orderLogs = ClientOrderLogs::all();
 
         //JOIN: BC_Secondary_User - BC_Location
         // $clients = DB::table('BC_Secondary_User')
@@ -127,8 +126,12 @@ class ClientOrderController extends Controller
      */
     public function show($id)
     {
+        $orderLogs = ClientOrderLogs::all();
         $order =  ClientOrder::where('id','=',$id)->first();
-        return view("appdev.clientorderdetail")->with('order',$order);
+        return view("appdev.clientorderdetail")
+                    ->with('order',$order)
+                    ->with('orderLogs',$orderLogs);
+
     }
 
     /**
