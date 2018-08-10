@@ -205,7 +205,7 @@
                                                 <tbody id="orderList">
                                                     <tr style="color:black;" id="xorderListNum1">
                                                         @if(isset($products))
-                                                            <td><span id="countAddOrder3" class="label label-info"></span></td>
+                                                                <td><span id="countAddOrder3" class="label label-info"></span></td>
                                                                 <td>
                                                                     <select style="font-size:12px;" class="form-control orderName2">
                                                                         <option selected>Choose a product </option>
@@ -802,8 +802,7 @@
     $(document).on('change', '.orderName2', function (e) {
         var updatedList = [];
         for(var i = 1; i <=count3; i++){//quick
-            var holder = $('xorderListNum'+i).find('td:first').text();
-            alert(holder);
+            var holder = $('#xorderListNum'+i).find('td:first').next().find('select').find('option:selected').text();
             if(holder!='Choose a product'){
                 updatedList.push(holder);
             }
