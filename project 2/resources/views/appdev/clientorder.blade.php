@@ -319,7 +319,7 @@
                                             <th><i class="fa fa-gear"></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style="font-weight:400;"><!--BUG EXIST HERE CANNOT FIND WHAT IS THE CAUSE OF THE FONT-WEIGHT TO 700. OUTSIDE OF THE CSS SELECTOR-->
                                         <!--
                                             SECTION KEYWORD/S: CLIENT, ORDERS, TABLE.
                                             Prepared By: John Edel B. Tamani.
