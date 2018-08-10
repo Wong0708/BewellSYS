@@ -265,12 +265,16 @@
                                                 @if(isset($materials))
                                                     <td><span id="countAddOrder"  class="label label-info"></span></td>
                                                     <td> 
-                                                        <select style="font-size:12px;" class="form-control orderName">
+
+                                                        {{-- 
+                                                            For future purposes - old implementation 
+                                                            
+                                                            <select style="font-size:12px;" class="form-control orderName">
                                                             <option selected disabled>Choose a Material </option>
                                                             @foreach ($materials as $material)
                                                                 <option>{{$material->sp_name}}</option>
                                                             @endforeach 
-                                                        </select>
+                                                        </select> --}}
                                                     </td>
                                                     <td> 
                                                         <select style="font-size:12px;" class="form-control orderSKU">
