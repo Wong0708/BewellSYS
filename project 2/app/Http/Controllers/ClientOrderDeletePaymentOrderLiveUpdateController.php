@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ClientOrderPayment;
 use App\ClientOrderLogs;
+use DateTime;
 
 class ClientOrderDeletePaymentOrderLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {
+
+        //Initialization of Variables.
+        $date = new DateTime();
 
         //For the logic of the order Logs.
         $logs = new ClientOrderLogs();

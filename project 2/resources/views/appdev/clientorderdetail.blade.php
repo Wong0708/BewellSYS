@@ -677,6 +677,8 @@
                     var verify = confirm("Do you want to cancel the payment?");
 
                     if(verify == true){
+                        //REASON WILL JOIN THE LOG FOR CLIENTPAYMENT LOGS
+                        //UPDATED BY: JOHN EDEL B. TAMANI
                         var reason = prompt("Please enter the reason for the cancellation?");
                         if (reason != null || reason != "") {
                             $.ajaxSetup({
