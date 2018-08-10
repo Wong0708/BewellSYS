@@ -54,7 +54,7 @@ class ClientAccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Includes all the insert of the client to the table.
         $added_clients = $request->all();
         
         $details = array();
@@ -103,7 +103,6 @@ class ClientAccountController extends Controller
                 $clientdetail->created_at = $date->gettimestamp();
                 $clientdetail->updated_at = $date->getTimestamp();
                 $clientdetail->save();
-
                 $i = $i + 1;
         }
 
@@ -143,16 +142,11 @@ class ClientAccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $date = new datetime();
-        //
         $clients = Client::find($request->cl_id);
         $clients->cl_status = $request->input('clientStatus');
         $clients->updated_at = $date->getTimeStamp();
         $clients->save();
-
-        // dd($order);
-
         Session::flash('success','Successfully updated the client status!');
         return redirect("/clientaccount");
     }
@@ -165,12 +159,8 @@ class ClientAccountController extends Controller
      */
     public function destroy($id)
     {
-        //
         $client = Client::find($id);
         $client->delete();
-
-        // dd($product);
-
         Session::flash('success','Successfully deleted a client!');
         return redirect("/clientaccount");
     }
