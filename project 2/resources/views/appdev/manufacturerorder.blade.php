@@ -207,7 +207,7 @@
                                                         @if(isset($products))
                                                             <td><span id="countAddOrder3" class="label label-info"></span></td>
                                                             
-                                                                <td> 
+                                                                <td>
                                                                     <select style="font-size:12px;" class="form-control orderName2">
                                                                         <option selected>Choose a product </option>
                                                                         @foreach ($products as $product)
@@ -265,10 +265,9 @@
                                                 @if(isset($materials))
                                                     <td><span id="countAddOrder"  class="label label-info"></span></td>
                                                     <td> 
-
                                                         {{-- 
                                                             For future purposes - old implementation 
-                                                            
+                                                            Commented out by: John Edel B. Tamani
                                                             <select style="font-size:12px;" class="form-control orderName">
                                                             <option selected disabled>Choose a Material </option>
                                                             @foreach ($materials as $material)
@@ -802,6 +801,7 @@
 
 <script type='text/javascript'>
     $(document).on('change', '.orderName2', function (e) {
+        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
