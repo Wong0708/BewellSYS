@@ -1123,7 +1123,7 @@
                  var formData = {
                      scheduleID: $(this).data('id'),
                      remarks:$('#scheduleRemarks2').text(),
-                 }//tangina
+                 }
 
                  $.ajax({
                      type: "POST",
