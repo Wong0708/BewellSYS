@@ -795,9 +795,6 @@
             
             </script>
 
-
-
-
 <script type='text/javascript'>
     $(document).on('change', '.orderName2', function (e) {
         
