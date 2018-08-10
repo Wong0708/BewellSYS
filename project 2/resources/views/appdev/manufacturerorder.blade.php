@@ -800,15 +800,18 @@
 
 <script type='text/javascript'>
     $(document).on('change', '.orderName2', function (e) {
+        
+        //Logic for Live Material Update
+        //Done By: PrivateAirJET
         var updatedList = [];
-        for(var i = 1; i <=count3; i++){//quick
+        for(var i = 1; i <=count3; i++){
             var holder = $('#xorderListNum'+i).find('td:first').next().find('select').find('option:selected').text();
             if(holder!='Choose a product'){
                 updatedList.push(holder);
             }
         }
 
-
+        //AJAX Start here
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
