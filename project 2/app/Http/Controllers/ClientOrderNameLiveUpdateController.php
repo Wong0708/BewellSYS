@@ -41,6 +41,8 @@ class ClientOrderNameLiveUpdateController extends Controller
         //Loop the id here and retrieve the ingredients.
         //Done by: PrivateAirJET.
         $materialNameList = [];
+        $count = 0 ;
+        $audit = [];
         if(isset($productList)){
             for($i=0;$i<count($productList);$i=$i+1){
                 $ingredients = ProductDetails::where('pd_id','=',$productList[$i][0])
@@ -49,6 +51,10 @@ class ClientOrderNameLiveUpdateController extends Controller
                 //Target: To filter out similar material list from $ingredients sp_id.
                 foreach($ingredients as $info2){
                     $material = Supply::where('id','=',$info2->sp_id)->first();
+                    $push2 = array(
+                        $info2
+                    );
+                    array_push($materialNameList,$push);
                     //Loop again to check if the material is present on the list of added material list.
                     if(count($materialNameList)==0){
                         $push = array(
@@ -58,7 +64,8 @@ class ClientOrderNameLiveUpdateController extends Controller
                     }else if (count($materialNameList)>0){
                         //Greedy Code here.
                         foreach($materialNameList as $info3){
-                            if($info3[0] != $material->name){
+                            if($info3[0] != $material->sp_name){
+
                                 $push = array(
                                     $material->sp_name
                                 );
