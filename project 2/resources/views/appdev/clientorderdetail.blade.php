@@ -630,6 +630,8 @@
                 $(document).on('click','#updateOrderStatus',function(e){
                     var verify = confirm("Do you want to update the order?");
                     if(verify==true){
+
+                        //Logic to check if similar date
                         if($('#previousexpdate').val()!=$('#exp_date').val()){
                             $.ajaxSetup({
                                 headers: {
