@@ -688,6 +688,7 @@
                             })
 
                             e.preventDefault(); 
+                            alert($(this).data('payment'));
                             var formData = {
                                 id: $(this).data('id'),
                                 reason: reason,
