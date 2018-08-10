@@ -33,6 +33,7 @@ class ClientOrderNameLiveUpdateController extends Controller
                 array_push($productList,$push);
             }
         }
+        dd( $request->materialList);
     
         //Logic for Product Details and retrieve the materials needed.
         //Loop the id here and retrieve the ingredients.

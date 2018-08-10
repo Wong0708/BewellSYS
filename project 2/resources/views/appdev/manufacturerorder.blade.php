@@ -802,11 +802,12 @@
     $(document).on('change', '.orderName2', function (e) {
         var updatedList = [];
         for(var i = 1; i <=count3; i++){//quick
-            var holder = $('xorderListNum'+i).find('td:first').next().find('select').val();
+            var holder = $('xorderListNum'+i).find('td:first').next().find('select').text();
             if(holder!='Choose a product'){
                 updatedList.push(holder);
             }
         }
+
 
         $.ajaxSetup({
             headers: {
