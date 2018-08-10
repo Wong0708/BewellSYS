@@ -800,9 +800,12 @@
 
 <script type='text/javascript'>
     $(document).on('change', '.orderName2', function (e) {
-
+        var updatedList = [];
         for(var i = 1; i <=count3; i++){//quick
-            var holder = $('xorderListNum'+i).val();
+            var holder = $('xorderListNum'+i).find('td:first').next().find('select').val();
+            if(holder!='Choose a product'){
+                updatedList.push(holder);
+            }
         }
 
         $.ajaxSetup({
@@ -814,6 +817,7 @@
         e.preventDefault(); 
         var formData = {
             productName: ($(this).val()),
+            materialList:holder,
         }
         
         var tdEdit = this;

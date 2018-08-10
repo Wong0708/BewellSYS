@@ -23,6 +23,18 @@ class ClientOrderNameLiveUpdateController extends Controller
             ]);
         }
 
+        //Logic for the loop on the live material list updated based on product ordered.
+        //Done by: PrivateAirJET
+        if(isset($request->materialList)){
+            foreach($productMaterialList as $info){
+                $material = Material::where('id','=',$info->sp_id)->first();
+                $push = array(
+                    $material->sp_name
+                );
+                array_push($materialNameList,$push);
+            }
+        }
+
         //Logic for Material Order List Update
         //Done by: PrivateAirJET
         $materialNameList =  [];
