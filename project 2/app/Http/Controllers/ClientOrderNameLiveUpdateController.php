@@ -42,7 +42,6 @@ class ClientOrderNameLiveUpdateController extends Controller
         //Logic for Product Details and retrieve the materials needed.
         //Loop the id here and retrieve the ingredients.
         //Done by: PrivateAirJET
-        $productDetails =  [];
         if(isset($productList)){
             foreach($productList as $info){
                 $ingredients = ProductDetails::where('pd_id','=',$info[0])->get();
