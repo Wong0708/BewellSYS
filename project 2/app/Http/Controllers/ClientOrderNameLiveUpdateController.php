@@ -44,7 +44,7 @@ class ClientOrderNameLiveUpdateController extends Controller
                 foreach($ingredients as $info2){
                     $material = Material::where('id','=',$info2->sp_id)->first();
                     //Loop again to check if the material is present on the list of added material list.
-                    if(count($materialNameList)==0){
+                    if(isset($materialNameList)){
                         foreach($materialNameList as $info3){
                             if($info3 != $material->name){
                                 $push = array(
