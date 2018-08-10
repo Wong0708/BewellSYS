@@ -18,6 +18,7 @@ class ClientOrderDeletePaymentOrderLiveUpdateController extends Controller
         //For the logic of the order Logs.
         $logs = new ClientOrderLogs();
         $logs->userID= auth()->user()->id;
+        $logs->orderID=$request->id;
         $logs->query_date= date('Y-m-d H:i:s');
         $logs->query_type= 'Insert';
         $logs->notification= 'Payment of PHP'.$request->value. 'was cancelled!';
