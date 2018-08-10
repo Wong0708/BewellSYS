@@ -297,10 +297,7 @@
                             <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> 
 
                             <p class="text-muted m-b-30"></p>
-                            <d
-                            
-                            
-                            iv class="table-responsive">
+                            <div class="table-responsive">
                                 <table id="orderListTable" class="table table-striped">
                                     <thead>
                                         <tr style="color:black;">
@@ -360,21 +357,24 @@
                                                     
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="deliveryStatus'.$order->id.'">';
+                                                        '<td id="paymentStatus'.$order->id.'">';
 
-                                                    if($order->clod_pstatus=='Delivered'){
+                                                    if($order->clod_pstatus=='Complete'){
                                                         echo '<span class="label label-success">'.$order->clod_pstatus.'</span></td>';
-                                                    }else if($order->mnod_status=='Cancelled'){
-                                                        echo '<span class="label label-warning">'.$order->clod_pstatus.'</span></td>';
                                                     }else{
                                                         echo '<span class="label label-info">'.$order->clod_pstatus.'</span></td>';
                                                     }
 
                                                     echo 
-                                                        '</td>'.
-                                                        '<td id="paymentStatus'.$order->id.'">'.$order->clod_pstatus.'</td>'.
-                                                        '<td id="deliveryStatus'.$order->id.'">'.$order->clod_status.'</td>';
+                                                        '<td id="deliveryStatus'.$order->id.'">';
 
+                                                    if($order->clod_status=='Delivered'){
+                                                        echo '<span class="label label-success">'.$order->clod_status.'</span></td>';
+                                                    }else{
+                                                        echo '<span class="label label-info">'.$order->clod_status.'</span></td>';
+                                                    }
+                                                    
+                                                    //OLD IMPLEMENTATION
                                                     //Commented Out By: John Edel B. Tamani
                                                     // For Future Purposes
                                                     // echo 
