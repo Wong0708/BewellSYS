@@ -42,7 +42,6 @@ class ClientOrderNameLiveUpdateController extends Controller
         //Done by: PrivateAirJET.
         $materialNameList = [];
         $count = 0 ;
-        $audit = [];
         if(isset($productList)){
             for($i=0;$i<count($productList);$i=$i+1){
                 $ingredients = ProductDetails::where('pd_id','=',$productList[$i][0])
@@ -60,20 +59,17 @@ class ClientOrderNameLiveUpdateController extends Controller
                         array_push($materialNameList,$push);
                     }else if (count($materialNameList)>0){
                         //Greedy Code here.
-                        $count+=1;
+                        $checker = false;
                         foreach($materialNameList as $info3){
-                            $push2 = array(
-                                $count,$info3[0]
-                            );
-                            array_push($audit,$push2);
-
                             if(strcmp($info3[0], $material->sp_name)==0){
-
-                                $push = array(
-                                    $material->sp_name
-                                );
-                                array_push($materialNameList,$push);
+                                $checker=true;
                             }
+                        }
+                        if($checker==false){
+                            $push = array(
+                                $material->sp_name
+                            );
+                            array_push($materialNameList,$push);
                         }
                     }
                 }
