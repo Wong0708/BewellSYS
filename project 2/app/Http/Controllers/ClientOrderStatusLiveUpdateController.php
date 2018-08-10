@@ -16,6 +16,7 @@ class ClientOrderStatusLiveUpdateController extends Controller
 
         //Logs for the order.
         $logs = new ClientOrderLogs();
+        $logs->orderID= $request->id;
         $logs->userID= auth()->user()->id;
         $logs->query_date=  date('Y-m-d H:i:s');
         $logs->query_type= 'Insert';

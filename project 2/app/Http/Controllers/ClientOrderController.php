@@ -127,7 +127,7 @@ class ClientOrderController extends Controller
     public function show($id)
     {
         $order =  ClientOrder::where('id','=',$id)->first();
-        $orderLogs =  ClientOrderLogs::all();
+        $orderLogs =  ClientOrderLogs::where('id','=',$id)->get();
         return view("appdev.clientorderdetail")
                     ->with('order',$order)
                     ->with("orderLogs",$orderLogs);
@@ -160,7 +160,7 @@ class ClientOrderController extends Controller
         // Session::flash('success','Successfully edited an order!');
         // return redirect("/clientorder");
 
-        $order = ClientOrder::where('id', $id)->update(['expectedDate'=>$request->expectedDate]);
+        $order = ClientOrder::where('orderID', $id)->update(['expectedDate'=>$request->expectedDate]);
         return response()->json($order);
     }
 
@@ -181,14 +181,14 @@ class ClientOrderController extends Controller
         //For the logic of the order Logs.
         //For future purposes of data retention on deleted orders.
         $logs = new ClientOrderLogs();
+        $logs->orderID= $id;
         $logs->userID= auth()->user()->id;
         $logs->query_date= date('Y-m-d H:i:s');
         $logs->query_type= 'Insert';
-        $logs->notification= 'Order has been deleted successfully'.$request->value. 'was cancelled!';
+        $logs->notification= 'Order '.$id.' has been deleted successfully!';
         $logs->created_at= $date->getTimestamp();
         $logs->updated_at= $date->getTimestamp();
         $logs->save();
-
 
         $order = ClientOrder::where('orderID', $id)->delete();
         return response()->json($order);
