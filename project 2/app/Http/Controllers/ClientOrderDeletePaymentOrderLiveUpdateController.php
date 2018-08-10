@@ -4,10 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ClientOrderPayment;
+use App\ClientOrderLogs;
+
 class ClientOrderDeletePaymentOrderLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {
+
+        //For the logic of the order Logs.
+        $logs = new ClientOrderLogs();
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification= 'Payment cancellation' $request->reason;
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
+
         $product = ClientOrderPayment::destroy($request->id);
         return response()->json();
     }

@@ -678,12 +678,7 @@
 
                     if(verify == true){
                         var reason = prompt("Please enter the reason for the cancellation?");
-                        if (reason == null || reason == "") {
-                            
-                        } else {
-                            txt = "Hello " + person + "! How are you today?";
-                        }
-
+                        if (reason != null || reason != "") {
                             $.ajaxSetup({
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -693,6 +688,7 @@
                             e.preventDefault(); 
                             var formData = {
                                 id: $(this).data('id'),
+                                reason: reason,
                             }
                             
                             var toEdit = this;
@@ -739,6 +735,7 @@
                                 }
                             });
                         }
+                    }
 
                         return false;
                     
