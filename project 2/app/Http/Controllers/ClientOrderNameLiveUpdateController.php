@@ -51,10 +51,7 @@ class ClientOrderNameLiveUpdateController extends Controller
                 //Target: To filter out similar material list from $ingredients sp_id.
                 foreach($ingredients as $info2){
                     $material = Supply::where('id','=',$info2->sp_id)->first();
-                    $push2 = array(
-                        $info2
-                    );
-                    array_push($audit,$push2);
+                
                     //Loop again to check if the material is present on the list of added material list.
                     if(count($materialNameList)==0){
                         $push = array(
@@ -63,8 +60,14 @@ class ClientOrderNameLiveUpdateController extends Controller
                         array_push($materialNameList,$push);
                     }else if (count($materialNameList)>0){
                         //Greedy Code here.
+                        $count+=1;
                         foreach($materialNameList as $info3){
-                            if($info3[0] != $material->sp_name){
+                            $push2 = array(
+                                $count,$info3[0]
+                            );
+                            array_push($audit,$push2);
+
+                            if(strcmp($info3[0], $material->sp_name)==0){
 
                                 $push = array(
                                     $material->sp_name
