@@ -38,7 +38,6 @@ class ClientOrderNameLiveUpdateController extends Controller
         //Loop the id here and retrieve the ingredients.
         //Done by: PrivateAirJET.
         $materialNameList = [];
-
         if(isset($productList)){
             foreach($productList as $info){
                 $ingredients = ProductDetails::where('pd_id','=',$info[0])->get();
