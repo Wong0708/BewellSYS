@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Session;
 use App\ClientOrder;
 use App\ClientOrderDetail;
-// use App\SecondaryUser;
 use App\Client;
 use App\Product;
+use App\ClientOrderLogs;
 use DateTime;
 use DB;
 
@@ -29,6 +29,7 @@ class ClientOrderController extends Controller
         $orders = ClientOrder::all();
         $clients = Client::all();
         $products = Product::all();
+        $orderLogs = ClientOrderLogs::all();
 
         //JOIN: BC_Secondary_User - BC_Location
         // $clients = DB::table('BC_Secondary_User')
@@ -40,7 +41,8 @@ class ClientOrderController extends Controller
         return view("appdev.clientorder")
                 ->with("orders",$orders)
                 ->with("clients",$clients)
-                ->with("products",$products);
+                ->with("products",$products)
+                ->with("orderLogs",$orderLogs);
     }
 
     /**

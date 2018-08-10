@@ -68,10 +68,6 @@ class ClientAddOrderLiveUpdateController extends Controller
         $logs->notification= 'Order has been added to the list!';
         $logs->save();
 
-
-        
-
-
         return response()->json([
             'processed_orders' => $json_orders,
         ]);
