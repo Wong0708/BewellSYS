@@ -250,11 +250,7 @@
                                                                     <th>Status</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody id="clientOrderSupport">
-                                                                <th>
-                                                                    </th>    
-
-                                                            </tbody>
+                                                            <tbody id="clientOrderSupport"></tbody>
                                                     </table>
 
                                                 </div>

@@ -31,12 +31,13 @@ class ClientAddOrderLiveUpdateController extends Controller
 
         $count = 1;
         foreach($orderList as $order){
+            $product = Product::where('pd_name','=',$order[0])
+                                ->where('pd_sku','=',$order[1])
+                                ->first();
             $new_order_detail = new ClientOrderDetail();
             $new_order_detail->orderID = $new_order->id;
 
-            $product = Product::where('pd_name','=',$order[0])
-                        ->where('pd_sku','=',$order[1])
-                        ->first();
+           
             $new_order_detail->productID = $product->id;
             $new_order_detail->cldt_qty = $order[2];
             $new_order_detail->received = 0;
