@@ -28,7 +28,7 @@ class ScheduleFulfill2DeliveryLiveUpdateController extends Controller
             $client_detail = ManufacturerOrderDetail::where('orderID','=',$schedule->orderID)
                                                 ->where('supplyID','=',$product->id)
                                                 ->first();
-            $client_detail->received=$client_detail->received+$info->delivered_qty;
+            $client_detail->received2=$client_detail->received2+$info->delivered_qty;
             $client_detail->save();
 
         }
