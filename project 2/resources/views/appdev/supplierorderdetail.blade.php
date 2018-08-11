@@ -408,8 +408,6 @@
     <footer class="footer text-center"> 2018 &copy; Bewell Nutraceutical Corporation</footer>
             </div>
             </div>
-
-
             <script src="../plugins/bower_components/jquery/dist/jquery.min.js"></script>
             <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
             <script src="../../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
