@@ -484,7 +484,7 @@
                         }
                         
                         var type = "POST"; 
-                        var process_url = '/ajaxReceiveOrder';//tite
+                        var process_url = '/ajaxReceiveOrder';
 
                         $.ajax({
                             type: type,
