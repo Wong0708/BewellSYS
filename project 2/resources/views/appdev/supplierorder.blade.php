@@ -397,7 +397,7 @@
                                 dataAppend=dataAppend+'<td>'+count+'</td><td>'+data.materialOrders[i][0]+'</td><td>500 Grams</td><td>'+data.materialOrders[i][1]+'</td></tr>';
                                 count = count + 1;
                             }
-
+                            $('#materialProductSupportList').find('tr').remove(); //updated by: PrivateAirJET
                             $('#materialProductSupportList').append(dataAppend);
                         },   
                         error: function (data) {
