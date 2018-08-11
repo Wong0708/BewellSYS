@@ -618,6 +618,9 @@
             </script>
 
             <script type='text/javascript'>
+                //No Error Checking Yet!
+                //Mislabelled data or missing data will result to non-property non id.
+                
                 $('#submitOrderList').on('click','',function(e) {
                     if($('#orderListNum1').find('td:first').next().next().find('select').val()!='N/A' && $('#orderListNum1').find('td:first').next().next().next().find('input').val()!=0){
                         var verify = confirm("Do you wish to add the following order/s?");
@@ -662,7 +665,6 @@
                                 orderList2:orders2,
                                 manufacturerInfo:manufacturerDetail,
                             }
-                            
                             var tdEdit = '#clientLocation';
                             
                             //jump5
@@ -834,11 +836,13 @@
                 console.log(data);
 
                 var dataAppend = '<option selected disabled>Choose a material </option>';
+                var dataAppend2 = '<option selected disabled>Choose product SKU </option>';
+
                 //Old Implementation of products to material added!
                 //Commented By: John Edel B. Tamani
-                // for (var i = 0; i < data.product.length; i++){
-                //     dataAppend = dataAppend+'<option>'+data.product[i].pd_sku+'</option>';
-                // }
+                for (var i = 0; i < data.product.length; i++){
+                    dataAppend2 = dataAppend2+'<option>'+data.product[i].pd_sku+'</option>';
+                }
                     
                 //New Implementation here!
                 //Done By: PrivateAirJET
@@ -852,6 +856,12 @@
                 for (var i = 1; i <=count; i++){
                     $('#orderID'+i).find('option').remove();
                     $('#orderID'+i).append(dataAppend);
+                }
+
+                //Product SKU Live Update here.
+                for (var i = 1; i <=count; i++){
+                    $(tdEdit).closest('td').next().find('select').find('option').remove();
+                    $(tdEdit).closest('td').next().find('select').append(dataAppend2);
                 }
 
             },   

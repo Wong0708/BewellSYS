@@ -63,8 +63,6 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
             $count = $count + 1;
         }      
         
-       
-
         return response()->json([
             'order'=>$new_order,
             'manufacturer'=>$manufacturer->mn_name,
