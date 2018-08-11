@@ -325,26 +325,29 @@
                                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                             <h3 class="box-title m-b-0" style="color:black;">Order Update Logs</h3>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this order.</span>
-                                        <hr>
-                                        <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
+                                            <hr>
+                                            <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                                             <div class="table-responsive">
-                                                    <table id="orderNotificationList" class="table table-striped">
-                                                        <thead>
-                                                            <tr style="color:black;">
-                                                                <th>#</th>
-                                                                <th>User</th>
-                                                                <th>Update</th>
-                                                                <th>Timestamp</th>
-                                                              
+                                                <table id="orderNotificationList" class="table table-striped">
+                                                    <thead>
+                                                        <tr style="color:black;">
+                                                            <th>#</th>
+                                                            <th>User</th>
+                                                            <td>Query Type</td>
+                                                            <th>Notification</th>
+                                                            <th>Timestamp</th>
+                                                        
                                                     </thead>
                                                     <tbody>
-                                                       
+                                                        @foreach($orderLogs as $log)
                                                                 <tr>
-                                                                    <td>1</td>
-                                                                    <td>PrivateAirJET</td>
-                                                                    <td><span class="label label-info">Added 5 New Client Orders.</span></td>
-                                                                    <td>2018-04-18 09:42:37</td>
+                                                                    <td>{{$log->query_id}}</td>
+                                                                    <td>{{$log->fromUser->name}}</td>
+                                                                    <td>{{$log->query_type}}</td>
+                                                                    <td><span class="label label-info">{{$log->notification}}</span></td>
+                                                                    <td>{{$log->query_date}}</td>
                                                                 </tr> 
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
