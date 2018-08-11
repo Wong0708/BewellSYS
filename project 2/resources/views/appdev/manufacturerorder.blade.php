@@ -273,6 +273,9 @@
                                                                 <option>{{$material->sp_name}}</option>
                                                             @endforeach 
                                                         </select> --}}
+                                                        <select style="font-size:12px;" class="form-control orderName" id="orderID1">
+                                                            <option selected disabled>Choose a Material </option>
+                                                        </select> 
                                                     </td>
                                                     <td> 
                                                         <select style="font-size:12px;" class="form-control orderSKU">
@@ -576,7 +579,7 @@
                     $('#orderMaterialList').append(
                         '@if(isset($materials))<tr id="orderListNum'+count+'" style="color:black;">'+ 
                         '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
-                        '<td> <select style="font-size:12px;" class="form-control orderName"><option selected> Choose a Material</option>@foreach ($materials as $material)<option>{{$material->sp_name}}</option> @endforeach</select> </td>' +
+                        '<td> <select style="font-size:12px;" class="form-control orderName" id="orderID'+count+'"><option selected> Choose a Material</option>@foreach ($materials as $material)<option>{{$material->sp_name}}</option> @endforeach</select> </td>' +
                         '<td><select style="font-size:12px;" class="form-control orderSKU"><option selected>N/A</option></td>'+
                         '<td><input type="text" style="font-size:12px;" class="form-control" placeholder=""></td> ' +
                         '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td> ' +
@@ -830,9 +833,7 @@
             success: function(data){
                 console.log(data);
 
-                $(tdEdit).closest('td').next().find('select').find('option').remove();
-                var dataAppend = '<option selected disabled>Choose product SKU</option>';
-
+                var dataAppend = '<option selected disabled>Choose a material </option>';
                 //Old Implementation of products to material added!
                 //Commented By: John Edel B. Tamani
                 // for (var i = 0; i < data.product.length; i++){
@@ -841,12 +842,18 @@
                     
                 //New Implementation here!
                 //Done By: PrivateAirJET
-                
+                var dataAppend = '<option selected disabled>Choose a material </option>';
                 for (var i = 0; i < data.materialList.length; i++){
-                    dataAppend = dataAppend+'<option>'+data.materialList[i][0]+'</option>';
+                    dataAppend = dataAppend+'<option>'+data.materialList[i]+'</option>';
+                }
+                
+                //Add product ingredients here.
+                //Done By: PrivateAirJET
+                for (var i = 1; i <=count; i++){
+                    $('#orderID'+i).find('option').remove();
+                    $('#orderID'+i).append(dataAppend);
                 }
 
-                $(tdEdit).closest('td').next().find('select').append(dataAppend);
             },   
             error: function (data) {
                 console.log('Data Error:', data);
