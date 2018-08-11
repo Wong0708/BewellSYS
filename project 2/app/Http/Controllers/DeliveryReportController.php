@@ -19,7 +19,28 @@ class DeliveryReportController extends Controller
     public function index()
     {
 
+        $filter_val = array(
+            "Scheduled"=>0,
+            "Fulfilled"=>0,
+            "Cancelled"=>0,
+        );
+
         $schedules = Schedule::all();
+
+        foreach($schedules as $ord){
+            switch ($ord['scd_status']){
+                    case 'Scheduled':
+                        $filter_val['Scheduled'] = $filter_val ['Scheduled'] +1;
+                        break;
+                    case 'Delivered':
+                        $filter_val['Fulfilled'] = $filter_val ['Fulfilled'] +1;
+                        break;
+                    case "Cancelled":
+                        $filter_val['Cancelled'] = $filter_val ['Cancelled'] +1;
+                        break;
+                }
+        }
+
         foreach($schedules as $schedule){
             $date = date_create($schedule['scd_date']);
             $schedule['scd_date'] = date_format($date, "F j Y");
@@ -30,7 +51,8 @@ class DeliveryReportController extends Controller
         }
         return view("appdev.deliveryreport")->with("start","N/A")
             ->with("end","N/A")
-            ->with("filter")
+            ->with("filter","")
+            ->with("filter_val",$filter_val)
             ->with("schedules",$schedules);
     }
     public static function checkOverdue($id){
@@ -52,7 +74,11 @@ class DeliveryReportController extends Controller
     public function generateReport(Request $request)
     {
         $schedules = Schedule::all();
-
+        $filter_val = array(
+            "Scheduled"=>0,
+            "Fulfilled"=>0,
+            "Cancelled"=>0,
+            );
         $start = new DateTime($request->start." 00:00:00");
         $end = new DateTime($request->end." 23:59:59");
 
@@ -62,6 +88,21 @@ class DeliveryReportController extends Controller
         switch($filter){
             case 'no_filter':
                 $fltr = "General";
+                foreach($schedules as $ord){
+                    if(new DateTime($ord['scd_date']) >= $start && new DateTime($ord['scd_date']) <= $end){
+                        switch ($ord['scd_status']){
+                            case 'Scheduled':
+                                $filter_val['Scheduled'] = $filter_val ['Scheduled'] +1;
+                                break;
+                            case 'Delivered':
+                                $filter_val['Fulfilled'] = $filter_val ['Fulfilled'] +1;
+                                break;
+                            case "Cancelled":
+                                $filter_val['Cancelled'] = $filter_val ['Cancelled'] +1;
+                                break;
+                        }
+                    }
+                }
                 break;
             case 'scheduled':
                 $fltr = "Scheduled";
@@ -88,7 +129,6 @@ class DeliveryReportController extends Controller
             if(new DateTime($ord['scd_date']) >= $start && new DateTime($ord['scd_date']) <= $end){
                 array_push($scheds,$ord);
             }
-
         }
         foreach($scheds as $schedule){
             $date = date_create($schedule['scd_date']);
@@ -102,6 +142,7 @@ class DeliveryReportController extends Controller
         return view("appdev.deliveryreport")
             ->with("start",$request->start)
             ->with("end",$request->end)
+            ->with("filter_val",$filter_val)
             ->with("schedules",$scheds)
             ->with("filter",$fltr);
     }

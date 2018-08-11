@@ -266,6 +266,50 @@
                                     <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>{{$filter}} Delivery Reports</b></h4>
                                     @if($start!="")
                                         <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>From {{$start}} to {{$end}}</b></h4>
+                                        <div class="row">
+                                            @if($filter!="")
+                                                @if($filter != "General")
+                                                    <div class="col-md-4 text-center">
+                                                        <h5>Total {{$filter}} Deliveries:</h5>
+                                                        <h4><b>{{count($schedules)}}</b></h4>
+                                                    </div>
+                                                @else
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Scheduled Deliveries:</h5>
+                                                        <h4><b>{{$filter_val['Scheduled']}}</b></h4>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Fulfilled: </h5>
+                                                        <h4><b>{{$filter_val['Fulfilled']}}</b></h4>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Cancelled: </h5>
+                                                        <h4><b>{{$filter_val['Cancelled']}}</b></h4>
+                                                    </div>
+                                                @endif
+                                            @else
+                                                <div class="row">
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Scheduled Deliveries:</h5>
+                                                        <h4><b>{{$filter_val['Scheduled']}}</b></h4>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Fulfilled: </h5>
+                                                        <h4><b>{{$filter_val['Fulfilled']}}</b></h4>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Cancelled: </h5>
+                                                        <h4><b>{{$filter_val['Cancelled']}}</b></h4>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
                                     @endif
                                     <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
                                         <tbody id="addproduct">
