@@ -274,9 +274,6 @@
                                     <div class="modal-header">
                                         <h4 class="modal-title">Receive Supplier Order </h4> 
                                     </div>
-
-                                    <!--jet-->
-
                                     <div class="modal-body">
                                             <h4 style="text-align:center; margin-bottom:10px; font-weight:700; color:black;">Update Supplies Inventory </h4> 
                                             <h6 style="text-align:center; margin-bottom:10px; color:black;">Note: This section updates all the supplier orders. </h6> 
