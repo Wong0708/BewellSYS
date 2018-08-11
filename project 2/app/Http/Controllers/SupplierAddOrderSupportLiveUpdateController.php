@@ -36,16 +36,16 @@ class SupplierAddOrderSupportLiveUpdateController extends Controller
                 }else{
                     for($i=1;$i<$holder;$i++){
                         if($products[$j]->productID!=$verify_products[$i][0]){
+
                             $push2 = array(
-                                $products[$j]->productID,$products[$j]->cldt_qty
+                                $products[$j]->productID, $products[$j]->fromProductDetail->pd_sp_qty
                             );
                             array_push($verify_products,$push2);
                         }else{
-                            $verify_products[$i][1] = $verify_products[$i][1] + $products[$j]->cldt_qty;
+                            $verify_products[$i][1] = $verify_products[$i][1] + $products[$j]->fromProductDetail->pd_sp_qty;
                         }
                     }
                 }
-
             }
        }
 
@@ -60,6 +60,8 @@ class SupplierAddOrderSupportLiveUpdateController extends Controller
                 array_push($processed_products,$push3);
             }
        }
+
+       dd($processed_products);
 
         //start can be created
         //can be created
