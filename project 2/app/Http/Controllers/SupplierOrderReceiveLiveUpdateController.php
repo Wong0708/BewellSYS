@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use App\SupplierOrderDetail;
 use App\SupplierOrderLogs;
 use App\Supply;
+use DateTime;
 
 class SupplierOrderReceiveLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {   
+        //Initialize Variable needed.
+        $date = new DateTime();
+
         $count = 0;
         $supplierOrder=[];
         foreach($request->orders as $order){
