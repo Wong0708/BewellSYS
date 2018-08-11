@@ -422,10 +422,14 @@
                 var verify = confirm("Do you want to receive the orders?");
                 if(verify==true){
                     var orders = [];
+
+                    //Write error checking for negative values here.
+                    //Added by: PrivateAirJET
                     for(var i=1;i<=$('#receiveListBody').find('tr').length;i++){
                         orders.push([$('#editable'+i).find('td:first').next().text(),
                         $('#editable'+i).find('td:first').next().next().text(),
                         $('#editable'+i).find('td:first').next().next().next().text(),
+
                         $('#editable'+i).find('td:first').next().next().next().next().find('input').val()]);
                     }
                     //check for wrong input
