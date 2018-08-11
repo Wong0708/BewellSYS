@@ -418,11 +418,10 @@
             </script>
 
             <script type="text/javascript">
-            //jet
             $(document).on('click','#receiveOrderList',function(e){
                 var verify = confirm("Do you want to receive the orders?");
                 if(verify==true){
-                    var orders = [];//gags
+                    var orders = [];
                     for(var i=1;i<=$('#receiveListBody').find('tr').length;i++){
                         orders.push([$('#editable'+i).find('td:first').next().text(),
                         $('#editable'+i).find('td:first').next().next().text(),
