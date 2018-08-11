@@ -241,7 +241,7 @@
                                     @if(!isset($order->spod_completed))
                                         <button id="orderDeadlineButton" data-expecteddate={{$order->mnod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
                                     @else 
-                                        <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="O" class="linea-icon linea-basic"></i></span><a style="color:black;" href={{route('supplierorder.index')}}>View Supplier Order List</a></button>
+                                        <a style="color:black;" href={{route('supplierorder.index')}}><button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="O" class="linea-icon linea-basic"></i></span>View Supplier Order List</button></a>
                                     @endif
                                     </div>
                                 </div>
