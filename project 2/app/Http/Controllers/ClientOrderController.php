@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Session;
 use App\ClientOrder;
 use App\ClientOrderDetail;
-// use App\SecondaryUser;
 use App\Client;
 use App\Product;
+use App\ClientOrderLogs;
 use DateTime;
 use DB;
 
@@ -26,16 +26,17 @@ class ClientOrderController extends Controller
 
     public function index()
     {
-        $orders = ClientOrder::all();
-        $clients = Client::all();
-        $products = Product::all();
-
+        //OLD IMPLEMENTATION OF THE CODE
         //JOIN: BC_Secondary_User - BC_Location
         // $clients = DB::table('BC_Secondary_User')
         // ->join('BC_Location', 'BC_Secondary_User.refID', '=', 'BC_Location.companyID')
         // ->where('BC_Location.companyID', '=', '1')
         // ->select('BC_Secondary_User.*')
         // ->get();
+
+        $orders = ClientOrder::all();
+        $clients = Client::all();
+        $products = Product::all();
 
         return view("appdev.clientorder")
                 ->with("orders",$orders)
@@ -126,7 +127,10 @@ class ClientOrderController extends Controller
     public function show($id)
     {
         $order =  ClientOrder::where('id','=',$id)->first();
-        return view("appdev.clientorderdetail")->with('order',$order);
+        $orderLogs =  ClientOrderLogs::where('orderID','=',$id)->get();
+        return view("appdev.clientorderdetail")
+                    ->with('order',$order)
+                    ->with("orderLogs",$orderLogs);
     }
 
     /**
@@ -156,7 +160,7 @@ class ClientOrderController extends Controller
         // Session::flash('success','Successfully edited an order!');
         // return redirect("/clientorder");
 
-        $order = ClientOrder::where('id', $id)->update(['expectedDate'=>$request->expectedDate]);
+        $order = ClientOrder::where('orderidID', $id)->update(['expectedDate'=>$request->expectedDate]);
         return response()->json($order);
     }
 
@@ -174,8 +178,19 @@ class ClientOrderController extends Controller
         // Session::flash('success','Successfully deleted an order!');
         // return redirect("/clientorder");
 
-        $order = ClientOrder::where('orderID', $id)->delete();
+        //For the logic of the order Logs.
+        //For future purposes of data retention on deleted orders.
+        $logs = new ClientOrderLogs();
+        $logs->orderID= $id;
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification= 'Order '.$id.' has been deleted successfully!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
 
+        $order = ClientOrder::where('orderID', $id)->delete();
         return response()->json($order);
     }
 }

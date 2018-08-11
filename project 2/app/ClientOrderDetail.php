@@ -15,4 +15,8 @@ class ClientOrderDetail extends Model
     public function fromProduct(){
         return $this->belongsTo(Product::class,'productID','id');
     }
+
+    public function fromProductDetail(){
+        return $this->belongsTo(ProductDetails::class,'productID','pd_id');
+    }
 }

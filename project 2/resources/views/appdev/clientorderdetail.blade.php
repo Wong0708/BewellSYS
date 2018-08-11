@@ -238,12 +238,17 @@
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     {{-- Commented Out for future purposes By: John Edel B. Tamani
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button> --}}
-                                    <button id="orderDeadlineButton" data-expecteddate={{$order->expectedDate}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
                                     {{-- <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="|" class="linea-icon linea-basic"></i></span>Update Delivery Status</button> --}}
                                     {{-- <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span><a href={{route('manufacturerorder.index')}}>Manage Manufacturer Order</a></button>
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="f" class="linea-icon linea-basic"></i></span><a href={{route('supplierorder.index')}}>Manage Supplier Order</a></button>
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span><a href={{route('schedule.index')}}>Manage Schedule</a></button>
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="O" class="linea-icon linea-basic"></i></span><a href={{route('clientorder.index')}}>View Orders List</a></button> --}}
+                                    
+                                    @if(!isset($order->clod_completed))
+                                        <button id="orderDeadlineButton" data-expecteddate={{$order->mnod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
+                                    @else 
+                                        <a style="color:black;" href={{route('clientorder.index')}}><button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="O" class="linea-icon linea-basic"></i></span>View Client Order List</button></a>
+                                    @endif
                                     
                                     </div>
                                 </div>
@@ -398,18 +403,21 @@
                                                             <tr style="color:black;">
                                                                 <th>#</th>
                                                                 <th>User</th>
-                                                                <th>Update</th>
+                                                                <td>Query Type</td>
+                                                                <th>Notification</th>
                                                                 <th>Timestamp</th>
                                                               
                                                     </thead>
                                                     <tbody>
-                                                       
+                                                        @foreach($orderLogs as $log)
                                                                 <tr>
-                                                                    <td>1</td>
-                                                                    <td>PrivateAirJET</td>
-                                                                    <td><span class="label label-info">Added 5 New Client Orders.</span></td>
-                                                                    <td>2018-04-18 09:42:37</td>
+                                                                    <td>{{$log->query_id}}</td>
+                                                                    <td>{{$log->fromUser->name}}</td>
+                                                                    <td>{{$log->query_type}}</td>
+                                                                    <td><span class="label label-info">{{$log->notification}}</span></td>
+                                                                    <td>{{$log->query_date}}</td>
                                                                 </tr> 
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -424,7 +432,7 @@
                         <div class="col-lg-12 col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                             <h3 class="box-title m-b-0" style="color:black;">Order Details Record</h3>
-                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
+                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all of the client order/s.</span><br>
                             <button id="addClientOrder"style="margin-top:10px; " class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('clientorder.index')}}>Manage Order List</a></button>
                             <p class="text-muted m-b-30"></p>
                             <hr>
@@ -627,6 +635,8 @@
                 $(document).on('click','#updateOrderStatus',function(e){
                     var verify = confirm("Do you want to update the order?");
                     if(verify==true){
+
+                        //Logic to check if similar date
                         if($('#previousexpdate').val()!=$('#exp_date').val()){
                             $.ajaxSetup({
                                 headers: {
@@ -672,63 +682,74 @@
                     var verify = confirm("Do you want to cancel the payment?");
 
                     if(verify == true){
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                            }
-                        })
-
-                        e.preventDefault(); 
-                        var formData = {
-                            id: $(this).data('id'),
-                        }
-                        
-                        var toEdit = this;
-
-                        $.ajax({
-                            type: "POST",
-                            url:  '/ajaxDeletePayment',
-                            data: formData,
-                            success: function(data){
-                                console.log(data);
-                                $(toEdit).closest('tr').remove();
-
-                                //AJAX TO UPDATE THE ORDER STATUS
-                                //By: John Edel B. Tamani
-                                $.ajaxSetup({
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                                    }
-                                })
-
-                                e.preventDefault(); 
-                                var formData = {
-                                    id:$('#orderIDPayment').val(),
-                                    funcNum:1,
+                        //REASON WILL JOIN THE LOG FOR CLIENTPAYMENT LOGS
+                        //UPDATED BY: JOHN EDEL B. TAMANI
+                        var reason = prompt("Please enter the reason for the cancellation?");
+                        if (reason != null || reason != "") {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                                 }
-                                
-                                $.ajax({
-                                    type: "POST",
-                                    url:  '/ajaxUpdatePaymentStatus',
-                                    data: formData,
-                                    success: function(data){
-                                        console.log(data);
-                                        $('#paymentStatus').text(data.status);                                                
-                                    },   
-                                    error: function (data) {
-                                        console.log('Data Error:', data);
-                                    }
-                                });
-                                
-                                $('#paymentStatus').text('Pending');
-                            },   
-                            error: function (data) {
-                                console.log('Data Error:', data);
+                            })
+
+                            e.preventDefault(); 
+
+                            //BUGS STILL EXIST HERE!
+                            //BY: JOHN EDEL B. TAMANI
+                            alert($(this).data('payment'));
+                            var formData = {
+                                id: $(this).data('id'),
+                                reason: reason,
+                                value: $(this).data('payment'),
                             }
-                        });
+                            
+                            var toEdit = this;
+
+                            $.ajax({
+                                type: "POST",
+                                url:  '/ajaxDeletePayment',
+                                data: formData,
+                                success: function(data){
+                                    console.log(data);
+                                    $(toEdit).closest('tr').remove();
+
+                                    //AJAX TO UPDATE THE ORDER STATUS
+                                    //By: John Edel B. Tamani
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                        }
+                                    })
+
+                                    e.preventDefault(); 
+                                    var formData = {
+                                        id:$('#orderIDPayment').val(),
+                                        funcNum:1,
+                                    }
+                                    
+                                    $.ajax({
+                                        type: "POST",
+                                        url:  '/ajaxUpdatePaymentStatus',
+                                        data: formData,
+                                        success: function(data){
+                                            console.log(data);
+                                            $('#paymentStatus').text(data.status);                                                
+                                        },   
+                                        error: function (data) {
+                                            console.log('Data Error:', data);
+                                        }
+                                    });
+                                    
+                                    $('#paymentStatus').text('Pending');
+                                },   
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }
                     }
 
-                    return false;
+                        return false;
                     
                     //Commented out By: John Edel B. Tamani
                     //For Future Purposes!
@@ -839,7 +860,7 @@
                                     console.log(data);
                                     var count = $('#paymentOrderTable').children('tr').length;
                                     $('#paymentOrderTable').append('<tr><td>'+(count+1)+'</td><td>'+data.orderDate+'<td>'+data.orderID+'</td><td>'+data.type+'</td><td>'+data.payment+'</td><td>'+
-                                    '<i style="margin-left:5px; color:#E53935;" data-id="'+data.id+'" class="fa fa-trash-o removePayment"></td></tr>');
+                                    '<i style="margin-left:5px; color:#E53935;" data-id="'+data.id+'" data-payment="'+data.payment+'" class="fa fa-trash-o removePayment"></td></tr>');
                                     $('#addOrderPaymentModal').modal('hide');
                                     if(data.totalBalance==0){
                                         //AJAX TO UPDATE THE ORDER

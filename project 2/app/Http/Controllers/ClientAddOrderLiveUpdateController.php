@@ -7,6 +7,8 @@ use App\Product;
 use App\ClientOrder;
 use App\ClientOrderDetail;
 use App\Client;
+use App\ClientOrderLogs;
+use App\User;
 use DateTime;
 
 class ClientAddOrderLiveUpdateController extends Controller
@@ -31,12 +33,11 @@ class ClientAddOrderLiveUpdateController extends Controller
 
         $count = 1;
         foreach($orderList as $order){
+            $product = Product::where('pd_name','=',$order[0])
+                                ->where('pd_sku','=',$order[1])
+                                ->first();
             $new_order_detail = new ClientOrderDetail();
             $new_order_detail->orderID = $new_order->id;
-
-            $product = Product::where('pd_name','=',$order[0])
-                        ->where('pd_sku','=',$order[1])
-                        ->first();
             $new_order_detail->productID = $product->id;
             $new_order_detail->cldt_qty = $order[2];
             $new_order_detail->received = 0;
@@ -58,6 +59,18 @@ class ClientAddOrderLiveUpdateController extends Controller
             array_push($json_orders,'orderNum'.$count,$new_order_detail);
             $count = $count + 1;
         }        
+
+        //Logs section of the order By: John Edel B. Tamani
+        $logs = new ClientOrderLogs();
+        $logs->orderID= $new_order->id;
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification= 'Order has been added to the list!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
+
         return response()->json([
             'processed_orders' => $json_orders,
         ]);

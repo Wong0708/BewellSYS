@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SupplierOrderDetail;
+use App\SupplierOrderLogs;
 use App\Supply;
+use DateTime;
 
 class SupplierOrderReceiveLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {   
+        //Initialize Variable needed.
+        $date = new DateTime();
+
         $count = 0;
         $supplierOrder=[];
         foreach($request->orders as $order){
@@ -27,6 +32,17 @@ class SupplierOrderReceiveLiveUpdateController extends Controller
             $orderDetail->save();
             $count = $count + 1;
         }
+
+        $logs = new SupplierOrderLogs();
+        $logs->supplierID=$request->orderID;
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification=  'Receive order from the supplier!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
+        
         return response()->json([
             'count'=>$count,
             'supplierOrder'=>$supplierOrder,

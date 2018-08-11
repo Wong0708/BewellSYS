@@ -204,7 +204,6 @@
                         </div>
                     </div>
                     
-                
                 <!--SECTION KEYWORD/S: ORDER, MODAL 
                     Prepared By: John Edel B. Tamani
                 -->
@@ -238,7 +237,11 @@
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     {{-- Commented Out for future purposes By: John Edel B. Tamani
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button> --}}
-                                    <button id="orderDeadlineButton" data-expecteddate={{$order->mnod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
+                                    @if(!isset($order->mnod_completed))
+                                        <button id="orderDeadlineButton" data-expecteddate={{$order->mnod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
+                                    @else 
+                                        <a style="color:black;" href={{route('manufacturerorder.index')}}><button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="O" class="linea-icon linea-basic"></i></span>View Manufacturer Order List</button></a>
+                                    @endif
                                     </div>
                                 </div>
                       </div>
@@ -252,7 +255,7 @@
                                         <div class="row" style="margin-top:10px; ">
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Manufacturer</strong>
                                                     <br>
-                                                <p class="text-muted">{{$order->fromManufacturer->smnname}}</p>
+                                                <p class="text-muted">{{$order->fromManufacturer->mn_name}}</p>
                                                 </div>
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Email</strong>
                                                     <br>
@@ -272,23 +275,26 @@
                                         <hr>
                                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                                             <div class="table-responsive">
-                                                    <table id="orderNotificationList" class="table table-striped">
-                                                        <thead>
-                                                            <tr style="color:black;">
-                                                                <th>#</th>
-                                                                <th>User</th>
-                                                                <th>Update</th>
-                                                                <th>Timestamp</th>
-                                                              
+                                                <table id="orderNotificationList" class="table table-striped">
+                                                    <thead>
+                                                        <tr style="color:black;">
+                                                            <th>#</th>
+                                                            <th>User</th>
+                                                            <td>Query Type</td>
+                                                            <th>Notification</th>
+                                                            <th>Timestamp</th>
+                                                        
                                                     </thead>
                                                     <tbody>
-                                                       
+                                                        @foreach($orderLogs as $log)
                                                                 <tr>
-                                                                    <td>1</td>
-                                                                    <td>PrivateAirJET</td>
-                                                                    <td><span class="label label-info">Added 5 New Client Orders.</span></td>
-                                                                    <td>2018-04-18 09:42:37</td>
+                                                                    <td>{{$log->query_id}}</td>
+                                                                    <td>{{$log->fromUser->name}}</td>
+                                                                    <td>{{$log->query_type}}</td>
+                                                                    <td><span class="label label-info">{{$log->notification}}</span></td>
+                                                                    <td>{{$log->query_date}}</td>
                                                                 </tr> 
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -297,13 +303,116 @@
                                 </div>
                                
                     </div>
-                    
+                    <div class="col-lg-6 col-sm-6">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12">
+                                <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                                    <h3 class="box-title m-b-0" style="color:black;">Product - Order Details Record</h3>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all the products given to the manufacturer.<</span><br>
+                                    @if(isset($order->mnod_completed))<button id="receiveInventoryButton"style="margin-top:10px; " data-toggle="modal" data-target="#receiveSupplierOrder"class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="&#xe01b;" class="linea linea-basic"></i></span>Receive Inventory</button>@endif
+                                  
+                                    <button id="addClientOrder"style="margin-top:10px; margin-left:10px;" class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('manufacturerorder.index')}}>Manage Order List</a></button>
+                                    <p class="text-muted m-b-30"></p>
+                                    <hr>
+                                <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
+                                    <div class="table-responsive">
+                                        <table id="orderDetailList" class="table table-striped">
+                                            <thead>
+                                                <tr style="color:black;">
+                                                    <th>#</th>
+                                                    <th>Order #</th>
+                                                    <th>Product Name</th>
+                                                    <th>SKU</th>
+                                                    <th>Total</th>
+                                                    <th>Remaining</th>
+                                                    <th>Received</th> 
+                                                    <!--tite-->
+                                                </tr>
+                                            </thead>
+                                            <tbody id="receiveList">
+                                                <?php 
+                                                    $count= 1;
+                                                    if(isset($order->fromManufacturerOrderDetail)){
+                                                        foreach($order->fromManufacturerOrderDetail as $orderInfo){
+                                                            echo '<tr>'.
+                                                                '<td>'.$count.'</td>'.
+                                                                '<td>'.$orderInfo->id.'</td>'.
+                                                                '<td>'.$orderInfo->fromProduct->pd_name.'</td>'.
+                                                                '<td>'.$orderInfo->fromProduct->pd_sku.'</td>'.
+                                                                '<td>'.$orderInfo->prod_qty.'</td>'.
+                                                                '<td id="remaining'.$orderInfo->id.'">'.($orderInfo->prod_qty-$orderInfo->received2).'</td>'.
+                                                                '<td id="receive'.$orderInfo->id.'">'.$orderInfo->received2.'</td>'.
+                                                            '</tr>';
+                                                            $count = $count + 1;
+                                                        }
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <div id='receiveSupplierOrder' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveSupplierOrder" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Receive Manufacturer Order </h4> 
+                                </div>
+
+                                <!--jet-->
+
+                                <div class="modal-body">
+                                        <h4 style="text-align:center; margin-bottom:10px; font-weight:700; color:black;">Update Product Inventory </h4> 
+                                        <h6 style="text-align:center; margin-bottom:10px; color:black;">Note: This section updates all the manufacturer orders. </h6> 
+                                        <hr>
+                                        <table id="orderNotificationList" class="table color-bordered-table info-bordered-table">
+                                                <thead>
+                                                    <tr style="color:black;">
+                                                        <th>#</th>
+                                                        <th>Order #</th>
+                                                        <th>Product Name</th>
+                                                        <th>Product SKU</th>
+                                                        <th>Receive Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="receiveListBody">
+                                                    <?php
+                                                        $count = 1;
+                                                        foreach($orderdetail as $detail){//tite
+                                                            echo 
+                                                                '<tr id="editable'.$count.'">'.
+                                                                    '<td id="count'.$count.'">'.$count.'</td>'.
+                                                                    '<td data-id="'.$detail->id.'" id="data'.$count.'">'.$detail->id.'</td>'.
+                                                                    '<td id="name'.$count.'">'.$detail->fromProduct->pd_name.'</td>'.
+                                                                    '<td id="sku'.$count.'">'.$detail->fromProduct->pd_sku.'</td>'.
+                                                                    '<td><input min="1" max="'.($detail->prod_qty-$detail->received2).'" id="retrieve'.$count.'"></td>'.
+                                                                '</tr>';
+                                                            $count = $count +1;
+                                                        }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                </div>
+                            
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                    <button style="background-color:#4c87ed;" type="button" id="receiveOrderList" class="btn btn-danger waves-effect waves-light">Receive</button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="orderModalID" name="orderID" value="0">
+                        </div>
+                    </div>
+
+
                 <div class="col-lg-6 col-sm-6">
                     <div class="row">
                         <div class="col-lg-12 col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                            <h3 class="box-title m-b-0" style="color:black;">Order Details Record</h3>
-                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
+                            <h3 class="box-title m-b-0" style="color:black;">Material - Order Details Record</h3>
+                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all the materials given to the manufacturer.</span><br>
                             <button id="addClientOrder"style="margin-top:10px; margin-left:10px;" class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('manufacturerorder.index')}}>Manage Order List</a></button>
                             <p class="text-muted m-b-30"></p>
                             <hr>
@@ -314,11 +423,9 @@
                                         <tr style="color:black;">
                                             <th>#</th>
                                             <th>Order #</th>
-                                            <th>Product Name</th>
+                                            <th>Material Name</th>
                                             <th>SKU</th>
                                             <th>Total</th>
-                                            <th>Remaining</th>
-                                            <th>Received</th> 
                                             <!--tite-->
                                         </tr>
                                     </thead>
@@ -332,9 +439,7 @@
                                                         '<td>'.$orderInfo->id.'</td>'.
                                                         '<td>'.$orderInfo->fromSupply->sp_name.'</td>'.
                                                         '<td>'.$orderInfo->fromSupply->sp_sku.'</td>'.
-                                                        '<td>'.$orderInfo->spdt_qty.'</td>'.
-                                                        '<td id="remaining'.$orderInfo->id.'">'.($orderInfo->mndt_qty-$orderInfo->received).'</td>'.
-                                                        '<td id="receive'.$orderInfo->id.'">'.$orderInfo->received.'</td>'.
+                                                        '<td>'.$orderInfo->mndt_qty.'</td>'.
                                                     '</tr>';
                                                     $count = $count + 1;
                                                 }
@@ -400,152 +505,6 @@
                 });
             </script>
 
-            <script type="text/javascript">
-            //jet
-            $(document).on('click','#receiveOrderList',function(e){
-                var verify = confirm("Do you want to receive the orders?");
-                if(verify==true){
-                    var orders = [];//gags
-                    for(var i=1;i<=$('#receiveListBody').find('tr').length;i++){
-                        orders.push([$('#editable'+i).find('td:first').next().text(),
-                        $('#editable'+i).find('td:first').next().next().text(),
-                        $('#editable'+i).find('td:first').next().next().next().text(),
-                        $('#editable'+i).find('td:first').next().next().next().next().find('input').val()]);
-                    }
-                    //check for wrong input
-                    // if($('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().find('input').val()<=$('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().find('input').attr('max')){
-                        $.ajaxSetup({
-                            headers: 
-                            {
-                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                            }
-                        })
-
-                        e.preventDefault(); 
-                        
-                        var formData = {
-                            orders:orders,
-                        }
-                        
-                        var type = "POST"; 
-                        var process_url = '/ajaxReceiveOrder';//tite
-
-                        $.ajax({
-                            type: type,
-                            url: process_url,
-                            data: formData,
-                            dataType: 'json',
-                            success: function (data) {
-                                $('#receiveSupplierOrder').modal('hide');
-                                var checker = false;
-                                console.log(data.supplierOrder);
-                                for(var i = 0; i<data.supplierOrder.length;i++){
-                                    var remaining = data.supplierOrder[i][0];
-                                    var receive = data.supplierOrder[i][1];
-                                    $('#remaining'+data.supplierOrder[i][2]).text(remaining);
-                                    $('#receive'+data.supplierOrder[i][2]).text(receive);
-                                    if($('#remaining'+data.supplierOrder[i][2]).text()==0){
-                                        checker = true;
-                                    }else{
-                                        checker = false;
-                                    }
-                                }
-
-                                if(checker==true){
-                                    $.ajaxSetup({
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                                        }
-                                    })
-
-                                    e.preventDefault(); 
-
-                                    var formData = {
-                                        id:$('#orderIDPayment').val(),
-                                    }
-                                    
-                                    var type = "POST"; 
-                                    var process_url = '/ajaxCompleteSupplierOrder';
-
-                                    $.ajax({
-                                        type: type,
-                                        url: process_url,
-                                        data: formData,
-                                        dataType: 'json',
-                                        success: function (data) {
-                                            console.log(data);
-                                            $('#orderStatus').text(data.status);
-                                            $('#orderCompleted').text(data.completed);
-                                            $('#receiveInventoryButton').hide();
-                                        },
-                                        error: function (data) {
-                                            console.log('Data Error:', data);
-                                        }
-                                    });
-                                }
-                            },
-                            error: function (data) {
-                                console.log('Data Error:', data);
-                            }
-                        });
-                    }else{
-                        alert("Error Invalid Input! Please Try Again!");
-                    }
-                // }
-
-                return false;
-            });
-
-            </script>
-            <script type="text/javascript">
-                $(document).on('click','#orderDeadlineButton',function(e){
-                    $('#exp_date').val($(this).data('expecteddate'));
-                    $('#previousexpdate').val($(this).data('expecteddate'));
-                    $('#orderDeadlineModal').modal('show');
-                });
-
-                $(document).on('click','#updateOrderStatus',function(e){
-                    var verify = confirm("Do you want to update the order?");
-                    if(verify==true){
-                        if($('#previousexpdate').val()!=$('#exp_date').val()){
-                            $.ajaxSetup({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                                }
-                            })
-
-                            e.preventDefault(); 
-
-                            var formData = {
-                                expectedDate: $('#exp_date').val(),
-                                id: $('#orderModalIDUpdateStatus').val(),
-
-                            }
-                            
-                            var type = "POST"; 
-                            var orderID = $('#orderModalIDUpdateStatus').val();
-                            var process_url = '/ajaxUpdateOrderStatus3';
-
-                            $.ajax({
-                                type: type,
-                                url: process_url,
-                                data: formData,
-                                dataType: 'json',
-                                success: function (data) {
-                                    $("#orderDeadlineStatus").text(data.expdate);
-                                    $('#orderDeadlineModal').modal('hide');
-                                },
-                                error: function (data) {
-                                    console.log('Data Error:', data);
-                                }
-                            });
-                        }else{
-                            alert('Invalid Input Update Order Status is the Same! Please Try Again!');
-                        }
-                    }
-                });
-                
-            </script>
 
             <script type="text/javascript">
                 $(document).on('click','.removePayment',function(e){
@@ -929,6 +888,157 @@
             <script src="../plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
             <script src="../plugins/bower_components/sweetalert/sweetalert.min.js"></script>
             <script src="../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
+
+            <script type="text/javascript">
+                $(document).on('click','#orderDeadlineButton',function(e){
+                    $('#exp_date').val($(this).data('expecteddate'));
+                    $('#previousexpdate').val($(this).data('expecteddate'));
+                    $('#orderDeadlineModal').modal('show');
+                });
+
+                $(document).on('click','#updateOrderStatus',function(e){
+                    var verify = confirm("Do you want to update the order?");
+                    if(verify==true){
+
+                        //Logic to check if similar date
+                        if($('#previousexpdate').val()!=$('#exp_date').val()){
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                }
+                            })
+
+                            e.preventDefault(); 
+
+                            var formData = {
+                                expectedDate: $('#exp_date').val(),
+                                id: $('#orderModalIDUpdateStatus').val(),
+
+                            }
+                            
+                            var type = "POST"; 
+                            var orderID = $('#orderModalIDUpdateStatus').val();
+                            var process_url = '/ajaxUpdateOrderStatus3';
+
+                            $.ajax({
+                                type: type,
+                                url: process_url,
+                                data: formData,
+                                dataType: 'json',
+                                success: function (data) {
+                                    $("#orderDeadlineStatus").text(data.expdate);
+                                    $('#orderDeadlineModal').modal('hide');
+                                },
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }else{
+                            alert('Invalid Input Update Order Status is the Same! Please Try Again!');
+                        }
+                    }
+                });
+                
+            </script>
+
+            <!--jesus-->
+            <script type="text/javascript">
+                //jet
+                $(document).on('click','#receiveOrderList',function(e){
+                    var verify = confirm("Do you want to receive the orders?");
+                    if(verify==true){
+                        var orders = [];//gags
+                        for(var i=1;i<=$('#receiveListBody').find('tr').length;i++){
+                            orders.push([$('#editable'+i).find('td:first').next().text(),
+                            $('#editable'+i).find('td:first').next().next().text(),
+                            $('#editable'+i).find('td:first').next().next().next().text(),
+                            $('#editable'+i).find('td:first').next().next().next().next().find('input').val()]);
+                        }
+                        //check for wrong input
+                        // if($('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().find('input').val()<=$('#receiveListBody').find('tr:first').find('td:first').next().next().next().next().find('input').attr('max')){
+                            $.ajaxSetup({
+                                headers: 
+                                {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                }
+                            })
+    
+                            e.preventDefault(); 
+                            
+                            var formData = {
+                                orders:orders,
+                            }
+                            
+                            var type = "POST"; 
+                            var process_url = '/ajaxReceiveOrder2';//tite
+    
+                            $.ajax({
+                                type: type,
+                                url: process_url,
+                                data: formData,
+                                dataType: 'json',
+                                success: function (data) {
+                                    $('#receiveSupplierOrder').modal('hide');
+                                    var checker = false;
+                                    console.log(data.productOrder);
+                                    for(var i = 0; i<data.productOrder.length;i++){
+                                        var remaining = data.productOrder[i][0];
+                                        var receive = data.productOrder[i][1];
+                                        $('#remaining'+data.productOrder[i][2]).text(remaining);
+                                        $('#receive'+data.productOrder[i][2]).text(receive);
+                                        if($('#remaining'+data.productOrder[i][2]).text()==0){
+                                            checker = true;
+                                        }else{
+                                            checker = false;
+                                        }
+                                    }
+    
+                                    if(checker==true){
+                                        $.ajaxSetup({
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                            }
+                                        })
+    
+                                        e.preventDefault(); 
+    
+                                        var formData = {
+                                            id:$('#orderIDPayment').val(),
+                                        }
+                                        
+                                        var type = "POST"; 
+                                        var process_url = '/ajaxCompleteSupplierOrder';
+    
+                                        $.ajax({
+                                            type: type,
+                                            url: process_url,
+                                            data: formData,
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                console.log(data);
+                                                $('#orderStatus').text(data.status);
+                                                $('#orderCompleted').text(data.completed);
+                                                $('#receiveInventoryButton').hide();
+                                            },
+                                            error: function (data) {
+                                                console.log('Data Error:', data);
+                                            }
+                                        });
+                                    }
+                                },
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }else{
+                            alert("Error Invalid Input! Please Try Again!");
+                        }
+                    // }
+    
+                    return false;
+                });
+    
+                </script>
 </body>
 
 </html>

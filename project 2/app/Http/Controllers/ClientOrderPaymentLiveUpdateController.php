@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ClientOrderPayment;
 use App\ClientOrderDetail;
+use App\ClientOrderLogs;
 use App\ClientOrder;
 use DateTime;
 
@@ -12,6 +13,7 @@ class ClientOrderPaymentLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
     {
+        //Initialization of variables here.
         $date = new DateTime();
         $orderPayment = new ClientOrderPayment();
         $orderPayment->orderID = $request->orderID;
@@ -20,14 +22,19 @@ class ClientOrderPaymentLiveUpdateController extends Controller
         $orderPayment->totalAmount = $request->paymentAmount;
         $orderPayment->save();
 
-        $orders = ClientOrderDetail::where('orderID','=',$request->orderID)->get();
+        // For processing on the view side.
+        $orderDetails = ClientOrderDetail::where('orderID','=',$request->orderID)->get();
         $orderPayments = ClientOrderPayment::where('orderID','=',$request->orderID)->get();
+
+        //Initialization of variables.
         $totalOrder = 0;
         $totalPayment = 0;
 
-        if(isset($orders)){
-            foreach($orders as $order){
-                $totalOrder = $totalOrder + $order->totalPrice;
+
+        //Logic to check the remaining blance for the specific order before update to complete,
+        if(isset($orderDetails)){
+            foreach($orderDetails as $info){
+                $totalOrder = $totalOrder + $info->totalPrice;
             }
         }
 
@@ -36,6 +43,17 @@ class ClientOrderPaymentLiveUpdateController extends Controller
                 $totalPayment = $totalPayment + $orderPayment->totalAmount;
             }
         }
+
+        $logs = new ClientOrderLogs();
+        $logs->orderID=$request->orderID;
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification=  $request->paymentType.' Payment Amount of PHP'.  $request->paymentAmount.' has been added!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
+
 
         return response()->json([
             'totalBalance'=>$totalOrder-$totalPayment,

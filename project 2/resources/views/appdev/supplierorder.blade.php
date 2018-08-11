@@ -371,7 +371,7 @@
 
 
             <script type='text/javascript'>
-                $(document).on('click', '#addSupplierOrder', function (e) {//jet
+                $(document).on('click', '#addSupplierOrder', function (e) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -397,7 +397,7 @@
                                 dataAppend=dataAppend+'<td>'+count+'</td><td>'+data.materialOrders[i][0]+'</td><td>500 Grams</td><td>'+data.materialOrders[i][1]+'</td></tr>';
                                 count = count + 1;
                             }
-
+                            $('#materialProductSupportList').find('tr').remove(); //updated by: PrivateAirJET
                             $('#materialProductSupportList').append(dataAppend);
                         },   
                         error: function (data) {
@@ -406,7 +406,6 @@
                     });
                 });
             </script>
-            <!--jump3-->
             <script type='text/javascript'>
                 var count = 1;
                 var count2 = 1;
@@ -458,7 +457,6 @@
             </script>
 
             <script type='text/javascript'>
-                //jump SKU
                 $(document).on('change', '.orderSKU', function (e) {
                     $.ajaxSetup({
                         headers: {
@@ -645,6 +643,7 @@
                                     $('#activityStatus').html('An order has been successfully added to the list!');
                                     $('#activityStatus').show();
                                     $('#supplierOrderModal').modal('hide');
+                                    location.reload();
                                 },   
                                 error: function (data) {
                                     console.log('Data Error:', data);

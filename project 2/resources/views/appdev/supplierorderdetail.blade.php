@@ -139,44 +139,7 @@
                         </ol>
                     </div>
                 </div>
-                <!--
-                    SECTION KEYWORD/S: ADD PAYMENT MODAL
-                    Prepared By: John Edel B. Tamani
-                -->
-                <!--START OF THE PAYMENT MODAL-->
-                <div class="modal fade" id="addOrderPaymentModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button"class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Payment</h4>
-                            </div>
-                            <input type="hidden" id="orderIDPayment" name="orderIDPayment" value={{$order->id}}>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="paymentType" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Payment Type:</b></label>
-                                    <select name="paymentType" class="form-control" id="paymentType" style="margin-bottom:10px;" required>
-                                        <option selected disabled>Choose a payment type</option>
-                                        <option>Cash</option>
-                                    </select>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a payment type for your order. <b style="color:#E53935;">*Required</b></span>
-                                    <br>
-                                    
-                                    <label for="paymentAmount" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Amount:</b></label>
-                                    <input type="number" min="0" name="paymentAmount" class="form-control" id="paymentAmount" style="margin-bottom:10px;" required/>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the total amount for the payment of the order. <b style="color:#E53935;">*Required</b></span>
-                                    <h4 style="margin-top:20px;" id="paymentBalance">
-                                    <b>Total Payment Balance:</b> PHP <span id="grandTotal"></span>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="submitOrderPayment" class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--END OF THE PAYMENT MODAL-->
-            
+
                 <div class="row">
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
@@ -238,7 +201,11 @@
                                     <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     {{-- Commented Out for future purposes By: John Edel B. Tamani
                                         <button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="&#xe00b;" class="linea-icon linea-basic"></i></span>Update Payment Status</button> --}}
-                                    <button id="orderDeadlineButton" data-expecteddate={{$order->spod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
+                                    @if(!isset($order->spod_completed))
+                                        <button id="orderDeadlineButton" data-expecteddate={{$order->mnod_expected}} type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="r" class="linea-icon linea-basic"></i></span>Update Order Deadline</button>
+                                    @else 
+                                        <a style="color:black;" href={{route('supplierorder.index')}}><button type="button" class="list-group-item"><span><i style="color:#1565C0; margin-right:5px;" data-icon="O" class="linea-icon linea-basic"></i></span>View Supplier Order List</button></a>
+                                    @endif
                                     </div>
                                 </div>
                       </div>
@@ -270,9 +237,6 @@
                                     <div class="modal-header">
                                         <h4 class="modal-title">Receive Supplier Order </h4> 
                                     </div>
-
-                                    <!--jet-->
-
                                     <div class="modal-body">
                                             <h4 style="text-align:center; margin-bottom:10px; font-weight:700; color:black;">Update Supplies Inventory </h4> 
                                             <h6 style="text-align:center; margin-bottom:10px; color:black;">Note: This section updates all the supplier orders. </h6> 
@@ -281,16 +245,16 @@
                                                     <thead>
                                                         <tr style="color:black;">
                                                             <th>#</th>
-                                                            <th>Order #</th>
+                                                            <th>Detail #</th>
                                                             <th>Material Name</th>
                                                             <th>Material SKU</th>
-                                                            <th>Retrieve Amount</th>
+                                                            <th>Receive Amount</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="receiveListBody">
                                                         <?php
                                                             $count = 1;
-                                                            foreach($orderdetail as $detail){//tite
+                                                            foreach($orderdetail as $detail){
                                                                 echo 
                                                                     '<tr id="editable'.$count.'">'.
                                                                         '<td id="count'.$count.'">'.$count.'</td>'.
@@ -311,7 +275,7 @@
                                         <button style="background-color:#4c87ed;" type="button" id="receiveOrderList" class="btn btn-danger waves-effect waves-light">Receive</button>
                                     </div>
                                 </div>
-                                <input type="hidden" id="orderModalID" name="orderID" value="0">
+                                <input type="hidden" id="orderIDPayment" name="orderID" value={{$order->id}}>
                             </div>
                         </div>
                         
@@ -321,26 +285,29 @@
                                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                             <h3 class="box-title m-b-0" style="color:black;">Order Update Logs</h3>
                                             <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all updates on this order.</span>
-                                        <hr>
-                                        <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
+                                            <hr>
+                                            <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                                             <div class="table-responsive">
-                                                    <table id="orderNotificationList" class="table table-striped">
-                                                        <thead>
-                                                            <tr style="color:black;">
-                                                                <th>#</th>
-                                                                <th>User</th>
-                                                                <th>Update</th>
-                                                                <th>Timestamp</th>
-                                                              
+                                                <table id="orderNotificationList" class="table table-striped">
+                                                    <thead>
+                                                        <tr style="color:black;">
+                                                            <th>#</th>
+                                                            <th>User</th>
+                                                            <td>Query Type</td>
+                                                            <th>Notification</th>
+                                                            <th>Timestamp</th>
+                                                        
                                                     </thead>
                                                     <tbody>
-                                                       
+                                                        @foreach($orderLogs as $log)
                                                                 <tr>
-                                                                    <td>1</td>
-                                                                    <td>PrivateAirJET</td>
-                                                                    <td><span class="label label-info">Added 5 New Client Orders.</span></td>
-                                                                    <td>2018-04-18 09:42:37</td>
+                                                                    <td>{{$log->query_id}}</td>
+                                                                    <td>{{$log->fromUser->name}}</td>
+                                                                    <td>{{$log->query_type}}</td>
+                                                                    <td><span class="label label-info">{{$log->notification}}</span></td>
+                                                                    <td>{{$log->query_date}}</td>
                                                                 </tr> 
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -372,7 +339,6 @@
                                             <th>Total</th>
                                             <th>Remaining</th>
                                             <th>Received</th> 
-                                            <!--tite-->
                                         </tr>
                                     </thead>
                                     <tbody id="receiveList">
@@ -405,8 +371,6 @@
     <footer class="footer text-center"> 2018 &copy; Bewell Nutraceutical Corporation</footer>
             </div>
             </div>
-
-
             <script src="../plugins/bower_components/jquery/dist/jquery.min.js"></script>
             <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
             <script src="../../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
@@ -454,15 +418,18 @@
             </script>
 
             <script type="text/javascript">
-            //jet
             $(document).on('click','#receiveOrderList',function(e){
                 var verify = confirm("Do you want to receive the orders?");
                 if(verify==true){
-                    var orders = [];//gags
+                    var orders = [];
+
+                    //Write error checking for negative values here.
+                    //Added by: PrivateAirJET
                     for(var i=1;i<=$('#receiveListBody').find('tr').length;i++){
                         orders.push([$('#editable'+i).find('td:first').next().text(),
                         $('#editable'+i).find('td:first').next().next().text(),
                         $('#editable'+i).find('td:first').next().next().next().text(),
+
                         $('#editable'+i).find('td:first').next().next().next().next().find('input').val()]);
                     }
                     //check for wrong input
@@ -478,10 +445,11 @@
                         
                         var formData = {
                             orders:orders,
+                            orderID: $('#orderIDPayment').val(),
                         }
                         
                         var type = "POST"; 
-                        var process_url = '/ajaxReceiveOrder';//tite
+                        var process_url = '/ajaxReceiveOrder';
 
                         $.ajax({
                             type: type,
@@ -544,8 +512,6 @@
                     }else{
                         alert("Error Invalid Input! Please Try Again!");
                     }
-                // }
-
                 return false;
             });
 

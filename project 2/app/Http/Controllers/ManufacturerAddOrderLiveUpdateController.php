@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Manufacturer;
 use App\Supply;
+use App\Product;
 use App\ManufacturerOrder;
 use App\ManufacturerOrderDetail;
+use App\ManufacturerOrderLogs;
 use DateTime;
 
 class ManufacturerAddOrderLiveUpdateController extends Controller
@@ -17,6 +19,7 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
         $date = new DateTime();
         $manufacturer = Manufacturer::where('mn_name','=',$request->manufacturerInfo[0][0])->first();
         $orderList = $request->orderList;
+        $orderList2 = $request->orderList2;
 
         $new_order = new ManufacturerOrder();
         $new_order->manufacturerID= $manufacturer->id;
@@ -43,10 +46,32 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
 
             $new_order_detail->created_at = $date->getTimestamp();
             $new_order_detail->updated_at = $date->getTimestamp();
+            $new_order_detail->productID = null;
+            $new_order_detail->prod_qty= null;
+            $new_order_detail->received2= 0;
+
             $new_order_detail->save();
 
+            foreach($orderList2 as $order){
+
+                $product = Product::where('pd_name','=',$order[0])
+                                    ->where('pd_sku','=',$order[1])
+                                    ->first();
+                $new_order_detail->productID = $product->id;
+                $new_order_detail->prod_qty= $order[2];
+                $new_order_detail->save();
+            }
             $count = $count + 1;
-        }        
+        }      
+        $logs = new ManufacturerOrderLogs();
+        $logs->manufacturerID=$new_order->id;
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification=  $request->paymentType.' Payment Amount of PHP'.  $request->manufacturerInfo[0][2].' has been added!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
 
         return response()->json([
             'order'=>$new_order,

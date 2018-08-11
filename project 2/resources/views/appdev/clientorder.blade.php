@@ -297,10 +297,7 @@
                             <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> 
 
                             <p class="text-muted m-b-30"></p>
-                            <d
-                            
-                            
-                            iv class="table-responsive">
+                            <div class="table-responsive">
                                 <table id="orderListTable" class="table table-striped">
                                     <thead>
                                         <tr style="color:black;">
@@ -322,7 +319,7 @@
                                             <th><i class="fa fa-gear"></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style="font-weight:400;"><!--BUG EXIST HERE CANNOT FIND WHAT IS THE CAUSE OF THE FONT-WEIGHT TO 700. OUTSIDE OF THE CSS SELECTOR-->
                                         <!--
                                             SECTION KEYWORD/S: CLIENT, ORDERS, TABLE.
                                             Prepared By: John Edel B. Tamani.
@@ -357,12 +354,27 @@
                                                     }else{
                                                         echo 'N/A';
                                                     }
-
+                                                    
                                                     echo 
                                                         '</td>'.
-                                                        '<td id="paymentStatus'.$order->id.'">'.$order->clod_pstatus.'</td>'.
-                                                        '<td id="deliveryStatus'.$order->id.'">'.$order->clod_status.'</td>';
+                                                        '<td id="paymentStatus'.$order->id.'">';
 
+                                                    if($order->clod_pstatus=='Complete'){
+                                                        echo '<span class="label label-success">'.$order->clod_pstatus.'</span></td>';
+                                                    }else{
+                                                        echo '<span class="label label-info">'.$order->clod_pstatus.'</span></td>';
+                                                    }
+
+                                                    echo 
+                                                        '<td id="deliveryStatus'.$order->id.'">';
+
+                                                    if($order->clod_status=='Delivered'){
+                                                        echo '<span class="label label-success">'.$order->clod_status.'</span></td>';
+                                                    }else{
+                                                        echo '<span class="label label-info">'.$order->clod_status.'</span></td>';
+                                                    }
+                                                    
+                                                    //OLD IMPLEMENTATION
                                                     //Commented Out By: John Edel B. Tamani
                                                     // For Future Purposes
                                                     // echo 
@@ -567,6 +579,7 @@
                             console.log('Data Error:', data);
                             $("#orderListTable").find('tbody').find('input').val('');
                             $('#clientOrderModal').modal('hide');
+                            location.reload();
                         },   
                         error: function (data) {
                             console.log('Data Error:', data);
