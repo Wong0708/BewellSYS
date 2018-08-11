@@ -325,12 +325,24 @@
                             <div id="printhead">
                                 <hr class="dotted">
                                 <p class="text-muted m-b-30"></p>
-                                @if(isset($start))
-                                @endif
-                                @if(isset($end))
+
+
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Sales Report</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
+
+                                @if($start!="")
+                                    <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>From {{$start}} to {{$end}}</b></h4>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5>Total Gross From All Orders:</h5>
+                                            <h4><b>123</b></h4>
+                                            <hr class="dotted" style="margin: 0px;padding: 0px">
+                                            <h5>Total Ordered Products From All Orders: </h5>
+                                            <h4><b>458</b></h4>
+                                        </div>
+                                    </div>
+                                @else
+                                    <br>
                                 @endif
                                 {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
                                 <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
