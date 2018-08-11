@@ -11,6 +11,7 @@ use App\Manufacturer;
 use App\Supply;
 use App\ClientOrder;
 use App\Product;
+use App\ManufacturerOrderLogs;
 
 use DateTime;
 
@@ -72,10 +73,11 @@ class ManufacturerOrderController extends Controller
     {
         $order =  ManufacturerOrder::where('id','=',$id)->first();
         $orderdetail =  ManufacturerOrderDetail::where('orderID','=',$order->id)->get();
+        $orderLogs =  ManufacturerOrderLogs::where('manufacturerID','=',$id)->get();
         return view("appdev.manufacturerorderdetail")
                     ->with('order',$order)
+                    ->with('orderLogs',$orderLogs)
                     ->with('orderdetail',$orderdetail);
-      
     }
 
     /**
