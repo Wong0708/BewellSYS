@@ -7,6 +7,7 @@ use App\Supplier;
 use App\Supply;
 use App\SupplierOrder;
 use App\SupplierOrderDetail;
+use App\SupplierOrderLogs;
 use DateTime;
 
 class SupplierAddOrderLiveUpdateController extends Controller
@@ -44,6 +45,16 @@ class SupplierAddOrderLiveUpdateController extends Controller
             $new_order_detail->updated_at = $date->getTimestamp();
             $new_order_detail->save();
         }        
+
+        $logs = new SupplierOrderLogs();
+        $logs->supplierID=$new_order->id;
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification=  $request->paymentType.' Payment Amount of PHP'.  $request->paymentAmount.' has been added!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
 
         return response()->json([
         ]);
