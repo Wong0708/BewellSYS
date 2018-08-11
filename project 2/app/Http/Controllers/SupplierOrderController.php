@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SupplierOrder;
 use App\SupplierOrderDetail;
+use App\SupplierOrderLogs;
 use App\Supplier;
 use App\Supply;
 
@@ -100,5 +101,15 @@ class SupplierOrderController extends Controller
     {
         $order = SupplierOrder::where('id', $id)->delete();
         return response()->json($order);
+
+        $logs = new SupplierOrderLogs();
+        $logs->supplierID=$nid;
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Delete';
+        $logs->notification=  'Deleted Supplier Order '.$id.'!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
     }
 }
