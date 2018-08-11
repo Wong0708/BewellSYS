@@ -63,8 +63,10 @@ class SupplierOrderController extends Controller
     {
         $order =  SupplierOrder::where('id','=',$id)->first();
         $orderdetail =  SupplierOrderDetail::where('orderID','=',$order->id)->get();
+        $orderLogs =  SupplierOrderLogs::where('supplierID','=',$id)->get();
         return view("appdev.supplierorderdetail")
                 ->with('order',$order)
+                ->with('orderLogs',$orderLogs)
                 ->with('orderdetail',$orderdetail);
     }
 
