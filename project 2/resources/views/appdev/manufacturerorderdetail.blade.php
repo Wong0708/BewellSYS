@@ -204,7 +204,6 @@
                         </div>
                     </div>
                     
-                
                 <!--SECTION KEYWORD/S: ORDER, MODAL 
                     Prepared By: John Edel B. Tamani
                 -->
@@ -252,7 +251,7 @@
                                         <div class="row" style="margin-top:10px; ">
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Manufacturer</strong>
                                                     <br>
-                                                <p class="text-muted">{{$order->fromManufacturer->smnname}}</p>
+                                                <p class="text-muted">{{$order->fromManufacturer->mn_name}}</p>
                                                 </div>
                                                 <div class="col-md-6 col-xs-6 b-r"> <strong>Email</strong>
                                                     <br>
@@ -887,9 +886,57 @@
             <script src="../plugins/bower_components/sweetalert/sweetalert.min.js"></script>
             <script src="../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 
+            <script type="text/javascript">
+                $(document).on('click','#orderDeadlineButton',function(e){
+                    $('#exp_date').val($(this).data('expecteddate'));
+                    $('#previousexpdate').val($(this).data('expecteddate'));
+                    $('#orderDeadlineModal').modal('show');
+                });
 
+                $(document).on('click','#updateOrderStatus',function(e){
+                    var verify = confirm("Do you want to update the order?");
+                    if(verify==true){
 
+                        //Logic to check if similar date
+                        if($('#previousexpdate').val()!=$('#exp_date').val()){
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                }
+                            })
 
+                            e.preventDefault(); 
+
+                            var formData = {
+                                expectedDate: $('#exp_date').val(),
+                                id: $('#orderModalIDUpdateStatus').val(),
+
+                            }
+                            
+                            var type = "POST"; 
+                            var orderID = $('#orderModalIDUpdateStatus').val();
+                            var process_url = '/ajaxUpdateOrderStatus3';
+
+                            $.ajax({
+                                type: type,
+                                url: process_url,
+                                data: formData,
+                                dataType: 'json',
+                                success: function (data) {
+                                    $("#orderDeadlineStatus").text(data.expdate);
+                                    $('#orderDeadlineModal').modal('hide');
+                                },
+                                error: function (data) {
+                                    console.log('Data Error:', data);
+                                }
+                            });
+                        }else{
+                            alert('Invalid Input Update Order Status is the Same! Please Try Again!');
+                        }
+                    }
+                });
+                
+            </script>
 
             <!--jesus-->
             <script type="text/javascript">
