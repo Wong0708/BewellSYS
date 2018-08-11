@@ -51,7 +51,7 @@ class SupplierAddOrderLiveUpdateController extends Controller
         $logs->userID= auth()->user()->id;
         $logs->query_date= date('Y-m-d H:i:s');
         $logs->query_type= 'Insert';
-        $logs->notification=  $request->paymentType.' Payment Amount of PHP'.  $request->paymentAmount.' has been added!';
+        $logs->notification=  $request->paymentType.' Payment Amount of PHP'.  $request->supplierInfo[0][2].' has been added!';
         $logs->created_at= $date->getTimestamp();
         $logs->updated_at= $date->getTimestamp();
         $logs->save();
