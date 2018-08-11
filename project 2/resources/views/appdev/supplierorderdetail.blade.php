@@ -139,44 +139,7 @@
                         </ol>
                     </div>
                 </div>
-                <!--
-                    SECTION KEYWORD/S: ADD PAYMENT MODAL
-                    Prepared By: John Edel B. Tamani
-                -->
-                <!--START OF THE PAYMENT MODAL-->
-                <div class="modal fade" id="addOrderPaymentModal" tabindex="-1" role="dialog" aria-labelledby="addClientOrder">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button"class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" style="color:black; font-family:Helvetica,Arial,sans-serif;">Add Payment</h4>
-                            </div>
-                            <input type="hidden" id="orderIDPayment" name="orderIDPayment" value={{$order->id}}>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="paymentType" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Payment Type:</b></label>
-                                    <select name="paymentType" class="form-control" id="paymentType" style="margin-bottom:10px;" required>
-                                        <option selected disabled>Choose a payment type</option>
-                                        <option>Cash</option>
-                                    </select>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose a payment type for your order. <b style="color:#E53935;">*Required</b></span>
-                                    <br>
-                                    
-                                    <label for="paymentAmount" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Amount:</b></label>
-                                    <input type="number" min="0" name="paymentAmount" class="form-control" id="paymentAmount" style="margin-bottom:10px;" required/>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the total amount for the payment of the order. <b style="color:#E53935;">*Required</b></span>
-                                    <h4 style="margin-top:20px;" id="paymentBalance">
-                                    <b>Total Payment Balance:</b> PHP <span id="grandTotal"></span>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="submitOrderPayment" class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--END OF THE PAYMENT MODAL-->
-            
+                
                 <div class="row">
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
