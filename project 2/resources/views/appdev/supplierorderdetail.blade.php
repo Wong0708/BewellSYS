@@ -441,7 +441,7 @@
                         
                         var formData = {
                             orders:orders,
-                            orderID: $('#orderIDPayment').val();
+                            orderID: $('#orderIDPayment').val(),
                         }
                         
                         var type = "POST"; 
