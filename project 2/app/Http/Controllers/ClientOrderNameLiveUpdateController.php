@@ -75,7 +75,6 @@ class ClientOrderNameLiveUpdateController extends Controller
                 }
             }
         }
-        dd($materialNameList);
 
         //Return Statement of JSON
         if(!empty($product)){
