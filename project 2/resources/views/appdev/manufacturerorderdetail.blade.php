@@ -271,23 +271,26 @@
                                         <hr>
                                         <h3 style="font-weight:700; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;">Order Details: {{$order->id}}</h3>
                                             <div class="table-responsive">
-                                                    <table id="orderNotificationList" class="table table-striped">
-                                                        <thead>
-                                                            <tr style="color:black;">
-                                                                <th>#</th>
-                                                                <th>User</th>
-                                                                <th>Update</th>
-                                                                <th>Timestamp</th>
-                                                              
+                                                <table id="orderNotificationList" class="table table-striped">
+                                                    <thead>
+                                                        <tr style="color:black;">
+                                                            <th>#</th>
+                                                            <th>User</th>
+                                                            <td>Query Type</td>
+                                                            <th>Notification</th>
+                                                            <th>Timestamp</th>
+                                                        
                                                     </thead>
                                                     <tbody>
-                                                       
+                                                        @foreach($orderLogs as $log)
                                                                 <tr>
-                                                                    <td>1</td>
-                                                                    <td>PrivateAirJET</td>
-                                                                    <td><span class="label label-info">Added 5 New Client Orders.</span></td>
-                                                                    <td>2018-04-18 09:42:37</td>
+                                                                    <td>{{$log->query_id}}</td>
+                                                                    <td>{{$log->fromUser->name}}</td>
+                                                                    <td>{{$log->query_type}}</td>
+                                                                    <td><span class="label label-info">{{$log->notification}}</span></td>
+                                                                    <td>{{$log->query_date}}</td>
                                                                 </tr> 
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -300,8 +303,8 @@
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                    <h3 class="box-title m-b-0" style="color:black;">Order Details Record</h3>
-                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
+                                    <h3 class="box-title m-b-0" style="color:black;">Product - Order Details Record</h3>
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all the products given to the manufacturer.<</span><br>
                                     @if(isset($order->mnod_completed))<button id="receiveInventoryButton"style="margin-top:10px; " data-toggle="modal" data-target="#receiveSupplierOrder"class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="&#xe01b;" class="linea linea-basic"></i></span>Receive Inventory</button>@endif
                                   
                                     <button id="addClientOrder"style="margin-top:10px; margin-left:10px;" class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('manufacturerorder.index')}}>Manage Order List</a></button>
@@ -404,8 +407,8 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-12">
                         <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                            <h3 class="box-title m-b-0" style="color:black;">Order Details Record</h3>
-                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains the payment updates for the client order/s.</span><br>
+                            <h3 class="box-title m-b-0" style="color:black;">Material - Order Details Record</h3>
+                            <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: This section contains all the materials given to the manufacturer.</span><br>
                             <button id="addClientOrder"style="margin-top:10px; margin-left:10px;" class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i data-icon="O" class="linea linea-basic"></i></span><a style="color:white;" href={{route('manufacturerorder.index')}}>Manage Order List</a></button>
                             <p class="text-muted m-b-30"></p>
                             <hr>
@@ -416,11 +419,9 @@
                                         <tr style="color:black;">
                                             <th>#</th>
                                             <th>Order #</th>
-                                            <th>Product Name</th>
+                                            <th>Material Name</th>
                                             <th>SKU</th>
                                             <th>Total</th>
-                                            <th>Remaining</th>
-                                            <th>Received</th> 
                                             <!--tite-->
                                         </tr>
                                     </thead>
@@ -434,9 +435,7 @@
                                                         '<td>'.$orderInfo->id.'</td>'.
                                                         '<td>'.$orderInfo->fromSupply->sp_name.'</td>'.
                                                         '<td>'.$orderInfo->fromSupply->sp_sku.'</td>'.
-                                                        '<td>'.$orderInfo->spdt_qty.'</td>'.
-                                                        '<td id="remaining'.$orderInfo->id.'">'.($orderInfo->mndt_qty-$orderInfo->received).'</td>'.
-                                                        '<td id="receive'.$orderInfo->id.'">'.$orderInfo->received.'</td>'.
+                                                        '<td>'.$orderInfo->mndt_qty.'</td>'.
                                                     '</tr>';
                                                     $count = $count + 1;
                                                 }
