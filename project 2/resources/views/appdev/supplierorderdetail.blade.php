@@ -139,7 +139,7 @@
                         </ol>
                     </div>
                 </div>
-                
+
                 <div class="row">
                         <div class="col-md-3 col-xs-12 col-sm-6">
                             <div class="white-box text-center bg-purple">
@@ -245,7 +245,7 @@
                                                     <thead>
                                                         <tr style="color:black;">
                                                             <th>#</th>
-                                                            <th>Order #</th>
+                                                            <th>Detail #</th>
                                                             <th>Material Name</th>
                                                             <th>Material SKU</th>
                                                             <th>Receive Amount</th>
@@ -508,8 +508,6 @@
                     }else{
                         alert("Error Invalid Input! Please Try Again!");
                     }
-                // }
-
                 return false;
             });
 
