@@ -61,8 +61,6 @@ class SupplierAddOrderSupportLiveUpdateController extends Controller
             }
        }
 
-       dd($processed_products);
-
         //start can be created
         //can be created
         //complicated too many butals of permutation and combination
