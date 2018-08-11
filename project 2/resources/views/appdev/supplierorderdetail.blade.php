@@ -275,7 +275,7 @@
                                         <button style="background-color:#4c87ed;" type="button" id="receiveOrderList" class="btn btn-danger waves-effect waves-light">Receive</button>
                                     </div>
                                 </div>
-                                <input type="hidden" id="orderModalID" name="orderID" value="0">
+                                <input type="hidden" id="orderIDPayment" name="orderID" value={{$order->id}}>
                             </div>
                         </div>
                         
@@ -441,6 +441,7 @@
                         
                         var formData = {
                             orders:orders,
+                            orderID: $('#orderIDPayment').val();
                         }
                         
                         var type = "POST"; 
