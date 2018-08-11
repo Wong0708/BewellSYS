@@ -9,36 +9,21 @@
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/bewelllogo.ico">
     <title>Bewell</title>
-    <!-- Bootstrap Core CSS -->
     <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-    <!-- Menu CSS -->
     <link href="../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
-    <!-- animation CSS -->
     <link href="../css/animate.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
-    <!-- color CSS -->
     <link href="../css/colors/blue.css" id="theme" rel="stylesheet">
-
     <link href="../plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body class="fix-sidebar">
-<!-- Preloader -->
 <div class="preloader">
     <div class="cssload-speeding-wheel"></div>
 </div>
 <div id="wrapper">
-    <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top m-b-0">
         <div class="navbar-header" style="background:#64B5F6;  border-radius: 2px; position:relative;"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
             <div class="top-left-part" style="background-color:#BBDEFB; opacity:1;"><a class="logo" href="index.html"><b><img src="../plugins/images/bewelllogos.png"  width="35px" alt="home" /></b><span class="hidden-xs"><img src="../plugins/images/bewelllogol.png" width="110px" alt="home" /></span></a></div>
@@ -50,8 +35,6 @@
                 </li>
             </ul>
             <ul class="nav navbar-top-links navbar-right pull-right">
-                <!-- /.dropdown -->
-
                 <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i>
                         <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
                     </a>
@@ -70,7 +53,6 @@
                             <a class="text-center" href="#"> <strong>See All Notifications</strong> <i class="fa fa-angle-right"></i> </a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-tasks -->
                 </li>
 
 
@@ -84,52 +66,24 @@
 
                         </b> </a>
 
-                    <!--DROPDOWN OF THE CLASS-->
                     <ul class="dropdown-menu dropdown-user animated flipInY">
                         <li><a href="#"><i class="ti-user"></i> Manage Account</a></li>
-                        {{-- <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                        <li><a href="#"><i class="ti-email"></i> Inbox</a></li> --}}
-                        {{-- <li role="separator" class="divider"></li>
-                        <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li> --}}
                         <li role="separator" class="divider"></li>
                         <li><a href={{route('logout.index')}}><i class="fa fa-power-off"></i> Logout</a></li>
                     </ul>
-                    <!-- /.dropdown-user -->
                 </li>
-                <!-- /.Megamenu -->
-            {{-- <li class="right-side-toggle"> <a class="waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li> --}}
-            <!-- /.dropdown -->
             </ul>
         </div>
-        <!-- /.navbar-header -->
-        <!-- /.navbar-top-links -->
-        <!-- /.navbar-static-side -->
     </nav>
-    <!-- Left navbar-header -->
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse slimscrollsidebar">
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-                    <!-- input-group -->
                     <div class="input-group custom-search-form">
                         <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
                 <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
                 </span> </div>
-                    <!-- /input-group -->
                 </li>
-                {{-- <li class="user-pro">
-                <a href="#" class="waves-effect"><img src="plugins/images/jet.jpg" alt="user-img" class="img-circle"> <span class="hide-menu">
-                    @if(Auth::user()->access==1)
-                        Administrator
-                    @endif
-
-                    <span class="fa arrow"></span></span>
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="javascript:void(0)"><i class="ti-user"></i> Manage Account</a></li>
-                    </ul>
-                </li> --}}
-                {{-- <li class="nav-small-cap m-t-10">--- Main Menu</li> --}}
                 <span style=" position:absolute; bottom: 50px; width:100%; text-align: center; font-size:14px;">Powered by</span>
                 <span style=" position:absolute; bottom: 30px; width:100%; text-align: center; font-size:12px;"><strong>AIMinds</strong></span>
                 <span style=" position:absolute; bottom: 10px; width:100%; text-align: center; font-size:10px;">BCOFSYS - Version 1.0.1</span>
@@ -142,11 +96,6 @@
                     </ul>
                 </li>
                 <li> <a href={{route('schedule.index')}} class="waves-effect"><i style="color:#5F6367;" data-icon="r" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Schedule</span></a>
-                    {{-- <ul class="nav nav-second-level">
-                        <li> <a href="javascript:void(0)">Client</a> </li>
-                        <li> <a href="javascript:void(0)">Manufacturer</a> </li>
-                        <li> <a href="javascript:void(0)">Supplier</a> </li>
-                    </ul> --}}
                 </li>
                 <li> <a href="javascript:void(0)" class="waves-effect"><i  style="color:#5F6367;"  data-icon="f" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Inventory<span class="fa arrow"></span></span></a>
                     <ul class="nav nav-second-level">
@@ -170,37 +119,15 @@
                             <li> <a href={{route('clientaccount.index')}}>Client</a> </li>
                             <li> <a href={{route('manufactureraccount.index')}}>Manufacturer</a> </li>
                             <li> <a href={{route('supplieraccount.index')}}>Supplier</a> </li>
-                            {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                         </ul>
                     </li>
                 @endif
-
-
-                {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
-                {{-- <ul class="nav nav-second-level">
-                    <li> <a href={{route('inventoryreport.index')}}>Truck</a> </li> --}}
-                {{-- <li> <a href={{route('salesreport.index')}}>Driver</a> </li> --}}
-                {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
-                {{-- </ul>
-            </li> --}}
-
                 <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">FAQs</span></a></li>
                 <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Documentation</span></a></li>
-
-                {{-- <li> <a href={{route('schedule.index')}} class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Settings</span></a> --}}
-                {{-- <ul class="nav nav-second-level">
-                    <li> <a href="javascript:void(0)">Client</a> </li>
-                    <li> <a href="javascript:void(0)">Manufacturer</a> </li>
-                    <li> <a href="javascript:void(0)">Supplier</a> </li>
-                </ul> --}}
-                {{-- </li> --}}
-                {{-- <li><a href={{route('logout.index')}} class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li> --}}
             </ul>
         </div>
     </div>
 
-    <!-- Left navbar-header end -->
-    <!-- Page Content -->
     <div id="page-wrapper">
         <div class="container-fluid" style="background-color:#F5F5F5;">
             <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -214,13 +141,10 @@
                         <li class="active" style="color:#4c87ed;">Supplier Report</li>
                     </ol>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /row -->
 
         <div class="white-box">
             <button style="background-color: #4c87ed;" class="pull-right btn btn-success waves-effect waves-light" onclick="myFunction()" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe008;"></i></span>Print</button>
-        <!-- printhead-->
         <?php use \App\Http\Controllers\SupplierReportController;?>
         <div id="printhead">
             <div class="col-lg-6 col-sm-6">
