@@ -335,10 +335,10 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <h5>Total Gross From All Orders:</h5>
-                                            <h4><b>123</b></h4>
+                                            <h4><b>₱ {{$total_gross}}.00</b></h4>
                                             <hr class="dotted" style="margin: 0px;padding: 0px">
                                             <h5>Total Ordered Products From All Orders: </h5>
-                                            <h4><b>458</b></h4>
+                                            <h4><b>{{$total_qty}}</b></h4>
                                         </div>
                                     </div>
                                 @else
@@ -364,7 +364,7 @@
                                                                 <td><a href="salesreport/{{$order->id}}">Order # {{$order->id}}</td>
                                                                 <td>{{$order->clod_date}}</td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
-                                                                <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
+                                                                <td><center>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
                                                                 <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
                                                                 {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
                                                             @endforeach
