@@ -8,6 +8,7 @@ use App\Supply;
 use App\Product;
 use App\ManufacturerOrder;
 use App\ManufacturerOrderDetail;
+use App\ManufacturerOrderLogs;
 use DateTime;
 
 class ManufacturerAddOrderLiveUpdateController extends Controller
@@ -62,7 +63,16 @@ class ManufacturerAddOrderLiveUpdateController extends Controller
             }
             $count = $count + 1;
         }      
-        
+        $logs = new ManufacturerOrderLogs();
+        $logs->manufacturerID=$new_order->id;
+        $logs->userID= auth()->user()->id;
+        $logs->query_date= date('Y-m-d H:i:s');
+        $logs->query_type= 'Insert';
+        $logs->notification=  $request->paymentType.' Payment Amount of PHP'.  $request->paymentAmount.' has been added!';
+        $logs->created_at= $date->getTimestamp();
+        $logs->updated_at= $date->getTimestamp();
+        $logs->save();
+
         return response()->json([
             'order'=>$new_order,
             'manufacturer'=>$manufacturer->mn_name,
