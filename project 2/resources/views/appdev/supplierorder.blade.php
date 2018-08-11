@@ -371,7 +371,7 @@
 
 
             <script type='text/javascript'>
-                $(document).on('click', '#addSupplierOrder', function (e) {//jet
+                $(document).on('click', '#addSupplierOrder', function (e) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -406,7 +406,6 @@
                     });
                 });
             </script>
-            <!--jump3-->
             <script type='text/javascript'>
                 var count = 1;
                 var count2 = 1;
@@ -458,7 +457,6 @@
             </script>
 
             <script type='text/javascript'>
-                //jump SKU
                 $(document).on('change', '.orderSKU', function (e) {
                     $.ajaxSetup({
                         headers: {
