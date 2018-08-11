@@ -30,7 +30,7 @@ class SupplierOrderReceiveLiveUpdateController extends Controller
         }
 
         $logs = new SupplierOrderLogs();
-        $logs->supplierID=$order[0];
+        $logs->supplierID=$request->orderID;
         $logs->userID= auth()->user()->id;
         $logs->query_date= date('Y-m-d H:i:s');
         $logs->query_type= 'Insert';
