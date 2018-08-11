@@ -833,9 +833,19 @@
                 $(tdEdit).closest('td').next().find('select').find('option').remove();
                 var dataAppend = '<option selected disabled>Choose product SKU</option>';
 
-                for (var i = 0; i < data.product.length; i++){
-                    dataAppend = dataAppend+'<option>'+data.product[i].pd_sku+'</option>';
+                //Old Implementation of products to material added!
+                //Commented By: John Edel B. Tamani
+                // for (var i = 0; i < data.product.length; i++){
+                //     dataAppend = dataAppend+'<option>'+data.product[i].pd_sku+'</option>';
+                // }
+                    
+                //New Implementation here!
+                //Done By: PrivateAirJET
+                
+                for (var i = 0; i < data.materialList.length; i++){
+                    dataAppend = dataAppend+'<option>'+data.materialList[i][0]+'</option>';
                 }
+
                 $(tdEdit).closest('td').next().find('select').append(dataAppend);
             },   
             error: function (data) {
