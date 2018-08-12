@@ -228,13 +228,12 @@
                                                                 </td>
                                                         @endif 
                                                         
-                                                        <td><input value="0" type="number" min="1" style="font-size:12px;" class="form-control orderInventory" placeholder=""></td>
+                                                        <td><input value="0" type="number" min="1" style="font-size:12px;" class="form-control orderInventory addable" price="x" placeholder=""></td>
                                                         <td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td>
                                                     </tr>
-
                                                 </tbody>
                                                     </table>
-                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Total Price:</b><b id="totalOrderAmount"></b></h4>
+                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b style="display: inline">Total Price:</b><p id="totalOrderAmount" style="display: inline"></p></h4>
                                                 </div>
                                                 <hr>
                                                     <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Product Inventory Support</b></h4>
@@ -254,26 +253,6 @@
                                                     </table>
 
                                                 </div>
-
-                                                {{-- 
-                                                    OLD IMPLEMENTATION - PAYMENT STATUS
-                                                    Prepared By: John Edel B. Tamani
-                                                    
-                                                    <label for="orderPaymentStatus" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Payment Status:</b></label>
-                                                    <select name="orderPaymentStatus" class="form-control" id="orderPaymentStatus" style="margin-bottom:10px;">
-                                                        <option disabled selected> Choose the current payment status of the order</option>
-                                                        <option></option>
-                                                        <option></option>
-                                                        <option></option>
-                                                    </select>
-                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the client's payment status on their ordered products. <b style="color:#E53935;">*Required</b></span>
-                                                    </br>
-                                                    <label for="client" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Paid Amount:</b></label>
-                                                    </br>
-                                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Enter the current paid amount of the client. <b style="color:#E53935;">*Required</b></span>
-                                                    <input style="margin-top:10px; " type="text" class="form-control" data-mask="PHP 9,999,999.00 ONLY"/>
-                                                    <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b>Grand Total:</b><b class="totalOrderAmount">100</b></h4> 
-                                                --}}
 
                                         </div>
 
@@ -508,7 +487,7 @@
                 '<td><span class="label label-info" id="countAddOrder">'+count+'</span></td> ' +
                 '<td> <select style="font-size:12px;" class="form-control orderName"><option selected> Choose a product</option>@foreach ($products as $product)<option>{{$product->pd_name}}</option> @endforeach</select> </td>' +
                 '<td><select style="font-size:12px;" class="form-control orderSKU"><option selected>N/A</option></td>'+
-                '<td><input type="text" style="font-size:12px;" class="form-control" placeholder=""></td> ' +
+                '<td><input type="text" style="font-size:12px;" price="x" class="form-control addable" placeholder=""></td> ' +
                 '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td> ' +
                 '</tr>@endif');
         });
@@ -682,11 +661,12 @@
         //SECTION KEYWORD/S: ORDER SKU TABLE
         var count2 = 1;
         $(document).on('change', '.orderSKU', function (e) {
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
-            })
+            });
 
             e.preventDefault(); 
 
@@ -705,6 +685,9 @@
                 success: function(data){
                     console.log(data);
 
+                    $(tdEdit).closest('td').next().find('input').attr('price',data.price);
+                    console.log("price: " + $(tdEdit).closest('td').next().find('input').attr('price'));
+
                     if($('#supportNum'+tdEdit2).length){ //Used length to check if the variable exists
                         $('#supportNum'+tdEdit2).remove();
                         count2 = count2 - 1;
@@ -716,20 +699,19 @@
 
                         $('#clientOrderSupport').append(
                             '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.productCode+'</td><td><span class="label label-success">'+data.inventory+'</span></td>'+
-                            '<td>₱ '+data.price+'.00</td><td><span class="label label-success">In-Stock</span></td></tr>');
+                            '<td>₱ '+data.price+'</td><td><span class="label label-success">In-Stock</span></td></tr>');
                     }else if(data.status == 2){
                         $(tdEdit).closest('td').next().find('input').prop("readonly", false);
                         // $(tdEdit).closest('td').next().find('input').attr('placeholder',data.inventory); Inventory quantity
-
                         $('#clientOrderSupport').append(
                             '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.productCode+'</td><td><span class="label label-success">'+data.inventory+'</span></td>'+
-                            '<td>₱ '+data.price+'.00</td><td><span class="label label-warning">Re-stock</span></td></tr>');
+                            '<td>₱ '+data.price+'</td><td><span class="label label-warning">Re-stock</span></td></tr>');
                     }else {
                         $(tdEdit).closest('td').next().find('input').val('');
                         $(tdEdit).closest('td').next().find('input').prop("readonly", true);
                         $('#clientOrderSupport').append(
                             '<tr id="supportNum'+count2+'"style="font-size:12px;"><td>'+count2+'</td><td>'+data.productCode+'</td><td><span class="label label-success">'+data.inventory+'</span></td>'+
-                            '<td>₱ '+data.price+'.00</td><td><span class="label label-danger">No Stock</span></td></tr>');
+                            '<td>₱ '+data.price+'</td><td><span class="label label-danger">No Stock</span></td></tr>');
                     }
                     count2 = count2 + 1;
                 },
@@ -773,8 +755,25 @@
             }
             return false;
         });
+
+        $(document).on('change', '.addable', function (e) {
+
+            var inputs = document.getElementsByClassName('addable');
+            var sum = 0;
+            for(ctr = 0;ctr< inputs.length;ctr++){
+                var price  = inputs[ctr].getAttribute('price');
+                if(price === "x"){
+                    alert("no sku selected!");
+                }else{
+                    sum+= parseFloat(inputs[ctr].value) * parseFloat(price);
+                }
+            }
+            $("#totalOrderAmount").html("  P "+sum);
+            console.log("total "+sum);
+
+        });
     </script>
-    
+
     <!--SECTION KEYWORD/S: MODAL, UPDATE, ORDER, AJAX, SCRIPT-->
     {{-- <script type='text/javascript'>
        $("#updateOrder").click(function (e) {
