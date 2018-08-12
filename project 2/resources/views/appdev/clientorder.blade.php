@@ -156,6 +156,8 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
+
+
                                     <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client:</b></label>
                                     <select name="client" class="form-control" id="clientList" style="margin-bottom:10px;">
                                         <option selected disabled>Choose a client</option>
@@ -166,9 +168,11 @@
                                         @endif
                                     </select>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one client among the list to add an order. <b style="color:#E53935;">*Required</b></span>
-
                                     <br>
-                                    
+                                    <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>P.O Price:</b></label>
+                                    <input type="number" name="POprice" class="form-control" placeholder="Enter PO Price" id="POprice">
+                                    <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Add alloted budget for purchase. Leave blank for no value <b style="color:cornflowerblue;">*Optional</b></span>
+                                    <br>
                                     {{--
                                         Commented By: John Edel B. Tamani
                                         Purpose: ADDRESS FOR CLIENT
@@ -233,7 +237,7 @@
                                                     </tr>
                                                 </tbody>
                                                     </table>
-                                                <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b style="display: inline">Total Price:</b><p id="totalOrderAmount" style="display: inline"></p></h4>
+                                            <h4  style="margin-top:10px; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif; text-transform:uppercase;"><b style="display: inline">Total Price:</b>  <p id="totalOrderAmount" style="display: inline"></p></h4>
                                                 </div>
                                                 <hr>
                                                     <h4  style="font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Product Inventory Support</b></h4>
@@ -273,7 +277,6 @@
 
                             <h3 class="box-title m-b-0" style="color:black;">LIST OF CLIENT ORDERS</h3>
                             <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button>
-                            <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> 
 
                             <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
@@ -512,6 +515,11 @@
     <!--SECTION KEYWORD/S: SUBMIT ORDER LIST-->
     <script type='text/javascript'>
         $('#submitOrderList').on('click','',function(e) {
+
+            var po_price = parseFloat($('#POprice').val());
+            var total_price = parseFloat($('#totalOrderAmount').html());
+
+
             if($('#orderListNum1').find('td:first').next().next().find('select').val()!='N/A' && $('#orderListNum1').find('td:first').next().next().next().find('input').val()!=0){
 
                 var verify = confirm("Do you wish to add the following order/s?");
@@ -533,38 +541,75 @@
 
                 console.log(clientDetail);
 
-                if(verify==true){
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                        }
-                    })
+                if(verify === true){
+                    if($('#POprice').val() === ""){
 
-                    e.preventDefault(); 
-                    var formData = {
-                        orderList:orders,
-                        clientInfo:clientDetail,
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        });
+                        e.preventDefault();
+                        var formData = {
+                            orderList:orders,
+                            clientInfo:clientDetail,
+                        }
+                        var tdEdit = '#clientLocation';
+                        $.ajax({
+                            type: "POST",
+                            url: 'liveClientAddOrderUpdate',
+                            data: formData,
+                            success: function(data){
+                                $('#activityUpdate').html('An order has been successfully added to the list!');
+                                $('#activityUpdate').show();
+                                console.log('Data Error:', data);
+                                $("#orderListTable").find('tbody').find('input').val('');
+                                $('#clientOrderModal').modal('hide');
+                                location.reload();
+                            },
+                            error: function (data) {
+                                console.log('Data Error:', data);
+                            }
+                        });
+
                     }
-                    
-                    var tdEdit = '#clientLocation';
+                    else{
+                        if ((total_price/po_price)-1 <= 0.1){
+                             $.ajaxSetup({
+                             headers: {
+                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                             }
+                             });
+                             e.preventDefault();
+                             var formData = {
+                             orderList:orders,
+                             clientInfo:clientDetail,
+                             }
+                             var tdEdit = '#clientLocation';
+                             $.ajax({
+                             type: "POST",
+                             url: 'liveClientAddOrderUpdate',
+                             data: formData,
+                             success: function(data){
+                             $('#activityUpdate').html('An order has been successfully added to the list!');
+                             $('#activityUpdate').show();
+                             console.log('Data Error:', data);
+                             $("#orderListTable").find('tbody').find('input').val('');
+                             $('#clientOrderModal').modal('hide');
+                             location.reload();
+                             },
+                             error: function (data) {
+                             console.log('Data Error:', data);
+                             }
+                             });
 
-                    $.ajax({
-                        type: "POST",
-                        url: 'liveClientAddOrderUpdate',
-                        data: formData,
-                        success: function(data){
-                            $('#activityUpdate').html('An order has been successfully added to the list!');
-                            $('#activityUpdate').show();
-                            console.log('Data Error:', data);
-                            $("#orderListTable").find('tbody').find('input').val('');
-                            $('#clientOrderModal').modal('hide');
-                            location.reload();
-                        },   
-                        error: function (data) {
-                            console.log('Data Error:', data);
                         }
-                    });
+                        else{
+                            alert('Total price exceeds PO price by over 10% !');
+                        }
+                    }
                 }
+
                 return false;
             }else{
                 alert('Sorry there are no order/s placed yet!')
@@ -768,7 +813,8 @@
                     sum+= parseFloat(inputs[ctr].value) * parseFloat(price);
                 }
             }
-            $("#totalOrderAmount").html("  P "+sum);
+            //sum = new Intl.NumberFormat().format(sum);
+            $("#totalOrderAmount").html(sum);
             console.log("total "+sum);
 
         });
