@@ -333,9 +333,12 @@
                                 @if($start!="")
                                     <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>From {{$start}} to {{$end}}</b></h4>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6 text-center">
+                                            <hr class="dotted" style="margin: 0px;padding: 0px">
                                             <h5>Total Gross From All Orders:</h5>
-                                            <h4><b>₱ {{$total_gross}}.00</b></h4>
+                                            <h4><b>₱ {{number_format($total_gross,2)}}</b></h4>
+                                        </div>
+                                        <div class="col-md-6 text-center">
                                             <hr class="dotted" style="margin: 0px;padding: 0px">
                                             <h5>Total Ordered Products From All Orders: </h5>
                                             <h4><b>{{$total_qty}}</b></h4>
@@ -365,7 +368,9 @@
                                                                 <td>{{$order->clod_date}}</td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
                                                                 <td><center>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
-                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
+                                                                <td>P {{number_format(App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']
+                                                                        *
+                                                                        App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty'],2)}} </td>
                                                                 {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
                                                             @endforeach
                                                         @endif

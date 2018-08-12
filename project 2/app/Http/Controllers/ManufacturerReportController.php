@@ -25,6 +25,14 @@ class ManufacturerReportController extends Controller
     }
     public function index()
     {
+        $filter_val = array(
+            "Scheduled"=>0,
+            "Fulfilled"=>0,
+            "Cancelled"=>0,
+            "Processing"=>0,
+        );
+
+
         $manufacturers = Manufacturer::all();
         $orders = ManufacturerOrder::all();
         $orderdetails = ManufacturerOrderDetail::all();
@@ -33,20 +41,63 @@ class ManufacturerReportController extends Controller
             $date = date_create($order['mnod_date']);
             $order['mnod_date'] = date_format($date, "F j Y");
         }
+        foreach($orders as $ord){
+            switch ($ord['mnod_status']){
+                case 'Scheduled':
+                    $filter_val['Scheduled'] = $filter_val ['Scheduled'] +1;
+                    break;
+                case 'Delivered':
+                    $filter_val['Fulfilled'] = $filter_val ['Fulfilled'] +1;
+                    break;
+                case "Cancelled":
+                    $filter_val['Cancelled'] = $filter_val ['Cancelled'] +1;
+                    break;
+
+                case "Processing":
+                    $filter_val['Processing'] = $filter_val ['Cancelled'] +1;
+                    break;
+            }
+        }
 
         return view("appdev.manufacturerreport")
         ->with("manufacturers",$manufacturers)
         ->with("orders",$orders)
+        ->with("filter_val",$filter_val)
         ->with("orderdetails",$orderdetails)
         ->with("start","")
         ->with("end","");
     }
     public function generateReport(Request $request)
     {
+        $filter_val = array(
+            "Scheduled"=>0,
+            "Fulfilled"=>0,
+            "Cancelled"=>0,
+            "Processing"=>0,
+        );
+        $total_qty = 0;
+        $total_gross = 0;
         $manufacturers = Manufacturer::all();
         $orders = ManufacturerOrder::all();
         $orderdetails = ManufacturerOrderDetail::all();
 
+        foreach($orders as $ord){
+            switch ($ord['mnod_status']){
+                case 'Scheduled':
+                    $filter_val['Scheduled'] = $filter_val ['Scheduled'] +1;
+                    break;
+                case 'Delivered':
+                    $filter_val['Fulfilled'] = $filter_val ['Fulfilled'] +1;
+                    break;
+                case "Cancelled":
+                    $filter_val['Cancelled'] = $filter_val ['Cancelled'] +1;
+                    break;
+
+                case "Processing":
+                    $filter_val['Processing'] = $filter_val ['Cancelled'] +1;
+                    break;
+            }
+        }
         foreach($orders as $order){
             $date = date_create($order['mnod_date']);
             $order['mnod_date'] = date_format($date, "F j Y");
@@ -60,21 +111,18 @@ class ManufacturerReportController extends Controller
         $orders = array();
         foreach($ords as $ord){
             if(new DateTime($ord['mnod_date']) >= $start && new DateTime($ord['mnod_date']) <= $end){
+                $clorder = self::getManufacturerOrder($ord['id']);
+                $total_qty += $clorder['mndt_qty'];
+                $total_gross += self::getSupply($clorder['supplyID'])['sp_price'] * $clorder['mndt_qty'];
                 array_push($orders,$ord);
             }
         }
-        /*
-        $orders = $orders->filter(function ($order) use($start)  {
-            return $order->clod_date >= $start;
-        });
-
-        $orders = $orders->filter(function ($order) use($end) {
-            return $order->clod_date < $end;
-        });
-        */
         return view("appdev.manufacturerreport")
         ->with("manufacturers",$manufacturers)
         ->with("orders",$orders)
+        ->with("filter_val",$filter_val)
+        ->with("total_qty",$total_qty)
+        ->with("total_gross",$total_gross)
         ->with("orderdetails",$orderdetails)
         ->with("start",$request->start)
         ->with("end",$request->end);
