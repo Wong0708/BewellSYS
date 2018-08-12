@@ -17,7 +17,8 @@ class SalesReportController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * CREATED BY FERNANDO PAYLAGO JR.
+     * MIT LICENSE 2015
      * @return \Illuminate\Http\Response
      */
     public function __construct()
@@ -27,6 +28,9 @@ class SalesReportController extends Controller
 
     public function index()
     {
+
+        $total_gross = 0;
+        $total_qty = 0;
         $orders = ClientOrder::all();
         $orderdetails =ClientOrderDetail::all();
         $clients = Client::all();
@@ -39,11 +43,18 @@ class SalesReportController extends Controller
         }
 
        return view("appdev.salesreport")->with("start","")
-       ->with("end","")->with("orders",$orders)->with("clients",$clients)->with("products",$products)->with("orderdetails", $orderdetails)->with("productdetails",$productdetails);
+       ->with("end","")->with("orders",$orders)->with("clients",$clients)
+       ->with("products",$products)
+       ->with("total_gross",$total_gross)
+       ->with("total_qty",$total_qty)
+       ->with("orderdetails", $orderdetails)
+       ->with("productdetails",$productdetails);
     }
 
     public function generateReport(Request $request)
     {
+        $total_gross = 0;
+        $total_qty = 0;
         $orders = ClientOrder::all();
         $orderdetails =ClientOrderDetail::all();
         $clients = Client::all();
@@ -51,10 +62,7 @@ class SalesReportController extends Controller
         $productdetails = ProductDetails::all();
         $test = $request->dog;
 
-        foreach($orders as $order){
-            $date = date_create($order['clod_date']);
-            $order['clod_date'] = date_format($date, "F j Y");
-        }
+
         
         $start = new DateTime($request->start." 00:00:00");
         $end = new DateTime($request->end." 23:59:59");
@@ -64,31 +72,30 @@ class SalesReportController extends Controller
         $orders = array();
         foreach($ords as $ord){
             if(new DateTime($ord['clod_date']) >= $start && new DateTime($ord['clod_date']) <= $end){
+                $clorder = self::getClientOrderFromOrderID($ord['id']);
+                $total_qty += $clorder['cldt_qty'];
+                $total_gross += self::getProduct($clorder['productID'])['pd_price'] * $clorder['cldt_qty'];
                 array_push($orders,$ord);
             }
         }
-        /*
-        $orders = $orders->filter(function ($order) use($start)  {
-            return $order->clod_date >= $start;
-        });
 
-        $orders = $orders->filter(function ($order) use($end) {
-            return $order->clod_date < $end;
-        });
-        */
+        foreach($orders as $order){
+            $date = date_create($order['clod_date']);
+            $order['clod_date'] = date_format($date, "F j Y");
+        }
+
         return view("appdev.salesreport")->with("orders",$orders)->with("clients",$clients)
         ->with("start",$request->start)
         ->with("end",$request->end)
         ->with("products",$products)
+        ->with("total_gross",$total_gross)
+        ->with("total_qty",$total_qty)
         ->with("orderdetails", $orderdetails)
         ->with("productdetails",$productdetails);
     }
     public static function getClient($id){
         $client = Client::where('id', $id)->first();
         return $client;
-        //return Client::find($id);
-        //$client = Client::find($id);
-        //return view("appdev.salesreport")->with("client",$client);
     }
     public static function getClientOrderFromOrderID($id){
         $order = ClientOrderDetail::where('orderID',$id)->first();

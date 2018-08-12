@@ -246,8 +246,8 @@
                             <div class="col-md-6" >
                                 <center>
                                     <div class="input-daterange input-group" id="date-range">
-                                        <input type="date" class="form-control" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
-                                        <input type="date" class="form-control" name="end"/>
+                                        <input type="date" class="form-control dt" id="sd" name="start"/> <span class="input-group-addon bg-info b-0 text-white">to</span>
+                                        <input type="date" class="form-control dt" id="ed" name="end"/>
                                     </div>
                                 </center>
                             </div>
@@ -266,6 +266,50 @@
                                     <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>{{$filter}} Delivery Reports</b></h4>
                                     @if($start!="")
                                         <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>From {{$start}} to {{$end}}</b></h4>
+                                        <div class="row">
+                                            @if($filter!="")
+                                                @if($filter != "General")
+                                                    <div class="col-md-4 text-center">
+                                                        <h5>Total {{$filter}} Deliveries:</h5>
+                                                        <h4><b>{{count($schedules)}}</b></h4>
+                                                    </div>
+                                                @else
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Scheduled Deliveries:</h5>
+                                                        <h4><b>{{$filter_val['Scheduled']}}</b></h4>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Fulfilled: </h5>
+                                                        <h4><b>{{$filter_val['Fulfilled']}}</b></h4>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Cancelled: </h5>
+                                                        <h4><b>{{$filter_val['Cancelled']}}</b></h4>
+                                                    </div>
+                                                @endif
+                                            @else
+                                                <div class="row">
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Scheduled Deliveries:</h5>
+                                                        <h4><b>{{$filter_val['Scheduled']}}</b></h4>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Fulfilled: </h5>
+                                                        <h4><b>{{$filter_val['Fulfilled']}}</b></h4>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                                        <h5>Total Cancelled: </h5>
+                                                        <h4><b>{{$filter_val['Cancelled']}}</b></h4>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
                                     @endif
                                     <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
                                         <tbody id="addproduct">
@@ -517,6 +561,16 @@
     <script src="plugins/bower_components/timepicker/bootstrap-timepicker.min.js"></script>
     <script src="plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script>
+        $(".dt").change(function() {
+            var startDate = document.getElementById("sd").value;
+            var endDate = document.getElementById("ed").value;
+            if(startDate != null && endDate!= null){
+                if ((Date.parse(endDate) <= Date.parse(startDate))) {
+                    alert("End date should be greater than Start date");
+                    document.getElementById("ed").value = "";
+                }
+            }
+        });
         // Clock pickers
         $('#single-input').clockpicker({
             placement: 'bottom',

@@ -213,68 +213,7 @@
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
-                <!-- /row -->
-                {{-- <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="sysmodal2">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="exampleModalLabel1">Edit Order</h4> </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">Customer</label>
-                                            <input type="dropdown" class="form-control" id="recipient-name1"> </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
 
-
-                
-                        {{-- <div id="statusModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"></button>
-                                        <h4 class="modal-title"></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="orderStatus">Order Status:</label>
-                                                <select name="orderStatus" class="form-control" id="orderStatus">
-                                                    <option>Processing</option>
-                                                    <option>Scheduled</option>
-                                                    <option>Delivering</option>
-                                                    <option>Delivered</option>
-                                                    <option>Complete</option>
-                                                    <option>Cancelled</option>
-                                                </select>
-                                            </div>
-
-                                            <input id="orderID" type="hidden" name="orderID">
-                                            
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning" data-dismiss="modal">
-                                                <span class='glyphicon glyphicon-remove'></span> Close
-                                            </button>
-                                            <button type="submit" class="btn btn-danger">
-                                                    <span class='glyphicon glyphicon-remove'></span> Submit
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> --}}
-                    
-                <!--MODAL ENDS HERE-->
-                
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                     <div class="col-sm-12">
                         <div class="white-box">
@@ -284,11 +223,7 @@
                               
                               @endif
                             <h3 class="box-title m-b-0" style="color:black;">GENERATE MANUFACTURER REPORT</h3>
-                            {{-- <div class="col-sm-12" style="background-color:red;"> --}}
-                                {{-- <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="fa fa-plus-square-o"></i></span>Add Order</button> --}}
-                                                    
-                                {{-- <a class="mytooltip" href="javascript:void(0)"><i class="fa fa-question-circle"></i><span class="tooltip-content3">Click this button to place an order of a customer </span> </a> </div> </i>Add Order <span class="tooltip-content3">You can easily navigate the city by car.</span> </a> --}}
-                                {{--<button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#clientOrderModal" type="button"><span class="btn-label"><i class="linea linea-basic" data-icon="&#xe019;"></i></span>Generate Report</button>--}}
+
                                 {!!Form::open(array('route' => 'appdev.manufacturerreport'))!!}
                                 <div class="col-md-6" >
                                     <center>
@@ -308,13 +243,47 @@
                                 <br>
                             <div id="printhead">
                                 <hr class="dotted">
-                                @if(isset($start))
-                                @endif
-                                @if(isset($end))
+
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Manufacturer Report</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
+
+                                @if($start!="")
+                                    <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>From {{$start}} to {{$end}}</b></h4>
+                                    <div class="row " style="margin-bottom: 5px; background-color: #333">
+                                        <div class="col-md-6 text-center">
+                                            <h5 class="text-white">Total Price From All Orders:</h5>
+                                            <h4><b class="text-white">₱ {{number_format($total_gross,2)}}</b></h4>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <h5 class="text-white">Total Quantity From All Orders: </h5>
+                                            <h4><b class="text-white">{{$total_qty}}</b></h4>
+                                        </div>
+                                    </div>
+                                @else
+                                    <br>
                                 @endif
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Scheduled Deliveries:</h5>
+                                        <h4><b>{{$filter_val['Scheduled']}}</b></h4>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Fulfilled: </h5>
+                                        <h4><b>{{$filter_val['Fulfilled']}}</b></h4>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Cancelled: </h5>
+                                        <h4><b>{{$filter_val['Cancelled']}}</b></h4>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Processing: </h5>
+                                        <h4><b>{{$filter_val['Processing']}}</b></h4>
+                                    </div>
+                                </div>
                                 {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
                                 <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
                                         <thead>
@@ -337,115 +306,13 @@
                                                                 <td>{{$order->mnod_date}}</td>
                                                                 <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturer($order->manufacturerID)['mn_name']}}</td>
                                                                 <td>{{App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}}</td>
-                                                                <td>P {{App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_price'] * App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty']}}</td>
+                                                                <td>P {{
+                                                                number_format(App\Http\Controllers\ManufacturerReportController::getSupply(App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['supplyID'])['sp_price']
+                                                                * App\Http\Controllers\ManufacturerReportController::getManufacturerOrder($order->id)['mndt_qty'],2)}}</td>
                                                                 <td>{{$order->mnod_status}}</td>
                                                                 {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
                                                             @endforeach
                                                         @endif
-                                                    {{--    
-                                                        <tr style="color:black;">
-                                                            <td>CLOD-0001</td>
-                                                            <td>Mercury Drug Corporation</td>
-                                                            <td>20 Products</td>
-                                                            <td>₱100,000.00</td>
-                                                            <td>₱5,000.00</td>
-                                                            <td>₱95,000.00</td>
-                                                            
-                                                        </tr>
-                                                        <tr style="color:black;">
-                                                                <td>CLOD-0001</td>
-                                                                <td>Mercury Drug Corporation</td>
-                                                                <td>20 Products</td>
-                                                                <td>₱100,000.00</td>
-                                                                <td>₱5,000.00</td>
-                                                                <td>₱95,000.00</td>
-                                                                
-                                                            </tr>
-                                                            <tr style="color:black;">
-                                                                    <td>CLOD-0001</td>
-                                                                    <td>Mercury Drug Corporation</td>
-                                                                    <td>20 Products</td>
-                                                                    <td>₱100,000.00</td>
-                                                                    <td>₱5,000.00</td>
-                                                                    <td>₱95,000.00</td>
-                                                                    
-                                                                </tr>
-                                                                <tr style="color:black;">
-                                                                        <td>CLOD-0001</td>
-                                                                        <td>Mercury Drug Corporation</td>
-                                                                        <td>20 Products</td>
-                                                                        <td>₱100,000.00</td>
-                                                                        <td>₱5,000.00</td>
-                                                                        <td>₱95,000.00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr style="color:black;">
-                                                                            <td>CLOD-0001</td>
-                                                                            <td>Mercury Drug Corporation</td>
-                                                                            <td>20 Products</td>
-                                                                            <td>₱100,000.00</td>
-                                                                            <td>₱5,000.00</td>
-                                                                            <td>₱95,000.00</td>
-                                                                            
-                                                                        </tr>
-                                                                        <tr style="color:black;">
-                                                                                <td>CLOD-0001</td>
-                                                                                <td>Mercury Drug Corporation</td>
-                                                                                <td>20 Products</td>
-                                                                                <td>₱100,000.00</td>
-                                                                                <td>₱5,000.00</td>
-                                                                                <td>₱95,000.00</td>
-                                                                                
-                                                                            </tr>
-                                                                            <tr style="color:black;">
-                                                                                    <td>CLOD-0001</td>
-                                                                                    <td>Mercury Drug Corporation</td>
-                                                                                    <td>20 Products</td>
-                                                                                    <td>₱100,000.00</td>
-                                                                                    <td>₱5,000.00</td>
-                                                                                    <td>₱95,000.00</td>
-                                                                                    
-                                                                                </tr>
-                                                                                <tr style="color:black;">
-                                                                                        <td>CLOD-0001</td>
-                                                                                        <td>Mercury Drug Corporation</td>
-                                                                                        <td>20 Products</td>
-                                                                                        <td>₱100,000.00</td>
-                                                                                        <td>₱5,000.00</td>
-                                                                                        <td>₱95,000.00</td>
-                                                                                        
-                                                                                    </tr>
-                                                                                    <tr style="color:black;">
-                                                                                            <td>CLOD-0001</td>
-                                                                                            <td>Mercury Drug Corporation</td>
-                                                                                            <td>20 Products</td>
-                                                                                            <td>₱100,000.00</td>
-                                                                                            <td>₱5,000.00</td>
-                                                                                            <td>₱95,000.00</td>
-                                                                                            
-                                                                                        </tr>
-                                                                                        <tr style="color:black;">
-                                                                                                <td>CLOD-0001</td>
-                                                                                                <td>Mercury Drug Corporation</td>
-                                                                                                <td>20 Products</td>
-                                                                                                <td>₱100,000.00</td>
-                                                                                                <td>₱5,000.00</td>
-                                                                                                <td>₱95,000.00</td>
-                                                                                                
-                                                                                            </tr>
-                                                                                            <tr style="color:black;">
-                                                                                                    <td>CLOD-0001</td>
-                                                                                                    <td>Mercury Drug Corporation</td>
-                                                                                                    <td>20 Products</td>
-                                                                                                    <td>₱100,000.00</td>
-                                                                                                    <td>₱5,000.00</td>
-                                                                                                    <td>₱95,000.00</td>
-                                                                                                    
-                                                                                                </tr>
-                                                                    
-                                                            
-
-                                                     --}}
 
                                                     </tbody>
                                                 </table>

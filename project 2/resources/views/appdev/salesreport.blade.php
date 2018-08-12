@@ -325,12 +325,27 @@
                             <div id="printhead">
                                 <hr class="dotted">
                                 <p class="text-muted m-b-30"></p>
-                                @if(isset($start))
-                                @endif
-                                @if(isset($end))
+
+
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Sales Report</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
+
+                                @if($start!="")
+                                    <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>From {{$start}} to {{$end}}</b></h4>
+                                    <div class="row">
+                                        <div class="col-md-6 text-center">
+                                            <hr class="dotted" style="margin: 0px;padding: 0px">
+                                            <h5>Total Gross From All Orders:</h5>
+                                            <h4><b>₱ {{number_format($total_gross,2)}}</b></h4>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <hr class="dotted" style="margin: 0px;padding: 0px">
+                                            <h5>Total Ordered Products From All Orders: </h5>
+                                            <h4><b>{{$total_qty}}</b></h4>
+                                        </div>
+                                    </div>
+                                @else
+                                    <br>
                                 @endif
                                 {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
                                 <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif;">
@@ -352,8 +367,10 @@
                                                                 <td><a href="salesreport/{{$order->id}}">Order # {{$order->id}}</td>
                                                                 <td>{{$order->clod_date}}</td>
                                                                 <td>{{App\Http\Controllers\SalesReportController::getClient($order->clientID)['cl_name']}} </td>
-                                                                <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
-                                                                <td>P {{App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']*App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}} </td>
+                                                                <td><center>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty']}}</center></td>
+                                                                <td>P {{number_format(App\Http\Controllers\SalesReportController::getProduct(App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['productID'])['pd_price']
+                                                                        *
+                                                                        App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['cldt_qty'],2)}} </td>
                                                                 {{--   <td>{{App\Http\Controllers\SalesReportController::getClientOrderFromOrderID($order->id)['id']}} </td>--}}
                                                             @endforeach
                                                         @endif

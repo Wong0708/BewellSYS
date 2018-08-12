@@ -228,68 +228,6 @@
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
-                <!-- /row -->
-                {{-- <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="sysmodal2">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="exampleModalLabel1">Edit Order</h4> </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">Customer</label>
-                                            <input type="dropdown" class="form-control" id="recipient-name1"> </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-
-
-                
-                        {{-- <div id="statusModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"></button>
-                                        <h4 class="modal-title"></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="orderStatus">Order Status:</label>
-                                                <select name="orderStatus" class="form-control" id="orderStatus">
-                                                    <option>Processing</option>
-                                                    <option>Scheduled</option>
-                                                    <option>Delivering</option>
-                                                    <option>Delivered</option>
-                                                    <option>Complete</option>
-                                                    <option>Cancelled</option>
-                                                </select>
-                                            </div>
-
-                                            <input id="orderID" type="hidden" name="orderID">
-                                            
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning" data-dismiss="modal">
-                                                <span class='glyphicon glyphicon-remove'></span> Close
-                                            </button>
-                                            <button type="submit" class="btn btn-danger">
-                                                    <span class='glyphicon glyphicon-remove'></span> Submit
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> --}}
-                    
-                <!--MODAL ENDS HERE-->
-                
                 <div class="row" style="font-family:Helvetica,Arial,sans-serif;">
                     <div class="col-sm-12">
                         <div class="white-box">
@@ -323,14 +261,42 @@
                                 <br>
                             <div id="printhead">
                                 <hr class="dotted">
-                                @if(isset($start))
-                                @endif
-                                @if(isset($end))
+
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Bewell Nutraceuticals Corporation</b></h4>
                                 <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Supplier Report</b></h4>
-                                <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Start date: {{$start}} to end date: {{$end}}  </b></h4>
+                                @if($start!="")
+                                    <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>From {{$start}} to {{$end}}</b></h4>
                                 @endif
-                                {{-- <h4  style="text-align:center; font-size:14px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Client Product Order/s</b></h4> --}}
+                                <div class="row">
+                                @if($start!="")
+                                    <div class="col-md-3 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Quantity From All Orders: </h5>
+                                        <h4><b>{{$total_qty}}</b></h4>
+                                    </div>
+                                @endif
+                                    <div class="col-md-2 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Cancelled: </h5>
+                                        <h4><b>{{$filter_val['Cancelled']}}</b></h4>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Processing: </h5>
+                                        <h4><b>{{$filter_val['Processing']}}</b></h4>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Scheduled Deliveries:</h5>
+                                        <h4><b>{{$filter_val['Scheduled']}}</b></h4>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <hr class="dotted" style="margin: 0px;padding: 0px">
+                                        <h5>Total Fulfilled: </h5>
+                                        <h4><b>{{$filter_val['Fulfilled']}}</b></h4>
+                                    </div>
+                                </div>
+
                                 <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;" align="center">
                                         <thead>
                                             <tr style="font-size:12px; font-weight:700; ">

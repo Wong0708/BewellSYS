@@ -25,6 +25,14 @@ class SupplierReportController extends Controller
     }
     public function index()
     {
+        $filter_val = array(
+            "Scheduled"=>0,
+            "Fulfilled"=>0,
+            "Cancelled"=>0,
+            "Processing"=>0,
+        );
+        $total_qty = 0;
+
         $suppliers = Supplier::all();
         $orders = SupplierOrder::all();
         $orderdetails = SupplierOrderDetail::all();
@@ -34,10 +42,29 @@ class SupplierReportController extends Controller
             $date = date_create($order['spod_date']);
             $order['spod_date'] = date_format($date, "F j Y");
         }
+        foreach($orders as $ord){
+            switch ($ord['spod_status']){
+                case 'Scheduled':
+                    $filter_val['Scheduled'] = $filter_val ['Scheduled'] +1;
+                    break;
+                case 'Delivered':
+                    $filter_val['Fulfilled'] = $filter_val ['Fulfilled'] +1;
+                    break;
+                case "Cancelled":
+                    $filter_val['Cancelled'] = $filter_val ['Cancelled'] +1;
+                    break;
+
+                case "Processing":
+                    $filter_val['Processing'] = $filter_val ['Cancelled'] +1;
+                    break;
+            }
+        }
 
         return view("appdev.supplierreport")->with("start","")
         ->with("end","")->with("orders",$orders)
         ->with("suppliers",$suppliers)
+        ->with("filter_val",$filter_val)
+        ->with("total_qty",$total_qty)
         ->with("supplies",$supplies)
         ->with("orderdetails",$orderdetails);
     }
@@ -50,6 +77,30 @@ class SupplierReportController extends Controller
         $supplies = Supply::all();
         $test = $request->dog;
 
+        $filter_val = array(
+            "Scheduled"=>0,
+            "Fulfilled"=>0,
+            "Cancelled"=>0,
+            "Processing"=>0,
+        );
+        $total_qty = 0;
+        foreach($orders as $ord){
+            switch ($ord['spod_status']){
+                case 'Scheduled':
+                    $filter_val['Scheduled'] = $filter_val ['Scheduled'] +1;
+                    break;
+                case 'Delivered':
+                    $filter_val['Fulfilled'] = $filter_val ['Fulfilled'] +1;
+                    break;
+                case "Cancelled":
+                    $filter_val['Cancelled'] = $filter_val ['Cancelled'] +1;
+                    break;
+
+                case "Processing":
+                    $filter_val['Processing'] = $filter_val ['Cancelled'] +1;
+                    break;
+            }
+        }
         foreach($orders as $order){
             $date = date_create($order['spod_date']);
             $order['spod_date'] = date_format($date, "F j Y");
@@ -63,12 +114,16 @@ class SupplierReportController extends Controller
         $orders = array();
         foreach($ords as $ord){
             if(new DateTime($ord['spod_date']) >= $start && new DateTime($ord['spod_date']) <= $end){
+                $clorder = self::getSupplierOrderDetail($ord['id']);
+                $total_qty += $clorder['spdt_qty'];
                 array_push($orders,$ord);
             }
         }
         return view("appdev.supplierreport")->with("orders",$orders)->with("suppliers",$suppliers)
         ->with("start",$request->start)
         ->with("end",$request->end)
+        ->with("filter_val",$filter_val)
+        ->with("total_qty",$total_qty)
         ->with("supplies",$supplies)
         ->with("orderdetails", $orderdetails);
     }
