@@ -1310,6 +1310,8 @@
                         }
                         $('#clientLocation').append(dataAppend);
                         $('#contactPerson').append(dataAppend2);
+                        $('#deliveryDate').append(data.expectedDate);
+
                     }else{
                         $(tdEdit).find('option').remove();
                         $(tdEdit2).find('option').remove();
