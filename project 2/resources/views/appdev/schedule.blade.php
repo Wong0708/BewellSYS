@@ -1175,7 +1175,7 @@
 
       <script type="text/javascript">
         $(document).on('change', '#truckPlateNumber', function (e) {
-            if($('#deliveryDate').val()!=null){
+            if($('#deliveryDate').val()!=null && $('#truckPlateNumber').val()!=null){
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -1183,11 +1183,10 @@
                 })
 
                 e.preventDefault(); 
-
                 var formData = {
                     truckPlateNumber: $('#truckPlateNumber').val(),
                     deliveryDate: $('#deliveryDate').val(),
-                }//tite
+                }
 
                 $.ajax({
                     type: "POST",
@@ -1198,7 +1197,6 @@
                         $('#truckTotalCapacity').html(data.total);
                         $('#truckCurrentCapacity').html('<b style="color:green;">'+data.current+'</b>');
                         $('#truckAvailableCapacity').html(data.available);
-
                     },   
                     error: function (data) {
                         console.log('Data Error:', data);
@@ -1208,7 +1206,7 @@
         });
 
         $(document).on('change', '#deliveryDate', function (e) {
-            if($('#truckPlateNumber').val()!=null){
+            if($('#truckPlateNumber').val()!=null && $('#deliveryDate').val()!=null){
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -1310,7 +1308,7 @@
                         }
                         $('#clientLocation').append(dataAppend);
                         $('#contactPerson').append(dataAppend2);
-                        $('#deliveryDate').append(data.expectedDate);
+                        $('#deliveryDate').val(data.orderDeadline);//added this line by: PrivateAirJET
 
                     }else{
                         $(tdEdit).find('option').remove();
