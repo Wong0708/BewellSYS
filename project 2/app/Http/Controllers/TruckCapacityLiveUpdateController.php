@@ -11,8 +11,8 @@ use App\ScheduleDetail;
 class TruckCapacityLiveUpdateController extends Controller
 {
     public function liveUpdate(Request $request)
-    {      
-        $truck = Truck::where('plate_num','=',$request->truckPlateNumber)->first();
+    {       
+        $truck = Truck::where('id','=',$request->truckID)->first();
         $schedules = Schedule::where('scd_date','=',$request->deliveryDate)
                                 ->where('truckID','=',$truck->id)
                                 ->get();
