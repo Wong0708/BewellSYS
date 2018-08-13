@@ -43,11 +43,5 @@ class ScheduleAddClientOrderLiveUpdateController extends Controller
             $new_order_detail->updated_at = $date->getTimestamp();
             $new_order_detail->save();
         }
-
-   
-      
     }
-
-
-   
 }
