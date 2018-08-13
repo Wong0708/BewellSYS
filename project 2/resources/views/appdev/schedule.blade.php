@@ -1314,7 +1314,20 @@
         });
       </script>
 
-      <script type="text/javascript">
+
+    <script type="text/javascript">
+        //Added by: PrivateAirJET
+        //For Error Checking.
+        $(document).on('change', '.liveValueCheck', function (e) {
+            if( $(this).attr('max')<$(this).val()){
+                $(this).css("background-color", "red");
+            }else{
+                $(this).css("background-color", "white");
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
          $(document).on('change', '#clientOrderList', function (e) {
             $.ajaxSetup({
                 headers: {
@@ -1361,10 +1374,9 @@
                     }
                     
                     //SECTION FOR CLIENT ORDERS
-
                     for(var i =0;i<data.clientorders.length;i++){
                         $('#clientProductList').append(
-                            '<tr><td id="orderNum'+i+'">'+(i+1)+'</td><td id="productCode'+i+'">'+data.clientorders[i][2]+'</td><td id="remaining'+i+'">'+data.clientorders[i][3]+'</td><td id="input'+i+'"><input data-productid="'+data.clientorders[i][4]+'" id="inputNum'+i+'" max="'+data.clientorders[i][3]+'" value="0" type="number" min="1" style="font-size:12px;" class="form-control" placeholder=""></td>'+
+                            '<tr><td id="orderNum'+i+'">'+(i+1)+'</td><td id="productCode'+i+'">'+data.clientorders[i][2]+'</td><td id="remaining'+i+'">'+data.clientorders[i][3]+'</td><td id="input'+i+'"><input data-productid="'+data.clientorders[i][4]+'" id="inputNum'+i+'" max="'+data.clientorders[i][3]+'" value="0" type="number" min="1" style="font-size:12px;" class="form-control liveValueCheck" placeholder=""></td>'+
                             '<td><i style="font-size:20px; color:#E53935; " class="linea linea-aerrow removeAddOrder" data-icon="&#xe04a;"></td></tr>');
                     }
                 },   
