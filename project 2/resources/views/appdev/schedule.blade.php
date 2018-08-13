@@ -1181,10 +1181,10 @@
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 })
-
+                
                 e.preventDefault(); 
                 var formData = {
-                    truckPlateNumber: $('#truckPlateNumber').val(),
+                    truckID: $('#truckPlateNumber').find('option:selected').data('id'), //Updated by: PrivateAirJET
                     deliveryDate: $('#deliveryDate').val(),
                 }
 
@@ -1216,9 +1216,9 @@
                 e.preventDefault(); 
 
                 var formData = {
-                    truckPlateNumber: $('#truckPlateNumber').val(),
+                    truckID: $('#truckPlateNumber').find('option:selected').data('id'),
                     deliveryDate: $('#deliveryDate').val(),
-                }//tite
+                }
 
                 $.ajax({
                     type: "POST",
