@@ -398,7 +398,7 @@
                                         <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Current Capacity: </b></h4>
                                         </div>
                                         <div class="col-md-4">
-                                        <h4  style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Available Capacity: </b></h4>
+                                        <h4 style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>Available Capacity: </b></h4>
                                         </div>
                                     </center>
                                 </div>
@@ -942,45 +942,50 @@
         $(document).on('click', '#submitOrderSchedule', function(e) {
             var verify = confirm("Do you want to submit this schedule?");
             if(verify==true){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                })
-
-                e.preventDefault(); 
-                
+                //Error Checking here by: PrivateAirJET
+                var limit = 0;
                 var orders=[];
                 for(var i=0; i<$('#clientProductList').find('tr').length;i++){
+                    limit = limit + $('#inputNum'+i).val();
                     orders.push([$('#inputNum'+i).val(),$('#inputNum'+i).data('productid')]);
                 }
 
+                if(limit<=parseInt($('#truckAvailableCapacity').text())){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
 
-                var formData = {//pota
-                    orderID: $('#clientOrderList').find('option:selected').data('orderid'),
-                    clientID: $('#clientOrderList').find('option:selected').data('clientid'),
-                    locationID: $('#clientLocation').find('option:selected').data('id'),
-                    contactPerson: $('#contactPerson').find('option:selected').val(),
-                    deliveryDate: $('#deliveryDate').val(),
-                    truckID: $('#truckPlateNumber').find('option:selected').data('id'),
-                    driverID: $('#truckDriver').find('option:selected').data('id'),
-                    orders: orders,
-
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: 'liveAddScheduleUpdate',
-                    data: formData,
-                    success: function(data){
-                        console.log(data);
-                        $('#clientOrderModal').modal('hide');
-                        location.reload();
-                    },   
-                    error: function (data) {
-                        console.log('Data Error:', data);
+                    e.preventDefault(); 
+                    
+                    var formData = {
+                        orderID: $('#clientOrderList').find('option:selected').data('orderid'),
+                        clientID: $('#clientOrderList').find('option:selected').data('clientid'),
+                        locationID: $('#clientLocation').find('option:selected').data('id'),
+                        contactPerson: $('#contactPerson').find('option:selected').val(),
+                        deliveryDate: $('#deliveryDate').val(),
+                        truckID: $('#truckPlateNumber').find('option:selected').data('id'),
+                        driverID: $('#truckDriver').find('option:selected').data('id'),
+                        orders: orders,
                     }
-                });
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'liveAddScheduleUpdate',
+                        data: formData,
+                        success: function(data){
+                            console.log(data);
+                            $('#clientOrderModal').modal('hide');
+                            location.reload();
+                        },   
+                        error: function (data) {
+                            console.log('Data Error:', data);
+                        }
+                    });
+                }else{
+                    alert('System Error! Truck Capacity Limit Reached! Please Try Again! ')
+                }
                 
             }
             return false;
@@ -1234,11 +1239,48 @@
                         console.log('Data Error:', data);
                     }
                 });
+
+        
+                if($('#clientLocation').val()!=null){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+
+                    e.preventDefault(); 
+
+                    var formData = {
+                        deliveryDate: $('#deliveryDate').val(),
+                        locationID: $('#clientLocation').find('option:selected').data('id'),
+                    }//tite
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'liveTruckScheduleSummary',
+                        data: formData,
+                        success: function(data){
+                            console.log(data);
+
+                            for(var i=0;i<data.schedules.length;i++){//hello
+                                $('#scheduleSummaryList').append(
+                                    '<tr><td id="orderNum'+i+'">'+(i+1)+'</td><td id="scheduleDate'+i+'">'+data.schedules[i][0]+'</td><td id="driver'+i+'"><span class="label label-success">'+data.schedules[i][1]+'</span></td>'+
+                                    '<td id="location'+i+'">'+data.schedules[i][2]+'</td><td id="status'+i+'"><span class="label label-success">'+data.schedules[i][3]+'</span></td></tr>');
+                            }
+                        },   
+                        error: function (data) {
+                            console.log('Data Error:', data);
+                        }
+                    });
+                
+                }
             }
+        });
+      </script>
 
-            //SECTION HERE TRUCK DELIVERY SUMMARY
-
-            if($('#clientLocation').val()!=null){
+      <script type="text/javascript">
+        $(document).on('change', '#clientLocation', function (e) {
+            if($('#clientLocation').val()!=null && $('#deliveryDate').val()!=null){
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -1250,7 +1292,7 @@
                 var formData = {
                     deliveryDate: $('#deliveryDate').val(),
                     locationID: $('#clientLocation').find('option:selected').data('id'),
-                }//tite
+                }
 
                 $.ajax({
                     type: "POST",
@@ -1336,8 +1378,6 @@
 
 
       <!--end jet-->
-
-
 
       <script>
          $('.myTable').DataTable();
@@ -1432,13 +1472,7 @@
        
      </script>
 
-
-
-
-
-
-
-      <script type="text/javascript">
+    <script type="text/javascript">
         $(document).on('click', '#submitOrderSchedule2', function(e) {
             var verify = confirm("Do you want to submit this schedule?");
             if(verify==true){
@@ -1487,112 +1521,107 @@
         });
     </script>
 
-
-
-
-
-
-<script type="text/javascript">
-    $(document).on('change', '#truckPlateNumber2', function (e) {
-        if($('#deliveryDate2').val()!=null){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            })
-
-            e.preventDefault(); 
-
-            var formData = {
-                truckPlateNumber: $('#truckPlateNumber2').val(),
-                deliveryDate: $('#deliveryDate2').val(),
-            }//tite
-
-            $.ajax({
-                type: "POST",
-                url: 'liveTruckCapacityUpdate2',
-                data: formData,
-                success: function(data){
-                    console.log(data);
-                    $('#truckTotalCapacity2').html(data.total);
-                    $('#truckCurrentCapacity2').html('<b style="color:green;">'+data.current+'</b>');
-                    $('#truckAvailableCapacity2').html(data.available);
-
-                },   
-                error: function (data) {
-                    console.log('Data Error:', data);
-                }
-            });
-        }
-    });
-
-    $(document).on('change', '#deliveryDate2', function (e) {
-        if($('#truckPlateNumber2').val()!=null){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            })
-
-            e.preventDefault(); 
-
-            var formData = {
-                truckPlateNumber: $('#truckPlateNumber2').val(),
-                deliveryDate: $('#deliveryDate2').val(),
-            }//tite
-
-            $.ajax({
-                type: "POST",
-                url: 'liveTruckCapacityUpdate2',
-                data: formData,
-                success: function(data){
-                    console.log(data);
-                    $('#truckTotalCapacity2').html(data.total);
-                    $('#truckCurrentCapacity2').html('<b style="color:green;">'+data.current+'</b>');
-                    $('#truckAvailableCapacity2').html(data.available);
-                },   
-                error: function (data) {
-                    console.log('Data Error:', data);
-                }
-            });
-        }
-
-        //SECTION HERE TRUCK DELIVERY SUMMARY
-
-        if($('#clientLocation2').val()!=null){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            })
-
-            e.preventDefault(); 
-
-            var formData = {
-                deliveryDate: $('#deliveryDate2').val(),
-                locationID: $('#clientLocation2').find('option:selected').data('id'),
-            }//tite
-
-            $.ajax({
-                type: "POST",
-                url: 'liveTruckScheduleSummary2',
-                data: formData,
-                success: function(data){
-                    console.log(data);
-
-                    for(var i=0;i<data.schedules.length;i++){//hello
-                        $('#scheduleSummaryList2').append(
-                            '<tr><td id="xorderNum'+i+'">'+(i+1)+'</td><td id="xscheduleDate'+i+'">'+data.schedules[i][0]+'</td><td id="xdriver'+i+'"><span class="label label-success">'+data.schedules[i][1]+'</span></td>'+
-                            '<td id="xlocation'+i+'">'+data.schedules[i][2]+'</td><td id="xstatus'+i+'"><span class="label label-success">'+data.schedules[i][3]+'</span></td></tr>');
+    <script type="text/javascript">
+        $(document).on('change', '#truckPlateNumber2', function (e) {
+            if($('#deliveryDate2').val()!=null){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
-                },   
-                error: function (data) {
-                    console.log('Data Error:', data);
-                }
-            });
-        }
-    });
-  </script>
+                })
+
+                e.preventDefault(); 
+
+                var formData = {
+                    truckPlateNumber: $('#truckPlateNumber2').val(),
+                    deliveryDate: $('#deliveryDate2').val(),
+                }//tite
+
+                $.ajax({
+                    type: "POST",
+                    url: 'liveTruckCapacityUpdate2',
+                    data: formData,
+                    success: function(data){
+                        console.log(data);
+                        $('#truckTotalCapacity2').html(data.total);
+                        $('#truckCurrentCapacity2').html('<b style="color:green;">'+data.current+'</b>');
+                        $('#truckAvailableCapacity2').html(data.available);
+
+                    },   
+                    error: function (data) {
+                        console.log('Data Error:', data);
+                    }
+                });
+            }
+        });
+
+        $(document).on('change', '#deliveryDate2', function (e) {
+            if($('#truckPlateNumber2').val()!=null){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                })
+
+                e.preventDefault(); 
+
+                var formData = {
+                    truckPlateNumber: $('#truckPlateNumber2').val(),
+                    deliveryDate: $('#deliveryDate2').val(),
+                }//tite
+
+                $.ajax({
+                    type: "POST",
+                    url: 'liveTruckCapacityUpdate2',
+                    data: formData,
+                    success: function(data){
+                        console.log(data);
+                        $('#truckTotalCapacity2').html(data.total);
+                        $('#truckCurrentCapacity2').html('<b style="color:green;">'+data.current+'</b>');
+                        $('#truckAvailableCapacity2').html(data.available);
+                    },   
+                    error: function (data) {
+                        console.log('Data Error:', data);
+                    }
+                });
+            }
+
+            //SECTION HERE TRUCK DELIVERY SUMMARY
+
+            if($('#clientLocation2').val()!=null){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                })
+
+                e.preventDefault(); 
+
+                var formData = {
+                    deliveryDate: $('#deliveryDate2').val(),
+                    locationID: $('#clientLocation2').find('option:selected').data('id'),
+                }//tite
+
+                $.ajax({
+                    type: "POST",
+                    url: 'liveTruckScheduleSummary2',
+                    data: formData,
+                    success: function(data){
+                        console.log(data);
+
+                        for(var i=0;i<data.schedules.length;i++){//hello
+                            $('#scheduleSummaryList2').append(
+                                '<tr><td id="xorderNum'+i+'">'+(i+1)+'</td><td id="xscheduleDate'+i+'">'+data.schedules[i][0]+'</td><td id="xdriver'+i+'"><span class="label label-success">'+data.schedules[i][1]+'</span></td>'+
+                                '<td id="xlocation'+i+'">'+data.schedules[i][2]+'</td><td id="xstatus'+i+'"><span class="label label-success">'+data.schedules[i][3]+'</span></td></tr>');
+                        }
+                    },   
+                    error: function (data) {
+                        console.log('Data Error:', data);
+                    }
+                });
+            }
+        });
+    </script>
 
    </body>
 </html>
