@@ -169,8 +169,8 @@
                                     </select>
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one client among the list to add an order. <b style="color:#E53935;">*Required</b></span>
                                     <br>
-                                    <label for="client" class="control-label" style="color:black; font-family:Helvetica,Arial,sans-serif;"><b>P.O Price:</b></label>
-                                    <input type="number" name="POprice" class="form-control" placeholder="Enter PO Price" id="POprice">
+                                    <label for="POPrice" class="control-label" style="margin-top:15px; color:black; font-family:Helvetica,Arial,sans-serif;"><b>P.O Price:</b></label>
+                                    <input style="margin-bottom:10px;" type="number" name="POprice" class="form-control" placeholder="Enter PO Price" id="POprice">
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Add alloted budget for purchase. Leave blank for no value <b style="color:cornflowerblue;">*Optional</b></span>
                                     <br>
                                     {{--
@@ -183,7 +183,7 @@
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose one client among the list to add an order. <b style="color:#E53935;">*Required</b></span>
                                     <br> --}}
 
-                                    <label for="orderExpDate" class="control-label" style="color:black; margin-top:10px; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
+                                    <label for="orderExpDate" class="control-label" style="color:black; margin-top:15px; font-family:Helvetica,Arial,sans-serif;"><b>Expected Date:</b></label>
                                     <input type="date" name="orderExpDate" class="form-control" id="orderExpDate" style="margin-bottom:10px;"/>
                                        
                                     <span class="text-muted" style="font-size:12px; color:black; font-family:Helvetica,Arial,sans-serif;">Note: Choose the client's expected date of delivery. <b style="color:#E53935;">*Required</b></span>
