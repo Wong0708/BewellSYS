@@ -23,6 +23,8 @@ class ClientAddressLiveUpdateController extends Controller
             }
         }
 
+        $orderDeadline = $orderInfo->expectedDate;
+
         //SECTION FOR ADDRESS
         $client = Client::where('id','=',$request->clientID)->first();
 
@@ -33,12 +35,14 @@ class ClientAddressLiveUpdateController extends Controller
                             ->where('companyID','=',$client->id)
                             ->get();
         $status = 0;
+
         if(count($clientLocation)>0){
             $status = 1;
             return response()->json([
                 'clientLocation' => $clientLocation,
                 'status' => $status,
                 'clientorders'=>$client_orders,
+                'orderDeadline'=>$orderDeadline,
             ]);
         }
         return response()->json();
