@@ -1253,7 +1253,7 @@
                     var formData = {
                         deliveryDate: $('#deliveryDate').val(),
                         locationID: $('#clientLocation').find('option:selected').data('id'),
-                    }//tite
+                    }
 
                     $.ajax({
                         type: "POST",
@@ -1262,7 +1262,7 @@
                         success: function(data){
                             console.log(data);
 
-                            for(var i=0;i<data.schedules.length;i++){//hello
+                            for(var i=0;i<data.schedules.length;i++){
                                 $('#scheduleSummaryList').append(
                                     '<tr><td id="orderNum'+i+'">'+(i+1)+'</td><td id="scheduleDate'+i+'">'+data.schedules[i][0]+'</td><td id="driver'+i+'"><span class="label label-success">'+data.schedules[i][1]+'</span></td>'+
                                     '<td id="location'+i+'">'+data.schedules[i][2]+'</td><td id="status'+i+'"><span class="label label-success">'+data.schedules[i][3]+'</span></td></tr>');
@@ -1300,7 +1300,7 @@
                     data: formData,
                     success: function(data){
                         console.log(data);
-                        for(var i=0;i<data.schedules.length;i++){//hello
+                        for(var i=0;i<data.schedules.length;i++){
                             $('#scheduleSummaryList').append(
                                 '<tr><td id="orderNum'+i+'">'+(i+1)+'</td><td id="scheduleDate'+i+'">'+data.schedules[i][0]+'</td><td id="driver'+i+'"><span class="label label-success">'+data.schedules[i][1]+'</span></td>'+
                                 '<td id="location'+i+'">'+data.schedules[i][2]+'</td><td id="status'+i+'"><span class="label label-success">'+data.schedules[i][3]+'</span></td></tr>');
