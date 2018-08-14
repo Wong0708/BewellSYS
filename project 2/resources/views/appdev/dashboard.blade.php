@@ -255,7 +255,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                                <h4 style="color:black;margin-bottom:7px;">Delivery Order Feedback</h4>
+                                <h4 style="color:black;margin-bottom:7px;">Client Delivery Order Feedback</h4>
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     <div class="table-responsive" style="margin-bottom:14px;">
                                         <table class="table color-table info-table color-bordered-table info-bordered-table">
@@ -268,40 +268,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><a href="">COR-0001</a></td>
-                                                    <td>Jet Tamani</td>
-                                                    <td> <span class="label label-rouded label-success">07/16/2018</span></td>
-                                                    <td><span class="label label-success">For Delivery</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><a href="">COR-0002</a></td>
-                                                    <td>Kenneth Wong</td>
-                                                    <td><span class="label label-rouded label-success">07/17/2018</span></td>
-                                                    <td><span class="label label-info">Re-schedule</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><a href="">COR-0003</a></td>
-                                                    <td>Fernan Paylago</td>
-                                                    <td><span class="label label-rouded label-danger">07/18/2018</span></td>
-                                                    <td><span class="label label-warning">On-Hold</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><a href="">COR-0004</a></td>
-                                                    <td>John Miguel</td>
-                                                    <td><span class="label label-rouded label-danger">07/19/2018</span></td>
-                                                    <td><span class="label label-danger">Cancelled</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><a href="">COR-0005</a></td>
-                                                    <td>Desmond Asanza</td>
-                                                    <td><span class="label label-rouded label-danger">07/20/2018</span></td>
-                                                    <td><span class="label label-success">For Delivery</span></td>
-                                                </tr>
+                                                @if(isset($deliveries))
+                                                    @foreach($deliveries as $info)
+                                                        <tr>
+                                                            <td><a href="">CLOD-{{$info->id}}</a></td>
+                                                            <td>{{$info->fromClient->cl_name}}</td>
+                                                            <td><span class="label label-rouded label-info">{{$info->scd_date}}</span></td>
+                                                            <td><span class="label label-info"></span>{{$info->scd_status}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a href="#">View Client Orders</a>
+                                    <a href={{route('appdev.schedule')}}>View Client Deliveries</a>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
