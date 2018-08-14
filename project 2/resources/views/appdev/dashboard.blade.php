@@ -211,7 +211,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-6"> <i style="color:#1565C0;" class="linea-icon linea-basic" data-icon="f"></i>
                                             <h5 style="color:black;"class="text-muted vb">NEEDED RESTOCKS</h5> </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h3 class="counter text-right m-t-15" style="color:black;"> 3</h3> </div>
+                                            <h3 class="counter text-right m-t-15" style="color:black;">@if(isset($todayRestock)) {{$todayRestock}} @else 0 @endif</h3> </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <span><small class="m-t-10 text-danger" style="text-transform:uppercase;"><i style="font-size:12px;" class="fa fa-sort-desc"></i> 18% lower than yesterday</small></span>
                                             <div class="progress m-b-0">
@@ -227,7 +227,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-6"> <i style="color:#1565C0;"class="linea-icon linea-basic" data-icon="r"></i>
                                             <h5 style="color:black;"class="text-muted vb">ORDER DEADLINES</h5> </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h3 class="counter text-right m-t-15" style="color:black;">15</h3> </div>
+                                            <h3 class="counter text-right m-t-15" style="color:black;">@if(isset($todayDeadline)) {{$todayDeadline}} @else 0 @endif</h3> </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <span><small class="m-t-10 text-success" style="text-transform:uppercase;"><i style="font-size:12px;" class="fa fa-sort-asc"></i> 21% higher than yesterday</small></span>
                                             <div class="progress m-b-0">
