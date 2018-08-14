@@ -156,7 +156,6 @@
                               </b>
                            </center>
                         </div>
-                        {!! Form::open(['route'=>['schedule.update',1],'method'=>'PUT','enctype'=>'multipart/form-data'])!!}
                         <div class="modal-body">
                            <div class="form-group">
                               <input type="hidden" name="sc_type" id="sc_type" value="">
@@ -174,7 +173,6 @@
                         <div class="modal-footer">
                            <button class="btn btn-danger btn-md btn-block text-uppercase waves-effect waves-light" style="background-color: #4c87ed; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" type="submit">Submit</button>
                         </div>
-                        {!!Form::close()!!}
                      </div>
                   </div>
                </div>
