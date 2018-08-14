@@ -53,7 +53,6 @@ class DashboardController extends Controller
             $totalSales = $totalSales+$info->clod_payment;
         }
 
-
         $allManufacturerOrder = ManufacturerOrder::where('mnod_status','=','Processing')->get();
         $allSupplierOrder = SupplierOrder::where('spod_status','=','Processing')->get();
         $totalCost = 0;
@@ -65,8 +64,6 @@ class DashboardController extends Controller
         foreach($allSupplierOrder as $info){
             $totalCost = $totalCost+$info->spod_payment;
         }
-
-
         return view('appdev.dashboard')
                     ->with('deliveries',$deliveries)
                     ->with('products',$products)
