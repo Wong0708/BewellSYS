@@ -32,8 +32,8 @@ class DashboardController extends Controller
                     ->get();
 
         return view('appdev.dashboard')
-                    ->with($deliveries)
-                    ->with($products);
+                    ->with('deliveries',$deliveries)
+                    ->with('products',$products);
     }
 
     /**
