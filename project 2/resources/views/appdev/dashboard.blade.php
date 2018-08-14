@@ -9,41 +9,20 @@
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/bewelllogo.ico">
     <title>Bewell</title>
-    <!-- Bootstrap Core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Menu CSS -->
     <link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
-    <!-- toast CSS -->
     <link href="plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
-    <!-- morris CSS -->
     <link href="plugins/bower_components/morrisjs/morris.css" rel="stylesheet">
-    <!-- animation CSS -->
     <link href="css/animate.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
-    <!-- color CSS -->
     <link href="css/colors/gray.css" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 
 <body class="fix-sidebar">
-
-    {{-- @if($user = Auth::user())
-    {
-    }
-    @endif --}}
-
-    <!-- Preloader -->
     <div class="preloader">
         <div class="cssload-speeding-wheel"></div>
     </div>
     <div id="wrapper">
-        <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top m-b-0">
             <div class="navbar-header" style="background:#64B5F6;  border-radius: 2px; position:relative;"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
                 <div class="top-left-part" style="background-color:#BBDEFB; opacity:1;"><a class="logo" href="index.html"><b><img src="plugins/images/bewelllogos.png"  width="35px" alt="home" /></b><span class="hidden-xs"><img src="plugins/images/bewelllogol.png" width="110px" alt="home" /></span></a></div>
@@ -55,8 +34,6 @@
                         </li>
                 </ul>
                 <ul class="nav navbar-top-links navbar-right pull-right">
-                    <!-- /.dropdown -->
-
                     <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i>
           <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
           </a>
@@ -75,10 +52,7 @@
                                 <a class="text-center" href={{route('notifications.index')}}> <strong>See All Notifications</strong> <i class="fa fa-angle-right"></i> </a>
                             </li>
                         </ul>
-                        <!-- /.dropdown-tasks -->
                     </li>
-
-
                     
                     <li class="dropdown"> 
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><img src="plugins/images/jet.jpg" alt="user-img" width="36" class="img-circle"><b style="color:white; font-family:Helvetica,Arial,sans-serif;" class="hidden-xs">
@@ -89,52 +63,24 @@
     
                         </b> </a>
 
-                        <!--DROPDOWN OF THE CLASS-->
                         <ul class="dropdown-menu dropdown-user animated flipInY">
                             <li><a href="#"><i class="ti-user"></i> Manage Account</a></li>
-                            {{-- <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                            <li><a href="#"><i class="ti-email"></i> Inbox</a></li> --}}
-                            {{-- <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li> --}}
                             <li role="separator" class="divider"></li>
                         <li><a href={{route('logout.index')}}><i class="fa fa-power-off"></i> Logout</a></li>
                         </ul>
-                        <!-- /.dropdown-user -->
                     </li>
-                    <!-- /.Megamenu -->
-                    {{-- <li class="right-side-toggle"> <a class="waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li> --}}
-                    <!-- /.dropdown -->
                 </ul>
             </div>
-            <!-- /.navbar-header -->
-            <!-- /.navbar-top-links -->
-            <!-- /.navbar-static-side -->
         </nav>
-        <!-- Left navbar-header -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-                        <!-- input-group -->
                         <div class="input-group custom-search-form">
                             <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
             <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
             </span> </div>
-                        <!-- /input-group -->
                     </li>
-                    {{-- <li class="user-pro">
-                    <a href="#" class="waves-effect"><img src="plugins/images/jet.jpg" alt="user-img" class="img-circle"> <span class="hide-menu">
-                        @if(Auth::user()->access==1)
-                            Administrator
-                        @endif
-
-                        <span class="fa arrow"></span></span>
-                        </a>
-                        <ul class="nav nav-second-level">
-                            <li><a href="javascript:void(0)"><i class="ti-user"></i> Manage Account</a></li>
-                        </ul>
-                    </li> --}}
-                    {{-- <li class="nav-small-cap m-t-10">--- Main Menu</li> --}}
                     <span style=" position:absolute; bottom: 50px; width:100%; text-align: center; font-size:14px;">Powered by</span>
                     <span style=" position:absolute; bottom: 30px; width:100%; text-align: center; font-size:12px;"><strong>AIMinds</strong></span>
                     <span style=" position:absolute; bottom: 10px; width:100%; text-align: center; font-size:10px;">BCOFSYS - Version 1.0.1</span>
@@ -147,11 +93,6 @@
                         </ul>
                     </li>
                     <li> <a href={{route('schedule.index')}} class="waves-effect"><i style="color:#5F6367;" data-icon="r" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Schedule</span></a>
-                        {{-- <ul class="nav nav-second-level">
-                            <li> <a href="javascript:void(0)">Client</a> </li>
-                            <li> <a href="javascript:void(0)">Manufacturer</a> </li>
-                            <li> <a href="javascript:void(0)">Supplier</a> </li>
-                        </ul> --}}
                     </li>
                     <li> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="f" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Inventory<span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
@@ -175,50 +116,20 @@
                             <li> <a href={{route('clientaccount.index')}}>Client</a> </li>
                             <li> <a href={{route('manufactureraccount.index')}}>Manufacturer</a> </li>
                             <li> <a href={{route('supplieraccount.index')}}>Supplier</a> </li>
-                            {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
                         </ul>
                     </li>
                     @endif
-
-                    {{-- <li style="border-bottom:1px solid #E8EAED;"> <a href="javascript:void(0)" class="waves-effect"><i style="color:#5F6367;" data-icon="&#xe005;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Logistics<span class="fa arrow"></span></span></a> --}}
-                        {{-- <ul class="nav nav-second-level">
-                            <li> <a href={{route('inventoryreport.index')}}>Truck</a> </li> --}}
-                            {{-- <li> <a href={{route('salesreport.index')}}>Driver</a> </li> --}}
-                            {{-- <li> <a href={{route('inventoryreport.index')}}>FAQs</a> </li> --}}
-                        {{-- </ul>
-                    </li> --}}
-
                     <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">FAQs</span></a></li>
                     <li><a href="faq.html" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Documentation</span></a></li>
-
-                    {{-- <li> <a href={{route('schedule.index')}} class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Settings</span></a> --}}
-                        {{-- <ul class="nav nav-second-level">
-                            <li> <a href="javascript:void(0)">Client</a> </li>
-                            <li> <a href="javascript:void(0)">Manufacturer</a> </li>
-                            <li> <a href="javascript:void(0)">Supplier</a> </li>
-                        </ul> --}}
-                    {{-- </li> --}}
-                    {{-- <li><a href={{route('logout.index')}} class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li> --}}
                 </ul>
             </div>
         </div>
-        <!-- Left navbar-header end -->
-        <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid" style="background-color:#F5F5F5;">
                 <div class="row bg-title" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title" style="color:black;">Dashboard</h4> </div>
-                    {{-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> <a href="http://wrappixel.com/templates/pixeladmin/" target="_blank" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Buy Now</a>
-                        <ol class="breadcrumb">
-                            <li><a href="#">Dashboard</a></li>
-                            <li class="active">Dashboard 1</li>
-                        </ol>
-                    </div> --}}
-                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.row -->
-                
                 <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                             <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -245,27 +156,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="white-box">
-                                <h3 class="box-title">Weekly Cost</h3>
-                                <div class="text-right"> <span class="text-muted">Monthly Income</span>
-                                    <h1><sup><i class="ti-arrow-up text-info"></i></sup> ₱10,000</h1> </div> <span class="text-info">60%</span>
-                                <div class="progress m-b-0">
-                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:60%;"> <span class="sr-only">20% Complete</span> </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="white-box">
-                                <h3 class="box-title">Monthly Cost</h3>
-                                <div class="text-right"> <span class="text-muted">Yearly Income</span>
-                                    <h1><sup><i class="ti-arrow-up text-inverse"></i></sup> ₱9,000</h1> </div> <span class="text-inverse">80%</span>
-                                <div class="progress m-b-0">
-                                    <div class="progress-bar progress-bar-inverse" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:80%;"> <span class="sr-only">230% Complete</span> </div>
-                                </div>
-                            </div>
-                        </div> --}}
-
                         <div class="col-md-4 col-sm-12 col-xs-12">
                             <h4 style="color:black; margin-bottom:7px;">Previous Month Comparison</h4>
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -280,7 +170,6 @@
                                         <div class="stat-item">
                                             <h6><span><i style="color:#1565C0;" data-icon="&#xe011;" class="linea-icon linea-weather"></i></span> Month</h6> <b>2.23%</b></div>
                                     </div>
-                                    {{-- <div id="sparkline8"></div> --}}
                                 </div>
                             </div>
 
@@ -295,37 +184,9 @@
                             </div>
                                 
                     </div>
-                {{-- <div class="row">
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center bg-purple">
-                                <h1 class="text-white counter">165</h1>
-                                <p class="text-white">counters</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center bg-info">
-                                <h1 class="text-white counter">2065</h1>
-                                <p class="text-white">counters</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center">
-                                <h1 class="counter">465</h1>
-                                <p class="text-muted">counters</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-6">
-                            <div class="white-box text-center bg-success">
-                                <h1 class="text-white counter">6555</h1>
-                                <p class="text-white">counters</p>
-                            </div>
-                        </div>
-                    </div> --}}
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="row row-in">
-                            <!-- /.col -->
-                            <!--col -->
                             <h4 style="color:black; margin-left:7px; margin-bottom:7px;">Daily Notification Feedback</h4>
                             <div class="col-lg-3 col-sm-12">
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
@@ -344,8 +205,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.col -->
-                            <!--col -->
                             <div class="col-lg-3 col-sm-12">
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     <div class="col-in row">
@@ -395,12 +254,9 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-6 col-md-6 col-sm-12">
                                 <h4 style="color:black;margin-bottom:7px;">Delivery Order Feedback</h4>
-                            
                                 <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                    {{-- <h3 class="box-title">Client Order Feedback</h3> --}}
                                     <div class="table-responsive" style="margin-bottom:14px;">
                                         <table class="table color-table info-table color-bordered-table info-bordered-table">
                                             <thead>
@@ -450,9 +306,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                     <h4 style="color:black;margin-bottom:7px;">Inventory Product Feedback</h4>
-                                
                                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                        {{-- <h3 class="box-title">Client Order Feedback</h3> --}}
                                         <div class="table-responsive" style="margin-bottom:14px;">
                                             <table class="table full-color-table full-info-table hover-table">
                                                 <thead>
