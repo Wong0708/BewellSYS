@@ -176,7 +176,7 @@
                             <div class="col-md-2 col-sm-12 col-xs-12">
                                 <h4 style="color:black; margin-bottom:7px;">Generate Report</h4>
                                 <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
-                                    <button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="U" class="linea-icon linea-ecommerce"></i></span> Sales Report</button>
+                                    <a href="salesreport"><button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="U" class="linea-icon linea-ecommerce"></i></span> Sales Report</button></a>
                                     <button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="Z" class="linea-icon linea-ecommerce"></i></span> Delivery Report</button>
                                     <button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="3" class="linea-icon linea-ecommerce"></i></span> Manufacturer Report</button>
                                     <button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="x" class="linea-icon linea-ecommerce"></i></span> Supplier Report</button>
