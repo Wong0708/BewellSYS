@@ -177,9 +177,9 @@
                                 <h4 style="color:black; margin-bottom:7px;">Generate Report</h4>
                                 <div class="list-group" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                     <a href="salesreport"><button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="U" class="linea-icon linea-ecommerce"></i></span> Sales Report</button></a>
-                                    <button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="Z" class="linea-icon linea-ecommerce"></i></span> Delivery Report</button>
-                                    <button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="3" class="linea-icon linea-ecommerce"></i></span> Manufacturer Report</button>
-                                    <button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="x" class="linea-icon linea-ecommerce"></i></span> Supplier Report</button>
+                                    <a href="deliveryreport"><button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="Z" class="linea-icon linea-ecommerce"></i></span> Delivery Report</button></a>
+                                    <a href="manufacturerreport"><button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="3" class="linea-icon linea-ecommerce"></i></span> Manufacturer Report</button></a>
+                                    <a href="supplierreport"><button type="button" class="list-group-item"><span><i style="color:#1565C0;" data-icon="x" class="linea-icon linea-ecommerce"></i></span> Supplier Report</button></a>
                                 </div>
                             </div>
                                 
@@ -194,7 +194,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-6"> <i style="color:#1565C0;" data-icon="&#xe019;" class="linea-icon linea-basic"></i>
                                             <h5 class="text-muted vb" style="color:black;">ORDER DELIVERIES</h5> </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h3 class="counter text-right m-t-15" style="color:black;">23</h3> 
+                                            <h3 class="counter text-right m-t-15" style="color:black;">{{$todayDelivery}}</h3> 
                                         </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <span><small class="m-t-10 text-success" style="text-transform:uppercase;"><i style="font-size:12px;" class="fa fa-sort-asc"></i> 40% higher than yesterday</small></span>
