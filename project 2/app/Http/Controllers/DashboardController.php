@@ -31,9 +31,13 @@ class DashboardController extends Controller
         $products =Product::where('pd_status','=','Re-stock')
                     ->get();
 
+        $todayDelivery =Schedule::where('scd_date','=',date('Y/m/d'))
+                    ->get();
+
         return view('appdev.dashboard')
                     ->with('deliveries',$deliveries)
-                    ->with('products',$products);
+                    ->with('products',$products)
+                    ->with('todayDelivery',$todayDelivery);
     }
 
     /**
