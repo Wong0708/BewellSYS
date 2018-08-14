@@ -49,11 +49,18 @@ class DeliveryReportController extends Controller
                 $schedule['dateDelivered'] = date_format($date, "F j Y");
             }
         }
-        return view("appdev.deliveryreport")->with("start","N/A")
-            ->with("end","N/A")
-            ->with("filter","")
-            ->with("filter_val",$filter_val)
-            ->with("schedules",$schedules);
+
+    //Added By: PrivateAirJET for reason/s
+    $reasons = Schedule::where('scd_status','=','Cancelled')
+                        ->select('remark')
+                        ->get();
+
+    return view("appdev.deliveryreport")->with("start","N/A")
+        ->with("end","N/A")
+        ->with("filter","")
+        ->with("filter_val",$filter_val)
+        ->with("schedules",$schedules)
+        ->with("reasons",$reasons);
     }
     public static function checkOverdue($id){
         $schedule = Schedule::find($id);
