@@ -281,11 +281,11 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a href={{route('appdev.schedule')}}>View Client Deliveries</a>
+                                    <a href={{route('schedule.index')}}>View Client Deliveries</a>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <h4 style="color:black;margin-bottom:7px;">Inventory Product Feedback</h4>
+                                    <h4 style="color:black;margin-bottom:7px;">Product Inventory Product Feedback</h4>
                                     <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                         <div class="table-responsive" style="margin-bottom:14px;">
                                             <table class="table full-color-table full-info-table hover-table">
@@ -296,45 +296,20 @@
                                                         <th>Re-Order</th>
                                                         <th>Total (Boxes)</th>
                                                         <th>Status</th>
-                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Bewell-C</td>
-                                                        <td>500 grams</td>
-                                                        <td>40</td>
-                                                        <td><span class="label label-rouded label-success">72</span></td>
-                                                        <td><span class="label label-success">On-Stock</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Bewell-C Calcium</td>
-                                                        <td>500 grams</td>
-                                                        <td>50</td>
-                                                        <td><span class="label label-rouded label-warning">37</span></td>
-                                                        <td><span class="label label-warning">Re-Stock</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BeNerv-B</td>
-                                                        <td>500 grams</td>
-                                                        <td>60</td>
-                                                        <td><span class="label label-rouded label-danger">0</span></td>
-                                                        <td><span class="label label-danger">No Stock</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Liverguard</td>
-                                                        <td>500 grams</td>
-                                                        <td>70</td>
-                                                        <td><span class="label label-rouded label-success">91</span></td>
-                                                        <td><span class="label label-success">On-Stock</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Bewell-C</td>
-                                                        <td>250 grams</td>
-                                                        <td>40</td>
-                                                        <td><span class="label label-rouded label-success">47</span></td>
-                                                        <td><span class="label label-success">On-Stock </span></td>
-                                                    </tr>
+                                                    @if(isset($deliveries))
+                                                        @foreach($deliveries as $info)
+                                                            <tr>
+                                                                <td>Bewell-C</td>
+                                                                <td>500 grams</td>
+                                                                <td>40</td>
+                                                                <td><span class="label label-rouded label-success">72</span></td>
+                                                                <td><span class="label label-success">On-Stock</span></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>
