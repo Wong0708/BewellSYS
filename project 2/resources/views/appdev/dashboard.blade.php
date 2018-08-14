@@ -304,7 +304,7 @@
                                                             <tr>
                                                                 <td>{{$info->pd_name}}</td>
                                                                 <td>{{$info->pd_sku}}</td>
-                                                                <td>{{$info->reorder}}</td>
+                                                                <td><span class="label label-rouded label-warning">{{$info->pd_reorder}}</span></td>
                                                                 <td><span class="label label-rouded label-success">{{$info->pd_qty}}</span></td>
                                                                 <td><span class="label label-success">{{$info->pd_status}}</span></td>
                                                             </tr>
