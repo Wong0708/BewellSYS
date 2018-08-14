@@ -213,6 +213,19 @@
                               @endif
                               @else
                               <div class="row">
+                                <div class="col-md-12 text-center">    
+                                    <hr>
+                                    <h4 style="color:black">Reason/s on Order Cancellation:</h4>
+                                    <ul class="list-group">
+                                        @if(isset($reasons))
+                                            @foreach($reasons as $info)
+                                                <li class="list-group-item">{{$info->remark}}</li>
+                                            @endforeach
+                                        @endif
+                                    </ul>
+                                </div>
+                              </div>
+                              <div class="row">
                                  <div class="col-md-4 text-center">
                                     <hr class="dotted" style="margin: 0px;padding: 0px">
                                     <h5>Total Scheduled Deliveries:</h5>
@@ -232,6 +245,8 @@
                               @endif
                            </div>
                            @endif
+                           <hr>
+                           <h5>DELIVERY ORDERS TABLE</h5>
                            <table class="table color-bordered-table info-bordered-table" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); font-family:Helvetica,Arial,sans-serif; table-align:center;">
                               <tbody id="addproduct">
                               <thead>
