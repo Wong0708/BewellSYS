@@ -20,8 +20,11 @@ class Schedule extends Model
         return $this->belongsTo(ClientLocation::class,'locationID','id');//foreign,local key
     }
 
+    public function fromLocationNumber(){
+        return $this->belongsTo(ClientLocation::class,'contactPerson','loc_contactperson');//foreign,local key
+    }
+
     public function fromDriver(){
         return $this->belongsTo(Driver::class,'driverID','id');//foreign,local key
     }
-
 }
