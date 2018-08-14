@@ -45,6 +45,15 @@ class DashboardController extends Controller
         $allSupplierOrder = SupplierOrder::where('spod_status','=','Processing')->get();
         $totalCompanyOrder = count($allClientOrder)+count($allManufacturerOrder)+count($allSupplierOrder);
 
+
+        $allClientOrder = ClientOrder::where('clod_status','=','Processing')->get();
+        $totalSales = 0;
+
+        foreach($allClientOrder as $info){
+            $totalSales = $totalSales+$info->clod_payment;
+        }
+
+
         $allManufacturerOrder = ManufacturerOrder::where('mnod_status','=','Processing')->get();
         $allSupplierOrder = SupplierOrder::where('spod_status','=','Processing')->get();
         $totalCost = 0;
@@ -65,6 +74,7 @@ class DashboardController extends Controller
                     ->with('todayRestock',count($products))
                     ->with('todayDeadline',count($todayDeadline))
                     ->with('totalCompanyOrder',$totalCompanyOrder)
+                    ->with('totalSales',$totalSales)
                     ->with('totalCost',$totalCost);
     }
 
