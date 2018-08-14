@@ -723,7 +723,7 @@
                                             @if(isset($client_schedules))
                                                 @foreach($client_schedules as $schedule)
                                                     <tr style="color:black;">
-                                                        <th><a href="sched_det/{{$schedule->id}}">{{$schedule->id}}</a></th>
+                                                        <th><a href="schedule/{{$schedule->id}}">{{$schedule->id}}</a></th>
                                                         <th>{{$schedule->orderID}}</th>
                                                         <th>@if(isset($schedule->fromTruck)){{$schedule->fromTruck->plate_num}}@else N/A @endif</th>
                                                         <th>@if(isset($schedule->fromDriver)){{$schedule->fromDriver->name}}@else N/A @endif</th>
@@ -1319,7 +1319,7 @@
         //Added by: PrivateAirJET
         //For Error Checking.
         $(document).on('change', '.liveValueCheck', function (e) {
-            if( $(this).attr('max')<$(this).val()){
+            if( $(this).val()>parseInt($(this).attr('max'))){
                 $(this).css("background-color", "red");
             }else{
                 $(this).css("background-color", "white");
