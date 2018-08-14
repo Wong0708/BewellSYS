@@ -689,12 +689,14 @@
                @endif
                <div class="col-sm-12">
                   <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                     
+
                      <h3 class="box-title m-b-0" style="color:black;">LIST OF ALL SCHEDULES</h3>
                      <ul class="nav customtab nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#client_table" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Client</span></a></li>
                         <li role="presentation" class=""><a href="#manuf_table" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Manufacturer</span></a></li>
                      </ul>
-                     <div class="tab-content">
+                     <div class="tab-content" style="margin-bottom:10px;">
                         <div role="tabpanel" class="tab-pane fade active in" id="client_table">
                            <button class="btn btn-success waves-effect waves-light"
                               data-toggle="modal" data-target="#clientOrderModal"
@@ -716,22 +718,22 @@
                                           <th>Schedule Date</th>
                                           <th>Delivered Date</th>
                                           <th>Status</th>
-                                          <th><i class="fa fa-gavel"></i> Action</th>
+                                          <th>Action <span><i class="fa fa-gavel"></i></span></th>
                                        </tr>
                                     </thead>
                                     <tbody id="scheduleList">
                                             @if(isset($client_schedules))
                                                 @foreach($client_schedules as $schedule)
                                                     <tr style="color:black;">
-                                                        <th><a href="schedule/{{$schedule->id}}">{{$schedule->id}}</a></th>
-                                                        <th>{{$schedule->orderID}}</th>
-                                                        <th>@if(isset($schedule->fromTruck)){{$schedule->fromTruck->plate_num}}@else N/A @endif</th>
-                                                        <th>@if(isset($schedule->fromDriver)){{$schedule->fromDriver->name}}@else N/A @endif</th>
-                                                        <th>@if(isset($schedule->fromLocation)){{$schedule->fromLocation->loc_address}}@else N/A @endif</th>
-                                                        <th>{{$schedule->scd_date}}</th>
-                                                        <th>@if(!empty($schedule->dateDelivered)){{$schedule->dateDelivered}}@else N/A @endif</th>
-                                                        <th>{{$schedule->scd_status}}</th>
-                                                        <th>@if($schedule->scd_status=='Scheduled')<i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-edit editSchedule"/>@elseif($schedule->scd_status=='Cancelled')<i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-reply-all editCancelled"/>  @elseif($schedule->scd_status=='Delivered') <a href="sched_det/{{$schedule->id}}"><i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-calendar"/></a>@endif</th>
+                                                        <td><a href="schedule/{{$schedule->id}}">{{$schedule->id}}</a></td>
+                                                        <td>{{$schedule->orderID}}</td>
+                                                        <td>@if(isset($schedule->fromTruck)){{$schedule->fromTruck->plate_num}}@else N/A @endif</td>
+                                                        <td>@if(isset($schedule->fromDriver)){{$schedule->fromDriver->name}}@else N/A @endif</td>
+                                                        <td>@if(isset($schedule->fromLocation)){{$schedule->fromLocation->loc_address}}@else N/A @endif</td>
+                                                        <td>{{$schedule->scd_date}}</td>
+                                                        <td>@if(!empty($schedule->dateDelivered)){{$schedule->dateDelivered}}@else N/A @endif</td>
+                                                        <td>{{$schedule->scd_status}}</td>
+                                                        <td>@if($schedule->scd_status=='Scheduled')<i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-edit editSchedule"/>@elseif($schedule->scd_status=='Cancelled')<i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-reply-all editCancelled"/>  @elseif($schedule->scd_status=='Delivered') <a href="sched_det/{{$schedule->id}}"><i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-calendar"/></a>@endif</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -779,6 +781,79 @@
                                                     <th>{{$schedule->scd_status}}</th>
                                                     <th>@if($schedule->scd_status=='Scheduled')<i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-edit editSchedule2"/>@elseif($schedule->scd_status=='Cancelled')<i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-reply-all editCancelled"/>  @elseif($schedule->scd_status=='Delivered') <a href="sched_det/{{$schedule->id}}"><i data-id={{$schedule->id}} style="color:#4c87ed;" class="fa fa-calendar"/></a>@endif</th>
                                                 </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                           <div class="clearfix"></div>
+                        </div>
+                     </div>
+                     <h3 class="box-title m-b-0" style="color:black; text-align:center;"><span><i style="color:red;" class="fa fa-list"></i></span> REASON/S ON ORDER CANCELLATION</h3>
+                     <ul class="nav customtab nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#clientReason" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Client</span></a></li>
+                        <li role="presentation" class=""><a href="#manufacturerReason" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Manufacturer</span></a></li>
+                     </ul>
+                     <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="clientReason">
+                           <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table table-striped myTable">
+                                        <thead>
+                                            <tr style="color:black;">
+                                                <th>Reason #</th>
+                                                <th>Order #</th>
+                                                <th>Status</th>
+                                                <th>Reason</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="scheduleList">
+                                            @if(isset($client_schedules))
+                                                @php ($count = 0)
+                                                @foreach($client_schedules as $schedule)
+                                                    @php ($count = $count + 1)
+                                                    @if($schedule->scd_status=="Cancelled")
+                                                        <tr style="color:black;">
+                                                            <td>{{$count}}</td>
+                                                            <td><a href="schedule/{{$schedule->id}}">{{$schedule->id}}</a></td>
+                                                            <td><span class="label label-danger">{{$schedule->scd_status}}</span></td>
+                                                            <td><span class="label label-info">{{$schedule->remark}}</span></td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                           </div>
+                           <div class="clearfix"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="manufacturerReason">
+                           <div class="row">
+                              <div class="table-responsive">
+                                 <table class="table table-striped myTable">
+                                    <thead>
+                                       <tr style="color:black;">
+                                          <th>Reason #</th>
+                                          <th>Order #</th>
+                                          <th>Status</th>
+                                          <th>Reason</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="scheduleList">
+                                        @if(isset($manufacturer_schedules))
+                                            @php ($count = 0)
+                                            @foreach($manufacturer_schedules as $schedule)
+                                                @php ($count = $count + 1)
+                                                @if($schedule->scd_status=="Cancelled")
+                                                    <tr style="color:black;">
+                                                        <td>{{$count}}</td>
+                                                        <td><a href="schedule/{{$schedule->id}}">{{$schedule->id}}</a></td>
+                                                        <td>{{$schedule->scd_status}}</td>
+                                                        <td>{{$schedule->scd_remark}}</td>
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -1031,7 +1106,8 @@
                 var formData = {
                     deliveryDate: $('#rescheddate').val(),
                     scheduleID: $(this).data('id'),
-                }//bobomojet
+                    remarks: $('#scheduleRemarks').text(),
+                }
 
                 $.ajax({
                     type: "POST",
@@ -1087,11 +1163,10 @@
                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                         }
                     })
-
                     e.preventDefault(); 
                     var formData = {
                         scheduleID: $(this).data('id'),
-                        remarks:$('#scheduleRemarks').text(),
+                        remarks:$('#scheduleRemarks').val(),
                     }
 
                     $.ajax({
@@ -1102,7 +1177,6 @@
                             console.log(data);
                             $('#concludeScheduleModal').modal('hide')
                             location.reload();
-
                         },   
                         error: function (data) {
                             console.log('Data Error:', data);
