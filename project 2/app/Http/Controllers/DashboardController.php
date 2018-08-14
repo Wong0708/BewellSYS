@@ -45,13 +45,27 @@ class DashboardController extends Controller
         $allSupplierOrder = SupplierOrder::where('spod_status','=','Processing')->get();
         $totalCompanyOrder = count($allClientOrder)+count($allManufacturerOrder)+count($allSupplierOrder);
 
+        $allManufacturerOrder = ManufacturerOrder::where('mnod_status','=','Processing')->get();
+        $allSupplierOrder = SupplierOrder::where('spod_status','=','Processing')->get();
+        $totalCost = 0;
+
+        foreach($allManufacturerOrder as $info){
+            $totalCost = $totalCost+$info->mnod_payment;
+        }
+
+        foreach($allSupplierOrder as $info){
+            $totalCost = $totalCost+$info->spod_payment;
+        }
+
+
         return view('appdev.dashboard')
                     ->with('deliveries',$deliveries)
                     ->with('products',$products)
                     ->with('todayDelivery',$todayDelivery)
                     ->with('todayRestock',count($products))
                     ->with('todayDeadline',count($todayDeadline))
-                    ->with('totalCompanyOrder',$totalCompanyOrder);
+                    ->with('totalCompanyOrder',$totalCompanyOrder)
+                    ->with('totalCost',$totalCost);
     }
 
     /**
