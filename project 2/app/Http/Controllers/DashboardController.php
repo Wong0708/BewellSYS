@@ -34,11 +34,15 @@ class DashboardController extends Controller
         $todayDelivery =Schedule::where('scd_date','=',date('Y/m/d'))
                     ->first();
 
+        $todayDeadline =Schedule::where(([['scd_status','=','Scheduled'],['scd_status','=', 'Processing'],['scd_date','=', date('Y/m/d')]]))
+                    ->get();
+
         return view('appdev.dashboard')
                     ->with('deliveries',$deliveries)
                     ->with('products',$products)
                     ->with('todayDelivery',$todayDelivery)
-                    ->with('todayRestock',count($products));
+                    ->with('todayRestock',count($products))
+                    ->with('todayDeadline',count($todayDeadline));
     }
 
     /**
