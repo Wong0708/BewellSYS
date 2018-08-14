@@ -194,7 +194,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-6"> <i style="color:#1565C0;" data-icon="&#xe019;" class="linea-icon linea-basic"></i>
                                             <h5 class="text-muted vb" style="color:black;">ORDER DELIVERIES</h5> </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h3 class="counter text-right m-t-15" style="color:black;">{{$todayDelivery}}</h3> 
+                                            <h3 class="counter text-right m-t-15" style="color:black;">@if(isset($todayDelivery)) {{$todayDelivery}} @else 0 @endif</h3> 
                                         </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <span><small class="m-t-10 text-success" style="text-transform:uppercase;"><i style="font-size:12px;" class="fa fa-sort-asc"></i> 40% higher than yesterday</small></span>
