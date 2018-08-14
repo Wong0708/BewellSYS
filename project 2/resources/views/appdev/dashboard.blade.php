@@ -243,7 +243,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-6"> <i style="color:#1565C0;" class="linea-icon linea-basic" data-icon="O"></i>
                                             <h5 style="color:black;"class="text-muted vb">COMPANY ORDERS</h5> </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h3 class="counter text-right m-t-15" style="color:black;"@if(isset($totalCompanyOrder)) {{$totalCompanyOrder}} @else 0 @endif</h3> </div>
+                                            <h3 class="counter text-right m-t-15" style="color:black;"> @if(isset($totalCompanyOrder)) {{$totalCompanyOrder}} @else 0 @endif</h3> </div>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <span><small class="m-t-10 text-success" style="text-transform:uppercase;"><i style="font-size:12px;" class="fa fa-sort-asc"></i> 37% higher than yesterday</small></span>
                                             <div class="progress m-b-0">
