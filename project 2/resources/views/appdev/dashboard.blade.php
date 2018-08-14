@@ -291,7 +291,7 @@
                                             <table class="table full-color-table full-info-table hover-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Supply</th>
+                                                        <th>Product</th>
                                                         <th>SKU</th>
                                                         <th>Re-Order</th>
                                                         <th>Total (Boxes)</th>
@@ -299,21 +299,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if(isset($deliveries))
-                                                        @foreach($deliveries as $info)
+                                                    @if(isset($products))
+                                                        @foreach($products as $info)
                                                             <tr>
-                                                                <td>Bewell-C</td>
-                                                                <td>500 grams</td>
-                                                                <td>40</td>
-                                                                <td><span class="label label-rouded label-success">72</span></td>
-                                                                <td><span class="label label-success">On-Stock</span></td>
+                                                                <td>{{$info->pd_name}}</td>
+                                                                <td>{{$info->pd_sku}}</td>
+                                                                <td>{{$info->reorder}}</td>
+                                                                <td><span class="label label-rouded label-success">{{$info->pd_qty}}</span></td>
+                                                                <td><span class="label label-success">{{$info->pd_status}}</span></td>
                                                             </tr>
                                                         @endforeach
                                                     @endif
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <a href="#">View Product Inventory</a>
+                                        <a href={{route('product.index')}}>View Product Inventory</a>
                                     </div>
                                 </div>
 
