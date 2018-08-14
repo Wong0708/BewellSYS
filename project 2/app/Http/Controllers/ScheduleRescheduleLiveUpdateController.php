@@ -15,6 +15,5 @@ class ScheduleRescheduleLiveUpdateController extends Controller
         $schedule->remark = $request->remarks;
         $schedule->save();
         return response()->json();
-       
     }
 }
