@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $deliveries =Schedule::where(([['scd_status','=','Scheduled'],['scd_status','=', 'Processing']]))
                     ->get();
 
-        $products =Products::where('pd_status','=','Re-stock')
+        $products =Product::where('pd_status','=','Re-stock')
                     ->get();
 
         return view('appdev.dashboard')
