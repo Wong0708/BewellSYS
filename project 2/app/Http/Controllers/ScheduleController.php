@@ -83,7 +83,7 @@ class ScheduleController extends Controller
     public function show($id)
     {
         $order =  Schedule::where('id','=',$id)->first();
-        return view("appdev.supplierorderdetail")
+        return view("appdev.scheduledetail")
                 ->with('order',$order);
     }
 
