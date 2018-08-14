@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Schedule;
+use App\Product;
 
 class DashboardController extends Controller
 {
@@ -22,8 +24,8 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $val = session('username');
-        return view('appdev.dashboard')->with('username', $val);
+        
+        return view('appdev.dashboard')->with();
     }
 
     /**
