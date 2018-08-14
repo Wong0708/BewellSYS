@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Schedule;
 use App\Product;
+use App\ClientOrder;
+use App\ManufacturerOrder;
+use App\SupplierOrder;
 use DB;
 
 class DashboardController extends Controller
@@ -34,15 +37,21 @@ class DashboardController extends Controller
         $todayDelivery =Schedule::where('scd_date','=',date('Y/m/d'))
                     ->first();
 
-        $todayDeadline =Schedule::where(([['scd_status','=','Scheduled'],['scd_status','=', 'Processing'],['scd_date','=', date('Y/m/d')]]))
+        $todayDeadline = ClientOrder::where('expectedDate','=', date('Y/m/d'))
                     ->get();
+
+        $allClientOrder = ClientOrder::where('clod_status','=','Processing')->get();
+        $allManufacturerOrder = ManufacturerOrder::where('mnod_status','=','Processing')->get();
+        $allSupplierOrder = SupplierOrder::where('spod_status','=','Processing')->get();
+        $totalCompanyOrder = count($allClientOrder)+count($allManufacturerOrder)+count($allSupplierOrder);
 
         return view('appdev.dashboard')
                     ->with('deliveries',$deliveries)
                     ->with('products',$products)
                     ->with('todayDelivery',$todayDelivery)
                     ->with('todayRestock',count($products))
-                    ->with('todayDeadline',count($todayDeadline));
+                    ->with('todayDeadline',count($todayDeadline))
+                    ->with('totalCompanyOrder',count($totalCompanyOrder));
     }
 
     /**
