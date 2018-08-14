@@ -134,8 +134,8 @@
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                             <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                 <h3 class="box-title">Weekly Sales</h3>
-                                <div class="text-right"> <span class="text-muted" style="color:black;">Total Sales</span>
-                                    <h1><sup><i class="ti-arrow-up text-success"></i></sup> ₱12,000</h1> 
+                                <div class="text-right"> <span class="text-muted" style="color:black;">Total Sales (PHP)</span>
+                                    <h1><sup><i class="ti-arrow-up text-success"></i></sup> ₱{{number_format($totalSales,2)}}</h1> 
                                 </div> 
                                 <span><small class="m-t-10 text-success" style="text-transform:uppercase;"><i class="fa fa-sort-asc"></i> 20% higher than last week</small></span>
                                     
@@ -148,7 +148,7 @@
                             <div class="white-box" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
                                 <h3 class="box-title">Weekly Cost</h3>
                                 <div class="text-right"> <span class="text-muted" style="color:black;">Total Costs (PHP)</span>
-                                    <h1><sup><i class="ti-arrow-down text-danger"></i></sup> {{number_format($totalCost,2)}}</h1> 
+                                    <h1><sup><i class="ti-arrow-down text-danger"></i></sup> ₱{{number_format($totalCost,2)}}</h1> 
                                 </div> 
                                     <span><small class="m-t-10 text-danger" style="text-transform:uppercase;"><i class="fa fa-sort-desc"></i> 30% higher than last week</small></span>
                                 <div class="progress m-b-0">
