@@ -51,7 +51,7 @@ class DashboardController extends Controller
                     ->with('todayDelivery',$todayDelivery)
                     ->with('todayRestock',count($products))
                     ->with('todayDeadline',count($todayDeadline))
-                    ->with('totalCompanyOrder',count($totalCompanyOrder));
+                    ->with('totalCompanyOrder',$totalCompanyOrder);
     }
 
     /**
